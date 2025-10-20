@@ -1,0 +1,15 @@
+
+/* Adicione seus estilos personalizados aqui */
+.jumbotron {
+  background-color: #e9ecef;
+  padding: 2rem;
+}
+
+.table th {
+  white-space: nowrap;
+}
+
+/* Estilo para o modal */
+.modal-body .form-group {
+    margin-bottom: 1rem;
+}

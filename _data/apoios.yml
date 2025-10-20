@@ -1,0 +1,7 @@
+
+# Formato: id_do_parlamentar: { status: 'apoia'/'nao-apoia'/'nao-manifestado', evidencia: 'URL' }
+# Exemplo:
+# 204534:
+#   status: apoia
+#   evidencia: 'https://example.com/noticia-declaracao'
+

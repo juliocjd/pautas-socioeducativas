@@ -1,0 +1,69 @@
+
+backend:
+  name: github
+  repo: juliocjd/pautas-socioeducativas
+  branch: master # Branch principal
+  site_domain: bucolic-dodol-77b24b.netlify.app
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: 'pautas'
+    label: 'Pautas'
+    folder: '_pautas'
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: 'Título', name: 'title', widget: 'string' }
+      - { label: 'Descrição', name: 'description', widget: 'text' }
+      - { label: 'Casa Legislativa', name: 'casa', widget: 'select', options: ['Câmara dos Deputados', 'Senado Federal'] }
+      - { label: 'Status', name: 'status', widget: 'string' }
+      - { label: 'Corpo da Página', name: 'body', widget: 'markdown' }
+
+  - name: 'apoios'
+    label: 'Status de Apoio'
+    description: 'Atualize o status de apoio dos parlamentares. Use o ID numérico deles como chave.'
+    folder: '_data'
+    create: false
+    files:
+      - label: 'Apoios'
+        name: 'apoios'
+        file: '_data/apoios.yml'
+        fields:
+          - label: 'ID do Parlamentar'
+            name: 'id'
+            widget: 'string'
+            hint: 'Ex: 204534'
+          - label: 'Status'
+            name: 'status'
+            widget: 'select'
+            options: ['apoia', 'nao-apoia', 'nao-manifestado']
+          - label: 'Evidência (Link)'
+            name: 'evidencia'
+            widget: 'string'
+            required: false
+
+  - name: 'contatos'
+    label: 'Contatos dos Parlamentares'
+    description: 'Adicione ou atualize informações de contato. Use o ID numérico deles como chave.'
+    folder: '_data'
+    create: false
+    files:
+      - label: 'Contatos'
+        name: 'contatos'
+        file: '_data/contatos.yml'
+        fields:
+          - label: 'ID do Parlamentar'
+            name: 'id'
+            widget: 'string'
+            hint: 'Ex: 204534'
+          - label: 'Telefone'
+            name: 'telefone'
+            widget: 'string'
+            required: false
+          - label: 'E-mail'
+            name: 'email'
+            widget: 'string'
+            required: false
+
