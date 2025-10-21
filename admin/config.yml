@@ -3,6 +3,7 @@ backend:
   repo: juliocjd/pautas-socioeducativas
   branch: main
   site_domain: bucolic-dodol-77b24b.netlify.app
+  site_url: https://juliocjd.github.io/pautas-socioeducativas
 
 media_folder: "assets/images"
 public_folder: "/assets/images"
