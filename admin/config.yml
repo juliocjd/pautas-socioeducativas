@@ -1,4 +1,3 @@
-
 backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
@@ -66,4 +65,3 @@ collections:
             name: 'email'
             widget: 'string'
             required: false
-
