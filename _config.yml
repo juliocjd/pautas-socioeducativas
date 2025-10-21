@@ -9,6 +9,12 @@ markdown: kramdown
 plugins:
   - jekyll-feed
 
+# Configuração de Coleç
+collections:
+  pautas:
+    output: true
+    permalink: /:collection/:name/
+
 # Exclusões
 exclude:
   - Gemfile
