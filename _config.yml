@@ -1,8 +1,7 @@
-
 # Configurações do Site
 title: "Pautas Socioeducativas"
 description: "Acompanhe as pautas legislativas para a categoria de Agentes de Segurança Socioeducativos."
-baseurl: "" # o subdiretório do seu site, ex: /blog. Deixe em branco se for na raiz.
+baseurl: "/pautas-socioeducativas"
 url: "https://juliocjd.github.io" # URL do seu site no GitHub Pages
 
 # Build settings
@@ -21,4 +20,3 @@ exclude:
   - vendor/ruby/
   - scripts/
   - README.md
-
