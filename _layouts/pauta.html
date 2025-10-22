@@ -123,9 +123,20 @@ layout: default
     filtroApoio.addEventListener('change', renderTable);
 
     renderTable();
+
+    // CORREÇÃO: A lógica do modal foi movida para AQUI, DENTRO do DOMContentLoaded
+    $('#modalContribuicao').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var parlamentarId = button.data('id');
+      var parlamentarNome = button.data('nome');
+      
+      var modal = $(this);
+      modal.find('.modal-title').text('Enviar informação sobre: ' + parlamentarNome);
+      modal.find('#parlamentar-nome').val(parlamentarNome);
+      modal.find('#parlamentar-id').val(parlamentarId);
+    });
   });
 </script>
-
 <!-- Modal de Contribuição -->
 <div class="modal fade" id="modalContribuicao" tabindex="-1" role="dialog" aria-labelledby="modalContribuicaoLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
