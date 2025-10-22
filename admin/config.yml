@@ -2,6 +2,16 @@ backend:
   name: github
 media_folder: assets/images
 public_folder: /assets/images
-media_library:
-  name: images
-collections: []
+media_library: {}
+collections:
+  - name: pautas
+    label: Pautas
+    folder: _pautas
+    create: true
+    slug: '{{slug}}'
+    fields:
+      - { label: Título, name: title, widget: string }
+      - { label: Descrição, name: description, widget: text }
+      - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
+      - { label: Status, name: status, widget: string }
+      - { label: 'Corpo da Página', name: body, widget: markdown }
