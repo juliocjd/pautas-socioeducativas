@@ -26,20 +26,3 @@
 
   <button type="submit" class="btn btn-primary">Enviar Contribuição</button>
 </form>
-
-<script>
-  // CORREÇÃO: Envolver o código em $(function() { ... })
-  // Isso garante que o código só execute depois que o jQuery estiver carregado.
-  $(function() {
-    $('#modalContribuicao').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var parlamentarId = button.data('id');
-      var parlamentarNome = button.data('nome');
-      
-      var modal = $(this);
-      modal.find('.modal-title').text('Enviar informação sobre: ' + parlamentarNome);
-      modal.find('#parlamentar-nome').val(parlamentarNome);
-      modal.find('#parlamentar-id').val(parlamentarId);
-    });
-  });
-</script>
