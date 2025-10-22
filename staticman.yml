@@ -1,8 +1,12 @@
 # Configuração do Staticman
 comments:
-  allowedFields: ['name', 'email', 'mensagem', 'parlamentar-nome']
+  # CORREÇÃO 1: Adicionado o campo 'parlamentar_id' que o formulário envia
+  allowedFields: ['name', 'email', 'mensagem', 'parlamentar-nome', 'parlamentar_id']
   allowedOrigins: ['https://juliocjd.github.io', 'localhost:3000']
-  branch: 'master'
+  
+  # CORREÇÃO 2: Alterado de 'master' para 'main' para combinar com o resto do projeto
+  branch: 'main'
+  
   commitMessage: 'Nova contribuição de {fields.name} sobre {fields.parlamentar-nome}'
   filename: '{@timestamp}'
   format: 'yaml'
