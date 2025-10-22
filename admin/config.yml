@@ -4,11 +4,9 @@ backend:
   branch: main
   site_domain: bucolic-dodol-77b24b.netlify.app
   site_url: https://juliocjd.github.io/pautas-socioeducativas
-
 media_folder: assets/images
 public_folder: /assets/images
-media_library:{}
-
+media_library: {}
 collections:
   - name: pautas
     label: Pautas
