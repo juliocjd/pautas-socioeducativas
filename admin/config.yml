@@ -4,6 +4,7 @@ backend:
   branch: main
   site_domain: bucolic-dodol-77b24b.netlify.app
   site_url: https://juliocjd.github.io/pautas-socioeducativas
+  base_url: /pautas-socioeducativas/admin/ # <--- LINHA ADICIONADA
 media_folder: assets/images
 public_folder: /assets/images
 collections:
