@@ -6,7 +6,6 @@ backend:
   site_url: https://juliocjd.github.io/pautas-socioeducativas
 media_folder: assets/images
 public_folder: /assets/images
-media_library: {}
 collections:
   - name: pautas
     label: Pautas
