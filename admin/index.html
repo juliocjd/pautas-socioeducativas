@@ -4,10 +4,44 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Área do Administrador - Pautas Socioeducativas</title>
-    
-    <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.1/dist/decap-cms.js"></script>
   </head>
   <body>
-    <!-- O conteúdo do painel será inserido aqui pelo JavaScript -->
+    <!-- Este é o "alvo" seguro para o CMS construir a interface -->
+    <div id="cms-root"></div>
+    
+    <!-- Carregando uma versão mais antiga e extremamente estável do Netlify CMS (Decap CMS) -->
+    <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+      window.CMS.init({
+        config: {
+          backend: {
+            name: 'github',
+            repo: 'juliocjd/pautas-socioeducativas',
+            branch: 'main',
+            site_domain: 'bucolic-dodol-77b24b.netlify.app',
+            site_url: 'https://juliocjd.github.io/pautas-socioeducativas'
+          },
+          media_folder: "assets/images",
+          public_folder: "/assets/images",
+          collections: [
+            {
+              name: 'pautas',
+              label: 'Pautas',
+              folder: '_pautas',
+              create: true,
+              slug: '{{slug}}',
+              fields: [
+                { label: 'Título', name: 'title', widget: 'string' },
+                { label: 'Descrição', name: 'description', widget: 'text' },
+                { label: 'Casa Legislativa', name: 'casa', widget: 'select', options: ['Câmara dos Deputados', 'Senado Federal'] },
+                { label: 'Status', name: 'status', widget: 'string' },
+                { label: 'Corpo da Página', name: 'body', widget: 'markdown' }
+              ]
+            }
+          ]
+        }
+      });
+    </script>
   </body>
 </html>
