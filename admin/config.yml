@@ -2,10 +2,15 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
+  # CORREÇÃO 1: O site_domain já estava certo, mas vamos garantir
   site_domain: bucolic-dodol-77b24b.netlify.app
-  site_url: https://juliocjd.github.io/pautas-socioeducativas
+  # CORREÇÃO 2: O site_url agora é o do Netlify!
+  site_url: https://bucolic-dodol-77b24b.netlify.app
+
+# CORREÇÃO 3: No Netlify, o site está na raiz, não em um subdiretório
 media_folder: assets/images
-public_folder: /pautas-socioeducativas/assets/images  
+public_folder: /assets/images
+
 collections:
   - name: pautas
     label: Pautas
