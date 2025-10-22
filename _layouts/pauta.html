@@ -1,44 +1,145 @@
-<form method="POST" action="https://staticman.net/v3/entry/github/juliocjd/pautas-socioeducativas/main/contribuicoes" class="staticman-form">
-  <!-- CORREÇÃO 1: Redirecionamento dinâmico para a página atual -->
-  <input name="options[redirect]" type="hidden" value="{{ page.url }}?submited=true">
-  <input name="options[slug]" type="hidden" value="{{ page.slug }}">
-  
-  <!-- CORREÇÃO 2: Campo oculto para o ID do parlamentar -->
-  <input type="hidden" id="parlamentar-id" name="fields[parlamentar_id]" value="">
+---
+layout: default
+---
 
-  <div class="form-group">
-    <label for="parlamentar-nome">Parlamentar:</label>
-    <input type="text" class="form-control" id="parlamentar-nome" name="fields[parlamentar-nome]" readonly>
+<div class="container">
+  <h1>{{ page.title }}</h1>
+  <p class="lead">{{ page.description }}</p>
+  <p><strong>Casa Legislativa:</strong> {{ page.casa }}</p>
+  <p><strong>Status:</strong> {{ page.status }}</p>
+  <hr>
+
+  <h2>Posicionamento dos Parlamentares</h2>
+  <p>Use os filtros abaixo para encontrar os parlamentares do seu estado.</p>
+
+  <!-- Filtros -->
+  <div class="form-row mb-3">
+    <div class="col-md-4">
+      <input type="text" id="filtro-nome" class="form-control" placeholder="Filtrar por nome...">
+    </div>
+    <div class="col-md-4">
+      <select id="filtro-estado" class="form-control">
+        <option value="">Todos os Estados</option>
+        <!-- Opções de estados serão preenchidas por JS -->
+      </select>
+    </div>
+    <div class="col-md-4">
+      <select id="filtro-apoio" class="form-control">
+        <option value="">Todos os Status</option>
+        <option value="apoia">Apoia</option>
+        <option value="nao-apoia">Não Apoia</option>
+        <option value="nao-manifestado">Não se Manifestou</option>
+      </select>
+    </div>
   </div>
 
-  <div class="form-group">
-    <label for="seu-nome">Seu Nome (opcional):</label>
-    <input type="text" class="form-control" id="seu-nome" name="fields[name]">
+  <!-- Tabela de Parlamentares -->
+  <div class="table-responsive">
+    <table class="table table-striped table-hover" id="tabela-parlamentares">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nome</th>
+          <th>Partido</th>
+          <th>UF</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- As linhas da tabela serão geradas por JavaScript -->
+      </tbody>
+    </table>
   </div>
-
-  <div class="form-group">
-    <label for="seu-email">Seu E-mail (opcional):</label>
-    <input type="email" class="form-control" id="seu-email" name="fields[email]">
-  </div>
-
-  <div class="form-group">
-    <label for="mensagem">Mensagem / Evidência:</label>
-    <textarea class="form-control" id="mensagem" name="fields[mensagem]" rows="3" required placeholder="Descreva a informação e, se possível, inclua um link para uma notícia, vídeo ou foto como prova."></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-primary">Enviar Contribuição</button>
-</form>
+</div>
 
 <script>
-  $('#modalContribuicao').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var parlamentarId = button.data('id') // Extract ID from data-* attributes
-    var parlamentarNome = button.data('nome') // Extract name from data-* attributes
-    
-    var modal = $(this)
-    modal.find('.modal-title').text('Enviar informação sobre: ' + parlamentarNome)
-    modal.find('#parlamentar-nome').val(parlamentarNome)
-    // CORREÇÃO 3: Preenche o campo oculto com o ID do parlamentar
-    modal.find('#parlamentar-id').val(parlamentarId)
-  })
+  // Dados vindos de _data/*
+  const parlamentaresBase = [{% for parl in site.data.parlamentares_base %}{"id": "{{ parl.id }}", "nome": "{{ parl.nome }}", "partido": "{{ parl.partido }}", "uf": "{{ parl.uf }}"},{% endfor %}];
+  const apoios = {{ site.data.apoios | jsonify }};
+  const contatos = {{ site.data.contatos | jsonify }};
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabelaBody = document.querySelector('#tabela-parlamentares tbody');
+    const filtroNome = document.getElementById('filtro-nome');
+    const filtroEstado = document.getElementById('filtro-estado');
+    const filtroApoio = document.getElementById('filtro-apoio');
+    const filtroEstadoSelect = document.getElementById('filtro-estado');
+
+    // Preencher filtro de estados
+    const estados = [...new Set(parlamentaresBase.map(p => p.uf))].sort();
+    estados.forEach(estado => {
+      const option = new Option(estado, estado);
+      filtroEstadoSelect.add(option);
+    });
+
+    function renderTable() {
+      tabelaBody.innerHTML = '';
+      const termoNome = filtroNome.value.toLowerCase();
+      const termoEstado = filtroEstado.value;
+      const termoApoio = filtroApoio.value;
+
+      const parlamentaresFiltrados = parlamentaresBase.filter(parlamentar => {
+        const nomeMatch = parlamentar.nome.toLowerCase().includes(termoNome);
+        const estadoMatch = termoEstado === '' || parlamentar.uf === termoEstado;
+        
+        let apoioStatus = 'nao-manifestado';
+        if (apoios[parlamentar.id]) {
+            apoioStatus = apoios[parlamentar.id].status;
+        }
+        const apoioMatch = termoApoio === '' || apoioStatus === termoApoio;
+
+        return nomeMatch && estadoMatch && apoioMatch;
+      });
+
+      parlamentaresFiltrados.forEach(parlamentar => {
+        const row = document.createElement('tr');
+        
+        let apoioStatus = 'nao-manifestado';
+        let statusBadge = '<span class="badge badge-secondary">Não se Manifestou</span>';
+        if (apoios[parlamentar.id]) {
+            apoioStatus = apoios[parlamentar.id].status;
+            if (apoioStatus === 'apoia') statusBadge = '<span class="badge badge-success">Apoia</span>';
+            if (apoioStatus === 'nao-apoia') statusBadge = '<span class="badge badge-danger">Não Apoia</span>';
+        }
+
+        const contatoInfo = contatos[parlamentar.id] ? `Telefone: ${contatos[parlamentar.id].telefone || 'N/A'}` : 'Contato não disponível';
+
+        row.innerHTML = `
+          <td>${parlamentar.nome}</td>
+          <td>${parlamentar.partido}</td>
+          <td>${parlamentar.uf}</td>
+          <td>${statusBadge}</td>
+          <td>
+            <button class="btn btn-sm btn-info" onclick="alert('${contatoInfo}')">Ver Contato</button>
+            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-id="${parlamentar.id}" data-nome="${parlamentar.nome}">Enviar Info</button>
+          </td>
+        `;
+        tabelaBody.appendChild(row);
+      });
+    }
+
+    filtroNome.addEventListener('input', renderTable);
+    filtroEstado.addEventListener('change', renderTable);
+    filtroApoio.addEventListener('change', renderTable);
+
+    renderTable();
+  });
 </script>
+
+<!-- Modal de Contribuição -->
+<div class="modal fade" id="modalContribuicao" tabindex="-1" role="dialog" aria-labelledby="modalContribuicaoLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalContribuicaoLabel">Enviar Informação</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% include staticman-form.html %}
+      </div>
+    </div>
+  </div>
+</div>
+
