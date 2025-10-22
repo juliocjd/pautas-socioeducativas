@@ -7,8 +7,7 @@ backend:
 
 media_folder: assets/images
 public_folder: /assets/images
-media_library:
-  name: images
+media_library:{}
 
 collections:
   - name: pautas
