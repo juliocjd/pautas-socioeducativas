@@ -17,16 +17,19 @@ collections:
     create: true
     slug: '{{slug}}'
     fields:
-      - { label: Título, name: title, widget: string }
-      - { label: Descrição, name: description, widget: text }
-      - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
-      - { label: Status, name: status, widget: string }
-      - { label: Pauta Principal, name: featured, widget: boolean, default: false }
-      - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false }
-      - label: "Membros-Chave desta Pauta"
-        name: "key_players"
-        widget: "list"
-        fields:
-          - { label: "ID do Parlamentar", name: "id", widget: "select", options: [{{ site.data.parlamentares_base | map: 'id' | prepend: '"' | append: '"' | join: ',' }}] }
-          - { label: "Papel/Função", name: "role", widget: "string" }
+      # TROQUE ESTE BLOCO DE CAMPOS
+fields:
+  - { label: Título, name: title, widget: string }
+  - { label: Descrição, name: description, widget: text }
+  - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
+  - { label: Status, name: status, widget: string }
+  - { label: Pauta Principal, name: featured, widget: boolean, default: false }
+  - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false }
+  - label: "Membros-Chave desta Pauta"
+    name: "key_players"
+    widget: "list"
+    fields:
+      # AQUI ESTÁ A MUDANÇA
+      - { label: "Nome do Parlamentar", name: "nome", widget: "select", options: ['Abou Anni', 'Adolfo Viana', 'Adriana Ventura'] }
+      - { label: "Papel/Função", name: "role", widget: "string" }
       - { label: 'Corpo da Página', name: body, widget: markdown }
