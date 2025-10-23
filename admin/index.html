@@ -3,9 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Área do Administrador - Pautas Socioeducativas</title>
+    <title>Área do Administrador</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+    <!-- Inclua o script do CMS -->
+    <script src="https://unpkg.com/netlify-cms@^3/dist/netlify-cms.js"></script>
+    
+    <!-- Inicie o CMS com a configuração correta -->
+    <script>
+      window.CMS_MANUAL_INIT = true;
+      NetlifyCms.init({
+        config: {
+          backend: {
+            name: 'github',
+            repo: 'juliocjd/pautas-socioeducativas',
+            branch: 'main',
+            site_domain: '0065d9ed-3e53-403a-82c6-8d0ba63a809c', // Seu ID do Netlify
+            site_url: 'https://pautas-socioeducativas.vercel.app' // URL do seu site no Vercel
+          },
+          load_config_file: true,
+          config_path: '/admin/config.yml' // Caminho explícito para o arquivo de config
+        }
+      });
+    </script>
   </body>
 </html>
