@@ -57,6 +57,7 @@ layout: default
                 {% assign sorted_players = relators | concat: other_players %}
 
                 {% for player in sorted_players %}
+                  <!-- ALTERAÇÃO: Busca pelo NOME em vez do ID -->
                   {% assign parlamentar = site.data.parlamentares_base | where: "nome", player.nome | first %}
                   {% if parlamentar %}
                     <tr>
@@ -76,7 +77,8 @@ layout: default
                       </td>
                       <td>
                         <button class="btn btn-sm btn-info" onclick="alert('Contato: {{ contatos[parlamentar.id].telefone | default: 'N/A' }}')">Ver Contato</button>
-                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-id="{{ parlamentar.id }}" data-nome="{{ parlamentar.nome }}">Enviar Info</button>
+                        <!-- ALTERAÇÃO: Botão agora usa apenas o data-nome -->
+                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-nome="{{ parlamentar.nome }}">Enviar Info</button>
                       </td>
                     </tr>
                   {% endif %}
@@ -191,7 +193,8 @@ layout: default
           <td>${statusBadge}</td>
           <td>
             <button class="btn btn-sm btn-info" onclick="alert('${contatoInfo}')">Ver Contato</button>
-            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-nome="{{ parlamentar.nome }}">Enviar Info</button>
+            <!-- ALTERAÇÃO: Botão da tabela geral também usa apenas o data-nome -->
+            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-nome="${parlamentar.nome}">Enviar Info</button>
           </td>
         `;
         tabelaBody.appendChild(row);
@@ -204,16 +207,14 @@ layout: default
 
     renderTable();
 
-    // Lógica para preencher o modal com os dados do parlamentar
+    // LÓGICA DO MODAL ATUALIZADA (só trabalha com o nome)
     $('#modalContribuicao').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
-      var parlamentarId = button.data('id');
       var parlamentarNome = button.data('nome');
       
       var modal = $(this);
       modal.find('.modal-title').text('Enviar informação sobre: ' + parlamentarNome);
       modal.find('#parlamentar-nome').val(parlamentarNome);
-      modal.find('#parlamentar-id').val(parlamentarId);
     });
   });
 </script>
