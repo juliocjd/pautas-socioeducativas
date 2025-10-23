@@ -2,8 +2,7 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  # TENTATIVA DE DEPURAÇÃO: Definir o site_domain como o Project ID
-  site_domain: prj_YQw122R9MsG5DAFpg0TTO8LOICG8
+  # A LINHA site_domain FOI COMPLETAMENTE REMOVIDA
   site_url: https://juliocjd.github.io/pautas-socioeducativas
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
