@@ -11,20 +11,15 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="{{ '/' | relative_url }}">Início</a>
               </li>
-              
-              <!-- INÍCIO DO MENU DINÂMICO DE PAUTAS -->
-              {% for pauta in site.pautas %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ pauta.url }}">{{ pauta.title }}</a>
-                </li>
-              {% endfor %}
-              <!-- FIM DO MENU DINÂMICO -->
-
               <li class="nav-item">
-                <a class="nav-link" href="https://bucolic-dodol-77b24b.netlify.app/admin/">Área do Administrador</a>
+                <a class="nav-link" href="/pautas/pec-18-2025/">PEC 18/2025</a>
+              </li>
+              <!-- CORREÇÃO: Link relativo em vez de hardcoded -->
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/">Área do Administrador</a>
               </li>
             </ul>
           </div>
