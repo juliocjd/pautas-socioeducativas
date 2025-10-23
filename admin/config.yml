@@ -2,11 +2,7 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  # MANTENHA O SITE_DOMAIN
-  site_domain: pautas-socioeducativas.vercel.app
-  # ADICIONE ESTE CAMPO E DEIXE-O EM BRANCO
-  site_id: ""
-  # MANTENHA O SITE_URL
+  # Removemos o site_domain para forçar o uso da variável de ambiente NETLIFY_SITE_ID
   site_url: https://juliocjd.github.io/pautas-socioeducativas
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
