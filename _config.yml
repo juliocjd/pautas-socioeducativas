@@ -9,7 +9,7 @@ markdown: kramdown
 plugins:
   - jekyll-feed
 
-# Configuração de Coleç
+# Configuração de Coleções
 collections:
   pautas:
     output: true
