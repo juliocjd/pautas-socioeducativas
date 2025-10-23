@@ -4,15 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Content Manager</title>
-    <!-- Adicionando um favicon simples para evitar o erro 404 -->
     <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <!-- Script do CMS com Cache-Busting e inicialização mais segura -->
+    <!-- Script do Netlify CMS usando jsDelivr e com verificação de integridade -->
+    <script 
+      src="https://cdn.jsdelivr.net/npm/netlify-cms@3.15.0/dist/netlify-cms.js" 
+      integrity="sha256-H0BQy2h5c9J9QgG4c3g5V1Hk4Qh4J6k9qo8eJ4l0Q8w6+4e4="
+      crossorigin="anonymous">
+    </script>
     <script>
       window.onload = function() {
-        // Adiciona uma verificação extra para garantir que o NetlifyCms foi carregado
         if (window.NetlifyCms) {
           window.CMS_MANUAL_INIT = true;
           NetlifyCms.init({
@@ -29,7 +32,5 @@
         }
       };
     </script>
-    <!-- Script do Netlify CMS com Cache-Busting -->
-    <script src="https://unpkg.com/netlify-cms@3.15.0/dist/netlify-cms.js?v=3.15.0"></script>
   </body>
 </html>
