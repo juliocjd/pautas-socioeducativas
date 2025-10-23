@@ -9,7 +9,88 @@ layout: default
   <p><strong>Status:</strong> {{ page.status }}</p>
   <hr>
 
-  <h2>Posicionamento dos Parlamentares</h2>
+  <!-- SEÇÃO CONDICIONAL DE MEMBROS-CHAVE OU PLENÁRIO -->
+  {% if page.key_players %}
+    <div class="card mb-4">
+      <div class="card-header">
+        <!-- TÍTULO DINÂMICO -->
+        {% if page.is_plenary_vote %}
+          <h3>Votação em Plenário</h3>
+        {% else %}
+          <h3>Membros-Chave nesta Pauta</h3>
+        {% endif %}
+      </div>
+      <div class="card-body">
+        <!-- TEXTO DINÂMICO -->
+        {% if page.is_plenary_vote %}
+          <p class="text-muted font-weight-bold">Essa pauta será julgada por todos os Deputados Federais. Use a tabela abaixo para filtrar e encontrar os parlamentares.</p>
+        {% else %}
+          <p class="text-muted">Estes são os parlamentares com papéis decisivos para o trâmite atual desta proposta nesta fase do projeto. O Relator, se houver, é listado primeiro.</p>
+        {% endif %}
+        
+        <!-- TABELA APENAS SE NÃO FOR PLENÁRIO -->
+        {% unless page.is_plenary_vote %}
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Nome</th>
+                  <th>Papel/Função</th>
+                  <th>Partido</th>
+                  <th>UF</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Lógica de ordenação (Relator no topo) -->
+                {% assign relators = "" | split: "" %}
+                {% assign other_players = "" | split: "" %}
+                {% for player in page.key_players %}
+                  {% assign player_role_downcase = player.role | downcase %}
+                  {% if player_role_downcase contains "relator" %}
+                    {% assign relators = relators | push: player %}
+                  {% else %}
+                    {% assign other_players = other_players | push: player %}
+                  {% endif %}
+                {% endfor %}
+                {% assign sorted_players = relators | concat: other_players %}
+
+                {% for player in sorted_players %}
+                  {% assign parlamentar = site.data.parlamentares_base | where: "id", player.id | first %}
+                  {% if parlamentar %}
+                    <tr>
+                      <td><strong>{{ parlamentar.nome }}</strong></td>
+                      <td><span class="badge badge-info">{{ player.role }}</span></td>
+                      <td>{{ parlamentar.partido }}</td>
+                      <td>{{ parlamentar.uf }}</td>
+                      <td>
+                        {% assign apoioStatus = 'nao-manifestado' %}
+                        {% assign statusBadge = '<span class="badge badge-secondary">Não se Manifestou</span>' %}
+                        {% if apoios[parlamentar.id] %}
+                          {% assign apoioStatus = apoios[parlamentar.id].status %}
+                          {% if apoioStatus == 'apoia' %}{% assign statusBadge = '<span class="badge badge-success">Apoia</span>' %}{% endif %}
+                          {% if apoioStatus == 'nao-apoia' %}{% assign statusBadge = '<span class="badge badge-danger">Não Apoia</span>' %}{% endif %}
+                        {% endif %}
+                        {{ statusBadge }}
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-info" onclick="alert('Contato: {{ contatos[parlamentar.id].telefone | default: 'N/A' }}')">Ver Contato</button>
+                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-id="{{ parlamentar.id }}" data-nome="{{ parlamentar.nome }}">Enviar Info</button>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endunless %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- SEÇÃO DE TODOS OS PARLAMENTARES -->
+  <h2>Posicionamento de Todos os Parlamentares</h2>
   <p>Use os filtros abaixo para encontrar os parlamentares do seu estado.</p>
 
   <!-- Filtros -->
@@ -20,7 +101,6 @@ layout: default
     <div class="col-md-4">
       <select id="filtro-estado" class="form-control">
         <option value="">Todos os Estados</option>
-        <!-- Opções de estados serão preenchidas por JS -->
       </select>
     </div>
     <div class="col-md-4">
@@ -124,7 +204,7 @@ layout: default
 
     renderTable();
 
-    // CORREÇÃO: A lógica do modal foi movida para AQUI, DENTRO do DOMContentLoaded
+    // Lógica para preencher o modal com os dados do parlamentar
     $('#modalContribuicao').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
       var parlamentarId = button.data('id');
@@ -137,6 +217,7 @@ layout: default
     });
   });
 </script>
+
 <!-- Modal de Contribuição -->
 <div class="modal fade" id="modalContribuicao" tabindex="-1" role="dialog" aria-labelledby="modalContribuicaoLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -153,4 +234,3 @@ layout: default
     </div>
   </div>
 </div>
-
