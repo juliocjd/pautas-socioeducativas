@@ -2,14 +2,10 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  # IMPORTANTE: Substitua pela sua URL do Vercel
-  site_domain: pautas-socioeducativas.vercel.app 
-  # MANTENHA esta URL para os links do site funcionarem
+  site_domain: pautas-socioeducativas.vercel.app
   site_url: https://juliocjd.github.io/pautas-socioeducativas
-
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
-
 collections:
   - name: pautas
     label: Pautas
@@ -17,19 +13,16 @@ collections:
     create: true
     slug: '{{slug}}'
     fields:
-      # TROQUE ESTE BLOCO DE CAMPOS
-fields:
-  - { label: Título, name: title, widget: string }
-  - { label: Descrição, name: description, widget: text }
-  - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
-  - { label: Status, name: status, widget: string }
-  - { label: Pauta Principal, name: featured, widget: boolean, default: false }
-  - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false }
-  - label: "Membros-Chave desta Pauta"
-    name: "key_players"
-    widget: "list"
-    fields:
-      # AQUI ESTÁ A MUDANÇA
-      - { label: "Nome do Parlamentar", name: "nome", widget: "select", options: ['Abou Anni', 'Adolfo Viana', 'Adriana Ventura'] }
-      - { label: "Papel/Função", name: "role", widget: "string" }
+      - { label: Título, name: title, widget: string }
+      - { label: Descrição, name: description, widget: text }
+      - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
+      - { label: Status, name: status, widget: string }
+      - { label: Pauta Principal, name: featured, widget: boolean, default: false }
+      - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false }
+      - label: "Membros-Chave desta Pauta"
+        name: "key_players"
+        widget: "list"
+        fields:
+          - { label: "Nome do Parlamentar", name: "nome", widget: "select", options: ['Abou Anni', 'Adolfo Viana', 'Adriana Ventura'] }
+          - { label: "Papel/Função", name: "role", widget: "string" }
       - { label: 'Corpo da Página', name: body, widget: markdown }
