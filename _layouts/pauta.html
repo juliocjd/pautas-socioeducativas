@@ -57,7 +57,7 @@ layout: default
                 {% assign sorted_players = relators | concat: other_players %}
 
                 {% for player in sorted_players %}
-                  {% assign parlamentar = site.data.parlamentares_base | where: "id", player.id | first %}
+                  {% assign parlamentar = site.data.parlamentares_base | where: "nome", player.nome | first %}
                   {% if parlamentar %}
                     <tr>
                       <td><strong>{{ parlamentar.nome }}</strong></td>
@@ -191,7 +191,7 @@ layout: default
           <td>${statusBadge}</td>
           <td>
             <button class="btn btn-sm btn-info" onclick="alert('${contatoInfo}')">Ver Contato</button>
-            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-id="${parlamentar.id}" data-nome="${parlamentar.nome}">Enviar Info</button>
+            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-nome="{{ parlamentar.nome }}">Enviar Info</button>
           </td>
         `;
         tabelaBody.appendChild(row);
