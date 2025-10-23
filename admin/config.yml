@@ -2,15 +2,10 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  # CORREÇÃO 1: O site_domain já estava certo, mas vamos garantir
   site_domain: bucolic-dodol-77b24b.netlify.app
-  # CORREÇÃO 2: O site_url agora é o do Netlify!
-  site_url: https://bucolic-dodol-77b24b.netlify.app
-
-# CORREÇÃO 3: No Netlify, o site está na raiz, não em um subdiretório
+  site_url: https://juliocjd.github.io/pautas-socioeducativas
 media_folder: assets/images
-public_folder: /assets/images
-
+public_folder: /pautas-socioeducativas/assets/images
 collections:
   - name: pautas
     label: Pautas
@@ -22,4 +17,6 @@ collections:
       - { label: Descrição, name: description, widget: text }
       - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
       - { label: Status, name: status, widget: string }
+      # NOVO CAMPO ADICIONADO ABAIXO
+      - { label: Pauta Principal, name: featured, widget: boolean, default: false, hint: "Marque esta opção para destacar esta pauta na página inicial. Apenas uma pauta deve ser marcada por vez." }
       - { label: 'Corpo da Página', name: body, widget: markdown }
