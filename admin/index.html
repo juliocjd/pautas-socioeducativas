@@ -3,25 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Área do Administrador</title>
+    <title>Content Manager</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <!-- Inclua o script do CMS com uma versão específica -->
     <script src="https://unpkg.com/netlify-cms@3.15.0/dist/netlify-cms.js"></script>
-    
-    <!-- Inicie o CMS com a configuração correta de forma segura -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        NetlifyCms.init({
-          backend: {
-            name: 'github',
-            repo: 'juliocjd/pautas-socioeducativas',
-            branch: 'main',
-            site_domain: '0065d9ed-3e53-403a-82c6-8d0ba63a809c',
-            site_url: 'https://pautas-socioeducativas.vercel.app'
-          }
-        });
+        // Adiciona uma verificação extra para garantir que o NetlifyCms foi carregado
+        if (window.NetlifyCms) {
+          window.CMS_MANUAL_INIT = true;
+          NetlifyCms.init({
+            backend: {
+              name: 'github',
+              repo: 'juliocjd/pautas-socioeducativas',
+              branch: 'main',
+              site_domain: '0065d9ed-3e53-403a-82c6-8d0ba63a809c',
+              site_url: 'https://pautas-socioeducativas.vercel.app'
+            }
+          });
+        } else {
+          console.error("NetlifyCms não pôde ser carregado.");
+        }
       });
     </script>
   </body>
