@@ -2,12 +2,11 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  # CORREÇÃO 1: O site_domain agora é o do Vercel
-  site_domain: pautas-socioeducativas-psi.vercel.app # SUBSTITUA PELA SUA URL
-  # CORREÇÃO 2: O site_url também aponta para o Vercel
-  site_url: https://juliocjd.github.io/pautas-socioeducativas # MANTENHA ESTE PARA OS LINKS DO SITE
+  # IMPORTANTE: Substitua pela sua URL do Vercel
+  site_domain: pautas-socioeducativas.vercel.app 
+  # MANTENHA esta URL para os links do site funcionarem
+  site_url: https://juliocjd.github.io/pautas-socioeducativas
 
-# CORREÇÃO 3: Como o site final tem um baseurl, o public_folder deve refletir isso
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
 
