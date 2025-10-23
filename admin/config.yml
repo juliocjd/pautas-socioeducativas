@@ -27,6 +27,6 @@ collections:
         name: "key_players"
         widget: "list"
         fields:
-          - { label: "ID do Parlamentar", name: "id", widget: "select", options: [{% for parl in site.data.parlamentares_base %}'{{ parl.id }}'{% unless forloop.last %},{% endunless %}{% endfor %}] }
+          - { label: "ID do Parlamentar", name: "id", widget: "select", options: [{{ site.data.parlamentares_base | map: 'id' | prepend: '"' | append: '"' | join: ',' }}] }
           - { label: "Papel/Função", name: "role", widget: "string" }
       - { label: 'Corpo da Página', name: body, widget: markdown }
