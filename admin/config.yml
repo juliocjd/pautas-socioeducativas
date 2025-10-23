@@ -2,10 +2,15 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  site_domain: bucolic-dodol-77b24b.netlify.app
-  site_url: https://juliocjd.github.io/pautas-socioeducativas
+  # CORREÇÃO 1: O site_domain agora é o do Vercel
+  site_domain: pautas-socioeducativas-psi.vercel.app # SUBSTITUA PELA SUA URL
+  # CORREÇÃO 2: O site_url também aponta para o Vercel
+  site_url: https://juliocjd.github.io/pautas-socioeducativas # MANTENHA ESTE PARA OS LINKS DO SITE
+
+# CORREÇÃO 3: Como o site final tem um baseurl, o public_folder deve refletir isso
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
+
 collections:
   - name: pautas
     label: Pautas
@@ -18,12 +23,11 @@ collections:
       - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
       - { label: Status, name: status, widget: string }
       - { label: Pauta Principal, name: featured, widget: boolean, default: false }
-      # NOVO CAMPO ABAIXO
-      - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false, hint: "Marque 'Sim' se a votação for por todos os deputados. 'Não' se for uma comissão ou grupo específico." }
+      - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false }
       - label: "Membros-Chave desta Pauta"
         name: "key_players"
         widget: "list"
         fields:
           - { label: "ID do Parlamentar", name: "id", widget: "select", options: [{% for parl in site.data.parlamentares_base %}{{ parl.id }},{% endfor %}] }
-          - { label: "Papel/Função", name: "role", widget: "string", hint: "Ex: Relator, Presidente da Comissão, Membro" }
+          - { label: "Papel/Função", name: "role", widget: "string" }
       - { label: 'Corpo da Página', name: body, widget: markdown }
