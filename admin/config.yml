@@ -17,6 +17,13 @@ collections:
       - { label: Descrição, name: description, widget: text }
       - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
       - { label: Status, name: status, widget: string }
-      # NOVO CAMPO ADICIONADO ABAIXO
-      - { label: Pauta Principal, name: featured, widget: boolean, default: false, hint: "Marque esta opção para destacar esta pauta na página inicial. Apenas uma pauta deve ser marcada por vez." }
+      - { label: Pauta Principal, name: featured, widget: boolean, default: false }
+      # NOVO CAMPO ABAIXO
+      - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false, hint: "Marque 'Sim' se a votação for por todos os deputados. 'Não' se for uma comissão ou grupo específico." }
+      - label: "Membros-Chave desta Pauta"
+        name: "key_players"
+        widget: "list"
+        fields:
+          - { label: "ID do Parlamentar", name: "id", widget: "select", options: [{% for parl in site.data.parlamentares_base %}{{ parl.id }},{% endfor %}] }
+          - { label: "Papel/Função", name: "role", widget: "string", hint: "Ex: Relator, Presidente da Comissão, Membro" }
       - { label: 'Corpo da Página', name: body, widget: markdown }
