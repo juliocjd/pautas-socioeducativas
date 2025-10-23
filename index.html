@@ -6,11 +6,38 @@ layout: default
   <h1 class="display-4">Bem-vindo às Pautas Socioeducativas</h1>
   <p class="lead">Acompanhe e mobilize a categoria em torno das propostas legislativas que mais importam para nós.</p>
   <hr class="my-4">
-  <p>Nossa luta principal é a inclusão dos Agentes Socioeducativos na PEC 18/2025.</p>
-  <a class="btn btn-primary btn-lg" href="{{ '/pautas/pec-18-2025/' | relative_url }}" role="button">Acompanhar a PEC 18/2025</a>
+  
+  <!-- BLOCO DE TEXTO DINÂMICO -->
+  {% assign featured_pauta = site.pautas | where: "featured", true | first %}
+  {% if featured_pauta %}
+    <p>Nossa luta principal é a inclusão dos Agentes Socioeducativos na <a href="{{ featured_pauta.url }}">{{ featured_pauta.title }}</a>.</p>
+  {% else %}
+    <p>Nossa luta principal é a inclusão dos Agentes Socioeducativos em nossas pautas legislativas.</p>
+  {% endif %}
 </div>
 
+<!-- NOVA SEÇÃO DINÂMICA DE PAUTAS -->
 <div class="container">
+  <h2 class="mb-4">Nossas Pautas em Andamento</h2>
+  <div class="row">
+    {% for pauta in site.pautas %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ pauta.title }}</h5>
+            <p class="card-text">{{ pauta.description }}</p>
+            <div class="mt-auto">
+              <a href="{{ pauta.url }}" class="btn btn-primary">Acompanhar Pauta</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- SEÇÃO MANTIDA COMO ESTAVA -->
+<div class="container mt-5">
   <h2>Como Funciona</h2>
   <p>Este site é uma ferramenta de transparência e mobilização. Você pode:</p>
   <ul>
@@ -20,4 +47,3 @@ layout: default
   </ul>
   <p>Todas as contribuições são moderadas para garantir a precisão das informações.</p>
 </div>
-
