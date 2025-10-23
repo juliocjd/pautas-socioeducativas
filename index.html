@@ -7,15 +7,13 @@ layout: default
   <p class="lead">Acompanhe e mobilize a categoria em torno das propostas legislativas que mais importam para nós.</p>
   <hr class="my-4">
   
-  <!-- BLOCO DO BOTÃO DINÂMICO -->
+  <!-- BLOCO CONDICIONAL DA PAUTA PRINCIPAL -->
   {% assign featured_pauta = site.pautas | where: "featured", true | first %}
   {% if featured_pauta %}
-    <p>Nossa luta principal é a inclusão dos Agentes Socioeducativos na pauta abaixo:</p>
-    <a class="btn btn-primary btn-lg" href="{{ featured_pauta.url }}" role="button">Acompanhar {{ featured_pauta.title }}</a>
-  {% else %}
-    <p>Nossa luta principal é a inclusão dos Agentes Socioeducativos em nossas pautas legislativas.</p>
-    <a class="btn btn-primary btn-lg" href="{{ '/pautas/' | relative_url }}" role="button">Ver Todas as Pautas</a>
+    <p>Nossa luta principal é</p>
+    <a class="btn btn-primary btn-lg" href="{{ featured_pauta.url }}" role="button">{{ featured_pauta.title }}</a>
   {% endif %}
+  <!-- SE NÃO HOUVER PAUTA PRINCIPAL, NADA AQUI SERÁ EXIBIDO -->
 </div>
 
 <!-- NOVA SEÇÃO DINÂMICA DE PAUTAS -->
