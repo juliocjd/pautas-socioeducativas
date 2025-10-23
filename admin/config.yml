@@ -2,7 +2,8 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  # Removemos o site_domain para forçar o uso da variável de ambiente NETLIFY_SITE_ID
+  # TENTATIVA DE DEPURAÇÃO: Definir o site_domain como o Project ID
+  site_domain: prj_YQw122R9MsG5DAFpg0TTO8LOICG8
   site_url: https://juliocjd.github.io/pautas-socioeducativas
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
