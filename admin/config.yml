@@ -2,7 +2,7 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  site_id: 0065d9ed-3e53-403a-82c6-8d0ba63a809c
+  site_domain: 0065d9ed-3e53-403a-82c6-8d0ba63a809c
   site_url: https://juliocjd.github.io/pautas-socioeducativas
 media_folder: assets/images
 public_folder: /pautas-socioeducativas/assets/images
