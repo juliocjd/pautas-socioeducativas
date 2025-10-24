@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://github.com;">
     <title>Painel Administrativo - Pautas Socioeducativas</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
   </head>
   <body>
-    <!-- Carrega o Netlify CMS (Decap CMS) -->
-    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    <!-- Carrega o Netlify CMS via jsdelivr (mais estável) -->
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     
     <script>
-      // Configuração do CMS
-      if (window.CMS) {
-        console.log('✅ Netlify CMS carregado com sucesso!');
-      } else {
-        console.error('❌ Erro ao carregar Netlify CMS');
-      }
+      // Aguarda o carregamento e verifica
+      window.addEventListener('load', function() {
+        if (window.DecapCMS || window.CMS) {
+          console.log('✅ CMS carregado com sucesso!');
+        } else {
+          console.error('❌ Erro ao carregar o CMS');
+        }
+      });
     </script>
   </body>
 </html>
