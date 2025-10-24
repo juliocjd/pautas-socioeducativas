@@ -1,8 +1,8 @@
-# Modo de desenvolvimento/teste local
-local_backend: true
-
 backend:
-  name: test-repo
+  name: github
+  repo: juliocjd/pautas-socioeducativas
+  branch: main
+  open_authoring: true
 
 # Configurações de mídia
 media_folder: assets/images
