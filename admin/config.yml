@@ -2,8 +2,6 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  base_url: https://pautas-socioeducativas.vercel.app
-  auth_endpoint: api/auth
 
 # Configurações de mídia
 media_folder: assets/images
