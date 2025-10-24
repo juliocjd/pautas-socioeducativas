@@ -3,30 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Content Manager</title>
+    <title>Painel Administrativo - Pautas Socioeducativas</title>
     <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==">
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <!-- Carrega a versão mais recente e estável do Netlify CMS -->
-    <script src="https://cdn.jsdelivr.net/npm/netlify-cms-app@2.15.72"></script>
+    <!-- Carrega o Netlify CMS (Decap CMS) -->
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    
     <script>
-      window.onload = function() {
-        if (window.NetlifyCms) {
-          window.CMS_MANUAL_INIT = true;
-          NetlifyCms.init({
-            backend: {
-              name: 'github',
-              repo: 'juliocjd/pautas-socioeducativas',
-              branch: 'main',
-              site_domain: 'pautas-socioeducativas.vercel.app',
-              site_url: 'https://pautas-socioeducativas.vercel.app'
-            }
-          });
-        } else {
-          console.error("NetlifyCms não pôde ser carregado. Verifique o console para erros de rede.");
-        }
-      };
+      // Configuração do CMS
+      if (window.CMS) {
+        console.log('✅ Netlify CMS carregado com sucesso!');
+      } else {
+        console.error('❌ Erro ao carregar Netlify CMS');
+      }
     </script>
   </body>
 </html>
