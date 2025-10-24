@@ -1,7 +1,10 @@
-// API endpoint para autenticação OAuth do GitHub
-// Este arquivo deve estar em: api/auth.js
-
+// api/auth.js
 module.exports = async (req, res) => {
+  // Log para debug
+  console.log('🔍 Request recebida em /api/auth');
+  console.log('Query params:', req.query);
+  console.log('Method:', req.method);
+  
   // Configurações do GitHub OAuth App
   const clientId = process.env.GITHUB_CLIENT_ID;
   const clientSecret = process.env.GITHUB_CLIENT_SECRET;
@@ -14,12 +17,21 @@ module.exports = async (req, res) => {
     });
   }
 
-  // Pega o código de autorização da query string
-  const { code } = req.query;
+  // Suporte para GET e POST
+  const code = req.query.code || req.body?.code;
   
   if (!code) {
-    return res.status(400).json({ error: 'Código de autorização não fornecido' });
+    console.error('❌ Código não encontrado. Query:', req.query);
+    return res.status(400).json({ 
+      error: 'Código de autorização não fornecido',
+      debug: {
+        query: req.query,
+        body: req.body
+      }
+    });
   }
+
+  console.log('✅ Código recebido:', code.substring(0, 10) + '...');
 
   try {
     // Troca o código pelo token de acesso
@@ -27,33 +39,4 @@ module.exports = async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        client_id: clientId,
-        client_secret: clientSecret,
-        code: code
-      })
-    });
-
-    const tokenData = await tokenResponse.json();
-
-    if (tokenData.error) {
-      console.error('Erro ao obter token:', tokenData);
-      return res.status(400).json({ error: tokenData.error_description });
-    }
-
-    // Retorna o token para o Netlify CMS
-    return res.status(200).json({
-      token: tokenData.access_token,
-      provider: 'github'
-    });
-
-  } catch (error) {
-    console.error('Erro na autenticação:', error);
-    return res.status(500).json({ 
-      error: 'Erro ao processar autenticação',
-      details: error.message 
-    });
-  }
-};
+        'Accept': 'applicat
