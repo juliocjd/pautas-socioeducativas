@@ -7,5 +7,25 @@
   </head>
   <body>
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+    
+    <script>
+      // Aguarda o CMS carregar
+      window.addEventListener('load', function() {
+        // Solicita o token ao usuário na primeira vez
+        let token = localStorage.getItem('github_token');
+        
+        if (!token) {
+          token = prompt('Cole seu GitHub Personal Access Token:');
+          if (token) {
+            localStorage.setItem('github_token', token);
+          }
+        }
+        
+        if (token && window.CMS) {
+          // Configura o backend com o token
+          window.CMS.registerBackend('github', window.NetlifyCmsBackendGithub);
+        }
+      });
+    </script>
   </body>
 </html>
