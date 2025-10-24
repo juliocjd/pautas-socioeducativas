@@ -2,10 +2,12 @@ backend:
   name: github
   repo: juliocjd/pautas-socioeducativas
   branch: main
-  site_domain: 0065d9ed-3e53-403a-82c6-8d0ba63a809c
-  site_url: https://juliocjd.github.io/pautas-socioeducativas
+  base_url: https://pautas-socioeducativas.vercel.app
+  auth_endpoint: /api/auth
+
 media_folder: assets/images
-public_folder: /pautas-socioeducativas/assets/images
+public_folder: /assets/images
+
 collections:
   - name: pautas
     label: Pautas
