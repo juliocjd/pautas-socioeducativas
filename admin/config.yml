@@ -3,28 +3,57 @@ backend:
   repo: juliocjd/pautas-socioeducativas
   branch: main
   base_url: https://pautas-socioeducativas.vercel.app
-  auth_endpoint: /api/auth
+  auth_endpoint: api/auth
 
+# Configurações de mídia
 media_folder: assets/images
 public_folder: /assets/images
 
+# Configurações de publicação
+publish_mode: editorial_workflow
+
+# Coleções
 collections:
   - name: pautas
     label: Pautas
     folder: _pautas
     create: true
     slug: '{{slug}}'
+    editor:
+      preview: false
     fields:
       - { label: Título, name: title, widget: string }
       - { label: Descrição, name: description, widget: text }
-      - { label: 'Casa Legislativa', name: casa, widget: select, options: ['Câmara dos Deputados', 'Senado Federal'] }
+      - { 
+          label: 'Casa Legislativa', 
+          name: casa, 
+          widget: select, 
+          options: ['Câmara dos Deputados', 'Senado Federal'] 
+        }
       - { label: Status, name: status, widget: string }
-      - { label: Pauta Principal, name: featured, widget: boolean, default: false }
-      - { label: 'Votação em Plenário?', name: is_plenary_vote, widget: boolean, default: false }
+      - { 
+          label: Pauta Principal, 
+          name: featured, 
+          widget: boolean, 
+          default: false,
+          required: false
+        }
+      - { 
+          label: 'Votação em Plenário?', 
+          name: is_plenary_vote, 
+          widget: boolean, 
+          default: false,
+          required: false
+        }
       - label: "Membros-Chave desta Pauta"
         name: "key_players"
         widget: "list"
+        required: false
         fields:
-          - { label: "Nome do Parlamentar", name: "nome", widget: "select", options: ['Abou Anni', 'Adolfo Viana', 'Adriana Ventura'] }
+          - { 
+              label: "Nome do Parlamentar", 
+              name: "nome", 
+              widget: "string"
+            }
           - { label: "Papel/Função", name: "role", widget: "string" }
       - { label: 'Corpo da Página', name: body, widget: markdown }
