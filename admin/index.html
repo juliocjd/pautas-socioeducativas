@@ -8,11 +8,11 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body>
-    <!-- Carrega a versão do script que funciona -->
-    <script src="https://cdn.jsdelivr.net/npm/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+    <!-- Carrega o script localmente, sem depender de CDNs externas -->
+    <script src="/admin/netlify-cms.js"></script>
     <script>
       window.onload = function() {
-        if (window.NetlifyCms) {
+        if (window.NetlifyCend) {
           window.CMS_MANUAL_INIT = true;
           NetlifyCms.init({
             backend: {
