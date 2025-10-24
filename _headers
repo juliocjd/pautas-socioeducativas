@@ -1,0 +1,4 @@
+/admin/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://github.com;
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
