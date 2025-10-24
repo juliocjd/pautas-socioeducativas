@@ -1,9 +1,8 @@
+# Modo de desenvolvimento/teste local
+local_backend: true
+
 backend:
-  name: github
-  repo: juliocjd/pautas-socioeducativas
-  branch: main
-  # Modo de autenticação implícita (sem OAuth)
-  use_large_media_transforms_in_media_library: false
+  name: test-repo
 
 # Configurações de mídia
 media_folder: assets/images
