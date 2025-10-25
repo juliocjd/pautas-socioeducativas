@@ -344,10 +344,10 @@
             <p style="margin-bottom: 20px; color: #666;">Digite a senha para acessar o gerador de pautas:</p>
             <div style="display: flex; gap: 10px; align-items: start;">
                 <div style="flex: 1;">
-                    <input type="password" id="passwordInput" class="search-input" placeholder="Digite a senha..." style="width: 100%;">
+                    <input type="password" id="passwordInput" class="search-input" placeholder="Digite a senha..." style="width: 100%;" onkeypress="if(event.key==='Enter') window.checkPassword()">
                     <p id="passwordError" style="color: #dc3545; margin-top: 8px; font-size: 14px; display: none;">❌ Senha incorreta!</p>
                 </div>
-                <button onclick="checkPassword()" class="btn">Entrar</button>
+                <button onclick="window.checkPassword()" class="btn">Entrar</button>
             </div>
         </div>
         
@@ -430,18 +430,55 @@
                 </ol>
             </div>
         </div>
+        </div>
     </div>
     
     <script>
+        // CONFIGURAÇÃO DA SENHA - MUDE AQUI!
+        const SENHA_ACESSO = "pautas2025";
+        
         let deputados = [];
         let parlamentarCount = 0;
+        
+        // Verificar senha
+        window.checkPassword = function() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            const senhaDigitada = input.value.trim();
+            
+            console.log('Senha digitada:', senhaDigitada);
+            console.log('Senha esperada:', SENHA_ACESSO);
+            console.log('São iguais?', senhaDigitada === SENHA_ACESSO);
+            
+            if (senhaDigitada === SENHA_ACESSO) {
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('mainContent').classList.remove('hidden');
+                loadDeputados();
+            } else {
+                error.style.display = 'block';
+                error.textContent = `❌ Senha incorreta! (Você digitou: "${senhaDigitada}")`;
+                input.value = '';
+                input.focus();
+            }
+        }
+        
+        // Enter para enviar senha
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('passwordInput');
+            if (input) {
+                input.focus();
+            }
+        });
         
         // Carregar deputados da API
         async function loadDeputados() {
             const statusEl = document.getElementById('loadingStatus');
             
             try {
-                const response = await fetch('https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome');
+                // Usando proxy CORS para evitar bloqueio
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
+                const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
                 const data = await response.json();
                 
                 deputados = data.dados.map(dep => ({
@@ -685,9 +722,6 @@
                 alert('❌ Erro ao copiar. Selecione manualmente e copie com Ctrl+C');
             });
         }
-        
-        // Carregar deputados ao iniciar
-        loadDeputados();
     </script>
 </body>
 </html>
