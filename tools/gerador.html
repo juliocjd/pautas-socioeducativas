@@ -1,1 +1,693 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Pautas Socioeducativas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .loading {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .loading.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .loading.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .parlamentares-list {
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        
+        .parlamentar-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .parlamentar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .parlamentar-search {
+            position: relative;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            margin-top: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .search-result-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .deputado-info {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .deputado-nome {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .selected-deputado {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .selected-deputado-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            font-size: 13px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            color: #666;
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+        
+        .info-value {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .role-input {
+            margin-top: 10px;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+            white-space: nowrap;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: #28a745;
+        }
+        
+        .btn-secondary:hover {
+            background: #218838;
+        }
+        
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+        }
+        
+        .output h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .code-output {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .instructions h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ Gerador de Pautas Socioeducativas</h1>
+        <p class="subtitle">Preencha o formulário abaixo para gerar o arquivo Markdown da pauta</p>
+        
+        <div id="loginForm" class="output">
+            <h3>🔐 Acesso Restrito</h3>
+            <p style="margin-bottom: 20px; color: #666;">Digite a senha para acessar o gerador de pautas:</p>
+            <div style="display: flex; gap: 10px; align-items: start;">
+                <div style="flex: 1;">
+                    <input type="password" id="passwordInput" class="search-input" placeholder="Digite a senha..." style="width: 100%;">
+                    <p id="passwordError" style="color: #dc3545; margin-top: 8px; font-size: 14px; display: none;">❌ Senha incorreta!</p>
+                </div>
+                <button onclick="checkPassword()" class="btn">Entrar</button>
+            </div>
+        </div>
+        
+        <div id="mainContent" class="hidden">
+        <div id="loadingStatus" class="loading">
+            <div class="spinner"></div>
+            <span>Carregando dados dos deputados da Câmara...</span>
+        </div>
+        
+        <form id="pautaForm">
+            <div class="form-group">
+                <label for="title">Título da Pauta *</label>
+                <input type="text" id="title" required placeholder="Ex: Inclusão do ASSE no art. 144 da CF">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Descrição *</label>
+                <textarea id="description" required placeholder="Descrição curta da pauta..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="casa">Casa Legislativa *</label>
+                <select id="casa" required>
+                    <option value="">Selecione...</option>
+                    <option value="Câmara dos Deputados">Câmara dos Deputados</option>
+                    <option value="Senado Federal">Senado Federal</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="status">Status *</label>
+                <input type="text" id="status" required placeholder="Ex: Em tramitação na Comissão Especial">
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="featured">
+                    <label for="featured" style="margin: 0;">Pauta Principal (destacar na página inicial)</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="is_plenary_vote">
+                    <label for="is_plenary_vote" style="margin: 0;">Votação em Plenário?</label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Membros-Chave desta Pauta</label>
+                <div class="parlamentares-list" id="parlamentaresList">
+                    <p style="color: #666; font-size: 14px;">Nenhum parlamentar adicionado ainda.</p>
+                </div>
+                <button type="button" class="btn btn-secondary" onclick="addParlamentar()" id="btnAddParlamentar" disabled>+ Adicionar Parlamentar</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="body">Conteúdo da Página (HTML ou Texto)</label>
+                <textarea id="body" rows="8" placeholder="Adicione o conteúdo da pauta aqui..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn">🎯 Gerar Arquivo Markdown</button>
+        </form>
+        
+        <div id="output" class="output hidden">
+            <h3>✅ Arquivo Gerado com Sucesso!</h3>
+            <div class="code-output" id="codeOutput"></div>
+            <button class="btn" onclick="copyToClipboard()">📋 Copiar para Área de Transferência</button>
+            
+            <div class="instructions">
+                <h4>📝 Próximos Passos:</h4>
+                <ol>
+                    <li>Copie o código acima (clique no botão)</li>
+                    <li>Acesse: <a href="https://github.com/juliocjd/pautas-socioeducativas/tree/main/_pautas" target="_blank">GitHub - Pasta _pautas</a></li>
+                    <li>Clique em <strong>"Add file"</strong> → <strong>"Create new file"</strong></li>
+                    <li>Nome do arquivo: <strong><span id="filename"></span></strong></li>
+                    <li>Cole o código copiado no editor</li>
+                    <li>Role até o final e clique em <strong>"Commit changes"</strong></li>
+                    <li>Aguarde alguns minutos e sua pauta estará no site! 🎉</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let deputados = [];
+        let parlamentarCount = 0;
+        
+        // Carregar deputados da API
+        async function loadDeputados() {
+            const statusEl = document.getElementById('loadingStatus');
+            
+            try {
+                const response = await fetch('https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome');
+                const data = await response.json();
+                
+                deputados = data.dados.map(dep => ({
+                    id: dep.id,
+                    nome: dep.nome,
+                    partido: dep.siglaPartido,
+                    uf: dep.siglaUf,
+                    email: dep.email || 'N/A'
+                }));
+                
+                // Buscar detalhes com telefone (fazemos de forma assíncrona para não travar)
+                loadDeputadosDetalhes();
+                
+                statusEl.className = 'loading success';
+                statusEl.innerHTML = `<span>✅ ${deputados.length} deputados carregados com sucesso!</span>`;
+                
+                document.getElementById('btnAddParlamentar').disabled = false;
+                
+                setTimeout(() => {
+                    statusEl.classList.add('hidden');
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Erro ao carregar deputados:', error);
+                statusEl.className = 'loading error';
+                statusEl.innerHTML = '<span>❌ Erro ao carregar deputados. Tente recarregar a página.</span>';
+            }
+        }
+        
+        // Carregar detalhes (telefone) de forma assíncrona
+        async function loadDeputadosDetalhes() {
+            // Carrega detalhes de alguns deputados importantes primeiro
+            // Para não sobrecarregar a API, carregamos sob demanda
+            console.log('Detalhes dos deputados serão carregados conforme necessário');
+        }
+        
+        // Buscar deputado por nome
+        function searchDeputado(query) {
+            if (!query || query.length < 2) return [];
+            
+            const lowerQuery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            
+            return deputados.filter(dep => {
+                const nome = dep.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                const partido = dep.partido.toLowerCase();
+                const uf = dep.uf.toLowerCase();
+                
+                return nome.includes(lowerQuery) || 
+                       partido.includes(lowerQuery) || 
+                       uf.includes(lowerQuery);
+            }).slice(0, 10); // Limita a 10 resultados
+        }
+        
+        function addParlamentar() {
+            parlamentarCount++;
+            const list = document.getElementById('parlamentaresList');
+            
+            if (list.querySelector('p')) {
+                list.innerHTML = '';
+            }
+            
+            const item = document.createElement('div');
+            item.className = 'parlamentar-item';
+            item.id = `parlamentar-${parlamentarCount}`;
+            item.innerHTML = `
+                <div class="parlamentar-header">
+                    <div class="parlamentar-search">
+                        <input type="text" 
+                               class="search-input" 
+                               placeholder="Buscar deputado por nome, partido ou UF..." 
+                               oninput="handleSearch(this, ${parlamentarCount})"
+                               onfocus="handleSearch(this, ${parlamentarCount})">
+                        <div class="search-results hidden" id="results-${parlamentarCount}"></div>
+                    </div>
+                    <button type="button" class="btn-remove" onclick="removeParlamentar(${parlamentarCount})">✕ Remover</button>
+                </div>
+                <div id="selected-${parlamentarCount}" class="hidden"></div>
+            `;
+            list.appendChild(item);
+        }
+        
+        function handleSearch(input, id) {
+            const query = input.value;
+            const resultsDiv = document.getElementById(`results-${id}`);
+            
+            if (!query || query.length < 2) {
+                resultsDiv.classList.add('hidden');
+                return;
+            }
+            
+            const results = searchDeputado(query);
+            
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<div class="search-result-item">Nenhum deputado encontrado</div>';
+                resultsDiv.classList.remove('hidden');
+                return;
+            }
+            
+            resultsDiv.innerHTML = results.map(dep => `
+                <div class="search-result-item" onclick="selectDeputado(${id}, ${JSON.stringify(dep).replace(/"/g, '&quot;')})">
+                    <div class="deputado-nome">${dep.nome}</div>
+                    <div class="deputado-info">${dep.partido} - ${dep.uf}</div>
+                </div>
+            `).join('');
+            
+            resultsDiv.classList.remove('hidden');
+        }
+        
+        function selectDeputado(id, deputado) {
+            const resultsDiv = document.getElementById(`results-${id}`);
+            const selectedDiv = document.getElementById(`selected-${id}`);
+            const searchInput = document.querySelector(`#parlamentar-${id} .search-input`);
+            
+            resultsDiv.classList.add('hidden');
+            searchInput.value = '';
+            
+            selectedDiv.innerHTML = `
+                <div class="selected-deputado">
+                    <div class="selected-deputado-info">
+                        <div class="info-item">
+                            <span class="info-label">Nome</span>
+                            <span class="info-value">${deputado.nome}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Partido</span>
+                            <span class="info-value">${deputado.partido}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">UF</span>
+                            <span class="info-value">${deputado.uf}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">ID</span>
+                            <span class="info-value">${deputado.id}</span>
+                        </div>
+                    </div>
+                    <div class="role-input">
+                        <input type="text" 
+                               class="search-input parl-role" 
+                               placeholder="Papel/Função (ex: Relator, Presidente da Comissão)" 
+                               data-deputado='${JSON.stringify(deputado)}'>
+                    </div>
+                </div>
+            `;
+            
+            selectedDiv.classList.remove('hidden');
+        }
+        
+        // Fechar resultados ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.parlamentar-search')) {
+                document.querySelectorAll('.search-results').forEach(div => {
+                    div.classList.add('hidden');
+                });
+            }
+        });
+        
+        function removeParlamentar(id) {
+            const item = document.getElementById(`parlamentar-${id}`);
+            item.remove();
+            
+            const list = document.getElementById('parlamentaresList');
+            if (list.children.length === 0) {
+                list.innerHTML = '<p style="color: #666; font-size: 14px;">Nenhum parlamentar adicionado ainda.</p>';
+            }
+        }
+        
+        function slugify(text) {
+            return text
+                .toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .trim();
+        }
+        
+        document.getElementById('pautaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const casa = document.getElementById('casa').value;
+            const status = document.getElementById('status').value;
+            const featured = document.getElementById('featured').checked;
+            const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
+            const body = document.getElementById('body').value;
+            
+            // Coletar parlamentares
+            const parlamentares = [];
+            const roleInputs = document.querySelectorAll('.parl-role');
+            roleInputs.forEach(input => {
+                const role = input.value;
+                if (role) {
+                    const deputado = JSON.parse(input.dataset.deputado);
+                    parlamentares.push({ 
+                        nome: deputado.nome,
+                        role: role 
+                    });
+                }
+            });
+            
+            // Gerar YAML front matter
+            let yaml = `---\nlayout: pauta\n`;
+            yaml += `title: ${title}\n`;
+            yaml += `description: ${description}\n`;
+            yaml += `casa: ${casa}\n`;
+            yaml += `status: ${status}\n`;
+            yaml += `featured: ${featured}\n`;
+            yaml += `is_plenary_vote: ${isPlenaryVote}\n`;
+            
+            if (parlamentares.length > 0) {
+                yaml += `key_players:\n`;
+                parlamentares.forEach(p => {
+                    yaml += `  - nome: "${p.nome}"\n`;
+                    yaml += `    role: "${p.role}"\n`;
+                });
+            }
+            
+            yaml += `---\n\n`;
+            yaml += body;
+            
+            // Mostrar resultado
+            document.getElementById('codeOutput').textContent = yaml;
+            document.getElementById('output').classList.remove('hidden');
+            
+            // Gerar nome do arquivo
+            const filename = slugify(title) + '.md';
+            document.getElementById('filename').textContent = filename;
+            
+            // Scroll suave até o output
+            document.getElementById('output').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        
+        function copyToClipboard() {
+            const code = document.getElementById('codeOutput').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ Código copiado para a área de transferência!');
+            }).catch(err => {
+                alert('❌ Erro ao copiar. Selecione manualmente e copie com Ctrl+C');
+            });
+        }
+        
+        // Carregar deputados ao iniciar
+        loadDeputados();
+    </script>
+</body>
+</html>
