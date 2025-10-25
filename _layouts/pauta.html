@@ -1,5 +1,388 @@
-<!-- CONTINUAÇÃO DO _layouts/pauta.html - PARTE 3 -->
-<!-- Cole este conteúdo DEPOIS da PARTE 2 -->
+---
+layout: default
+---
+
+<div class="container">
+  <!-- Cabeçalho da Pauta -->
+  <div class="jumbotron">
+    <h1 class="display-4">{{ page.title }}</h1>
+    <p class="lead">{{ page.description }}</p>
+    <hr class="my-4">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Casa:</strong> {{ page.casa }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Status:</strong> {{ page.status }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteúdo da Pauta -->
+  <div class="content-section mb-5">
+    {{ content }}
+  </div>
+
+  <!-- Seção de Campanhas -->
+  {% if page.campanha %}
+  <div class="campanhas-section mb-5">
+    <h3>📢 Mobilização</h3>
+    <p>Participe das campanhas de contato com os parlamentares:</p>
+    
+    <div class="row">
+      {% if page.campanha.email %}
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-primary btn-block" onclick="abrirCampanhaEmail()">
+          📧 Campanha de Email
+        </button>
+        <small id="contador-emails" class="text-muted"></small>
+      </div>
+      {% endif %}
+      
+      {% if page.campanha.whatsapp %}
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-success btn-block" onclick="abrirCampanhaWhatsApp()">
+          💬 Campanha WhatsApp
+        </button>
+        <small id="contador-whatsapp" class="text-muted"></small>
+      </div>
+      {% endif %}
+      
+      {% if page.campanha.instagram %}
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-danger btn-block" onclick="abrirCampanhaInstagram()">
+          📷 Campanha Instagram
+        </button>
+        <small id="contador-instagram" class="text-muted"></small>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Filtros -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="filtro-nome" placeholder="Nome do parlamentar">
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" id="filtro-estado">
+            <option value="">Todos os Estados</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" id="filtro-posicao">
+            <option value="">Todas as Posições</option>
+            <option value="apoia">Apoia</option>
+            <option value="nao-apoia">Não Apoia</option>
+            <option value="nao-manifestado">Não se Manifestou</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabela de Parlamentares -->
+  <div class="table-responsive">
+    <table class="table table-striped" id="tabela-parlamentares">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nome</th>
+          <th>Partido</th>
+          <th>UF</th>
+          <th>Posição</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Será preenchido dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal: Ver Contato -->
+<div class="modal fade" id="modalVerContato" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Contatos: <span id="contato-nome"></span></h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="contato-conteudo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Enviar Informações -->
+<div class="modal fade" id="modalEnviarInfo" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Enviar Informações: <span id="enviar-info-nome"></span></h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="formEnviarInfo">
+          <input type="hidden" id="parlamentar-id-hidden">
+          <input type="hidden" id="parlamentar-nome-hidden">
+          
+          <h6>📞 Dados de Contato (Permanentes)</h6>
+          <div class="form-group">
+            <label>WhatsApp Pessoal</label>
+            <input type="text" class="form-control" id="campo-whatsapp" placeholder="(XX) XXXXX-XXXX">
+          </div>
+          <div class="form-group">
+            <label>Instagram</label>
+            <input type="text" class="form-control" id="campo-instagram" placeholder="@usuario">
+          </div>
+          <div class="form-group">
+            <label>Telefone do Gabinete</label>
+            <input type="text" class="form-control" id="campo-telefone" placeholder="(61) 3215-XXXX">
+          </div>
+          
+          <h6>👥 Assessores</h6>
+          <div id="assessores-lista"></div>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="adicionarAssessor()">+ Adicionar Assessor</button>
+          
+          <hr>
+          
+          <h6>📄 Evidência de Posicionamento (Específica desta Pauta)</h6>
+          <div class="form-group">
+            <label>Tipo de Evidência</label>
+            <select class="form-control" id="campo-evidencia-tipo">
+              <option value="link">Link/Notícia</option>
+              <option value="video">Vídeo</option>
+              <option value="audio">Áudio</option>
+              <option value="documento">Documento</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>URL da Evidência</label>
+            <input type="url" class="form-control" id="campo-evidencia-url" placeholder="https://...">
+          </div>
+          <div class="form-group">
+            <label>Descrição</label>
+            <textarea class="form-control" id="campo-evidencia-desc" rows="2"></textarea>
+          </div>
+          
+          <hr>
+          
+          <h6>👤 Seus Dados (Para Contato)</h6>
+          <div class="form-group">
+            <label>Seu Nome</label>
+            <input type="text" class="form-control" id="campo-usuario-nome" required>
+          </div>
+          <div class="form-group">
+            <label>Seu Email</label>
+            <input type="email" class="form-control" id="campo-usuario-email" required>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">✅ Enviar Informações</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Campanha Email -->
+<div class="modal fade" id="modalCampanhaEmail" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">📧 Campanha de Email</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Total:</strong> <span id="total-emails-campanha"></span></p>
+        
+        <div class="form-group">
+          <label>Filtros</label>
+          <div class="row">
+            <div class="col-md-6">
+              <select class="form-control" id="filtro-campanha-estado" onchange="atualizarFiltrosCampanha()">
+                <option value="">Todos os Estados</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Lista de Emails (CCO)</label>
+          <textarea class="form-control" id="emails-lista" rows="3" readonly></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Assunto</label>
+          <input type="text" class="form-control" id="email-assunto">
+        </div>
+        
+        <div class="form-group">
+          <label>Mensagem</label>
+          <textarea class="form-control" id="email-mensagem" rows="8"></textarea>
+        </div>
+        
+        <button class="btn btn-primary" onclick="abrirClienteEmail()">📧 Abrir no Cliente de Email</button>
+        <button class="btn btn-secondary" onclick="copiarTexto('emails-lista')">📋 Copiar Emails</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Campanha WhatsApp -->
+<div class="modal fade" id="modalCampanhaWhatsApp" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">💬 Campanha WhatsApp</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Total:</strong> <span id="total-whatsapp"></span></p>
+        
+        <div class="progress mb-3">
+          <div id="progress-whatsapp" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
+        </div>
+        
+        <div class="form-group">
+          <label>Mensagem Modelo</label>
+          <textarea class="form-control" id="whatsapp-mensagem" rows="6"></textarea>
+          <small class="text-muted">Use: [NOME], [PARTIDO], [ESTADO]</small>
+        </div>
+        
+        <div id="lista-whatsapp" style="max-height: 400px; overflow-y: auto;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Campanha Instagram -->
+<div class="modal fade" id="modalCampanhaInstagram" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">📷 Campanha Instagram</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Total:</strong> <span id="total-instagram"></span></p>
+        
+        <div class="progress mb-3">
+          <div id="progress-instagram" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
+        </div>
+        
+        <div class="form-group">
+          <label>Mensagem Modelo</label>
+          <textarea class="form-control" id="instagram-mensagem" rows="4"></textarea>
+        </div>
+        
+        <div id="lista-instagram" style="max-height: 400px; overflow-y: auto;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Widget de Tracking -->
+<div id="tracking-container" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 2px solid #667eea; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; z-index: 1000;">
+  <h6 style="margin: 0 0 10px 0;">📊 Seu Progresso</h6>
+  <div id="tracking-items"></div>
+  <button onclick="fecharTracking()" style="margin-top: 10px; background: none; border: none; color: #999; font-size: 12px; cursor: pointer;">Fechar</button>
+</div>
+
+<style>
+.badge-status {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-apoia { background: #d4edda; color: #155724; }
+.badge-nao-apoia { background: #f8d7da; color: #721c24; }
+.badge-nao-manifestado { background: #e2e3e5; color: #383d41; }
+
+.contato-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.contato-info-titulo {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+.contato-info-valor {
+  color: #666;
+  font-size: 14px;
+}
+
+.btn-acao-contato {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+}
+.btn-whatsapp:hover {
+  background: #20BA5A;
+  color: white;
+}
+.btn-instagram {
+  background: #E4405F;
+  color: white;
+}
+.btn-instagram:hover {
+  background: #D32F4F;
+  color: white;
+}
+
+.assessores-lista {
+  margin-top: 10px;
+}
+.assessor-item {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 3px solid #667eea;
+}
+
+.parlamentar-envio-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #e0e0e0;
+}
+.parlamentar-envio-item.enviado {
+  background: #d4edda;
+  border-color: #28a745;
+  opacity: 0.7;
+}
+
+.tracking-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+.tracking-item:last-child {
+  border-bottom: none;
+}
+</style>
 
 <script>
 // Dados globais
@@ -270,19 +653,22 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
 function carregarContadores() {
   // Emails
   const totalEmails = parlamentaresBase.filter(p => p.email).length;
-  document.getElementById('contador-emails')?.textContent = `${totalEmails} emails disponíveis`;
+  const elEmails = document.getElementById('contador-emails');
+  if (elEmails) elEmails.textContent = `${totalEmails} emails disponíveis`;
   
   // WhatsApp
   const totalWhatsApp = parlamentaresBase.filter(p => {
     return congressistasExtras.congressistas?.[p.id]?.whatsapp;
   }).length;
-  document.getElementById('contador-whatsapp')?.textContent = `${totalWhatsApp} WhatsApps cadastrados`;
+  const elWhatsApp = document.getElementById('contador-whatsapp');
+  if (elWhatsApp) elWhatsApp.textContent = `${totalWhatsApp} WhatsApps cadastrados`;
   
   // Instagram
   const totalInstagram = parlamentaresBase.filter(p => {
     return congressistasExtras.congressistas?.[p.id]?.instagram;
   }).length;
-  document.getElementById('contador-instagram')?.textContent = `${totalInstagram} perfis cadastrados`;
+  const elInstagram = document.getElementById('contador-instagram');
+  if (elInstagram) elInstagram.textContent = `${totalInstagram} perfis cadastrados`;
 }
 
 // CAMPANHA EMAIL
@@ -319,7 +705,6 @@ function abrirClienteEmail() {
 }
 
 function atualizarFiltrosCampanha() {
-  // Implementar filtros
   abrirCampanhaEmail();
 }
 
@@ -359,14 +744,13 @@ function enviarWhatsApp(parlamentarId) {
   const parlamentar = parlamentaresBase.find(p => p.id === parlamentarId);
   const whatsapp = congressistasExtras.congressistas[parlamentarId].whatsapp;
   const mensagem = document.getElementById('whatsapp-mensagem').value
-    .replace('[NOME]', parlamentar.nome)
-    .replace('[ESTADO]', parlamentar.uf)
-    .replace('[PARTIDO]', parlamentar.partido);
+    .replace(/\[NOME\]/g, parlamentar.nome)
+    .replace(/\[ESTADO\]/g, parlamentar.uf)
+    .replace(/\[PARTIDO\]/g, parlamentar.partido);
   
   const url = `https://wa.me/55${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensagem)}`;
   window.open(url, '_blank');
   
-  // Marcar como enviado
   if (!trackingData[pautaSlug].whatsapp) trackingData[pautaSlug].whatsapp = [];
   if (!trackingData[pautaSlug].whatsapp.includes(parlamentarId)) {
     trackingData[pautaSlug].whatsapp.push(parlamentarId);
@@ -415,6 +799,8 @@ function atualizarListaInstagram() {
     </div>`;
   }).join('');
   
+  const elTotal = document.getElementById('total-instagram');
+  if (elTotal) elTotal.textContent = `${parlamentares.length} perfis disponíveis`;
   atualizarProgressoInstagram();
 }
 
@@ -423,7 +809,6 @@ function enviarInstagram(parlamentarId) {
   const url = `https://ig.me/m/${instagram}`;
   window.open(url, '_blank');
   
-  // Marcar como enviado
   if (!trackingData[pautaSlug].instagram) trackingData[pautaSlug].instagram = [];
   if (!trackingData[pautaSlug].instagram.includes(parlamentarId)) {
     trackingData[pautaSlug].instagram.push(parlamentarId);
@@ -500,6 +885,3 @@ function copiarTexto(elementId) {
   alert('✅ Copiado para área de transferência!');
 }
 </script>
-
-</body>
-</html>
