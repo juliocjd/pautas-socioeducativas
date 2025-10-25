@@ -65,10 +65,17 @@ layout: default
     <div class="card-body">
       <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <input type="text" class="form-control" id="filtro-nome" placeholder="Nome do parlamentar">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
+          <select class="form-control" id="filtro-casa">
+            <option value="">Todas as Casas</option>
+            <option value="Câmara">Câmara</option>
+            <option value="Senado">Senado</option>
+          </select>
+        </div>
+        <div class="col-md-2">
           <select class="form-control" id="filtro-estado">
             <option value="">Todos os Estados</option>
           </select>
@@ -91,6 +98,7 @@ layout: default
       <thead class="thead-dark">
         <tr>
           <th>Nome</th>
+          <th>Casa</th>
           <th>Partido</th>
           <th>UF</th>
           <th>Posição</th>
@@ -99,7 +107,7 @@ layout: default
       </thead>
       <tbody>
         <tr>
-          <td colspan="5" style="text-align: center;">
+          <td colspan="6" style="text-align: center;">
             <div class="spinner-border" role="status">
               <span class="sr-only">Carregando...</span>
             </div>
@@ -111,6 +119,7 @@ layout: default
   </div>
 </div>
 
+<!-- Modais (mesma estrutura anterior) -->
 <!-- Modal: Ver Contato -->
 <div class="modal fade" id="modalVerContato" tabindex="-1">
   <div class="modal-dialog">
@@ -137,18 +146,21 @@ layout: default
           <input type="hidden" id="parlamentar-id-hidden">
           <input type="hidden" id="parlamentar-nome-hidden">
           
-          <h6>📞 Dados de Contato (Permanentes)</h6>
+          <div class="alert alert-info">
+            <strong>ℹ️ Informação:</strong> Email e telefone do gabinete já vêm das APIs oficiais da Câmara/Senado. 
+            Use este formulário para adicionar dados pessoais (WhatsApp, Instagram, assessores).
+          </div>
+          
+          <h6>📱 Dados Pessoais (Contribuições da Comunidade)</h6>
           <div class="form-group">
             <label>WhatsApp Pessoal</label>
             <input type="text" class="form-control" id="campo-whatsapp" placeholder="(XX) XXXXX-XXXX">
+            <small class="text-muted">Para contato direto via WhatsApp</small>
           </div>
           <div class="form-group">
             <label>Instagram</label>
             <input type="text" class="form-control" id="campo-instagram" placeholder="@usuario">
-          </div>
-          <div class="form-group">
-            <label>Telefone do Gabinete</label>
-            <input type="text" class="form-control" id="campo-telefone" placeholder="(61) 3215-XXXX">
+            <small class="text-muted">Para campanhas nas redes sociais</small>
           </div>
           
           <h6>👥 Assessores</h6>
@@ -195,7 +207,7 @@ layout: default
   </div>
 </div>
 
-<!-- Modal: Campanha Email -->
+<!-- Modais de Campanha (mesma estrutura) -->
 <div class="modal fade" id="modalCampanhaEmail" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -205,33 +217,18 @@ layout: default
       </div>
       <div class="modal-body">
         <p><strong>Total:</strong> <span id="total-emails-campanha"></span></p>
-        
-        <div class="form-group">
-          <label>Filtros</label>
-          <div class="row">
-            <div class="col-md-6">
-              <select class="form-control" id="filtro-campanha-estado" onchange="atualizarFiltrosCampanha()">
-                <option value="">Todos os Estados</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        
         <div class="form-group">
           <label>Lista de Emails (CCO)</label>
           <textarea class="form-control" id="emails-lista" rows="3" readonly></textarea>
         </div>
-        
         <div class="form-group">
           <label>Assunto</label>
           <input type="text" class="form-control" id="email-assunto">
         </div>
-        
         <div class="form-group">
           <label>Mensagem</label>
           <textarea class="form-control" id="email-mensagem" rows="8"></textarea>
         </div>
-        
         <button class="btn btn-primary" onclick="abrirClienteEmail()">📧 Abrir no Cliente de Email</button>
         <button class="btn btn-secondary" onclick="copiarTexto('emails-lista')">📋 Copiar Emails</button>
       </div>
@@ -239,7 +236,6 @@ layout: default
   </div>
 </div>
 
-<!-- Modal: Campanha WhatsApp -->
 <div class="modal fade" id="modalCampanhaWhatsApp" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -249,24 +245,20 @@ layout: default
       </div>
       <div class="modal-body">
         <p><strong>Total:</strong> <span id="total-whatsapp"></span></p>
-        
         <div class="progress mb-3">
           <div id="progress-whatsapp" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
         </div>
-        
         <div class="form-group">
           <label>Mensagem Modelo</label>
           <textarea class="form-control" id="whatsapp-mensagem" rows="6"></textarea>
           <small class="text-muted">Use: [NOME], [PARTIDO], [ESTADO]</small>
         </div>
-        
         <div id="lista-whatsapp" style="max-height: 400px; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal: Campanha Instagram -->
 <div class="modal fade" id="modalCampanhaInstagram" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -276,23 +268,19 @@ layout: default
       </div>
       <div class="modal-body">
         <p><strong>Total:</strong> <span id="total-instagram"></span></p>
-        
         <div class="progress mb-3">
           <div id="progress-instagram" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
         </div>
-        
         <div class="form-group">
           <label>Mensagem Modelo</label>
           <textarea class="form-control" id="instagram-mensagem" rows="4"></textarea>
         </div>
-        
         <div id="lista-instagram" style="max-height: 400px; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Widget de Tracking -->
 <div id="tracking-container" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 2px solid #667eea; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; z-index: 1000;">
   <h6 style="margin: 0 0 10px 0;">📊 Seu Progresso</h6>
   <div id="tracking-items"></div>
@@ -324,6 +312,11 @@ layout: default
 .contato-info-valor {
   color: #666;
   font-size: 14px;
+}
+.contato-fonte {
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
 }
 
 .btn-acao-contato {
@@ -392,61 +385,41 @@ layout: default
 </style>
 
 <script>
-// Dados globais - COM TRATAMENTO PARA DADOS VAZIOS
+// Dados globais
 const pautaSlug = "{{ page.slug | default: page.title | slugify }}";
+const casaLegislativa = "{{ page.casa }}";
 
-// Parlamentares base - verificar se existe
+// Parlamentares - iniciar vazio e carregar das APIs
 let parlamentaresBase = [];
-try {
-  parlamentaresBase = [{% for parl in site.data.parlamentares_base %}{"id": "{{ parl.id }}", "nome": "{{ parl.nome }}", "partido": "{{ parl.partido }}", "uf": "{{ parl.uf }}", "email": "{{ parl.email | default: '' }}"},{% endfor %}];
-  
-  // Se não tem dados, carregar da API
-  if (parlamentaresBase.length === 0) {
-    console.log('⚠️ Nenhum dado em parlamentares_base.json. Carregando da API...');
-  }
-} catch (e) {
-  console.error('Erro ao carregar parlamentares_base:', e);
-  parlamentaresBase = [];
-}
 
-// Congressistas extras - verificar se existe
+// Extras de usuários
 let congressistasExtras = {};
 try {
   const tempExtras = {{ site.data.congressistas_extras | jsonify }};
   congressistasExtras = tempExtras && tempExtras.congressistas ? tempExtras : { congressistas: {} };
 } catch (e) {
-  console.error('Erro ao carregar congressistas_extras:', e);
   congressistasExtras = { congressistas: {} };
 }
 
-// Evidências - verificar se existe
+// Evidências
 let evidenciasPautas = {};
 try {
   const tempEvidencias = {{ site.data.evidencias_pautas | jsonify }};
   evidenciasPautas = tempEvidencias || { pautas: {} };
 } catch (e) {
-  console.error('Erro ao carregar evidencias_pautas:', e);
   evidenciasPautas = { pautas: {} };
 }
 
-// Campanhas (do front matter)
+// Campanhas
 let campanhaEmail = null;
 let campanhaWhatsApp = null;
 let campanhaInstagram = null;
 
-try {
-  campanhaEmail = {{ page.campanha.email | jsonify }};
-} catch(e) { campanhaEmail = null; }
+try { campanhaEmail = {{ page.campanha.email | jsonify }}; } catch(e) {}
+try { campanhaWhatsApp = {{ page.campanha.whatsapp | jsonify }}; } catch(e) {}
+try { campanhaInstagram = {{ page.campanha.instagram | jsonify }}; } catch(e) {}
 
-try {
-  campanhaWhatsApp = {{ page.campanha.whatsapp | jsonify }};
-} catch(e) { campanhaWhatsApp = null; }
-
-try {
-  campanhaInstagram = {{ page.campanha.instagram | jsonify }};
-} catch(e) { campanhaInstagram = null; }
-
-// Tracking de envios
+// Tracking
 let trackingData = JSON.parse(localStorage.getItem('campanhas_tracking') || '{}');
 if (!trackingData[pautaSlug]) {
   trackingData[pautaSlug] = { email: null, whatsapp: [], instagram: [] };
@@ -457,48 +430,140 @@ let assessorCount = 0;
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
   console.log('📊 Iniciando pauta...');
-  console.log('Parlamentares carregados:', parlamentaresBase.length);
-  
-  // Se não tem dados, carregar da API
-  if (parlamentaresBase.length === 0) {
-    carregarDeputadosDaAPI();
-  } else {
-    carregarEstados();
-    renderTabela();
-    carregarContadores();
-    mostrarTracking();
-  }
+  console.log('Casa Legislativa:', casaLegislativa);
+  carregarParlamentaresDasAPIs();
 });
 
-// Carregar deputados da API se não houver dados no Jekyll
-async function carregarDeputadosDaAPI() {
-  console.log('🔄 Carregando deputados da API da Câmara...');
+// CARREGAR PARLAMENTARES DAS APIs OFICIAIS
+async function carregarParlamentaresDasAPIs() {
+  console.log('🔄 Carregando parlamentares das APIs oficiais...');
   
+  const promises = [];
+  
+  // Sempre carregar Deputados se for Câmara ou ambos
+  if (!casaLegislativa || casaLegislativa.includes('Câmara')) {
+    promises.push(carregarDeputados());
+  }
+  
+  // Carregar Senadores se for Senado ou ambos
+  if (!casaLegislativa || casaLegislativa.includes('Senado')) {
+    promises.push(carregarSenadores());
+  }
+  
+  await Promise.all(promises);
+  
+  console.log('✅ Total de parlamentares carregados:', parlamentaresBase.length);
+  
+  carregarEstados();
+  renderTabela();
+  carregarContadores();
+  mostrarTracking();
+}
+
+// Carregar Deputados da API da Câmara
+async function carregarDeputados() {
   try {
+    console.log('📥 Buscando deputados...');
     const proxyUrl = 'https://api.allorigins.win/raw?url=';
     const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
     const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
     const data = await response.json();
     
-    parlamentaresBase = data.dados.map(dep => ({
-      id: String(dep.id),
-      nome: dep.nome,
-      partido: dep.siglaPartido,
-      uf: dep.siglaUf,
-      email: dep.email || ''
-    }));
+    // Para cada deputado, buscar detalhes completos (telefone)
+    const deputadosDetalhados = await Promise.all(
+      data.dados.slice(0, 20).map(async dep => { // Limitando a 20 para teste, remova o slice para todos
+        try {
+          const detailUrl = `https://dadosabertos.camara.leg.br/api/v2/deputados/${dep.id}`;
+          const detailResponse = await fetch(proxyUrl + encodeURIComponent(detailUrl));
+          const detailData = await detailResponse.json();
+          
+          return {
+            id: String(dep.id),
+            nome: dep.nome,
+            partido: dep.siglaPartido,
+            uf: dep.siglaUf,
+            email: dep.email || detailData.dados.ultimoStatus?.email || '',
+            telefone_gabinete: detailData.dados.ultimoStatus?.gabinete?.telefone || '',
+            casa: 'Câmara'
+          };
+        } catch (e) {
+          // Se falhar buscar detalhes, usa dados básicos
+          return {
+            id: String(dep.id),
+            nome: dep.nome,
+            partido: dep.siglaPartido,
+            uf: dep.siglaUf,
+            email: dep.email || '',
+            telefone_gabinete: '',
+            casa: 'Câmara'
+          };
+        }
+      })
+    );
     
-    console.log('✅ Deputados carregados:', parlamentaresBase.length);
-    
-    carregarEstados();
-    renderTabela();
-    carregarContadores();
-    mostrarTracking();
+    parlamentaresBase.push(...deputadosDetalhados);
+    console.log('✅ Deputados carregados:', deputadosDetalhados.length);
     
   } catch (error) {
     console.error('❌ Erro ao carregar deputados:', error);
-    const tbody = document.querySelector('#tabela-parlamentares tbody');
-    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">❌ Erro ao carregar parlamentares. Por favor, recarregue a página.</td></tr>';
+  }
+}
+
+// Carregar Senadores da API do Senado
+async function carregarSenadores() {
+  try {
+    console.log('📥 Buscando senadores...');
+    const proxyUrl = 'https://api.allorigins.win/raw?url=';
+    const apiUrl = 'https://legis.senado.leg.br/dadosabertos/senador/lista/atual';
+    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    const text = await response.text();
+    
+    // API do Senado retorna XML, vamos parsear
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(text, "text/xml");
+    const senadores = xmlDoc.getElementsByTagName('Parlamentar');
+    
+    const senadoresArray = Array.from(senadores).map(sen => {
+      const identificacao = sen.getElementsByTagName('IdentificacaoParlamentar')[0];
+      const nome = identificacao.getElementsByTagName('NomeParlamentar')[0]?.textContent || '';
+      const partido = identificacao.getElementsByTagName('SiglaPartidoParlamentar')[0]?.textContent || '';
+      const uf = identificacao.getElementsByTagName('UfParlamentar')[0]?.textContent || '';
+      const codigoParlamentar = identificacao.getElementsByTagName('CodigoParlamentar')[0]?.textContent || '';
+      
+      // Email
+      const emails = sen.getElementsByTagName('Email');
+      let email = '';
+      if (emails.length > 0) {
+        email = emails[0].textContent || '';
+      }
+      
+      // Telefones do gabinete
+      const telefones = sen.getElementsByTagName('Telefone');
+      let telefone_gabinete = '';
+      for (let tel of telefones) {
+        const numTelefone = tel.getElementsByTagName('NumeroTelefone')[0]?.textContent || '';
+        if (numTelefone) {
+          telefone_gabinete = numTelefone;
+          break;
+        }
+      }
+      
+      return {
+        id: 'SEN-' + codigoParlamentar,
+        nome: nome,
+        partido: partido,
+        uf: uf,
+        email: email,
+        telefone_gabinete: telefone_gabinete,
+        casa: 'Senado'
+      };
+    });
+    
+    parlamentaresBase.push(...senadoresArray);
+    console.log('✅ Senadores carregados:', senadoresArray.length);
+    
+  } catch (error) {
+    console.error('❌ Erro ao carregar senadores:', error);
   }
 }
 
@@ -521,25 +586,27 @@ function carregarEstados() {
   });
 }
 
-// Renderizar tabela de parlamentares
+// Renderizar tabela
 function renderTabela() {
   const tbody = document.querySelector('#tabela-parlamentares tbody');
   
   if (parlamentaresBase.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" class="text-center">⏳ Carregando parlamentares...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center">⏳ Carregando parlamentares...</td></tr>';
     return;
   }
   
   const termoNome = document.getElementById('filtro-nome').value.toLowerCase();
+  const termoCasa = document.getElementById('filtro-casa').value;
   const termoEstado = document.getElementById('filtro-estado').value;
   const termoPosicao = document.getElementById('filtro-posicao').value;
   
   const filtrados = parlamentaresBase.filter(p => {
     const nomeMatch = p.nome.toLowerCase().includes(termoNome);
+    const casaMatch = !termoCasa || p.casa === termoCasa;
     const estadoMatch = !termoEstado || p.uf === termoEstado;
     const posicao = obterPosicao(p.id);
     const posicaoMatch = !termoPosicao || posicao === termoPosicao;
-    return nomeMatch && estadoMatch && posicaoMatch;
+    return nomeMatch && casaMatch && estadoMatch && posicaoMatch;
   });
   
   tbody.innerHTML = filtrados.map(p => {
@@ -551,11 +618,12 @@ function renderTabela() {
     
     return `<tr>
       <td>${p.nome}</td>
+      <td>${p.casa}</td>
       <td>${p.partido}</td>
       <td>${p.uf}</td>
       <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
       <td>
-        <button class="btn btn-sm btn-info" onclick="verContato('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.email}')">Ver Contato</button>
+        <button class="btn btn-sm btn-info" onclick='verContato(${JSON.stringify(p)})'>Ver Contato</button>
         <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${p.id}', '${p.nome.replace(/'/g, "\\'")}')">Enviar Info</button>
       </td>
     </tr>`;
@@ -564,7 +632,6 @@ function renderTabela() {
   console.log('✅ Tabela renderizada com', filtrados.length, 'parlamentares');
 }
 
-// Obter posição do parlamentar
 function obterPosicao(parlamentarId) {
   if (evidenciasPautas.pautas && evidenciasPautas.pautas[pautaSlug] && evidenciasPautas.pautas[pautaSlug][parlamentarId]) {
     return evidenciasPautas.pautas[pautaSlug][parlamentarId].posicao || 'nao-manifestado';
@@ -574,74 +641,91 @@ function obterPosicao(parlamentarId) {
 
 // Filtros
 document.getElementById('filtro-nome')?.addEventListener('input', renderTabela);
+document.getElementById('filtro-casa')?.addEventListener('change', renderTabela);
 document.getElementById('filtro-estado')?.addEventListener('change', renderTabela);
 document.getElementById('filtro-posicao')?.addEventListener('change', renderTabela);
 
-// VER CONTATO
-function verContato(parlamentarId, nome, emailOficial) {
-  const extras = congressistasExtras.congressistas?.[parlamentarId] || {};
+// VER CONTATO - VERSÃO APRIMORADA
+function verContato(parlamentar) {
+  const extras = congressistasExtras.congressistas?.[parlamentar.id] || {};
   
-  let html = `<div class="contato-info">
-    <div class="contato-info-titulo">📧 Email Oficial</div>
-    <div class="contato-info-valor">${emailOficial || 'Não disponível'}</div>
-  </div>`;
+  let html = '';
   
-  if (extras.whatsapp) {
+  // DADOS OFICIAIS (das APIs)
+  html += '<div class="alert alert-info"><strong>📋 Dados Oficiais (API ' + parlamentar.casa + ')</strong></div>';
+  
+  if (parlamentar.email) {
     html += `<div class="contato-info">
-      <div class="contato-info-titulo">📱 WhatsApp Pessoal</div>
-      <a href="https://wa.me/55${extras.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp">
-        💬 Enviar WhatsApp
-      </a>
+      <div class="contato-info-titulo">📧 Email Oficial</div>
+      <div class="contato-info-valor">${parlamentar.email}</div>
+      <div class="contato-fonte">Fonte: API da ${parlamentar.casa}</div>
     </div>`;
   }
   
-  if (extras.telefone_gabinete) {
+  if (parlamentar.telefone_gabinete) {
     html += `<div class="contato-info">
-      <div class="contato-info-titulo">📞 Telefone Gabinete</div>
-      <div class="contato-info-valor">${extras.telefone_gabinete}</div>
+      <div class="contato-info-titulo">📞 Telefone do Gabinete</div>
+      <div class="contato-info-valor">${parlamentar.telefone_gabinete}</div>
+      <div class="contato-fonte">Fonte: API da ${parlamentar.casa}</div>
     </div>`;
   }
   
-  if (extras.instagram) {
-    html += `<div class="contato-info">
-      <div class="contato-info-titulo">📷 Instagram</div>
-      <a href="https://instagram.com/${extras.instagram.replace('@', '')}" target="_blank" class="btn-acao-contato btn-instagram">
-        📷 @${extras.instagram.replace('@', '')}
-      </a>
-    </div>`;
-  }
-  
-  if (extras.assessores && extras.assessores.length > 0) {
-    html += `<div class="contato-info">
-      <div class="contato-info-titulo">👥 Assessores</div>
-      <div class="assessores-lista">`;
+  // DADOS DA COMUNIDADE (contribuições aprovadas)
+  if (extras.whatsapp || extras.instagram || (extras.assessores && extras.assessores.length > 0)) {
+    html += '<div class="alert alert-success mt-3"><strong>📱 Dados da Comunidade (Contribuições Aprovadas)</strong></div>';
     
-    extras.assessores.forEach(ass => {
-      html += `<div class="assessor-item">
-        <strong>${ass.nome}</strong> - ${ass.cargo || 'Assessor(a)'}<br>
-        <a href="https://wa.me/55${ass.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp btn-sm mt-2">
-          💬 WhatsApp
+    if (extras.whatsapp) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">💬 WhatsApp Pessoal</div>
+        <a href="https://wa.me/55${extras.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp">
+          💬 Enviar WhatsApp
         </a>
+        <div class="contato-fonte">Contribuído pela comunidade</div>
       </div>`;
-    });
+    }
     
-    html += `</div></div>`;
-  }
-  
-  if (!extras.whatsapp && !extras.telefone_gabinete && !extras.instagram && (!extras.assessores || extras.assessores.length === 0)) {
-    html += `<div class="alert alert-warning">
-      ⚠️ Nenhuma informação adicional disponível ainda.
-      <br><button class="btn btn-sm btn-primary mt-2" onclick="$('#modalVerContato').modal('hide'); abrirEnviarInfo('${parlamentarId}', '${nome.replace(/'/g, "\\'")}')">
+    if (extras.instagram) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">📷 Instagram</div>
+        <a href="https://instagram.com/${extras.instagram.replace('@', '')}" target="_blank" class="btn-acao-contato btn-instagram">
+          📷 @${extras.instagram.replace('@', '')}
+        </a>
+        <div class="contato-fonte">Contribuído pela comunidade</div>
+      </div>`;
+    }
+    
+    if (extras.assessores && extras.assessores.length > 0) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">👥 Assessores</div>
+        <div class="assessores-lista">`;
+      
+      extras.assessores.forEach(ass => {
+        html += `<div class="assessor-item">
+          <strong>${ass.nome}</strong> - ${ass.cargo || 'Assessor(a)'}<br>
+          <a href="https://wa.me/55${ass.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp btn-sm mt-2">
+            💬 WhatsApp
+          </a>
+        </div>`;
+      });
+      
+      html += `</div>
+        <div class="contato-fonte">Contribuído pela comunidade</div>
+      </div>`;
+    }
+    
+    if (extras.ultima_atualizacao) {
+      html += `<small class="text-muted">ℹ️ Última atualização: ${extras.ultima_atualizacao}</small>`;
+    }
+  } else {
+    html += `<div class="alert alert-warning mt-3">
+      ⚠️ Nenhum dado adicional da comunidade disponível.
+      <br><button class="btn btn-sm btn-primary mt-2" onclick="$('#modalVerContato').modal('hide'); abrirEnviarInfo('${parlamentar.id}', '${parlamentar.nome.replace(/'/g, "\\'")}')">
         Contribuir com Informações
       </button>
     </div>`;
   }
   
-  if (extras.ultima_atualizacao) {
-    html += `<small class="text-muted">ℹ️ Atualizado em: ${extras.ultima_atualizacao}</small>`;
-  }
-  
-  document.getElementById('contato-nome').textContent = nome;
+  document.getElementById('contato-nome').textContent = parlamentar.nome;
   document.getElementById('contato-conteudo').innerHTML = html;
   $('#modalVerContato').modal('show');
 }
@@ -689,9 +773,6 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
   }
   if (document.getElementById('campo-instagram').value) {
     dados_contato.instagram = document.getElementById('campo-instagram').value;
-  }
-  if (document.getElementById('campo-telefone').value) {
-    dados_contato.telefone_gabinete = document.getElementById('campo-telefone').value;
   }
   
   const assessores = [];
@@ -751,24 +832,24 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
 function carregarContadores() {
   if (parlamentaresBase.length === 0) return;
   
-  // Emails
+  // EMAILS - vem das APIs
   const totalEmails = parlamentaresBase.filter(p => p.email).length;
   const elEmails = document.getElementById('contador-emails');
-  if (elEmails) elEmails.textContent = `${totalEmails} emails disponíveis`;
+  if (elEmails) elEmails.textContent = `${totalEmails} emails disponíveis (API)`;
   
-  // WhatsApp
+  // WHATSAPP - vem das contribuições
   const totalWhatsApp = parlamentaresBase.filter(p => {
     return congressistasExtras.congressistas?.[p.id]?.whatsapp;
   }).length;
   const elWhatsApp = document.getElementById('contador-whatsapp');
-  if (elWhatsApp) elWhatsApp.textContent = `${totalWhatsApp} WhatsApps cadastrados`;
+  if (elWhatsApp) elWhatsApp.textContent = `${totalWhatsApp} WhatsApps (comunidade)`;
   
-  // Instagram
+  // INSTAGRAM - vem das contribuições
   const totalInstagram = parlamentaresBase.filter(p => {
     return congressistasExtras.congressistas?.[p.id]?.instagram;
   }).length;
   const elInstagram = document.getElementById('contador-instagram');
-  if (elInstagram) elInstagram.textContent = `${totalInstagram} perfis cadastrados`;
+  if (elInstagram) elInstagram.textContent = `${totalInstagram} perfis (comunidade)`;
 }
 
 // CAMPANHA EMAIL
@@ -780,7 +861,7 @@ function abrirCampanhaEmail() {
   document.getElementById('emails-lista').value = emails.join('; ');
   document.getElementById('email-assunto').value = campanhaEmail.assunto || '';
   document.getElementById('email-mensagem').value = campanhaEmail.mensagem || '';
-  document.getElementById('total-emails-campanha').textContent = `${emails.length} emails selecionados`;
+  document.getElementById('total-emails-campanha').textContent = `${emails.length} emails (das APIs oficiais)`;
   
   $('#modalCampanhaEmail').modal('show');
 }
@@ -802,10 +883,6 @@ function abrirClienteEmail() {
   trackingData[pautaSlug].email = new Date().toISOString();
   salvarTracking();
   mostrarTracking();
-}
-
-function atualizarFiltrosCampanha() {
-  abrirCampanhaEmail();
 }
 
 // CAMPANHA WHATSAPP
@@ -836,7 +913,7 @@ function atualizarListaWhatsApp() {
     </div>`;
   }).join('');
   
-  document.getElementById('total-whatsapp').textContent = `${parlamentares.length} WhatsApps disponíveis`;
+  document.getElementById('total-whatsapp').textContent = `${parlamentares.length} WhatsApps (da comunidade)`;
   atualizarProgressoWhatsApp();
 }
 
@@ -900,7 +977,7 @@ function atualizarListaInstagram() {
   }).join('');
   
   const elTotal = document.getElementById('total-instagram');
-  if (elTotal) elTotal.textContent = `${parlamentares.length} perfis disponíveis`;
+  if (elTotal) elTotal.textContent = `${parlamentares.length} perfis (da comunidade)`;
   atualizarProgressoInstagram();
 }
 
