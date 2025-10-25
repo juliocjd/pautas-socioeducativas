@@ -1,0 +1,5 @@
+{
+  "installCommand": "bundle install",
+  "buildCommand": "LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 bundle exec jekyll build",
+  "outputDirectory": "_site"
+}
