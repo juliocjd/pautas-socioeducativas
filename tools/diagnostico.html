@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de APIs</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .test {
+            background: #2d2d2d;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #666;
+        }
+        .test.success {
+            border-left-color: #4caf50;
+        }
+        .test.error {
+            border-left-color: #f44336;
+        }
+        .test.warning {
+            border-left-color: #ff9800;
+        }
+        h1 { color: #569cd6; }
+        h3 { color: #4ec9b0; margin-top: 0; }
+        pre {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .status.ok { background: #4caf50; color: white; }
+        .status.fail { background: #f44336; color: white; }
+        button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #1177bb;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Diagnóstico de APIs</h1>
+    <button onclick="runTests()">▶️ Executar Testes</button>
+    <button onclick="location.reload()">🔄 Recarregar</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const API_BASE = 'https://pautas-socioeducativas.vercel.app';
+        
+        const tests = [
+            {
+                name: 'GET /api/pautas',
+                url: '/api/pautas',
+                method: 'GET'
+            },
+            {
+                name: 'GET /api/congressistas',
+                url: '/api/congressistas',
+                method: 'GET'
+            },
+            {
+                name: 'GET /api/evidencias',
+                url: '/api/evidencias',
+                method: 'GET'
+            },
+            {
+                name: 'GET /api/contribuicoes-pendentes',
+                url: '/api/contribuicoes-pendentes',
+                method: 'GET'
+            },
+            {
+                name: 'POST /api/auth-admin (senha errada)',
+                url: '/api/auth-admin',
+                method: 'POST',
+                body: { password: 'teste123' },
+                expectError: true
+            }
+        ];
+
+        async function runTests() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>Executando testes...</h2>';
+            
+            for (const test of tests) {
+                await runTest(test);
+            }
+        }
+
+        async function runTest(test) {
+            const resultsDiv = document.getElementById('results');
+            const testDiv = document.createElement('div');
+            testDiv.className = 'test';
+            testDiv.innerHTML = `<h3>${test.name} <span class="status">...</span></h3>`;
+            resultsDiv.appendChild(testDiv);
+
+            try {
+                const options = {
+                    method: test.method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                if (test.body) {
+                    options.body = JSON.stringify(test.body);
+                }
+
+                const startTime = Date.now();
+                const response = await fetch(API_BASE + test.url, options);
+                const endTime = Date.now();
+                const duration = endTime - startTime;
+
+                // Tentar ler como texto primeiro
+                const text = await response.text();
+                
+                let data;
+                let isJSON = false;
+                try {
+                    data = JSON.parse(text);
+                    isJSON = true;
+                } catch (e) {
+                    data = text;
+                }
+
+                const statusSpan = testDiv.querySelector('.status');
+                
+                if (response.ok || (test.expectError && response.status === 401)) {
+                    testDiv.className = 'test success';
+                    statusSpan.className = 'status ok';
+                    statusSpan.textContent = '✅ OK';
+                } else {
+                    testDiv.className = 'test error';
+                    statusSpan.className = 'status fail';
+                    statusSpan.textContent = '❌ FALHOU';
+                }
+
+                const details = `
+<strong>Status:</strong> ${response.status} ${response.statusText}
+<strong>Tempo:</strong> ${duration}ms
+<strong>Content-Type:</strong> ${response.headers.get('content-type')}
+<strong>É JSON válido:</strong> ${isJSON ? 'Sim' : 'Não'}
+
+<strong>Resposta:</strong>
+<pre>${isJSON ? JSON.stringify(data, null, 2) : text.substring(0, 500)}</pre>
+
+${!isJSON && response.status >= 400 ? `
+<strong>⚠️ PROBLEMA DETECTADO:</strong>
+A API retornou HTML em vez de JSON. Isso indica erro no servidor.
+
+<strong>Possíveis causas:</strong>
+1. Falta variável de ambiente (GITHUB_TOKEN)
+2. Erro no código da API
+3. Dependências não instaladas
+4. Timeout do Vercel
+
+<strong>Solução:</strong>
+1. Acesse: https://vercel.com/juliocjd/pautas-socioeducativas/logs
+2. Procure por erros relacionados a ${test.url}
+3. Verifique variáveis de ambiente
+` : ''}
+                `;
+
+                testDiv.innerHTML += details;
+
+            } catch (error) {
+                testDiv.className = 'test error';
+                const statusSpan = testDiv.querySelector('.status');
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '❌ ERRO';
+                
+                testDiv.innerHTML += `
+<strong>Erro de Rede:</strong>
+<pre>${error.message}</pre>
+
+<strong>⚠️ Possíveis causas:</strong>
+- CORS bloqueado
+- API não existe (404)
+- Timeout de rede
+- Vercel offline
+                `;
+            }
+        }
+
+        // Auto-executar ao carregar
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 500);
+        });
+    </script>
+</body>
+</html>
