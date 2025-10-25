@@ -1,0 +1,26 @@
+# _data/congressistas_extras.yml
+# Dados extras de contato dos congressistas (permanentes, aparecem em todas as pautas)
+
+congressistas:
+  # Exemplo de deputado com dados completos
+  "204534":
+    whatsapp: "11987654321"
+    instagram: "deputadofulano"
+    telefone_gabinete: "(61) 3215-5000"
+    assessores:
+      - nome: "João Silva"
+        whatsapp: "11999999999"
+        cargo: "Chefe de Gabinete"
+      - nome: "Maria Santos"
+        whatsapp: "11988888888"
+        cargo: "Assessora de Imprensa"
+    ultima_atualizacao: "2025-01-20"
+  
+  # Exemplo de deputado com dados parciais
+  "160573":
+    whatsapp: "21987654321"
+    instagram: "depciclano"
+    ultima_atualizacao: "2025-01-18"
+  
+  # Adicione mais congressistas conforme receber contribuições aprovadas
+  # O sistema adiciona automaticamente quando você aprovar contribuições
