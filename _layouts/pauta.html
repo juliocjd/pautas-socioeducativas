@@ -2,444 +2,129 @@
 layout: default
 ---
 
-<style>
-/* Estilos para Ação Coletiva */
-.acao-coletiva {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 40px;
-  border-radius: 15px;
-  margin: 30px 0;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-}
-
-.acao-coletiva h2 {
-  color: white;
-  margin-bottom: 10px;
-  font-size: 28px;
-}
-
-.acao-coletiva p {
-  opacity: 0.9;
-  margin-bottom: 30px;
-}
-
-.canal-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-.canal-card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 12px;
-  padding: 25px;
-  transition: all 0.3s;
-  cursor: pointer;
-}
-
-.canal-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.canal-icon {
-  font-size: 48px;
-  margin-bottom: 15px;
-}
-
-.canal-titulo {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.canal-descricao {
-  opacity: 0.9;
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-
-.canal-contador {
-  background: rgba(255, 255, 255, 0.3);
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 13px;
-  display: inline-block;
-}
-
-/* Modal Campanha */
-.modal-campanha .modal-content {
-  border-radius: 15px;
-  border: none;
-}
-
-.modal-campanha .modal-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 15px 15px 0 0;
-  border: none;
-}
-
-.preview-mensagem {
-  background: #f8f9fa;
-  border: 2px dashed #dee2e6;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px 0;
-  font-family: monospace;
-  white-space: pre-wrap;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.btn-copiar {
-  background: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s;
-}
-
-.btn-copiar:hover {
-  background: #218838;
-  transform: scale(1.05);
-}
-
-.progress-envio {
-  margin: 20px 0;
-}
-
-.progress-bar {
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-}
-
-.lista-parlamentares-envio {
-  max-height: 400px;
-  overflow-y: auto;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 15px;
-}
-
-.parlamentar-envio-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px;
-  margin-bottom: 10px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  transition: all 0.3s;
-}
-
-.parlamentar-envio-item.enviado {
-  background: #d4edda;
-  opacity: 0.7;
-}
-
-.parlamentar-envio-item:hover {
-  background: #e9ecef;
-}
-
-.filtros-campanha {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.filtros-campanha select {
-  margin-right: 10px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ced4da;
-}
-
-/* Modal Ver Contato */
-.contato-info {
-  padding: 15px;
-  margin-bottom: 15px;
-  background: #f8f9fa;
-  border-left: 4px solid #667eea;
-  border-radius: 5px;
-}
-
-.contato-info-titulo {
-  font-weight: bold;
-  color: #667eea;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.contato-info-valor {
-  margin-left: 30px;
-  color: #495057;
-}
-
-.btn-acao-contato {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.btn-whatsapp {
-  background: #25D366;
-  color: white;
-}
-
-.btn-whatsapp:hover {
-  background: #128C7E;
-  color: white;
-  transform: scale(1.05);
-}
-
-.btn-instagram {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: white;
-}
-
-.btn-instagram:hover {
-  transform: scale(1.05);
-  color: white;
-}
-
-.assessores-lista {
-  margin-top: 10px;
-  padding-left: 20px;
-}
-
-.assessor-item {
-  padding: 10px;
-  margin-bottom: 8px;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #e9ecef;
-}
-
-.badge-status {
-  padding: 5px 12px;
-  border-radius: 15px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.badge-apoia { background: #28a745; color: white; }
-.badge-nao-apoia { background: #dc3545; color: white; }
-.badge-nao-manifestado { background: #6c757d; color: white; }
-
-/* Tracking de Progresso */
-.tracking-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  max-width: 300px;
-}
-
-.tracking-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #e9ecef;
-}
-
-.tracking-item:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-</style>
-
 <div class="container">
-  <h1>{{ page.title }}</h1>
-  <p class="lead">{{ page.description }}</p>
-  <p><strong>Casa Legislativa:</strong> {{ page.casa }}</p>
-  <p><strong>Status:</strong> {{ page.status }}</p>
-  
-  <hr>
+  <!-- Cabeçalho da Pauta -->
+  <div class="jumbotron">
+    <h1 class="display-4">{{ page.title }}</h1>
+    <p class="lead">{{ page.description }}</p>
+    <hr class="my-4">
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Casa:</strong> {{ page.casa }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Status:</strong> {{ page.status }}</p>
+      </div>
+    </div>
+  </div>
 
-  <!-- SEÇÃO DE AÇÃO COLETIVA -->
+  <!-- Conteúdo da Pauta -->
+  <div class="content-section mb-5">
+    {{ content }}
+  </div>
+
+  <!-- Seção de Campanhas -->
   {% if page.campanha %}
-  <div class="acao-coletiva">
-    <h2>🎯 AÇÃO COLETIVA</h2>
-    <p>Escolha como mobilizar os parlamentares desta pauta:</p>
+  <div class="campanhas-section mb-5">
+    <h3>📢 Mobilização</h3>
+    <p>Participe das campanhas de contato com os parlamentares:</p>
     
-    <div class="canal-grid">
+    <div class="row">
       {% if page.campanha.email %}
-      <div class="canal-card" onclick="abrirCampanhaEmail()">
-        <div class="canal-icon">📧</div>
-        <div class="canal-titulo">Email em Massa</div>
-        <div class="canal-descricao">Envie para todos de uma vez</div>
-        <div class="canal-contador" id="contador-emails">Carregando...</div>
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-primary btn-block" onclick="abrirCampanhaEmail()">
+          📧 Campanha de Email
+        </button>
+        <small id="contador-emails" class="text-muted">Carregando...</small>
       </div>
       {% endif %}
       
       {% if page.campanha.whatsapp %}
-      <div class="canal-card" onclick="abrirCampanhaWhatsApp()">
-        <div class="canal-icon">💬</div>
-        <div class="canal-titulo">WhatsApp</div>
-        <div class="canal-descricao">Envio individual (mais efetivo)</div>
-        <div class="canal-contador" id="contador-whatsapp">Carregando...</div>
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-success btn-block" onclick="abrirCampanhaWhatsApp()">
+          💬 Campanha WhatsApp
+        </button>
+        <small id="contador-whatsapp" class="text-muted">Carregando...</small>
       </div>
       {% endif %}
       
       {% if page.campanha.instagram %}
-      <div class="canal-card" onclick="abrirCampanhaInstagram()">
-        <div class="canal-icon">📷</div>
-        <div class="canal-titulo">Instagram</div>
-        <div class="canal-descricao">Direct message individual</div>
-        <div class="canal-contador" id="contador-instagram">Carregando...</div>
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-danger btn-block" onclick="abrirCampanhaInstagram()">
+          📷 Campanha Instagram
+        </button>
+        <small id="contador-instagram" class="text-muted">Carregando...</small>
       </div>
       {% endif %}
     </div>
   </div>
   {% endif %}
 
-  <!-- Resto do conteúdo da pauta continua na PARTE 2 -->
-  
-  <h3>Resumo da Pauta</h3>
-  {{ content }}
-</div>
-
-<!-- JavaScript e Modals na PARTE 2 -->
-<!-- CONTINUAÇÃO DO _layouts/pauta.html - PARTE 2 -->
-<!-- Cole este conteúdo DEPOIS da PARTE 1 -->
-
-<!-- SEÇÃO CONDICIONAL DE MEMBROS-CHAVE -->
-{% if page.key_players %}
-<div class="card mb-4">
-  <div class="card-header">
-    {% if page.is_plenary_vote %}
-      <h3>Votação em Plenário</h3>
-    {% else %}
-      <h3>Membros-Chave nesta Pauta</h3>
-    {% endif %}
-  </div>
-  <div class="card-body">
-    {% if page.is_plenary_vote %}
-      <p class="text-muted font-weight-bold">Essa pauta será julgada por todos os Deputados Federais.</p>
-    {% else %}
-      <p class="text-muted">Parlamentares com papéis decisivos nesta fase do projeto.</p>
-    {% endif %}
-    
-    {% unless page.is_plenary_vote %}
-    <div class="table-responsive">
-      <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <th>Nome</th>
-            <th>Papel/Função</th>
-            <th>Partido</th>
-            <th>UF</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for player in page.key_players %}
-            {% assign parlamentar = site.data.parlamentares_base | where: "nome", player.nome | first %}
-            {% if parlamentar %}
-            <tr>
-              <td><strong>{{ parlamentar.nome }}</strong></td>
-              <td><span class="badge badge-info">{{ player.role }}</span></td>
-              <td>{{ parlamentar.partido }}</td>
-              <td>{{ parlamentar.uf }}</td>
-              <td>
-                <span class="badge-status badge-nao-manifestado" id="status-{{ parlamentar.id }}">
-                  Carregando...
-                </span>
-              </td>
-              <td>
-                <button class="btn btn-sm btn-info" onclick="verContato('{{ parlamentar.id }}', '{{ parlamentar.nome }}', '{{ parlamentar.email }}')">Ver Contato</button>
-                <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('{{ parlamentar.id }}', '{{ parlamentar.nome }}')">Enviar Info</button>
-              </td>
-            </tr>
-            {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    {% endunless %}
-  </div>
-</div>
-{% endif %}
-
-<!-- SEÇÃO DE TODOS OS PARLAMENTARES -->
-<h2>Posicionamento de Todos os Parlamentares</h2>
-<p>Use os filtros abaixo para encontrar parlamentares.</p>
-
-<div class="form-row mb-3">
-  <div class="col-md-4">
-    <input type="text" id="filtro-nome" class="form-control" placeholder="Filtrar por nome...">
-  </div>
-  <div class="col-md-4">
-    <select id="filtro-estado" class="form-control">
-      <option value="">Todos os Estados</option>
-    </select>
-  </div>
-  <div class="col-md-4">
-    <select id="filtro-posicao" class="form-control">
-      <option value="">Todos os Status</option>
-      <option value="apoia">Apoia</option>
-      <option value="nao-apoia">Não Apoia</option>
-      <option value="nao-manifestado">Não se Manifestou</option>
-    </select>
-  </div>
-</div>
-
-<div class="table-responsive">
-  <table class="table table-striped table-hover" id="tabela-parlamentares">
-    <thead class="thead-dark">
-      <tr>
-        <th>Nome</th>
-        <th>Partido</th>
-        <th>UF</th>
-        <th>Status</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-
-<!-- MODAL: VER CONTATO -->
-<div class="modal fade" id="modalVerContato" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Contato: <span id="contato-nome"></span></h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <div id="contato-conteudo">
-          <!-- Preenchido via JavaScript -->
+  <!-- Filtros -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
+      <div class="row">
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="filtro-nome" placeholder="Nome do parlamentar">
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" id="filtro-estado">
+            <option value="">Todos os Estados</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" id="filtro-posicao">
+            <option value="">Todas as Posições</option>
+            <option value="apoia">Apoia</option>
+            <option value="nao-apoia">Não Apoia</option>
+            <option value="nao-manifestado">Não se Manifestou</option>
+          </select>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Tabela de Parlamentares -->
+  <div class="table-responsive">
+    <table class="table table-striped" id="tabela-parlamentares">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nome</th>
+          <th>Partido</th>
+          <th>UF</th>
+          <th>Posição</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" style="text-align: center;">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Carregando...</span>
+            </div>
+            <p class="mt-2">Carregando parlamentares...</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<!-- MODAL: ENVIAR INFO -->
+<!-- Modal: Ver Contato -->
+<div class="modal fade" id="modalVerContato" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Contatos: <span id="contato-nome"></span></h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" id="contato-conteudo"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Enviar Informações -->
 <div class="modal fade" id="modalEnviarInfo" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -452,239 +137,314 @@ layout: default
           <input type="hidden" id="parlamentar-id-hidden">
           <input type="hidden" id="parlamentar-nome-hidden">
           
-          <h6>📞 Dados de Contato (permanentes)</h6>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>WhatsApp do Deputado/Senador</label>
-                <input type="text" class="form-control" id="campo-whatsapp" placeholder="11987654321">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Instagram do Deputado/Senador</label>
-                <input type="text" class="form-control" id="campo-instagram" placeholder="@deputadofulano">
-              </div>
-            </div>
+          <h6>📞 Dados de Contato (Permanentes)</h6>
+          <div class="form-group">
+            <label>WhatsApp Pessoal</label>
+            <input type="text" class="form-control" id="campo-whatsapp" placeholder="(XX) XXXXX-XXXX">
           </div>
-          
+          <div class="form-group">
+            <label>Instagram</label>
+            <input type="text" class="form-control" id="campo-instagram" placeholder="@usuario">
+          </div>
           <div class="form-group">
             <label>Telefone do Gabinete</label>
-            <input type="text" class="form-control" id="campo-telefone" placeholder="(61) 3215-5000">
+            <input type="text" class="form-control" id="campo-telefone" placeholder="(61) 3215-XXXX">
           </div>
           
-          <div id="assessores-container">
-            <label>Assessores</label>
-            <div id="assessores-lista"></div>
-            <button type="button" class="btn btn-sm btn-secondary" onclick="adicionarAssessor()">+ Adicionar Assessor</button>
-          </div>
+          <h6>👥 Assessores</h6>
+          <div id="assessores-lista"></div>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="adicionarAssessor()">+ Adicionar Assessor</button>
           
           <hr>
           
-          <h6>📄 Evidência de Posicionamento (específica desta pauta)</h6>
-          <div class="form-group">
-            <label>Link/Prova</label>
-            <input type="url" class="form-control" id="campo-evidencia-url" placeholder="https://...">
-          </div>
+          <h6>📄 Evidência de Posicionamento (Específica desta Pauta)</h6>
           <div class="form-group">
             <label>Tipo de Evidência</label>
             <select class="form-control" id="campo-evidencia-tipo">
-              <option value="noticia">Notícia</option>
+              <option value="link">Link/Notícia</option>
               <option value="video">Vídeo</option>
-              <option value="post_instagram">Post Instagram</option>
-              <option value="post_twitter">Post Twitter/X</option>
-              <option value="discurso">Discurso</option>
-              <option value="outro">Outro</option>
+              <option value="audio">Áudio</option>
+              <option value="documento">Documento</option>
             </select>
           </div>
           <div class="form-group">
+            <label>URL da Evidência</label>
+            <input type="url" class="form-control" id="campo-evidencia-url" placeholder="https://...">
+          </div>
+          <div class="form-group">
             <label>Descrição</label>
-            <textarea class="form-control" id="campo-evidencia-desc" rows="2" placeholder="Breve descrição da evidência..."></textarea>
+            <textarea class="form-control" id="campo-evidencia-desc" rows="2"></textarea>
           </div>
           
           <hr>
           
-          <h6>👤 Seus Dados (opcional)</h6>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Seu Nome</label>
-                <input type="text" class="form-control" id="campo-usuario-nome" placeholder="Como deseja ser identificado">
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Seu Email</label>
-                <input type="email" class="form-control" id="campo-usuario-email" placeholder="Para contato se necessário">
-                <small class="text-muted">Não será publicado</small>
-              </div>
-            </div>
+          <h6>👤 Seus Dados (Para Contato)</h6>
+          <div class="form-group">
+            <label>Seu Nome</label>
+            <input type="text" class="form-control" id="campo-usuario-nome" required>
+          </div>
+          <div class="form-group">
+            <label>Seu Email</label>
+            <input type="email" class="form-control" id="campo-usuario-email" required>
           </div>
           
-          <div class="alert alert-info">
-            ℹ️ Sua contribuição será revisada antes de ser publicada.
-          </div>
-          
-          <button type="submit" class="btn btn-primary btn-block">📤 Enviar Contribuição</button>
+          <button type="submit" class="btn btn-primary">✅ Enviar Informações</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: CAMPANHA EMAIL -->
-<div class="modal fade modal-campanha" id="modalCampanhaEmail" tabindex="-1">
+<!-- Modal: Campanha Email -->
+<div class="modal fade" id="modalCampanhaEmail" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">📧 Campanha por Email</h5>
-        <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+        <h5 class="modal-title">📧 Campanha de Email</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="filtros-campanha">
-          <label><strong>Enviar para:</strong></label>
-          <select id="filtro-campanha-estado" onchange="atualizarFiltrosCampanha()">
-            <option value="">Todos os Estados</option>
-          </select>
-          <select id="filtro-campanha-posicao" onchange="atualizarFiltrosCampanha()">
-            <option value="">Todos</option>
-            <option value="nao-manifestado">Apenas Não Manifestados</option>
-          </select>
-          <div class="mt-2">
-            <strong id="total-emails-campanha">0 emails selecionados</strong>
+        <p><strong>Total:</strong> <span id="total-emails-campanha"></span></p>
+        
+        <div class="form-group">
+          <label>Filtros</label>
+          <div class="row">
+            <div class="col-md-6">
+              <select class="form-control" id="filtro-campanha-estado" onchange="atualizarFiltrosCampanha()">
+                <option value="">Todos os Estados</option>
+              </select>
+            </div>
           </div>
         </div>
         
-        <button class="btn btn-primary btn-lg btn-block" id="btn-abrir-email" onclick="abrirClienteEmail()">
-          📧 Abrir no Meu Email
-        </button>
-        
-        <hr>
-        <p class="text-center text-muted">OU copie manualmente:</p>
-        
         <div class="form-group">
-          <label><strong>📧 PARA:</strong></label>
-          <textarea class="form-control" id="emails-lista" rows="4" readonly></textarea>
-          <button class="btn-copiar btn-block mt-2" onclick="copiarTexto('emails-lista')">📋 Copiar Emails</button>
+          <label>Lista de Emails (CCO)</label>
+          <textarea class="form-control" id="emails-lista" rows="3" readonly></textarea>
         </div>
         
         <div class="form-group">
-          <label><strong>✉️ ASSUNTO:</strong></label>
-          <input type="text" class="form-control" id="email-assunto" readonly>
-          <button class="btn-copiar btn-block mt-2" onclick="copiarTexto('email-assunto')">📋 Copiar Assunto</button>
+          <label>Assunto</label>
+          <input type="text" class="form-control" id="email-assunto">
         </div>
         
         <div class="form-group">
-          <label><strong>📝 MENSAGEM:</strong></label>
-          <textarea class="form-control" id="email-mensagem" rows="10" readonly></textarea>
-          <button class="btn-copiar btn-block mt-2" onclick="copiarTexto('email-mensagem')">📋 Copiar Mensagem</button>
+          <label>Mensagem</label>
+          <textarea class="form-control" id="email-mensagem" rows="8"></textarea>
         </div>
         
-        <div class="alert alert-warning">
-          💡 <strong>Dica:</strong> Use Cco (cópia oculta) para não expor os emails dos outros!
-        </div>
+        <button class="btn btn-primary" onclick="abrirClienteEmail()">📧 Abrir no Cliente de Email</button>
+        <button class="btn btn-secondary" onclick="copiarTexto('emails-lista')">📋 Copiar Emails</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: CAMPANHA WHATSAPP -->
-<div class="modal fade modal-campanha" id="modalCampanhaWhatsApp" tabindex="-1">
+<!-- Modal: Campanha WhatsApp -->
+<div class="modal fade" id="modalCampanhaWhatsApp" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">💬 Campanha por WhatsApp</h5>
-        <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+        <h5 class="modal-title">💬 Campanha WhatsApp</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="filtros-campanha">
-          <label><strong>Enviar para:</strong></label>
-          <select id="filtro-whatsapp-estado" onchange="atualizarListaWhatsApp()">
-            <option value="">Todos os Estados</option>
-          </select>
-          <div class="mt-2">
-            <strong id="total-whatsapp">0 WhatsApps disponíveis</strong>
-          </div>
+        <p><strong>Total:</strong> <span id="total-whatsapp"></span></p>
+        
+        <div class="progress mb-3">
+          <div id="progress-whatsapp" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
         </div>
         
         <div class="form-group">
-          <label><strong>📝 Mensagem (personalize se quiser):</strong></label>
+          <label>Mensagem Modelo</label>
           <textarea class="form-control" id="whatsapp-mensagem" rows="6"></textarea>
+          <small class="text-muted">Use: [NOME], [PARTIDO], [ESTADO]</small>
         </div>
         
-        <div class="progress-envio">
-          <div class="progress">
-            <div class="progress-bar" id="progress-whatsapp" style="width: 0%">0/0</div>
-          </div>
-        </div>
-        
-        <div class="lista-parlamentares-envio" id="lista-whatsapp"></div>
-        
-        <button class="btn btn-primary btn-block" id="btn-iniciar-whatsapp" onclick="iniciarEnvioWhatsApp()">
-          🚀 Iniciar Envio Individual
-        </button>
+        <div id="lista-whatsapp" style="max-height: 400px; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: CAMPANHA INSTAGRAM -->
-<div class="modal fade modal-campanha" id="modalCampanhaInstagram" tabindex="-1">
+<!-- Modal: Campanha Instagram -->
+<div class="modal fade" id="modalCampanhaInstagram" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">📷 Campanha por Instagram</h5>
-        <button type="button" class="close" data-dismiss="modal" style="color: white;">&times;</button>
+        <h5 class="modal-title">📷 Campanha Instagram</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <div class="alert alert-warning">
-          ⚠️ <strong>Atenção:</strong> Instagram não permite mensagem pré-escrita. O app abrirá o Direct e você precisará colar a mensagem manualmente.
+        <p><strong>Total:</strong> <span id="total-instagram"></span></p>
+        
+        <div class="progress mb-3">
+          <div id="progress-instagram" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
         </div>
         
         <div class="form-group">
-          <label><strong>📝 Mensagem para copiar:</strong></label>
-          <textarea class="form-control" id="instagram-mensagem" rows="6"></textarea>
-          <button class="btn-copiar btn-block mt-2" onclick="copiarTexto('instagram-mensagem')">📋 Copiar Mensagem</button>
+          <label>Mensagem Modelo</label>
+          <textarea class="form-control" id="instagram-mensagem" rows="4"></textarea>
         </div>
         
-        <div class="progress-envio">
-          <div class="progress">
-            <div class="progress-bar" id="progress-instagram" style="width: 0%">0/0</div>
-          </div>
-        </div>
-        
-        <div class="lista-parlamentares-envio" id="lista-instagram"></div>
-        
-        <button class="btn btn-primary btn-block" id="btn-iniciar-instagram" onclick="iniciarEnvioInstagram()">
-          🚀 Iniciar Envio Individual
-        </button>
+        <div id="lista-instagram" style="max-height: 400px; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Tracking Container (fixo no canto) -->
-<div class="tracking-container" id="tracking-container" style="display: none;">
-  <h6>📊 Progresso</h6>
+<!-- Widget de Tracking -->
+<div id="tracking-container" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 2px solid #667eea; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; z-index: 1000;">
+  <h6 style="margin: 0 0 10px 0;">📊 Seu Progresso</h6>
   <div id="tracking-items"></div>
-  <button class="btn btn-sm btn-secondary btn-block mt-2" onclick="fecharTracking()">Fechar</button>
+  <button onclick="fecharTracking()" style="margin-top: 10px; background: none; border: none; color: #999; font-size: 12px; cursor: pointer;">Fechar</button>
 </div>
 
-<!-- JavaScript na PARTE 3 -->
-<!-- CONTINUAÇÃO DO _layouts/pauta.html - PARTE 3 -->
-<!-- Cole este conteúdo DEPOIS da PARTE 2 -->
+<style>
+.badge-status {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-apoia { background: #d4edda; color: #155724; }
+.badge-nao-apoia { background: #f8d7da; color: #721c24; }
+.badge-nao-manifestado { background: #e2e3e5; color: #383d41; }
+
+.contato-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.contato-info-titulo {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+.contato-info-valor {
+  color: #666;
+  font-size: 14px;
+}
+
+.btn-acao-contato {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.btn-whatsapp {
+  background: #25D366;
+  color: white;
+}
+.btn-whatsapp:hover {
+  background: #20BA5A;
+  color: white;
+}
+.btn-instagram {
+  background: #E4405F;
+  color: white;
+}
+.btn-instagram:hover {
+  background: #D32F4F;
+  color: white;
+}
+
+.assessores-lista {
+  margin-top: 10px;
+}
+.assessor-item {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 3px solid #667eea;
+}
+
+.parlamentar-envio-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #e0e0e0;
+}
+.parlamentar-envio-item.enviado {
+  background: #d4edda;
+  border-color: #28a745;
+  opacity: 0.7;
+}
+
+.tracking-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+}
+.tracking-item:last-child {
+  border-bottom: none;
+}
+</style>
 
 <script>
-// Dados globais
+// Dados globais - COM TRATAMENTO PARA DADOS VAZIOS
 const pautaSlug = "{{ page.slug | default: page.title | slugify }}";
-const parlamentaresBase = [{% for parl in site.data.parlamentares_base %}{"id": "{{ parl.id }}", "nome": "{{ parl.nome }}", "partido": "{{ parl.partido }}", "uf": "{{ parl.uf }}", "email": "{{ parl.email }}"},{% endfor %}];
-const congressistasExtras = {{ site.data.congressistas_extras | jsonify }};
-const evidenciasPautas = {{ site.data.evidencias_pautas | jsonify }};
+
+// Parlamentares base - verificar se existe
+let parlamentaresBase = [];
+try {
+  parlamentaresBase = [{% for parl in site.data.parlamentares_base %}{"id": "{{ parl.id }}", "nome": "{{ parl.nome }}", "partido": "{{ parl.partido }}", "uf": "{{ parl.uf }}", "email": "{{ parl.email | default: '' }}"},{% endfor %}];
+  
+  // Se não tem dados, carregar da API
+  if (parlamentaresBase.length === 0) {
+    console.log('⚠️ Nenhum dado em parlamentares_base.json. Carregando da API...');
+  }
+} catch (e) {
+  console.error('Erro ao carregar parlamentares_base:', e);
+  parlamentaresBase = [];
+}
+
+// Congressistas extras - verificar se existe
+let congressistasExtras = {};
+try {
+  const tempExtras = {{ site.data.congressistas_extras | jsonify }};
+  congressistasExtras = tempExtras && tempExtras.congressistas ? tempExtras : { congressistas: {} };
+} catch (e) {
+  console.error('Erro ao carregar congressistas_extras:', e);
+  congressistasExtras = { congressistas: {} };
+}
+
+// Evidências - verificar se existe
+let evidenciasPautas = {};
+try {
+  const tempEvidencias = {{ site.data.evidencias_pautas | jsonify }};
+  evidenciasPautas = tempEvidencias || { pautas: {} };
+} catch (e) {
+  console.error('Erro ao carregar evidencias_pautas:', e);
+  evidenciasPautas = { pautas: {} };
+}
 
 // Campanhas (do front matter)
-const campanhaEmail = {{ page.campanha.email | jsonify }};
-const campanhaWhatsApp = {{ page.campanha.whatsapp | jsonify }};
-const campanhaInstagram = {{ page.campanha.instagram | jsonify }};
+let campanhaEmail = null;
+let campanhaWhatsApp = null;
+let campanhaInstagram = null;
+
+try {
+  campanhaEmail = {{ page.campanha.email | jsonify }};
+} catch(e) { campanhaEmail = null; }
+
+try {
+  campanhaWhatsApp = {{ page.campanha.whatsapp | jsonify }};
+} catch(e) { campanhaWhatsApp = null; }
+
+try {
+  campanhaInstagram = {{ page.campanha.instagram | jsonify }};
+} catch(e) { campanhaInstagram = null; }
 
 // Tracking de envios
 let trackingData = JSON.parse(localStorage.getItem('campanhas_tracking') || '{}');
@@ -696,20 +456,63 @@ let assessorCount = 0;
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
-  carregarEstados();
-  renderTabela();
-  carregarContadores();
-  mostrarTracking();
+  console.log('📊 Iniciando pauta...');
+  console.log('Parlamentares carregados:', parlamentaresBase.length);
+  
+  // Se não tem dados, carregar da API
+  if (parlamentaresBase.length === 0) {
+    carregarDeputadosDaAPI();
+  } else {
+    carregarEstados();
+    renderTabela();
+    carregarContadores();
+    mostrarTracking();
+  }
 });
+
+// Carregar deputados da API se não houver dados no Jekyll
+async function carregarDeputadosDaAPI() {
+  console.log('🔄 Carregando deputados da API da Câmara...');
+  
+  try {
+    const proxyUrl = 'https://api.allorigins.win/raw?url=';
+    const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
+    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    const data = await response.json();
+    
+    parlamentaresBase = data.dados.map(dep => ({
+      id: String(dep.id),
+      nome: dep.nome,
+      partido: dep.siglaPartido,
+      uf: dep.siglaUf,
+      email: dep.email || ''
+    }));
+    
+    console.log('✅ Deputados carregados:', parlamentaresBase.length);
+    
+    carregarEstados();
+    renderTabela();
+    carregarContadores();
+    mostrarTracking();
+    
+  } catch (error) {
+    console.error('❌ Erro ao carregar deputados:', error);
+    const tbody = document.querySelector('#tabela-parlamentares tbody');
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">❌ Erro ao carregar parlamentares. Por favor, recarregue a página.</td></tr>';
+  }
+}
 
 // Carregar estados no filtro
 function carregarEstados() {
+  if (parlamentaresBase.length === 0) return;
+  
   const estados = [...new Set(parlamentaresBase.map(p => p.uf))].sort();
-  const selects = ['filtro-estado', 'filtro-campanha-estado', 'filtro-whatsapp-estado'];
+  const selects = ['filtro-estado', 'filtro-campanha-estado'];
   
   selects.forEach(id => {
     const select = document.getElementById(id);
     if (select) {
+      select.innerHTML = '<option value="">Todos os Estados</option>';
       estados.forEach(uf => {
         const option = new Option(uf, uf);
         select.add(option);
@@ -721,6 +524,12 @@ function carregarEstados() {
 // Renderizar tabela de parlamentares
 function renderTabela() {
   const tbody = document.querySelector('#tabela-parlamentares tbody');
+  
+  if (parlamentaresBase.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center">⏳ Carregando parlamentares...</td></tr>';
+    return;
+  }
+  
   const termoNome = document.getElementById('filtro-nome').value.toLowerCase();
   const termoEstado = document.getElementById('filtro-estado').value;
   const termoPosicao = document.getElementById('filtro-posicao').value;
@@ -746,11 +555,13 @@ function renderTabela() {
       <td>${p.uf}</td>
       <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
       <td>
-        <button class="btn btn-sm btn-info" onclick="verContato('${p.id}', '${p.nome}', '${p.email}')">Ver Contato</button>
-        <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${p.id}', '${p.nome}')">Enviar Info</button>
+        <button class="btn btn-sm btn-info" onclick="verContato('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.email}')">Ver Contato</button>
+        <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${p.id}', '${p.nome.replace(/'/g, "\\'")}')">Enviar Info</button>
       </td>
     </tr>`;
   }).join('');
+  
+  console.log('✅ Tabela renderizada com', filtrados.length, 'parlamentares');
 }
 
 // Obter posição do parlamentar
@@ -820,7 +631,7 @@ function verContato(parlamentarId, nome, emailOficial) {
   if (!extras.whatsapp && !extras.telefone_gabinete && !extras.instagram && (!extras.assessores || extras.assessores.length === 0)) {
     html += `<div class="alert alert-warning">
       ⚠️ Nenhuma informação adicional disponível ainda.
-      <br><button class="btn btn-sm btn-primary mt-2" onclick="$('#modalVerContato').modal('hide'); abrirEnviarInfo('${parlamentarId}', '${nome}')">
+      <br><button class="btn btn-sm btn-primary mt-2" onclick="$('#modalVerContato').modal('hide'); abrirEnviarInfo('${parlamentarId}', '${nome.replace(/'/g, "\\'")}')">
         Contribuir com Informações
       </button>
     </div>`;
@@ -872,7 +683,6 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
   const parlamentarId = document.getElementById('parlamentar-id-hidden').value;
   const parlamentarNome = document.getElementById('parlamentar-nome-hidden').value;
   
-  // Coletar dados de contato
   const dados_contato = {};
   if (document.getElementById('campo-whatsapp').value) {
     dados_contato.whatsapp = document.getElementById('campo-whatsapp').value;
@@ -884,7 +694,6 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
     dados_contato.telefone_gabinete = document.getElementById('campo-telefone').value;
   }
   
-  // Coletar assessores
   const assessores = [];
   document.querySelectorAll('#assessores-lista .assessor-item').forEach(item => {
     const nome = item.querySelector('[data-field="nome"]').value;
@@ -898,7 +707,6 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
     dados_contato.assessores = assessores;
   }
   
-  // Coletar evidência
   let evidencia = null;
   const evidenciaUrl = document.getElementById('campo-evidencia-url').value;
   if (evidenciaUrl) {
@@ -941,21 +749,26 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
 
 // CAMPANHAS - Contadores
 function carregarContadores() {
+  if (parlamentaresBase.length === 0) return;
+  
   // Emails
   const totalEmails = parlamentaresBase.filter(p => p.email).length;
-  document.getElementById('contador-emails')?.textContent = `${totalEmails} emails disponíveis`;
+  const elEmails = document.getElementById('contador-emails');
+  if (elEmails) elEmails.textContent = `${totalEmails} emails disponíveis`;
   
   // WhatsApp
   const totalWhatsApp = parlamentaresBase.filter(p => {
     return congressistasExtras.congressistas?.[p.id]?.whatsapp;
   }).length;
-  document.getElementById('contador-whatsapp')?.textContent = `${totalWhatsApp} WhatsApps cadastrados`;
+  const elWhatsApp = document.getElementById('contador-whatsapp');
+  if (elWhatsApp) elWhatsApp.textContent = `${totalWhatsApp} WhatsApps cadastrados`;
   
   // Instagram
   const totalInstagram = parlamentaresBase.filter(p => {
     return congressistasExtras.congressistas?.[p.id]?.instagram;
   }).length;
-  document.getElementById('contador-instagram')?.textContent = `${totalInstagram} perfis cadastrados`;
+  const elInstagram = document.getElementById('contador-instagram');
+  if (elInstagram) elInstagram.textContent = `${totalInstagram} perfis cadastrados`;
 }
 
 // CAMPANHA EMAIL
@@ -992,7 +805,6 @@ function abrirClienteEmail() {
 }
 
 function atualizarFiltrosCampanha() {
-  // Implementar filtros
   abrirCampanhaEmail();
 }
 
@@ -1032,14 +844,13 @@ function enviarWhatsApp(parlamentarId) {
   const parlamentar = parlamentaresBase.find(p => p.id === parlamentarId);
   const whatsapp = congressistasExtras.congressistas[parlamentarId].whatsapp;
   const mensagem = document.getElementById('whatsapp-mensagem').value
-    .replace('[NOME]', parlamentar.nome)
-    .replace('[ESTADO]', parlamentar.uf)
-    .replace('[PARTIDO]', parlamentar.partido);
+    .replace(/\[NOME\]/g, parlamentar.nome)
+    .replace(/\[ESTADO\]/g, parlamentar.uf)
+    .replace(/\[PARTIDO\]/g, parlamentar.partido);
   
   const url = `https://wa.me/55${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensagem)}`;
   window.open(url, '_blank');
   
-  // Marcar como enviado
   if (!trackingData[pautaSlug].whatsapp) trackingData[pautaSlug].whatsapp = [];
   if (!trackingData[pautaSlug].whatsapp.includes(parlamentarId)) {
     trackingData[pautaSlug].whatsapp.push(parlamentarId);
@@ -1088,6 +899,8 @@ function atualizarListaInstagram() {
     </div>`;
   }).join('');
   
+  const elTotal = document.getElementById('total-instagram');
+  if (elTotal) elTotal.textContent = `${parlamentares.length} perfis disponíveis`;
   atualizarProgressoInstagram();
 }
 
@@ -1096,7 +909,6 @@ function enviarInstagram(parlamentarId) {
   const url = `https://ig.me/m/${instagram}`;
   window.open(url, '_blank');
   
-  // Marcar como enviado
   if (!trackingData[pautaSlug].instagram) trackingData[pautaSlug].instagram = [];
   if (!trackingData[pautaSlug].instagram.includes(parlamentarId)) {
     trackingData[pautaSlug].instagram.push(parlamentarId);
@@ -1173,6 +985,3 @@ function copiarTexto(elementId) {
   alert('✅ Copiado para área de transferência!');
 }
 </script>
-
-</body>
-</html>
