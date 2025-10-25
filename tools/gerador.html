@@ -203,23 +203,43 @@
             font-size: 14px;
         }
         
-        .alert {
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
         
-        .alert-info {
-            background: #d1ecf1;
-            border-left-color: #0c5460;
-            color: #0c5460;
+        .card {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
         }
         
-        .alert-warning {
-            background: #fff3cd;
-            border-left-color: #856404;
-            color: #856404;
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .card-info {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
         .output {
@@ -248,6 +268,53 @@
             display: none;
         }
         
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .contribuicao-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .contribuicao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .checkbox-item:hover {
+            background: #e9ecef;
+        }
+        
+        .checkbox-item.checked {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
         .campanha-section {
             background: #f8f9fa;
             border: 2px dashed #dee2e6;
@@ -267,6 +334,25 @@
             padding: 20px;
             margin-bottom: 15px;
             border-left: 4px solid #667eea;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            border-left-color: #0c5460;
+            color: #0c5460;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            border-left-color: #856404;
+            color: #856404;
         }
 
         #parlamentaresList {
@@ -310,6 +396,10 @@
             <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" onclick="showTab('criar')">➕ Criar Pauta</button>
+                <button class="tab" onclick="showTab('gerenciar')">📋 Gerenciar Pautas</button>
+                <button class="tab" onclick="showTab('contribuicoes')">📬 Contribuições</button>
+                <button class="tab" onclick="showTab('dados')">💾 Dados Cadastrados</button>
+                <button class="tab" onclick="showTab('estatisticas')">📊 Estatísticas</button>
             </div>
             
             <!-- Tab: Criar Pauta -->
@@ -422,12 +512,89 @@
                     <button class="btn" onclick="copiarCodigo()">📋 Copiar</button>
                 </div>
             </div>
+            
+            <!-- Tab: Gerenciar Pautas -->
+            <div id="tab-gerenciar" class="tab-content">
+                <input type="text" id="searchPautas" class="search-input" placeholder="🔍 Buscar pauta..." oninput="filterPautas()">
+                
+                <div id="loadingPautas" class="loading">
+                    <div class="spinner"></div>
+                    <span>Carregando pautas...</span>
+                </div>
+                
+                <div id="pautasGrid" class="grid"></div>
+            </div>
+
+            <!-- Tab: Contribuições -->
+            <div id="tab-contribuicoes" class="tab-content">
+                <h3>📬 Contribuições Pendentes de Aprovação</h3>
+                <p style="color: #666; margin-bottom: 20px;">
+                    Revise as contribuições enviadas pelos usuários e aprove seletivamente.
+                </p>
+                
+                <div id="loadingContribuicoes" class="loading">
+                    <div class="spinner"></div>
+                    <span>Carregando contribuições...</span>
+                </div>
+                
+                <div id="contribuicoesLista"></div>
+                
+                <div id="semContribuicoes" class="hidden" style="text-align: center; padding: 40px; color: #999;">
+                    <h4>🎉 Nenhuma contribuição pendente!</h4>
+                    <p>Quando usuários enviarem informações, aparecerão aqui.</p>
+                </div>
+            </div>
+
+            <!-- Tab: Dados Cadastrados -->
+            <div id="tab-dados" class="tab-content">
+                <h3>💾 Dados Cadastrados dos Congressistas</h3>
+                
+                <div class="form-group">
+                    <input type="text" id="searchDados" class="search-input" placeholder="🔍 Buscar por nome..." oninput="filtrarDados()">
+                </div>
+                
+                <div id="loadingDados" class="loading">
+                    <div class="spinner"></div>
+                    <span>Carregando dados...</span>
+                </div>
+                
+                <div id="dadosLista" class="grid"></div>
+            </div>
+
+            <!-- Tab: Estatísticas -->
+            <div id="tab-estatisticas" class="tab-content">
+                <h3>📊 Estatísticas de Mobilização</h3>
+                
+                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="card">
+                        <div class="card-title" id="stat-total-pautas">0</div>
+                        <div class="card-info">Pautas Cadastradas</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" id="stat-total-contribuicoes">0</div>
+                        <div class="card-info">Contribuições Recebidas</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" id="stat-total-dados">0</div>
+                        <div class="card-info">Congressistas com Dados Extras</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" id="stat-total-evidencias">0</div>
+                        <div class="card-info">Evidências Cadastradas</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="atualizarEstatisticas()">🔄 Atualizar</button>
+            </div>
         </div>
     </div>
     
     <script>
 // Variáveis globais
 let deputados = [];
+let pautas = [];
+let contribuicoesPendentes = [];
+let congressistasExtras = {};
 let sessionToken = null;
 let parlamentarCount = 0;
 
@@ -456,6 +623,7 @@ async function login() {
             document.getElementById('mainContent').classList.remove('hidden');
             
             loadDeputados();
+            carregarDados();
         } else {
             errorEl.textContent = '❌ Senha incorreta!';
             errorEl.classList.remove('hidden');
@@ -478,6 +646,7 @@ function checkAuth() {
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainContent').classList.remove('hidden');
         loadDeputados();
+        carregarDados();
     }
 }
 
@@ -511,34 +680,407 @@ async function loadDeputados() {
     }
 }
 
+// Carregar todos os dados
+async function carregarDados() {
+    await Promise.all([
+        carregarPautas(),
+        carregarCongressistas(),
+        carregarContribuicoes()
+    ]);
+    atualizarEstatisticas();
+}
+
+// Carregar pautas
+async function carregarPautas() {
+    try {
+        document.getElementById('loadingPautas').classList.remove('hidden');
+        
+        const response = await fetch(`${API_URL}/api/pautas`);
+        const data = await response.json();
+        pautas = data.pautas || [];
+        
+        document.getElementById('loadingPautas').classList.add('hidden');
+        renderPautas();
+    } catch (error) {
+        console.error('Erro ao carregar pautas:', error);
+        document.getElementById('loadingPautas').className = 'loading error';
+        document.getElementById('loadingPautas').innerHTML = '<span>❌ Erro ao carregar</span>';
+    }
+}
+
+// Render pautas
+function renderPautas() {
+    const grid = document.getElementById('pautasGrid');
+    
+    if (pautas.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Nenhuma pauta encontrada.</p>';
+        return;
+    }
+    
+    grid.innerHTML = pautas.map(pauta => `
+        <div class="card">
+            <div class="card-title">${pauta.title}</div>
+            <div class="card-info">
+                ${pauta.description}<br>
+                <strong>Casa:</strong> ${pauta.casa}<br>
+                <strong>Status:</strong> ${pauta.status}
+                ${pauta.featured ? '<br>⭐ <strong>Pauta Principal</strong>' : ''}
+                ${pauta.is_plenary_vote ? '<br>🏛️ <strong>Votação em Plenário</strong>' : ''}
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-small" onclick="verPauta('${pauta.filename}')">👁️ Ver</button>
+                <button class="btn btn-small btn-danger" onclick="excluirPauta('${pauta.filename}', '${pauta.title}')">🗑️ Excluir</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterPautas() {
+    const query = document.getElementById('searchPautas').value.toLowerCase();
+    const cards = document.querySelectorAll('#pautasGrid .card');
+    
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
+    });
+}
+
+function verPauta(filename) {
+    const url = `${window.location.origin}/pautas/${filename.replace('.md', '')}/`;
+    window.open(url, '_blank');
+}
+
+async function excluirPauta(filename, title) {
+    if (!confirm(`⚠️ Tem certeza que deseja excluir a pauta "${title}"?\n\nEsta ação não pode ser desfeita!`)) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/api/pautas`, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ filename })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Pauta excluída com sucesso!');
+            carregarPautas();
+        } else {
+            alert('❌ Erro: ' + data.message);
+        }
+    } catch (error) {
+        alert('❌ Erro ao excluir: ' + error.message);
+    }
+}
+
+// Carregar congressistas extras
+async function carregarCongressistas() {
+    try {
+        const response = await fetch(`${API_URL}/api/congressistas`);
+        const data = await response.json();
+        congressistasExtras = data.congressistas || {};
+        renderDados();
+    } catch (error) {
+        console.error('Erro ao carregar congressistas:', error);
+    }
+}
+
+// Carregar contribuições
+async function carregarContribuicoes() {
+    try {
+        document.getElementById('loadingContribuicoes').classList.remove('hidden');
+        
+        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`);
+        const data = await response.json();
+        contribuicoesPendentes = data.contribuicoes || [];
+        
+        document.getElementById('loadingContribuicoes').classList.add('hidden');
+        
+        if (contribuicoesPendentes.length === 0) {
+            document.getElementById('semContribuicoes').classList.remove('hidden');
+        } else {
+            document.getElementById('semContribuicoes').classList.add('hidden');
+            renderContribuicoes();
+        }
+    } catch (error) {
+        console.error('Erro ao carregar contribuições:', error);
+        document.getElementById('loadingContribuicoes').className = 'loading error';
+        document.getElementById('loadingContribuicoes').innerHTML = '<span>❌ Erro ao carregar</span>';
+    }
+}
+
+// Render contribuições
+function renderContribuicoes() {
+    const lista = document.getElementById('contribuicoesLista');
+    
+    lista.innerHTML = contribuicoesPendentes.map((contrib, index) => {
+        let dadosHtml = '';
+        
+        if (contrib.dados_contato) {
+            dadosHtml += '<div style="margin-bottom: 15px;"><strong>📞 Dados de Contato:</strong>';
+            if (contrib.dados_contato.whatsapp) {
+                dadosHtml += `<div class="checkbox-item" id="check-whatsapp-${index}">
+                    <input type="checkbox" onchange="toggleCheck('check-whatsapp-${index}')">
+                    <span>WhatsApp: ${contrib.dados_contato.whatsapp}</span>
+                </div>`;
+            }
+            if (contrib.dados_contato.instagram) {
+                dadosHtml += `<div class="checkbox-item" id="check-instagram-${index}">
+                    <input type="checkbox" onchange="toggleCheck('check-instagram-${index}')">
+                    <span>Instagram: ${contrib.dados_contato.instagram}</span>
+                </div>`;
+            }
+            if (contrib.dados_contato.telefone_gabinete) {
+                dadosHtml += `<div class="checkbox-item" id="check-telefone-${index}">
+                    <input type="checkbox" onchange="toggleCheck('check-telefone-${index}')">
+                    <span>Tel. Gabinete: ${contrib.dados_contato.telefone_gabinete}</span>
+                </div>`;
+            }
+            if (contrib.dados_contato.assessores) {
+                contrib.dados_contato.assessores.forEach((ass, i) => {
+                    dadosHtml += `<div class="checkbox-item" id="check-assessor-${index}-${i}">
+                        <input type="checkbox" onchange="toggleCheck('check-assessor-${index}-${i}')">
+                        <span>Assessor: ${ass.nome} (${ass.whatsapp})</span>
+                    </div>`;
+                });
+            }
+            dadosHtml += '</div>';
+        }
+        
+        if (contrib.evidencia) {
+            dadosHtml += `<div><strong>📄 Evidência:</strong>
+                <div class="checkbox-item" id="check-evidencia-${index}">
+                    <input type="checkbox" onchange="toggleCheck('check-evidencia-${index}')">
+                    <span>${contrib.evidencia.tipo}: <a href="${contrib.evidencia.url}" target="_blank">${contrib.evidencia.url}</a></span>
+                </div>
+            </div>`;
+        }
+        
+        return `<div class="contribuicao-card">
+            <div class="contribuicao-header">
+                <div>
+                    <h4>${contrib.parlamentar_nome}</h4>
+                    <small style="color: #666;">ID: ${contrib.parlamentar_id} | Pauta: ${contrib.pauta_slug || 'N/A'}</small><br>
+                    <small style="color: #666;">Enviado por: ${contrib.usuario_nome} em ${new Date(contrib.criado_em).toLocaleDateString('pt-BR')}</small>
+                </div>
+                <a href="${contrib.pr_url}" target="_blank" class="btn btn-small">Ver PR</a>
+            </div>
+            
+            ${dadosHtml}
+            
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="btn" onclick="aprovarSelecionados(${contrib.pr_number}, ${index})">✅ Aprovar Selecionados</button>
+                <button class="btn btn-danger" onclick="rejeitarContribuicao(${contrib.pr_number})">❌ Rejeitar Tudo</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function toggleCheck(id) {
+    const el = document.getElementById(id);
+    const checkbox = el.querySelector('input[type="checkbox"]');
+    if (checkbox.checked) {
+        el.classList.add('checked');
+    } else {
+        el.classList.remove('checked');
+    }
+}
+
+// Aprovar contribuição
+async function aprovarSelecionados(prNumber, index) {
+    const contrib = contribuicoesPendentes[index];
+    
+    // Coletar dados aprovados
+    const dadosAprovados = { contato: {}, evidencia: null };
+    
+    // WhatsApp
+    const checkWhatsapp = document.querySelector(`#check-whatsapp-${index} input`);
+    if (checkWhatsapp && checkWhatsapp.checked && contrib.dados_contato.whatsapp) {
+        dadosAprovados.contato.whatsapp = contrib.dados_contato.whatsapp;
+    }
+    
+    // Instagram
+    const checkInstagram = document.querySelector(`#check-instagram-${index} input`);
+    if (checkInstagram && checkInstagram.checked && contrib.dados_contato.instagram) {
+        dadosAprovados.contato.instagram = contrib.dados_contato.instagram;
+    }
+    
+    // Telefone
+    const checkTelefone = document.querySelector(`#check-telefone-${index} input`);
+    if (checkTelefone && checkTelefone.checked && contrib.dados_contato.telefone_gabinete) {
+        dadosAprovados.contato.telefone_gabinete = contrib.dados_contato.telefone_gabinete;
+    }
+    
+    // Assessores
+    if (contrib.dados_contato.assessores) {
+        dadosAprovados.contato.assessores = [];
+        contrib.dados_contato.assessores.forEach((ass, i) => {
+            const check = document.querySelector(`#check-assessor-${index}-${i} input`);
+            if (check && check.checked) {
+                dadosAprovados.contato.assessores.push(ass);
+            }
+        });
+    }
+    
+    // Evidência
+    const checkEvidencia = document.querySelector(`#check-evidencia-${index} input`);
+    if (checkEvidencia && checkEvidencia.checked && contrib.evidencia) {
+        dadosAprovados.evidencia = contrib.evidencia;
+        dadosAprovados.evidencia.posicao = 'nao-manifestado';
+    }
+    
+    if (Object.keys(dadosAprovados.contato).length === 0 && !dadosAprovados.evidencia) {
+        alert('⚠️ Selecione pelo menos um item para aprovar!');
+        return;
+    }
+    
+    if (!confirm('Confirma aprovação dos itens selecionados?')) return;
+    
+    try {
+        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ pr_number: prNumber, dados_aprovados: dadosAprovados })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Contribuição aprovada com sucesso!');
+            carregarContribuicoes();
+            carregarCongressistas();
+        } else {
+            alert('❌ Erro: ' + (data.error || 'Tente novamente'));
+        }
+    } catch (error) {
+        alert('❌ Erro ao aprovar: ' + error.message);
+    }
+}
+
+// Rejeitar contribuição
+async function rejeitarContribuicao(prNumber) {
+    if (!confirm('Tem certeza que deseja rejeitar toda esta contribuição?')) return;
+    
+    alert('Para rejeitar, feche o PR manualmente no GitHub.');
+    window.open(`https://github.com/juliocjd/pautas-socioeducativas/pull/${prNumber}`, '_blank');
+}
+
+// Render dados cadastrados
+function renderDados() {
+    const lista = document.getElementById('dadosLista');
+    document.getElementById('loadingDados').classList.add('hidden');
+    
+    const entries = Object.entries(congressistasExtras);
+    
+    if (entries.length === 0) {
+        lista.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Nenhum dado cadastrado ainda.</p>';
+        return;
+    }
+    
+    lista.innerHTML = entries.map(([id, dados]) => {
+        const parlamentar = deputados.find(d => d.id === id);
+        const nome = parlamentar ? parlamentar.nome : `ID: ${id}`;
+        
+        let infos = [];
+        if (dados.whatsapp) infos.push(`📱 ${dados.whatsapp}`);
+        if (dados.instagram) infos.push(`📷 @${dados.instagram}`);
+        if (dados.telefone_gabinete) infos.push(`📞 ${dados.telefone_gabinete}`);
+        if (dados.assessores) infos.push(`👥 ${dados.assessores.length} assessor(es)`);
+        
+        return `<div class="card">
+            <div class="card-title">${nome}</div>
+            <div class="card-info">
+                ${infos.join('<br>')}
+                <br><small>Atualizado: ${dados.ultima_atualizacao || 'N/A'}</small>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-small btn-danger" onclick="excluirDados('${id}', '${nome}')">🗑️ Excluir</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function filtrarDados() {
+    const query = document.getElementById('searchDados').value.toLowerCase();
+    const cards = document.querySelectorAll('#dadosLista .card');
+    
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? 'block' : 'none';
+    });
+}
+
+async function excluirDados(parlamentarId, nome) {
+    if (!confirm(`Tem certeza que deseja excluir todos os dados de ${nome}?`)) return;
+    
+    try {
+        const response = await fetch(`${API_URL}/api/congressistas`, {
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ parlamentar_id: parlamentarId })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Dados excluídos!');
+            carregarCongressistas();
+        } else {
+            alert('❌ Erro: ' + data.message);
+        }
+    } catch (error) {
+        alert('❌ Erro: ' + error.message);
+    }
+}
+
+// Estatísticas
+async function atualizarEstatisticas() {
+    document.getElementById('stat-total-pautas').textContent = pautas.length || '0';
+    document.getElementById('stat-total-contribuicoes').textContent = contribuicoesPendentes.length || '0';
+    document.getElementById('stat-total-dados').textContent = Object.keys(congressistasExtras).length || '0';
+    
+    try {
+        const response = await fetch(`${API_URL}/api/evidencias`);
+        const data = await response.json();
+        let totalEvidencias = 0;
+        if (data.pautas) {
+            Object.values(data.pautas).forEach(pauta => {
+                totalEvidencias += Object.keys(pauta).length;
+            });
+        }
+        document.getElementById('stat-total-evidencias').textContent = totalEvidencias;
+    } catch (error) {
+        console.error('Erro ao contar evidências:', error);
+    }
+}
+
 // Handler para mudança no checkbox de votação em plenário
 function handlePlenaryVoteChange() {
     const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
-    const membrosChaveSection = document.getElementById('membrosChaveSection');
     const btnAddParlamentar = document.getElementById('btnAddParlamentar');
     const parlamentaresList = document.getElementById('parlamentaresList');
     const infoMembrosChave = document.getElementById('infoMembrosChave');
     
     if (isPlenaryVote) {
-        // Mostrar aviso
         infoMembrosChave.classList.remove('hidden');
-        
-        // Desabilitar botão de adicionar
         btnAddParlamentar.disabled = true;
         btnAddParlamentar.style.opacity = '0.5';
-        
-        // Limpar lista de parlamentares
-        parlamentaresList.innerHTML = '<p style="color: #999; text-align: center;">✅ Votação em Plenário: Todos os deputados serão incluídos automaticamente</p>';
-        
+        parlamentaresList.innerHTML = '<p style="color: #28a745; text-align: center; font-weight: 600;">✅ Votação em Plenário: Todos os deputados serão incluídos automaticamente</p>';
     } else {
-        // Ocultar aviso
         infoMembrosChave.classList.add('hidden');
-        
-        // Habilitar botão de adicionar
         btnAddParlamentar.disabled = deputados.length === 0;
         btnAddParlamentar.style.opacity = '1';
-        
-        // Restaurar lista vazia
         parlamentaresList.innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
     }
 }
@@ -562,7 +1104,7 @@ function handleFeaturedChange() {
     }
 }
 
-// Adicionar Parlamentar (apenas para votações que não são em plenário)
+// Adicionar Parlamentar
 function addParlamentar() {
     if (document.getElementById('is_plenary_vote').checked) {
         alert('⚠️ Esta é uma votação em plenário. Não é necessário adicionar membros-chave.');
@@ -606,7 +1148,7 @@ function addParlamentar() {
     lista.appendChild(item);
 }
 
-// Gerar Pauta (VERSÃO AUTOMÁTICA)
+// Gerar Pauta
 async function gerarPauta(e) {
     e.preventDefault();
     
@@ -696,12 +1238,10 @@ is_plenary_vote: ${isPlenaryVote}
         const data = await response.json();
         
         if (data.success) {
-            // Mostrar sucesso
             document.getElementById('codeOutput').textContent = yaml;
             document.getElementById('filenameOutput').textContent = filename;
             document.getElementById('outputCriar').classList.remove('hidden');
             
-            // Mensagem especial se for pauta principal
             let alertMsg = `✅ Pauta criada com sucesso!\n\n📄 Arquivo: ${filename}\n🔗 GitHub: ${data.url}\n🌐 Site: ${data.site_url}`;
             
             if (featured) {
@@ -716,13 +1256,13 @@ is_plenary_vote: ${isPlenaryVote}
             
             alert(alertMsg);
             
-            // Resetar formulário
             document.getElementById('pautaForm').reset();
             document.getElementById('parlamentaresList').innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
             document.getElementById('infoMembrosChave').classList.add('hidden');
             
-            // Scroll para o output
             document.getElementById('outputCriar').scrollIntoView({ behavior: 'smooth' });
+            
+            carregarPautas();
         } else {
             if (response.status === 409) {
                 alert(`⚠️ ${data.error}\n\nArquivo: ${data.filename}\n\n${data.suggestion}`);
@@ -761,6 +1301,11 @@ function showTab(tabName) {
     
     event.target.classList.add('active');
     document.getElementById(`tab-${tabName}`).classList.add('active');
+    
+    if (tabName === 'gerenciar') carregarPautas();
+    if (tabName === 'contribuicoes') carregarContribuicoes();
+    if (tabName === 'dados') renderDados();
+    if (tabName === 'estatisticas') atualizarEstatisticas();
 }
 
 // Inicializar
