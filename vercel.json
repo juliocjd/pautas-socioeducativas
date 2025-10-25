@@ -1,17 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/auth-admin.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "api/pautas.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "**/*.html",
-      "use": "@vercel/static"
-    }
-  ]
+  "buildCommand": "bash build.sh",
+  "outputDirectory": "_site",
+  "installCommand": "gem install bundler && bundle install"
 }
