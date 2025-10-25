@@ -1,237 +1,505 @@
----
-layout: default
----
-
-<div class="container">
-  <h1>{{ page.title }}</h1>
-  <p class="lead">{{ page.description }}</p>
-  <p><strong>Casa Legislativa:</strong> {{ page.casa }}</p>
-  <p><strong>Status:</strong> {{ page.status }}</p>
-  <hr>
-
-  <!-- SEÇÃO CONDICIONAL DE MEMBROS-CHAVE OU PLENÁRIO -->
-  {% if page.key_players %}
-    <div class="card mb-4">
-      <div class="card-header">
-        <!-- TÍTULO DINÂMICO -->
-        {% if page.is_plenary_vote %}
-          <h3>Votação em Plenário</h3>
-        {% else %}
-          <h3>Membros-Chave nesta Pauta</h3>
-        {% endif %}
-      </div>
-      <div class="card-body">
-        <!-- TEXTO DINÂMICO -->
-        {% if page.is_plenary_vote %}
-          <p class="text-muted font-weight-bold">Essa pauta será julgada por todos os Deputados Federais. Use a tabela abaixo para filtrar e encontrar os parlamentares.</p>
-        {% else %}
-          <p class="text-muted">Estes são os parlamentares com papéis decisivos para o trâmite atual desta proposta nesta fase do projeto. O Relator, se houver, é listado primeiro.</p>
-        {% endif %}
-        
-        <!-- TABELA APENAS SE NÃO FOR PLENÁRIO -->
-        {% unless page.is_plenary_vote %}
-          <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Nome</th>
-                  <th>Papel/Função</th>
-                  <th>Partido</th>
-                  <th>UF</th>
-                  <th>Status</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Lógica de ordenação (Relator no topo) -->
-                {% assign relators = "" | split: "" %}
-                {% assign other_players = "" | split: "" %}
-                {% for player in page.key_players %}
-                  {% assign player_role_downcase = player.role | downcase %}
-                  {% if player_role_downcase contains "relator" %}
-                    {% assign relators = relators | push: player %}
-                  {% else %}
-                    {% assign other_players = other_players | push: player %}
-                  {% endif %}
-                {% endfor %}
-                {% assign sorted_players = relators | concat: other_players %}
-
-                {% for player in sorted_players %}
-                  <!-- ALTERAÇÃO: Busca pelo NOME em vez do ID -->
-                  {% assign parlamentar = site.data.parlamentares_base | where: "nome", player.nome | first %}
-                  {% if parlamentar %}
-                    <tr>
-                      <td><strong>{{ parlamentar.nome }}</strong></td>
-                      <td><span class="badge badge-info">{{ player.role }}</span></td>
-                      <td>{{ parlamentar.partido }}</td>
-                      <td>{{ parlamentar.uf }}</td>
-                      <td>
-                        {% assign apoioStatus = 'nao-manifestado' %}
-                        {% assign statusBadge = '<span class="badge badge-secondary">Não se Manifestou</span>' %}
-                        {% if apoios[parlamentar.id] %}
-                          {% assign apoioStatus = apoios[parlamentar.id].status %}
-                          {% if apoioStatus == 'apoia' %}{% assign statusBadge = '<span class="badge badge-success">Apoia</span>' %}{% endif %}
-                          {% if apoioStatus == 'nao-apoia' %}{% assign statusBadge = '<span class="badge badge-danger">Não Apoia</span>' %}{% endif %}
-                        {% endif %}
-                        {{ statusBadge }}
-                      </td>
-                      <td>
-                        <button class="btn btn-sm btn-info" onclick="alert('Contato: {{ contatos[parlamentar.id].telefone | default: 'N/A' }}')">Ver Contato</button>
-                        <!-- ALTERAÇÃO: Botão agora usa apenas o data-nome -->
-                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-nome="{{ parlamentar.nome }}">Enviar Info</button>
-                      </td>
-                    </tr>
-                  {% endif %}
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        {% endunless %}
-      </div>
-    </div>
-  {% endif %}
-
-  <!-- SEÇÃO DE TODOS OS PARLAMENTARES -->
-  <h2>Posicionamento de Todos os Parlamentares</h2>
-  <p>Use os filtros abaixo para encontrar os parlamentares do seu estado.</p>
-
-  <!-- Filtros -->
-  <div class="form-row mb-3">
-    <div class="col-md-4">
-      <input type="text" id="filtro-nome" class="form-control" placeholder="Filtrar por nome...">
-    </div>
-    <div class="col-md-4">
-      <select id="filtro-estado" class="form-control">
-        <option value="">Todos os Estados</option>
-      </select>
-    </div>
-    <div class="col-md-4">
-      <select id="filtro-apoio" class="form-control">
-        <option value="">Todos os Status</option>
-        <option value="apoia">Apoia</option>
-        <option value="nao-apoia">Não Apoia</option>
-        <option value="nao-manifestado">Não se Manifestou</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- Tabela de Parlamentares -->
-  <div class="table-responsive">
-    <table class="table table-striped table-hover" id="tabela-parlamentares">
-      <thead class="thead-dark">
-        <tr>
-          <th>Nome</th>
-          <th>Partido</th>
-          <th>UF</th>
-          <th>Status</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- As linhas da tabela serão geradas por JavaScript -->
-      </tbody>
-    </table>
-  </div>
-</div>
+<!-- CONTINUAÇÃO DO _layouts/pauta.html - PARTE 3 -->
+<!-- Cole este conteúdo DEPOIS da PARTE 2 -->
 
 <script>
-  // Dados vindos de _data/*
-  const parlamentaresBase = [{% for parl in site.data.parlamentares_base %}{"id": "{{ parl.id }}", "nome": "{{ parl.nome }}", "partido": "{{ parl.partido }}", "uf": "{{ parl.uf }}"},{% endfor %}];
-  const apoios = {{ site.data.apoios | jsonify }};
-  const contatos = {{ site.data.contatos | jsonify }};
+// Dados globais
+const pautaSlug = "{{ page.slug | default: page.title | slugify }}";
+const parlamentaresBase = [{% for parl in site.data.parlamentares_base %}{"id": "{{ parl.id }}", "nome": "{{ parl.nome }}", "partido": "{{ parl.partido }}", "uf": "{{ parl.uf }}", "email": "{{ parl.email }}"},{% endfor %}];
+const congressistasExtras = {{ site.data.congressistas_extras | jsonify }};
+const evidenciasPautas = {{ site.data.evidencias_pautas | jsonify }};
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const tabelaBody = document.querySelector('#tabela-parlamentares tbody');
-    const filtroNome = document.getElementById('filtro-nome');
-    const filtroEstado = document.getElementById('filtro-estado');
-    const filtroApoio = document.getElementById('filtro-apoio');
-    const filtroEstadoSelect = document.getElementById('filtro-estado');
+// Campanhas (do front matter)
+const campanhaEmail = {{ page.campanha.email | jsonify }};
+const campanhaWhatsApp = {{ page.campanha.whatsapp | jsonify }};
+const campanhaInstagram = {{ page.campanha.instagram | jsonify }};
 
-    // Preencher filtro de estados
-    const estados = [...new Set(parlamentaresBase.map(p => p.uf))].sort();
-    estados.forEach(estado => {
-      const option = new Option(estado, estado);
-      filtroEstadoSelect.add(option);
-    });
+// Tracking de envios
+let trackingData = JSON.parse(localStorage.getItem('campanhas_tracking') || '{}');
+if (!trackingData[pautaSlug]) {
+  trackingData[pautaSlug] = { email: null, whatsapp: [], instagram: [] };
+}
 
-    function renderTable() {
-      tabelaBody.innerHTML = '';
-      const termoNome = filtroNome.value.toLowerCase();
-      const termoEstado = filtroEstado.value;
-      const termoApoio = filtroApoio.value;
+let assessorCount = 0;
 
-      const parlamentaresFiltrados = parlamentaresBase.filter(parlamentar => {
-        const nomeMatch = parlamentar.nome.toLowerCase().includes(termoNome);
-        const estadoMatch = termoEstado === '' || parlamentar.uf === termoEstado;
-        
-        let apoioStatus = 'nao-manifestado';
-        if (apoios[parlamentar.id]) {
-            apoioStatus = apoios[parlamentar.id].status;
-        }
-        const apoioMatch = termoApoio === '' || apoioStatus === termoApoio;
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+  carregarEstados();
+  renderTabela();
+  carregarContadores();
+  mostrarTracking();
+});
 
-        return nomeMatch && estadoMatch && apoioMatch;
-      });
-
-      parlamentaresFiltrados.forEach(parlamentar => {
-        const row = document.createElement('tr');
-        
-        let apoioStatus = 'nao-manifestado';
-        let statusBadge = '<span class="badge badge-secondary">Não se Manifestou</span>';
-        if (apoios[parlamentar.id]) {
-            apoioStatus = apoios[parlamentar.id].status;
-            if (apoioStatus === 'apoia') statusBadge = '<span class="badge badge-success">Apoia</span>';
-            if (apoioStatus === 'nao-apoia') statusBadge = '<span class="badge badge-danger">Não Apoia</span>';
-        }
-
-        const contatoInfo = contatos[parlamentar.id] ? `Telefone: ${contatos[parlamentar.id].telefone || 'N/A'}` : 'Contato não disponível';
-
-        row.innerHTML = `
-          <td>${parlamentar.nome}</td>
-          <td>${parlamentar.partido}</td>
-          <td>${parlamentar.uf}</td>
-          <td>${statusBadge}</td>
-          <td>
-            <button class="btn btn-sm btn-info" onclick="alert('${contatoInfo}')">Ver Contato</button>
-            <!-- ALTERAÇÃO: Botão da tabela geral também usa apenas o data-nome -->
-            <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalContribuicao" data-nome="${parlamentar.nome}">Enviar Info</button>
-          </td>
-        `;
-        tabelaBody.appendChild(row);
+// Carregar estados no filtro
+function carregarEstados() {
+  const estados = [...new Set(parlamentaresBase.map(p => p.uf))].sort();
+  const selects = ['filtro-estado', 'filtro-campanha-estado', 'filtro-whatsapp-estado'];
+  
+  selects.forEach(id => {
+    const select = document.getElementById(id);
+    if (select) {
+      estados.forEach(uf => {
+        const option = new Option(uf, uf);
+        select.add(option);
       });
     }
-
-    filtroNome.addEventListener('input', renderTable);
-    filtroEstado.addEventListener('change', renderTable);
-    filtroApoio.addEventListener('change', renderTable);
-
-    renderTable();
-
-    // LÓGICA DO MODAL ATUALIZADA (só trabalha com o nome)
-    $('#modalContribuicao').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var parlamentarNome = button.data('nome');
-      
-      var modal = $(this);
-      modal.find('.modal-title').text('Enviar informação sobre: ' + parlamentarNome);
-      modal.find('#parlamentar-nome').val(parlamentarNome);
-    });
   });
-</script>
+}
 
-<!-- Modal de Contribuição -->
-<div class="modal fade" id="modalContribuicao" tabindex="-1" role="dialog" aria-labelledby="modalContribuicaoLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalContribuicaoLabel">Enviar Informação</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+// Renderizar tabela de parlamentares
+function renderTabela() {
+  const tbody = document.querySelector('#tabela-parlamentares tbody');
+  const termoNome = document.getElementById('filtro-nome').value.toLowerCase();
+  const termoEstado = document.getElementById('filtro-estado').value;
+  const termoPosicao = document.getElementById('filtro-posicao').value;
+  
+  const filtrados = parlamentaresBase.filter(p => {
+    const nomeMatch = p.nome.toLowerCase().includes(termoNome);
+    const estadoMatch = !termoEstado || p.uf === termoEstado;
+    const posicao = obterPosicao(p.id);
+    const posicaoMatch = !termoPosicao || posicao === termoPosicao;
+    return nomeMatch && estadoMatch && posicaoMatch;
+  });
+  
+  tbody.innerHTML = filtrados.map(p => {
+    const posicao = obterPosicao(p.id);
+    const badgeClass = posicao === 'apoia' ? 'badge-apoia' : 
+                       posicao === 'nao-apoia' ? 'badge-nao-apoia' : 'badge-nao-manifestado';
+    const statusTexto = posicao === 'apoia' ? 'Apoia' : 
+                        posicao === 'nao-apoia' ? 'Não Apoia' : 'Não se Manifestou';
+    
+    return `<tr>
+      <td>${p.nome}</td>
+      <td>${p.partido}</td>
+      <td>${p.uf}</td>
+      <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
+      <td>
+        <button class="btn btn-sm btn-info" onclick="verContato('${p.id}', '${p.nome}', '${p.email}')">Ver Contato</button>
+        <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${p.id}', '${p.nome}')">Enviar Info</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// Obter posição do parlamentar
+function obterPosicao(parlamentarId) {
+  if (evidenciasPautas.pautas && evidenciasPautas.pautas[pautaSlug] && evidenciasPautas.pautas[pautaSlug][parlamentarId]) {
+    return evidenciasPautas.pautas[pautaSlug][parlamentarId].posicao || 'nao-manifestado';
+  }
+  return 'nao-manifestado';
+}
+
+// Filtros
+document.getElementById('filtro-nome')?.addEventListener('input', renderTabela);
+document.getElementById('filtro-estado')?.addEventListener('change', renderTabela);
+document.getElementById('filtro-posicao')?.addEventListener('change', renderTabela);
+
+// VER CONTATO
+function verContato(parlamentarId, nome, emailOficial) {
+  const extras = congressistasExtras.congressistas?.[parlamentarId] || {};
+  
+  let html = `<div class="contato-info">
+    <div class="contato-info-titulo">📧 Email Oficial</div>
+    <div class="contato-info-valor">${emailOficial || 'Não disponível'}</div>
+  </div>`;
+  
+  if (extras.whatsapp) {
+    html += `<div class="contato-info">
+      <div class="contato-info-titulo">📱 WhatsApp Pessoal</div>
+      <a href="https://wa.me/55${extras.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp">
+        💬 Enviar WhatsApp
+      </a>
+    </div>`;
+  }
+  
+  if (extras.telefone_gabinete) {
+    html += `<div class="contato-info">
+      <div class="contato-info-titulo">📞 Telefone Gabinete</div>
+      <div class="contato-info-valor">${extras.telefone_gabinete}</div>
+    </div>`;
+  }
+  
+  if (extras.instagram) {
+    html += `<div class="contato-info">
+      <div class="contato-info-titulo">📷 Instagram</div>
+      <a href="https://instagram.com/${extras.instagram.replace('@', '')}" target="_blank" class="btn-acao-contato btn-instagram">
+        📷 @${extras.instagram.replace('@', '')}
+      </a>
+    </div>`;
+  }
+  
+  if (extras.assessores && extras.assessores.length > 0) {
+    html += `<div class="contato-info">
+      <div class="contato-info-titulo">👥 Assessores</div>
+      <div class="assessores-lista">`;
+    
+    extras.assessores.forEach(ass => {
+      html += `<div class="assessor-item">
+        <strong>${ass.nome}</strong> - ${ass.cargo || 'Assessor(a)'}<br>
+        <a href="https://wa.me/55${ass.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp btn-sm mt-2">
+          💬 WhatsApp
+        </a>
+      </div>`;
+    });
+    
+    html += `</div></div>`;
+  }
+  
+  if (!extras.whatsapp && !extras.telefone_gabinete && !extras.instagram && (!extras.assessores || extras.assessores.length === 0)) {
+    html += `<div class="alert alert-warning">
+      ⚠️ Nenhuma informação adicional disponível ainda.
+      <br><button class="btn btn-sm btn-primary mt-2" onclick="$('#modalVerContato').modal('hide'); abrirEnviarInfo('${parlamentarId}', '${nome}')">
+        Contribuir com Informações
+      </button>
+    </div>`;
+  }
+  
+  if (extras.ultima_atualizacao) {
+    html += `<small class="text-muted">ℹ️ Atualizado em: ${extras.ultima_atualizacao}</small>`;
+  }
+  
+  document.getElementById('contato-nome').textContent = nome;
+  document.getElementById('contato-conteudo').innerHTML = html;
+  $('#modalVerContato').modal('show');
+}
+
+// ENVIAR INFO
+function abrirEnviarInfo(parlamentarId, nome) {
+  document.getElementById('parlamentar-id-hidden').value = parlamentarId;
+  document.getElementById('parlamentar-nome-hidden').value = nome;
+  document.getElementById('enviar-info-nome').textContent = nome;
+  document.getElementById('formEnviarInfo').reset();
+  document.getElementById('assessores-lista').innerHTML = '';
+  assessorCount = 0;
+  $('#modalEnviarInfo').modal('show');
+}
+
+function adicionarAssessor() {
+  assessorCount++;
+  const html = `<div class="assessor-item mb-2" id="assessor-${assessorCount}">
+    <div class="row">
+      <div class="col-md-5">
+        <input type="text" class="form-control form-control-sm" placeholder="Nome do Assessor" data-field="nome">
       </div>
-      <div class="modal-body">
-        {% include staticman-form.html %}
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-sm" placeholder="WhatsApp" data-field="whatsapp">
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control form-control-sm" placeholder="Cargo" data-field="cargo">
       </div>
     </div>
-  </div>
-</div>
+    <button type="button" class="btn btn-sm btn-danger mt-1" onclick="document.getElementById('assessor-${assessorCount}').remove()">Remover</button>
+  </div>`;
+  document.getElementById('assessores-lista').insertAdjacentHTML('beforeend', html);
+}
+
+// Submit formulário
+document.getElementById('formEnviarInfo')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const parlamentarId = document.getElementById('parlamentar-id-hidden').value;
+  const parlamentarNome = document.getElementById('parlamentar-nome-hidden').value;
+  
+  // Coletar dados de contato
+  const dados_contato = {};
+  if (document.getElementById('campo-whatsapp').value) {
+    dados_contato.whatsapp = document.getElementById('campo-whatsapp').value;
+  }
+  if (document.getElementById('campo-instagram').value) {
+    dados_contato.instagram = document.getElementById('campo-instagram').value;
+  }
+  if (document.getElementById('campo-telefone').value) {
+    dados_contato.telefone_gabinete = document.getElementById('campo-telefone').value;
+  }
+  
+  // Coletar assessores
+  const assessores = [];
+  document.querySelectorAll('#assessores-lista .assessor-item').forEach(item => {
+    const nome = item.querySelector('[data-field="nome"]').value;
+    const whatsapp = item.querySelector('[data-field="whatsapp"]').value;
+    const cargo = item.querySelector('[data-field="cargo"]').value;
+    if (nome && whatsapp) {
+      assessores.push({ nome, whatsapp, cargo: cargo || 'Assessor(a)' });
+    }
+  });
+  if (assessores.length > 0) {
+    dados_contato.assessores = assessores;
+  }
+  
+  // Coletar evidência
+  let evidencia = null;
+  const evidenciaUrl = document.getElementById('campo-evidencia-url').value;
+  if (evidenciaUrl) {
+    evidencia = {
+      tipo: document.getElementById('campo-evidencia-tipo').value,
+      url: evidenciaUrl,
+      descricao: document.getElementById('campo-evidencia-desc').value
+    };
+  }
+  
+  const payload = {
+    parlamentar_id: parlamentarId,
+    parlamentar_nome: parlamentarNome,
+    pauta_slug: pautaSlug,
+    dados_contato: Object.keys(dados_contato).length > 0 ? dados_contato : null,
+    evidencia: evidencia,
+    usuario_nome: document.getElementById('campo-usuario-nome').value,
+    usuario_email: document.getElementById('campo-usuario-email').value
+  };
+  
+  try {
+    const response = await fetch('/api/contribuicoes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      alert('✅ Contribuição enviada com sucesso! Será revisada pelo administrador.');
+      $('#modalEnviarInfo').modal('hide');
+    } else {
+      alert('❌ Erro: ' + (data.error || 'Tente novamente'));
+    }
+  } catch (error) {
+    alert('❌ Erro ao enviar. Verifique sua conexão e tente novamente.');
+  }
+});
+
+// CAMPANHAS - Contadores
+function carregarContadores() {
+  // Emails
+  const totalEmails = parlamentaresBase.filter(p => p.email).length;
+  document.getElementById('contador-emails')?.textContent = `${totalEmails} emails disponíveis`;
+  
+  // WhatsApp
+  const totalWhatsApp = parlamentaresBase.filter(p => {
+    return congressistasExtras.congressistas?.[p.id]?.whatsapp;
+  }).length;
+  document.getElementById('contador-whatsapp')?.textContent = `${totalWhatsApp} WhatsApps cadastrados`;
+  
+  // Instagram
+  const totalInstagram = parlamentaresBase.filter(p => {
+    return congressistasExtras.congressistas?.[p.id]?.instagram;
+  }).length;
+  document.getElementById('contador-instagram')?.textContent = `${totalInstagram} perfis cadastrados`;
+}
+
+// CAMPANHA EMAIL
+function abrirCampanhaEmail() {
+  if (!campanhaEmail) return alert('Campanha de email não configurada para esta pauta.');
+  
+  const emails = parlamentaresBase.filter(p => p.email).map(p => p.email);
+  
+  document.getElementById('emails-lista').value = emails.join('; ');
+  document.getElementById('email-assunto').value = campanhaEmail.assunto || '';
+  document.getElementById('email-mensagem').value = campanhaEmail.mensagem || '';
+  document.getElementById('total-emails-campanha').textContent = `${emails.length} emails selecionados`;
+  
+  $('#modalCampanhaEmail').modal('show');
+}
+
+function abrirClienteEmail() {
+  const emails = document.getElementById('emails-lista').value;
+  const assunto = document.getElementById('email-assunto').value;
+  const mensagem = document.getElementById('email-mensagem').value;
+  
+  const mailto = `mailto:?bcc=${encodeURIComponent(emails)}&subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(mensagem)}`;
+  
+  if (mailto.length > 2000) {
+    alert('⚠️ Muitos emails! Use a opção de copiar manualmente.');
+    return;
+  }
+  
+  window.location.href = mailto;
+  
+  trackingData[pautaSlug].email = new Date().toISOString();
+  salvarTracking();
+  mostrarTracking();
+}
+
+function atualizarFiltrosCampanha() {
+  // Implementar filtros
+  abrirCampanhaEmail();
+}
+
+// CAMPANHA WHATSAPP
+function abrirCampanhaWhatsApp() {
+  if (!campanhaWhatsApp) return alert('Campanha de WhatsApp não configurada.');
+  
+  document.getElementById('whatsapp-mensagem').value = campanhaWhatsApp.mensagem || '';
+  atualizarListaWhatsApp();
+  $('#modalCampanhaWhatsApp').modal('show');
+}
+
+function atualizarListaWhatsApp() {
+  const lista = document.getElementById('lista-whatsapp');
+  const parlamentares = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.whatsapp);
+  
+  const enviados = trackingData[pautaSlug].whatsapp || [];
+  
+  lista.innerHTML = parlamentares.map(p => {
+    const jaEnviado = enviados.includes(p.id);
+    return `<div class="parlamentar-envio-item ${jaEnviado ? 'enviado' : ''}" data-id="${p.id}">
+      <div>
+        <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+        ${jaEnviado ? '✅' : ''}
+      </div>
+      <button class="btn btn-sm btn-success" onclick="enviarWhatsApp('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
+        💬 Enviar
+      </button>
+    </div>`;
+  }).join('');
+  
+  document.getElementById('total-whatsapp').textContent = `${parlamentares.length} WhatsApps disponíveis`;
+  atualizarProgressoWhatsApp();
+}
+
+function enviarWhatsApp(parlamentarId) {
+  const parlamentar = parlamentaresBase.find(p => p.id === parlamentarId);
+  const whatsapp = congressistasExtras.congressistas[parlamentarId].whatsapp;
+  const mensagem = document.getElementById('whatsapp-mensagem').value
+    .replace('[NOME]', parlamentar.nome)
+    .replace('[ESTADO]', parlamentar.uf)
+    .replace('[PARTIDO]', parlamentar.partido);
+  
+  const url = `https://wa.me/55${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(mensagem)}`;
+  window.open(url, '_blank');
+  
+  // Marcar como enviado
+  if (!trackingData[pautaSlug].whatsapp) trackingData[pautaSlug].whatsapp = [];
+  if (!trackingData[pautaSlug].whatsapp.includes(parlamentarId)) {
+    trackingData[pautaSlug].whatsapp.push(parlamentarId);
+  }
+  
+  salvarTracking();
+  atualizarListaWhatsApp();
+  mostrarTracking();
+}
+
+function atualizarProgressoWhatsApp() {
+  const total = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.whatsapp).length;
+  const enviados = (trackingData[pautaSlug].whatsapp || []).length;
+  const percent = total > 0 ? (enviados / total * 100) : 0;
+  
+  const progressBar = document.getElementById('progress-whatsapp');
+  progressBar.style.width = percent + '%';
+  progressBar.textContent = `${enviados}/${total}`;
+}
+
+// CAMPANHA INSTAGRAM
+function abrirCampanhaInstagram() {
+  if (!campanhaInstagram) return alert('Campanha de Instagram não configurada.');
+  
+  document.getElementById('instagram-mensagem').value = campanhaInstagram.mensagem || '';
+  atualizarListaInstagram();
+  $('#modalCampanhaInstagram').modal('show');
+}
+
+function atualizarListaInstagram() {
+  const lista = document.getElementById('lista-instagram');
+  const parlamentares = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.instagram);
+  
+  const enviados = trackingData[pautaSlug].instagram || [];
+  
+  lista.innerHTML = parlamentares.map(p => {
+    const jaEnviado = enviados.includes(p.id);
+    return `<div class="parlamentar-envio-item ${jaEnviado ? 'enviado' : ''}" data-id="${p.id}">
+      <div>
+        <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+        ${jaEnviado ? '✅' : ''}
+      </div>
+      <button class="btn btn-sm btn-success" onclick="enviarInstagram('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
+        📷 Abrir Direct
+      </button>
+    </div>`;
+  }).join('');
+  
+  atualizarProgressoInstagram();
+}
+
+function enviarInstagram(parlamentarId) {
+  const instagram = congressistasExtras.congressistas[parlamentarId].instagram.replace('@', '');
+  const url = `https://ig.me/m/${instagram}`;
+  window.open(url, '_blank');
+  
+  // Marcar como enviado
+  if (!trackingData[pautaSlug].instagram) trackingData[pautaSlug].instagram = [];
+  if (!trackingData[pautaSlug].instagram.includes(parlamentarId)) {
+    trackingData[pautaSlug].instagram.push(parlamentarId);
+  }
+  
+  salvarTracking();
+  atualizarListaInstagram();
+  mostrarTracking();
+}
+
+function atualizarProgressoInstagram() {
+  const total = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.instagram).length;
+  const enviados = (trackingData[pautaSlug].instagram || []).length;
+  const percent = total > 0 ? (enviados / total * 100) : 0;
+  
+  const progressBar = document.getElementById('progress-instagram');
+  progressBar.style.width = percent + '%';
+  progressBar.textContent = `${enviados}/${total}`;
+}
+
+// TRACKING
+function salvarTracking() {
+  localStorage.setItem('campanhas_tracking', JSON.stringify(trackingData));
+}
+
+function mostrarTracking() {
+  const dados = trackingData[pautaSlug];
+  if (!dados) return;
+  
+  let temProgresso = false;
+  let html = '';
+  
+  if (dados.email) {
+    temProgresso = true;
+    html += `<div class="tracking-item">
+      <span>📧 Email</span>
+      <span>✅ Enviado</span>
+    </div>`;
+  }
+  
+  if (dados.whatsapp && dados.whatsapp.length > 0) {
+    temProgresso = true;
+    const total = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.whatsapp).length;
+    html += `<div class="tracking-item">
+      <span>💬 WhatsApp</span>
+      <span>${dados.whatsapp.length}/${total}</span>
+    </div>`;
+  }
+  
+  if (dados.instagram && dados.instagram.length > 0) {
+    temProgresso = true;
+    const total = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.instagram).length;
+    html += `<div class="tracking-item">
+      <span>📷 Instagram</span>
+      <span>${dados.instagram.length}/${total}</span>
+    </div>`;
+  }
+  
+  if (temProgresso) {
+    document.getElementById('tracking-items').innerHTML = html;
+    document.getElementById('tracking-container').style.display = 'block';
+  }
+}
+
+function fecharTracking() {
+  document.getElementById('tracking-container').style.display = 'none';
+}
+
+// Utilitários
+function copiarTexto(elementId) {
+  const element = document.getElementById(elementId);
+  element.select();
+  document.execCommand('copy');
+  alert('✅ Copiado para área de transferência!');
+}
+</script>
+
+</body>
+</html>
