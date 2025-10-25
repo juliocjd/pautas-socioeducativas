@@ -28,4 +28,5 @@ exclude:
   - README.md
 
 # Configuração para Vercel  
+encoding: utf-8
 safe: false
