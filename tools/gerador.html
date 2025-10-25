@@ -947,52 +947,115 @@ function addParlamentar() {
     // ... (código de adicionar parlamentar já existe na PARTE 1)
 }
 
-// Gerar Pauta
-function gerarPauta(e) {
+// Gerar Pauta (VERSÃO AUTOMÁTICA)
+async function gerarPauta(e) {
     e.preventDefault();
     
-    const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const casa = document.getElementById('casa').value;
-    const status = document.getElementById('status').value;
-    const featured = document.getElementById('featured').checked;
-    const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
-    const body = document.getElementById('body').value;
+    const btnSubmit = e.target.querySelector('button[type="submit"]');
+    const btnText = btnSubmit.innerHTML;
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '⏳ Criando pauta...';
     
-    // Campanhas
-    const emailAssunto = document.getElementById('email-assunto').value;
-    const emailMensagem = document.getElementById('email-mensagem').value;
-    const whatsappMensagem = document.getElementById('whatsapp-mensagem').value;
-    const instagramMensagem = document.getElementById('instagram-mensagem').value;
-    
-    let yaml = `---\nlayout: pauta\ntitle: ${title}\ndescription: ${description}\ncasa: ${casa}\nstatus: ${status}\nfeatured: ${featured}\nis_plenary_vote: ${isPlenaryVote}\n`;
-    
-    // Adicionar campanhas se preenchidas
-    if (emailAssunto || emailMensagem || whatsappMensagem || instagramMensagem) {
-        yaml += `campanha:\n`;
-        if (emailAssunto || emailMensagem) {
-            yaml += `  email:\n`;
-            if (emailAssunto) yaml += `    assunto: "${emailAssunto}"\n`;
-            if (emailMensagem) yaml += `    mensagem: |\n      ${emailMensagem.split('\n').join('\n      ')}\n`;
+    try {
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const casa = document.getElementById('casa').value;
+        const status = document.getElementById('status').value;
+        const featured = document.getElementById('featured').checked;
+        const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
+        const body = document.getElementById('body').value;
+        
+        // Coletar parlamentares
+        const parlamentares = [];
+        document.querySelectorAll('.parl-role').forEach(input => {
+            if (input.value) {
+                const dep = JSON.parse(input.dataset.deputado);
+                parlamentares.push({ nome: dep.nome, role: input.value });
+            }
+        });
+        
+        // Campanhas
+        const emailAssunto = document.getElementById('email-assunto').value;
+        const emailMensagem = document.getElementById('email-mensagem').value;
+        const whatsappMensagem = document.getElementById('whatsapp-mensagem').value;
+        const instagramMensagem = document.getElementById('instagram-mensagem').value;
+        
+        // Gerar YAML
+        let yaml = `---\nlayout: pauta\ntitle: ${title}\ndescription: ${description}\ncasa: ${casa}\nstatus: ${status}\nfeatured: ${featured}\nis_plenary_vote: ${isPlenaryVote}\n`;
+        
+        if (parlamentares.length > 0) {
+            yaml += `key_players:\n`;
+            parlamentares.forEach(p => {
+                yaml += `  - nome: "${p.nome}"\n`;
+                yaml += `    role: "${p.role}"\n`;
+            });
         }
-        if (whatsappMensagem) {
-            yaml += `  whatsapp:\n`;
-            yaml += `    mensagem: |\n      ${whatsappMensagem.split('\n').join('\n      ')}\n`;
+        
+        // Adicionar campanhas se preenchidas
+        if (emailAssunto || emailMensagem || whatsappMensagem || instagramMensagem) {
+            yaml += `campanha:\n`;
+            if (emailAssunto || emailMensagem) {
+                yaml += `  email:\n`;
+                if (emailAssunto) yaml += `    assunto: "${emailAssunto}"\n`;
+                if (emailMensagem) yaml += `    mensagem: |\n      ${emailMensagem.split('\n').join('\n      ')}\n`;
+            }
+            if (whatsappMensagem) {
+                yaml += `  whatsapp:\n`;
+                yaml += `    mensagem: |\n      ${whatsappMensagem.split('\n').join('\n      ')}\n`;
+            }
+            if (instagramMensagem) {
+                yaml += `  instagram:\n`;
+                yaml += `    mensagem: |\n      ${instagramMensagem.split('\n').join('\n      ')}\n`;
+            }
         }
-        if (instagramMensagem) {
-            yaml += `  instagram:\n`;
-            yaml += `    mensagem: |\n      ${instagramMensagem.split('\n').join('\n      ')}\n`;
+        
+        yaml += `---\n\n${body}`;
+        
+        const filename = slugify(title) + '.md';
+        
+        // CRIAR AUTOMATICAMENTE NO GITHUB
+        const response = await fetch(`${API_URL}/api/criar-pauta`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ filename, content: yaml })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Mostrar sucesso
+            document.getElementById('codeOutput').textContent = yaml;
+            document.getElementById('filenameOutput').textContent = filename;
+            document.getElementById('outputCriar').classList.remove('hidden');
+            
+            // Alert com sucesso e link
+            alert(`✅ Pauta criada com sucesso!\n\n📄 Arquivo: ${filename}\n🔗 GitHub: ${data.url}\n🌐 Site: ${data.site_url}\n\nAguarde 2-5 minutos para o deploy completar.`);
+            
+            // Resetar formulário
+            document.getElementById('pautaForm').reset();
+            document.getElementById('parlamentaresList').innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
+            
+            // Scroll para o output
+            document.getElementById('outputCriar').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            if (response.status === 409) {
+                // Arquivo já existe
+                alert(`⚠️ ${data.error}\n\nArquivo: ${data.filename}\n\n${data.suggestion}`);
+            } else {
+                alert('❌ Erro ao criar pauta: ' + (data.error || 'Tente novamente'));
+            }
         }
+        
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('❌ Erro ao criar pauta: ' + error.message);
+    } finally {
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = btnText;
     }
-    
-    yaml += `---\n\n${body}`;
-    
-    const filename = slugify(title) + '.md';
-    
-    document.getElementById('codeOutput').textContent = yaml;
-    document.getElementById('filenameOutput').textContent = filename;
-    document.getElementById('outputCriar').classList.remove('hidden');
-    document.getElementById('outputCriar').scrollIntoView({ behavior: 'smooth' });
 }
 
 function slugify(text) {
