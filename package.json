@@ -1,0 +1,9 @@
+{
+  "name": "pautas-socioeducativas-api",
+  "version": "1.0.0",
+  "description": "APIs para painel administrativo",
+  "dependencies": {
+    "@octokit/rest": "^19.0.13",
+    "js-yaml": "^4.1.0"
+  }
+}
