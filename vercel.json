@@ -1,3 +1,17 @@
 {
-  "version": 2
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/auth-admin.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/pautas.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    }
+  ]
 }
