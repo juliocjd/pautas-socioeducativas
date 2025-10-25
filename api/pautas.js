@@ -1,91 +1,122 @@
 // api/pautas.js
-// Gerenciamento de pautas via GitHub API
+// Lista todas as pautas cadastradas ou cria/exclui pautas
 
-const https = require('https');
+const { Octokit } = require('@octokit/rest');
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Personal Access Token
-const REPO_OWNER = 'juliocjd';
-const REPO_NAME = 'pautas-socioeducativas';
-const PAUTAS_PATH = '_pautas';
+const octokit = new Octokit({
+  auth: process.env.GITHUB_TOKEN
+});
+
+const REPO = {
+  owner: 'juliocjd',
+  repo: 'pautas-socioeducativas'
+};
 
 module.exports = async (req, res) => {
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
 
-  if (!GITHUB_TOKEN) {
-    return res.status(500).json({ error: 'GitHub Token não configurado' });
-  }
-
   try {
-    // Listar todas as pautas
+    // GET - Listar pautas
     if (req.method === 'GET') {
-      const pautas = await listPautas();
-      return res.status(200).json({ pautas });
-    }
+      const { data: files } = await octokit.rest.repos.getContent({
+        ...REPO,
+        path: '_pautas'
+      });
 
-    // Criar nova pauta
-    if (req.method === 'POST') {
-      const { filename, content } = req.body;
-      if (!filename || !content) {
-        return res.status(400).json({ error: 'Filename e content são obrigatórios' });
-      }
+      const pautas = [];
       
-      const result = await createPauta(filename, content);
-      return res.status(201).json(result);
-    }
+      for (const file of files) {
+        if (file.name.endsWith('.md')) {
+          try {
+            const { data: fileContent } = await octokit.rest.repos.getContent({
+              ...REPO,
+              path: file.path
+            });
 
-    // Atualizar pauta existente
-    if (req.method === 'PUT') {
-      const { filename, content } = req.body;
-      if (!filename || !content) {
-        return res.status(400).json({ error: 'Filename e content são obrigatórios' });
+            const content = Buffer.from(fileContent.content, 'base64').toString('utf-8');
+            
+            // Parse front matter
+            const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+            if (frontMatterMatch) {
+              const frontMatter = frontMatterMatch[1];
+              const lines = frontMatter.split('\n');
+              const pauta = { filename: file.name };
+              
+              lines.forEach(line => {
+                const match = line.match(/^(\w+):\s*(.+)$/);
+                if (match) {
+                  const key = match[1];
+                  let value = match[2].trim();
+                  
+                  // Remove aspas
+                  if (value.startsWith('"') && value.endsWith('"')) {
+                    value = value.slice(1, -1);
+                  }
+                  
+                  // Parse booleans
+                  if (value === 'true') value = true;
+                  if (value === 'false') value = false;
+                  
+                  pauta[key] = value;
+                }
+              });
+              
+              pautas.push(pauta);
+            }
+          } catch (error) {
+            console.error(`Erro ao processar ${file.name}:`, error.message);
+          }
+        }
       }
-      
-      const result = await updatePauta(filename, content);
-      return res.status(200).json(result);
+
+      return res.status(200).json({ success: true, pautas });
     }
 
-    // Deletar pauta
+    // DELETE - Excluir pauta
     if (req.method === 'DELETE') {
       const { filename } = req.body;
-      if (!filename) {
-        return res.status(400).json({ error: 'Filename é obrigatório' });
-      }
       
-      const result = await deletePauta(filename);
-      return res.status(200).json(result);
+      if (!filename) {
+        return res.status(400).json({ success: false, message: 'Filename é obrigatório' });
+      }
+
+      // Verificar autenticação
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ success: false, message: 'Não autorizado' });
+      }
+
+      // Buscar SHA do arquivo
+      const { data: fileData } = await octokit.rest.repos.getContent({
+        ...REPO,
+        path: `_pautas/${filename}`
+      });
+
+      // Excluir arquivo
+      await octokit.rest.repos.deleteFile({
+        ...REPO,
+        path: `_pautas/${filename}`,
+        message: `Excluir pauta: ${filename}`,
+        sha: fileData.sha
+      });
+
+      return res.status(200).json({ success: true, message: 'Pauta excluída com sucesso' });
     }
 
-    return res.status(405).json({ error: 'Método não permitido' });
+    return res.status(405).json({ success: false, message: 'Método não permitido' });
 
   } catch (error) {
-    console.error('Erro:', error);
-    return res.status(500).json({ error: error.message });
+    console.error('Erro na API /api/pautas:', error);
+    return res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
-
-// Listar todas as pautas
-function listPautas() {
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: 'api.github.com',
-      path: `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${PAUTAS_PATH}`,
-      method: 'GET',
-      headers: {
-        'User-Agent': 'Pautas-Admin',
-        'Authorization': `token ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json'
-      }
-    };
-
-    const req = https.request(options, (response) => {
-      let data = '';
-      response.on('data', chunk => data += chunk);
-      response.on('end', () => {
-        try {
-          cons
