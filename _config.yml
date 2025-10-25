@@ -26,3 +26,6 @@ exclude:
   - vendor/ruby/
   - scripts/
   - README.md
+
+# Configuração para Vercel  
+safe: false
