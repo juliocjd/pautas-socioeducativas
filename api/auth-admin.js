@@ -1,14 +1,10 @@
 // api/auth-admin.js
-// Autenticação segura para o painel administrativo
+// Autentica administrador (suporta senha hash ou texto plano)
 
 const crypto = require('crypto');
 
-// Configuração
-const SENHA_HASH = process.env.ADMIN_PASSWORD_HASH; // Hash SHA256 da senha
-const TOKEN_SECRET = process.env.TOKEN_SECRET; // Segredo para gerar tokens
-
 module.exports = async (req, res) => {
-  // Permite CORS
+  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -18,43 +14,64 @@ module.exports = async (req, res) => {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método não permitido' });
+    return res.status(405).json({ success: false, error: 'Método não permitido' });
   }
 
   try {
     const { password } = req.body;
 
     if (!password) {
-      return res.status(400).json({ error: 'Senha não fornecida' });
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Senha é obrigatória' 
+      });
     }
 
-    // Gera hash da senha fornecida
-    const passwordHash = crypto
-      .createHash('sha256')
-      .update(password)
-      .digest('hex');
+    // Verificar qual variável existe no ambiente
+    const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-    // Compara com o hash armazenado
-    if (passwordHash !== SENHA_HASH) {
-      return res.status(401).json({ error: 'Senha incorreta' });
+    if (!ADMIN_PASSWORD_HASH && !ADMIN_PASSWORD) {
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Configuração de senha não encontrada. Configure ADMIN_PASSWORD_HASH ou ADMIN_PASSWORD no Vercel.' 
+      });
     }
 
-    // Gera um token de sessão (válido por 24h)
-    const token = crypto
-      .createHmac('sha256', TOKEN_SECRET)
-      .update(Date.now().toString())
-      .digest('hex');
+    let isValid = false;
 
-    const expiresAt = Date.now() + (24 * 60 * 60 * 1000); // 24 horas
+    // Se tiver hash, verificar com hash
+    if (ADMIN_PASSWORD_HASH) {
+      const hash = crypto.createHash('sha256').update(password).digest('hex');
+      isValid = hash === ADMIN_PASSWORD_HASH;
+    } 
+    // Se não tiver hash, verificar senha em texto plano
+    else if (ADMIN_PASSWORD) {
+      isValid = password === ADMIN_PASSWORD;
+    }
 
-    return res.status(200).json({
-      success: true,
-      token: token,
-      expiresAt: expiresAt
-    });
+    if (isValid) {
+      // Gerar token simples (em produção, use JWT)
+      const token = Buffer.from(`admin:${Date.now()}`).toString('base64');
+      const expiresAt = Date.now() + (24 * 60 * 60 * 1000); // 24 horas
+
+      return res.status(200).json({ 
+        success: true,
+        token: token,
+        expiresAt: expiresAt
+      });
+    } else {
+      return res.status(401).json({ 
+        success: false, 
+        error: 'Senha incorreta' 
+      });
+    }
 
   } catch (error) {
-    console.error('Erro na autenticação:', error);
-    return res.status(500).json({ error: 'Erro interno do servidor' });
+    console.error('Erro na API /api/auth-admin:', error);
+    return res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
   }
 };
