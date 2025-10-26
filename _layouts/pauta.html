@@ -415,7 +415,7 @@ try {
 // Carregar dados adicionais via fetch (se houver)
 async function carregarDadosExtrasAPI() {
   try {
-    const response = await fetch('/api/congressistas-dados.json');
+    const response = await fetch('_data/congressistas_extras.json');
     if (response.ok) {
       const data = await response.json();
       
