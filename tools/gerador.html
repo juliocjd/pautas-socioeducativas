@@ -371,6 +371,78 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        /* Autocomplete de parlamentares */
+        .autocomplete-container {
+            position: relative;
+            width: 100%;
+        }
+        
+        .autocomplete-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .autocomplete-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #667eea;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: none;
+        }
+        
+        .autocomplete-list.show {
+            display: block;
+        }
+        
+        .autocomplete-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .autocomplete-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+        
+        .autocomplete-item strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .autocomplete-item small {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .no-results {
+            padding: 15px;
+            text-align: center;
+            color: #999;
+        }
+
     </style>
 </head>
 <body>
@@ -458,8 +530,37 @@
                         <div id="parlamentaresList">
                             <p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>
                         </div>
-                        <button type="button" class="btn btn-secondary" onclick="addParlamentar()" id="btnAddParlamentar" disabled>+ Adicionar Parlamentar</button>
-                    </div>
+                       
+                        <!-- Modal: Adicionar Parlamentar com Autocomplete -->
+                        <div class="modal fade" id="modalAddParlamentar" tabindex="-1">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title">Adicionar Parlamentar</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label>Buscar por nome:</label>
+                                  <div class="autocomplete-container">
+                                    <input 
+                                      type="text" 
+                                      id="autocomplete-input" 
+                                      class="autocomplete-input" 
+                                      placeholder="Digite o nome do parlamentar..."
+                                      autocomplete="off"
+                                    >
+                                    <div id="autocomplete-list" class="autocomplete-list"></div>
+                                  </div>
+                                  <small class="text-muted">Digite pelo menos 2 letras para buscar</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                                                <button type="button" class="btn btn-secondary" onclick="abrirAutocomplete()" id="btnAddParlamentar" disabled>+ Adicionar Parlamentar</button>
+                        </div>
                     
                     <!-- SEÇÃO DE CAMPANHAS -->
                     <div class="campanha-section">
@@ -645,14 +746,62 @@ function checkAuth() {
         sessionToken = token;
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainContent').classList.remove('hidden');
-        loadDeputados();
+        // NÃO carregar deputados automaticamente
         carregarDados();
+        
+        // Adicionar listener no select de casa
+        configurarCarregamentoCondicional();
     }
 }
 
-// Carregar deputados
+// Configurar carregamento condicional de parlamentares
+function configurarCarregamentoCondicional() {
+    const casaSelect = document.getElementById('casa');
+    let casaAnterior = '';
+    
+    if (casaSelect) {
+        casaSelect.addEventListener('change', function() {
+            const casa = this.value;
+            const btnAdd = document.getElementById('btnAddParlamentar');
+            
+            // Habilitar botão se casa selecionada
+            if (casa) {
+                btnAdd.disabled = false;
+                
+                // Carregar deputados se necessário (primeira vez)
+                if (deputados.length === 0) {
+                    loadDeputados();
+                }
+            } else {
+                btnAdd.disabled = true;
+            }
+            
+            // Limpar parlamentares se mudar de casa
+            const lista = document.getElementById('parlamentaresList');
+            const temParlamentares = !lista.querySelector('p');
+            
+            if (temParlamentares && casaAnterior && casa !== casaAnterior) {
+                if (confirm('⚠️ Ao mudar a Casa Legislativa, os parlamentares já adicionados serão removidos. Continuar?')) {
+                    lista.innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
+                } else {
+                    // Reverter seleção
+                    this.value = casaAnterior;
+                }
+            }
+            
+            casaAnterior = casa;
+        });
+    }
+}
+
 async function loadDeputados() {
     try {
+        // Mostrar loading
+        const statusEl = document.getElementById('loadingDeputados');
+        statusEl.className = 'loading';
+        statusEl.innerHTML = '<span class="spinner"></span><span>Carregando parlamentares...</span>';
+        statusEl.classList.remove('hidden');
+        
         const proxyUrl = 'https://api.allorigins.win/raw?url=';
         const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
         const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
@@ -663,14 +812,14 @@ async function loadDeputados() {
             nome: dep.nome,
             partido: dep.siglaPartido,
             uf: dep.siglaUf,
-            email: dep.email || 'N/A'
+            email: dep.email || 'N/A',
+            casa: 'Câmara'
         }));
         
-        const statusEl = document.getElementById('loadingDeputados');
         statusEl.className = 'loading success';
         statusEl.innerHTML = `<span>✅ ${deputados.length} deputados carregados!</span>`;
         
-        document.getElementById('btnAddParlamentar').disabled = false;
+        // Não habilitar botão aqui - será habilitado quando selecionar casa
         
         setTimeout(() => statusEl.classList.add('hidden'), 3000);
     } catch (error) {
@@ -679,7 +828,6 @@ async function loadDeputados() {
         statusEl.innerHTML = '<span>❌ Erro ao carregar deputados</span>';
     }
 }
-
 // Carregar todos os dados
 async function carregarDados() {
     await Promise.all([
@@ -1104,29 +1252,85 @@ function handleFeaturedChange() {
     }
 }
 
-// Adicionar Parlamentar
-function addParlamentar() {
+// Abrir modal de autocomplete
+function abrirAutocomplete() {
     if (document.getElementById('is_plenary_vote').checked) {
         alert('⚠️ Esta é uma votação em plenário. Não é necessário adicionar membros-chave.');
         return;
     }
     
-    const nome = prompt('Nome do Deputado:');
-    if (!nome) return;
-    
-    const deputado = deputados.find(d => d.nome.toLowerCase().includes(nome.toLowerCase()));
-    
-    if (!deputado) {
-        alert('❌ Deputado não encontrado. Tente novamente.');
+    if (deputados.length === 0) {
+        alert('⚠️ Aguarde o carregamento dos parlamentares...');
         return;
     }
     
-    const role = prompt(`Função/Papel de ${deputado.nome}:\n(Ex: Relator, Presidente da Comissão, etc.)`);
-    if (!role) return;
+    const modal = document.getElementById('modalAddParlamentar');
+    const input = document.getElementById('autocomplete-input');
+    const list = document.getElementById('autocomplete-list');
     
+    // Limpar input
+    input.value = '';
+    list.classList.remove('show');
+    
+    // Mostrar modal
+    $(modal).modal('show');
+    
+    // Focar input após modal abrir
+    $(modal).on('shown.bs.modal', function() {
+        input.focus();
+    });
+    
+    // Event listener para autocomplete
+    input.oninput = function() {
+        const termo = this.value.toLowerCase();
+        
+        if (termo.length < 2) {
+            list.classList.remove('show');
+            return;
+        }
+        
+        const casaSelecionada = document.getElementById('casa').value;
+        const parlamentaresFiltrados = deputados.filter(p => {
+            const nomeMatch = p.nome.toLowerCase().includes(termo);
+            const casaMatch = 
+                (casaSelecionada.includes('Câmara') && p.casa === 'Câmara') ||
+                (casaSelecionada.includes('Senado') && p.casa === 'Senado');
+            return nomeMatch && casaMatch;
+        }).slice(0, 10);
+        
+        if (parlamentaresFiltrados.length === 0) {
+            list.innerHTML = '<div class="no-results">Nenhum resultado encontrado</div>';
+            list.classList.add('show');
+            return;
+        }
+        
+        list.innerHTML = parlamentaresFiltrados.map(p => `
+            <div class="autocomplete-item" onclick="selecionarParlamentar('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.partido}', '${p.uf}')">
+                <strong>${p.nome}</strong><br>
+                <small>${p.partido}-${p.uf}</small>
+            </div>
+        `).join('');
+        
+        list.classList.add('show');
+    };
+}
+
+// Selecionar parlamentar do autocomplete
+function selecionarParlamentar(id, nome, partido, uf) {
+    // Fechar lista
+    document.getElementById('autocomplete-list').classList.remove('show');
+    
+    // Pedir função/papel
+    const role = prompt(`Função/Papel de ${nome}:\n(Ex: Relator, Presidente da Comissão, etc.)`);
+    if (!role) {
+        $('#modalAddParlamentar').modal('hide');
+        return;
+    }
+    
+    // Adicionar à lista
     parlamentarCount++;
-    
     const lista = document.getElementById('parlamentaresList');
+    
     if (lista.querySelector('p')) {
         lista.innerHTML = '';
     }
@@ -1136,9 +1340,9 @@ function addParlamentar() {
     item.id = `parl-${parlamentarCount}`;
     item.innerHTML = `
         <div>
-            <strong>${deputado.nome}</strong> (${deputado.partido}-${deputado.uf})
+            <strong>${nome}</strong> (${partido}-${uf})
             <br><small>${role}</small>
-            <input type="hidden" class="parl-role" value="${role}" data-deputado='${JSON.stringify(deputado)}'>
+            <input type="hidden" class="parl-role" value="${role}" data-deputado='${JSON.stringify({id, nome, partido, uf})}'>
         </div>
         <button type="button" class="btn btn-small btn-danger" onclick="document.getElementById('parl-${parlamentarCount}').remove()">
             🗑️ Remover
@@ -1146,8 +1350,20 @@ function addParlamentar() {
     `;
     
     lista.appendChild(item);
+    
+    // Fechar modal e limpar
+    $('#modalAddParlamentar').modal('hide');
+    document.getElementById('autocomplete-input').value = '';
 }
 
+// Fechar autocomplete ao clicar fora
+document.addEventListener('click', function(e) {
+    const list = document.getElementById('autocomplete-list');
+    const input = document.getElementById('autocomplete-input');
+    if (list && !list.contains(e.target) && e.target !== input) {
+        list.classList.remove('show');
+    }
+});
 // Gerar Pauta
 async function gerarPauta(e) {
     e.preventDefault();
