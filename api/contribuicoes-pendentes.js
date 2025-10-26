@@ -83,7 +83,7 @@ export default async function handler(req, res) {
           });
       
           // Verificar se modifica congressistas.json
-          const congressistasFile = files.find(f => f.filename === 'api/congressistas.json');
+          const congressistasFile = files.find(f => f.filename === 'api/congressistas-dados.json');
           
           if (!congressistasFile) {
             console.log(`⚠️ PR #${pr.number} não modifica congressistas.json`);
@@ -105,7 +105,7 @@ export default async function handler(req, res) {
             const { data: fileContent } = await octokit.rest.repos.getContent({
               owner,
               repo,
-              path: 'api/congressistas.json',
+              path: 'api/congressistas-dados.json',
               ref: pr.head.ref  // Branch do PR (não main!)
             });
       
@@ -227,7 +227,7 @@ export default async function handler(req, res) {
           const { data: fileData } = await octokit.rest.repos.getContent({
             owner,
             repo,
-            path: 'api/congressistas.json',
+            path: 'api/congressistas-dados.json',
             ref: branch
           });
 
@@ -306,7 +306,7 @@ export default async function handler(req, res) {
           const { data: currentFile } = await octokit.rest.repos.getContent({
             owner,
             repo,
-            path: 'api/congressistas.json',
+            path: 'api/congressistas-dados.json',
             ref: branch
           });
           fileSha = currentFile.sha;
@@ -323,7 +323,7 @@ export default async function handler(req, res) {
         const commitData = {
           owner,
           repo,
-          path: 'api/congressistas.json',
+          path: 'api/congressistas-dados.json',
           message: `Aprovar dados de ${parlamentar_id} (parcial) - PR #${pr_number}`,
           content: Buffer.from(JSON.stringify(congressistas, null, 2)).toString('base64'),
           branch
