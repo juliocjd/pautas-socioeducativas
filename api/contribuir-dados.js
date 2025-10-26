@@ -90,7 +90,7 @@ export default async function handler(req, res) {
         const { data: fileData } = await octokit.rest.repos.getContent({
           owner,
           repo,
-          path: 'api/congressistas-dados.json',
+          path: '_data/congressistas_extras.json',
           ref: branch
         });
 
@@ -99,7 +99,7 @@ export default async function handler(req, res) {
         congressistas = JSON.parse(content);
       } catch (error) {
         if (error.status === 404) {
-          console.log('ℹ️ Arquivo congressistas-dados.json não existe, será criado');
+          console.log('ℹ️ Arquivo _data/congressistas_extras.json não existe, será criado');
           congressistas = {};
         } else {
           throw error;
@@ -169,7 +169,7 @@ export default async function handler(req, res) {
       await octokit.rest.repos.createOrUpdateFileContents({
         owner,
         repo,
-        path: 'api/congressistas-dados.json',
+        path: '_data/congressistas_extras.json',
         message: `Contribuição de dados: ${parlamentar_nome}`,
         content: Buffer.from(newContent).toString('base64'),
         branch: branchName,
