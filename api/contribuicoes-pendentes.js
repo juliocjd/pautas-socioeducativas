@@ -232,6 +232,15 @@ export default async function handler(req, res) {
 
           const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
           congressistas = JSON.parse(content);
+
+          await octokit.rest.pulls.update({
+            owner,
+            repo,
+            pull_number: pr_number,
+            state: 'closed'
+          });
+  
+          console.log('✅ PR fechado com sucesso');
         } catch (error) {
           if (error.status === 404) {
             congressistas = {};
@@ -366,6 +375,8 @@ export default async function handler(req, res) {
         });
 
         console.log('✅ Itens aprovados e salvos com sucesso!');
+
+        
 
         return res.status(200).json({
           success: true,
