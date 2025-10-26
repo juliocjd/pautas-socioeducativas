@@ -564,113 +564,161 @@ async function carregarParlamentaresDasAPIs() {
   carregarContadores();
   mostrarTracking();
 }
-// Carregar Deputados da API da Câmara
+// ==========================================
+// CARREGAR DEPUTADOS - SEM PROXY
+// ==========================================
 async function carregarDeputados() {
   try {
     console.log('📥 Buscando deputados...');
-    const proxyUrl = 'https://api.allorigins.win/raw?url=';
-    const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
-    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    
+    // Buscar lista completa de deputados (SEM PROXY)
+    const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome&itens=600';
+    const response = await fetch(apiUrl);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
     const data = await response.json();
     
-    // Para cada deputado, buscar detalhes completos (telefone)
-    const deputadosDetalhados = await Promise.all(
-      data.dados.slice(0, 20).map(async dep => { // Limitando a 20 para teste, remova o slice para todos
-        try {
-          const detailUrl = `https://dadosabertos.camara.leg.br/api/v2/deputados/${dep.id}`;
-          const detailResponse = await fetch(proxyUrl + encodeURIComponent(detailUrl));
-          const detailData = await detailResponse.json();
-          
-          return {
-            id: String(dep.id),
-            nome: dep.nome,
-            partido: dep.siglaPartido,
-            uf: dep.siglaUf,
-            email: dep.email || detailData.dados.ultimoStatus?.email || '',
-            telefone_gabinete: detailData.dados.ultimoStatus?.gabinete?.telefone || '',
-            casa: 'Câmara'
-          };
-        } catch (e) {
-          // Se falhar buscar detalhes, usa dados básicos
-          return {
-            id: String(dep.id),
-            nome: dep.nome,
-            partido: dep.siglaPartido,
-            uf: dep.siglaUf,
-            email: dep.email || '',
-            telefone_gabinete: '',
-            casa: 'Câmara'
-          };
-        }
-      })
-    );
+    if (!data.dados || data.dados.length === 0) {
+      throw new Error('Nenhum deputado retornado pela API');
+    }
     
-    parlamentaresBase.push(...deputadosDetalhados);
-    console.log('✅ Deputados carregados:', deputadosDetalhados.length);
+    console.log(`📋 ${data.dados.length} deputados encontrados. Processando...`);
+    
+    // Processar todos os deputados (SEM buscar detalhes individuais)
+    const deputados = data.dados.map(dep => ({
+      id: String(dep.id),
+      nome: dep.nome,
+      partido: dep.siglaPartido,
+      uf: dep.siglaUf,
+      email: dep.email || '',
+      telefone_gabinete: '', // Não buscar detalhes para ser rápido
+      casa: 'Câmara',
+      foto: dep.urlFoto || ''
+    }));
+    
+    parlamentaresBase.push(...deputados);
+    console.log(`✅ ${deputados.length} deputados carregados com sucesso!`);
     
   } catch (error) {
-    console.error('❌ Erro ao carregar deputados:', error);
+    console.error('❌ Erro ao carregar deputados:', error.message);
+    
+    // Mostrar erro amigável na interface
+    const loadingEl = document.getElementById('loading-parlamentares');
+    if (loadingEl) {
+      loadingEl.innerHTML = `
+        <div style="color:#dc3545;padding:15px;text-align:center;">
+          ❌ Erro ao carregar deputados: ${error.message}
+          <br><small>Tente recarregar a página</small>
+        </div>
+      `;
+    }
   }
 }
 
-// Carregar Senadores da API do Senado
+// ==========================================
+// CARREGAR SENADORES - SEM PROXY
+// ==========================================
 async function carregarSenadores() {
   try {
     console.log('📥 Buscando senadores...');
-    const proxyUrl = 'https://api.allorigins.win/raw?url=';
+    
+    // Buscar senadores (SEM PROXY)
     const apiUrl = 'https://legis.senado.leg.br/dadosabertos/senador/lista/atual';
-    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    const response = await fetch(apiUrl);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
     const text = await response.text();
     
-    // API do Senado retorna XML, vamos parsear
+    // Parsear XML
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(text, "text/xml");
+    
+    // Verificar se há erro no XML
+    const parserError = xmlDoc.getElementsByTagName('parsererror');
+    if (parserError.length > 0) {
+      throw new Error('Erro ao processar XML da API do Senado');
+    }
+    
     const senadores = xmlDoc.getElementsByTagName('Parlamentar');
     
+    if (senadores.length === 0) {
+      throw new Error('Nenhum senador retornado pela API');
+    }
+    
+    console.log(`📋 ${senadores.length} senadores encontrados. Processando...`);
+    
     const senadoresArray = Array.from(senadores).map(sen => {
-      const identificacao = sen.getElementsByTagName('IdentificacaoParlamentar')[0];
-      const nome = identificacao.getElementsByTagName('NomeParlamentar')[0]?.textContent || '';
-      const partido = identificacao.getElementsByTagName('SiglaPartidoParlamentar')[0]?.textContent || '';
-      const uf = identificacao.getElementsByTagName('UfParlamentar')[0]?.textContent || '';
-      const codigoParlamentar = identificacao.getElementsByTagName('CodigoParlamentar')[0]?.textContent || '';
-      
-      // Email
-      const emails = sen.getElementsByTagName('Email');
-      let email = '';
-      if (emails.length > 0) {
-        email = emails[0].textContent || '';
-      }
-      
-      // Telefones do gabinete
-      const telefones = sen.getElementsByTagName('Telefone');
-      let telefone_gabinete = '';
-      for (let tel of telefones) {
-        const numTelefone = tel.getElementsByTagName('NumeroTelefone')[0]?.textContent || '';
-        if (numTelefone) {
-          telefone_gabinete = numTelefone;
-          break;
+      try {
+        const identificacao = sen.getElementsByTagName('IdentificacaoParlamentar')[0];
+        
+        if (!identificacao) {
+          console.warn('Senador sem identificação, pulando...');
+          return null;
         }
+        
+        const nome = identificacao.getElementsByTagName('NomeParlamentar')[0]?.textContent || '';
+        const partido = identificacao.getElementsByTagName('SiglaPartidoParlamentar')[0]?.textContent || '';
+        const uf = identificacao.getElementsByTagName('UfParlamentar')[0]?.textContent || '';
+        const codigoParlamentar = identificacao.getElementsByTagName('CodigoParlamentar')[0]?.textContent || '';
+        
+        // Email
+        const emails = sen.getElementsByTagName('Email');
+        let email = '';
+        if (emails.length > 0) {
+          email = emails[0]?.textContent?.trim() || '';
+        }
+        
+        // Telefone do gabinete
+        const telefones = sen.getElementsByTagName('Telefone');
+        let telefone_gabinete = '';
+        for (let tel of telefones) {
+          const numTelefone = tel.getElementsByTagName('NumeroTelefone')[0]?.textContent?.trim() || '';
+          if (numTelefone) {
+            telefone_gabinete = numTelefone;
+            break;
+          }
+        }
+        
+        return {
+          id: 'SEN-' + codigoParlamentar,
+          nome: nome.trim(),
+          partido: partido.trim(),
+          uf: uf.trim(),
+          email: email,
+          telefone_gabinete: telefone_gabinete,
+          casa: 'Senado'
+        };
+        
+      } catch (e) {
+        console.warn('Erro ao processar senador:', e);
+        return null;
       }
-      
-      return {
-        id: 'SEN-' + codigoParlamentar,
-        nome: nome,
-        partido: partido,
-        uf: uf,
-        email: email,
-        telefone_gabinete: telefone_gabinete,
-        casa: 'Senado'
-      };
-    });
+    }).filter(s => s !== null); // Remover nulos
     
     parlamentaresBase.push(...senadoresArray);
-    console.log('✅ Senadores carregados:', senadoresArray.length);
+    console.log(`✅ ${senadoresArray.length} senadores carregados com sucesso!`);
     
   } catch (error) {
-    console.error('❌ Erro ao carregar senadores:', error);
+    console.error('❌ Erro ao carregar senadores:', error.message);
+    
+    // Mostrar erro amigável na interface
+    const loadingEl = document.getElementById('loading-parlamentares');
+    if (loadingEl) {
+      loadingEl.innerHTML = `
+        <div style="color:#dc3545;padding:15px;text-align:center;">
+          ❌ Erro ao carregar senadores: ${error.message}
+          <br><small>Tente recarregar a página</small>
+        </div>
+      `;
+    }
   }
 }
-
 // Carregar estados no filtro
 function carregarEstados() {
   if (parlamentaresBase.length === 0) return;
