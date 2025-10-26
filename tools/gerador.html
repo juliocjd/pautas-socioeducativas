@@ -294,26 +294,72 @@
             border-bottom: 2px solid #e9ecef;
         }
         
+        /* Checkboxes de contribuições */
         .checkbox-item {
-            display: flex;
-            align-items: start;
-            gap: 10px;
             padding: 10px;
-            margin-bottom: 8px;
-            background: #f8f9fa;
-            border-radius: 6px;
-            border: 2px solid transparent;
+            margin: 5px 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             transition: all 0.2s;
+            cursor: pointer;
         }
         
         .checkbox-item:hover {
-            background: #e9ecef;
+            background: #f8f9fa;
         }
         
         .checkbox-item.checked {
-            border-color: #28a745;
-            background: #d4edda;
+            background: #e7f3ff;
+            border-color: #667eea;
         }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item span {
+            flex: 1;
+        }
+        
+        .contribuicao-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .contribuicao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .contribuicao-header h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-primary { background: #667eea; color: white; }
+        .badge-warning { background: #ffc107; color: #333; }
+        .badge-success { background: #28a745; color: white; }
+        .badge-secondary { background: #6c757d; color: white; }
         
         .campanha-section {
             background: #f8f9fa;
@@ -1027,97 +1073,383 @@ async function carregarCongressistas() {
     }
 }
 
-// Carregar contribuições
+// ==========================================
+// CARREGAR E RENDERIZAR CONTRIBUIÇÕES
+// ==========================================
+
+let contribuicoesPendentes = [];
+
+// Carregar contribuições (PRs com dados de contato)
 async function carregarContribuicoes() {
     try {
         document.getElementById('loadingContribuicoes').classList.remove('hidden');
         
-        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`);
+        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+            cache: 'no-cache',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+            }
+        });
+        
         const data = await response.json();
+        
+        console.log('📥 Contribuições recebidas:', data);
+        
+        // Verificar se são PRs (dados de contato) ou contribuições de conteúdo
         contribuicoesPendentes = data.contribuicoes || [];
         
         document.getElementById('loadingContribuicoes').classList.add('hidden');
         
         if (contribuicoesPendentes.length === 0) {
             document.getElementById('semContribuicoes').classList.remove('hidden');
+            document.getElementById('contribuicoesLista').innerHTML = '';
         } else {
             document.getElementById('semContribuicoes').classList.add('hidden');
             renderContribuicoes();
         }
     } catch (error) {
-        console.error('Erro ao carregar contribuições:', error);
+        console.error('❌ Erro ao carregar contribuições:', error);
         document.getElementById('loadingContribuicoes').className = 'loading error';
         document.getElementById('loadingContribuicoes').innerHTML = '<span>❌ Erro ao carregar</span>';
     }
 }
 
-// Render contribuições
+// Renderizar contribuições
 function renderContribuicoes() {
     const lista = document.getElementById('contribuicoesLista');
     
     lista.innerHTML = contribuicoesPendentes.map((contrib, index) => {
-        let dadosHtml = '';
+        // Verificar tipo de contribuição
+        if (contrib.dados_contato || contrib.evidencia) {
+            // Contribuição de DADOS (PR)
+            return renderContribuicaoDados(contrib, index);
+        } else {
+            // Contribuição de CONTEÚDO (YAML)
+            return renderContribuicaoConteudo(contrib, index);
+        }
+    }).join('');
+}
+
+// Renderizar contribuição de DADOS (PR - WhatsApp, Instagram, etc)
+function renderContribuicaoDados(contrib, index) {
+    let dadosHtml = '';
+    
+    if (contrib.dados_contato) {
+        dadosHtml += '<div style="margin-bottom: 15px;"><strong>📞 Dados de Contato:</strong><br>';
         
-        if (contrib.dados_contato) {
-            dadosHtml += '<div style="margin-bottom: 15px;"><strong>📞 Dados de Contato:</strong>';
-            if (contrib.dados_contato.whatsapp) {
-                dadosHtml += `<div class="checkbox-item" id="check-whatsapp-${index}">
+        if (contrib.dados_contato.whatsapp) {
+            dadosHtml += `
+                <div class="checkbox-item" id="check-whatsapp-${index}">
                     <input type="checkbox" onchange="toggleCheck('check-whatsapp-${index}')">
                     <span>WhatsApp: ${contrib.dados_contato.whatsapp}</span>
                 </div>`;
-            }
-            if (contrib.dados_contato.instagram) {
-                dadosHtml += `<div class="checkbox-item" id="check-instagram-${index}">
+        }
+        
+        if (contrib.dados_contato.instagram) {
+            dadosHtml += `
+                <div class="checkbox-item" id="check-instagram-${index}">
                     <input type="checkbox" onchange="toggleCheck('check-instagram-${index}')">
                     <span>Instagram: ${contrib.dados_contato.instagram}</span>
                 </div>`;
-            }
-            if (contrib.dados_contato.telefone_gabinete) {
-                dadosHtml += `<div class="checkbox-item" id="check-telefone-${index}">
+        }
+        
+        if (contrib.dados_contato.telefone_gabinete) {
+            dadosHtml += `
+                <div class="checkbox-item" id="check-telefone-${index}">
                     <input type="checkbox" onchange="toggleCheck('check-telefone-${index}')">
                     <span>Tel. Gabinete: ${contrib.dados_contato.telefone_gabinete}</span>
                 </div>`;
-            }
-            if (contrib.dados_contato.assessores) {
-                contrib.dados_contato.assessores.forEach((ass, i) => {
-                    dadosHtml += `<div class="checkbox-item" id="check-assessor-${index}-${i}">
+        }
+        
+        if (contrib.dados_contato.assessores && contrib.dados_contato.assessores.length > 0) {
+            contrib.dados_contato.assessores.forEach((ass, i) => {
+                dadosHtml += `
+                    <div class="checkbox-item" id="check-assessor-${index}-${i}">
                         <input type="checkbox" onchange="toggleCheck('check-assessor-${index}-${i}')">
                         <span>Assessor: ${ass.nome} (${ass.whatsapp})</span>
                     </div>`;
-                });
-            }
-            dadosHtml += '</div>';
+            });
         }
         
-        if (contrib.evidencia) {
-            dadosHtml += `<div><strong>📄 Evidência:</strong>
+        dadosHtml += '</div>';
+    }
+    
+    if (contrib.evidencia) {
+        dadosHtml += `
+            <div style="margin-bottom: 15px;"><strong>📄 Evidência:</strong><br>
                 <div class="checkbox-item" id="check-evidencia-${index}">
                     <input type="checkbox" onchange="toggleCheck('check-evidencia-${index}')">
                     <span>${contrib.evidencia.tipo}: <a href="${contrib.evidencia.url}" target="_blank">${contrib.evidencia.url}</a></span>
                 </div>
             </div>`;
-        }
-        
-        return `<div class="contribuicao-card">
+    }
+    
+    return `
+        <div class="contribuicao-card">
             <div class="contribuicao-header">
                 <div>
-                    <h4>${contrib.parlamentar_nome}</h4>
-                    <small style="color: #666;">ID: ${contrib.parlamentar_id} | Pauta: ${contrib.pauta_slug || 'N/A'}</small><br>
-                    <small style="color: #666;">Enviado por: ${contrib.usuario_nome} em ${new Date(contrib.criado_em).toLocaleDateString('pt-BR')}</small>
+                    <h4>${contrib.parlamentar_nome || 'Parlamentar'}</h4>
+                    <small style="color: #666;">ID: ${contrib.parlamentar_id || 'N/A'} | Pauta: ${contrib.pauta_slug || 'N/A'}</small><br>
+                    <small style="color: #666;">Enviado por: ${contrib.usuario_nome || 'Anônimo'} em ${new Date(contrib.criado_em).toLocaleDateString('pt-BR')}</small>
                 </div>
-                <a href="${contrib.pr_url}" target="_blank" class="btn btn-small">Ver PR</a>
+                ${contrib.pr_url ? `<a href="${contrib.pr_url}" target="_blank" class="btn btn-small">Ver PR</a>` : ''}
             </div>
             
             ${dadosHtml}
             
             <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button class="btn" onclick="aprovarSelecionados(${contrib.pr_number}, ${index})">✅ Aprovar Selecionados</button>
-                <button class="btn btn-danger" onclick="rejeitarContribuicao(${contrib.pr_number})">❌ Rejeitar Tudo</button>
+                <button class="btn" onclick="aprovarSelecionados(${contrib.pr_number || 0}, ${index})">✅ Aprovar Selecionados</button>
+                <button class="btn btn-secondary" onclick="selecionarTodos(${index})">☑️ Selecionar Todos</button>
+                <button class="btn btn-danger" onclick="rejeitarContribuicao(${contrib.pr_number || 0})">❌ Rejeitar Tudo</button>
             </div>
         </div>`;
-    }).join('');
 }
 
+// Renderizar contribuição de CONTEÚDO (sugestão, correção)
+function renderContribuicaoConteudo(contrib, index) {
+    const tipoLabels = {
+        'sugestao': 'Sugestão',
+        'correcao': 'Correção',
+        'apoio': 'Apoio',
+        'outro': 'Outro'
+    };
+    
+    const tipoBadges = {
+        'sugestao': 'primary',
+        'correcao': 'warning',
+        'apoio': 'success',
+        'outro': 'secondary'
+    };
+    
+    const tipoLabel = tipoLabels[contrib.tipo] || contrib.tipo || 'Não especificado';
+    const tipoBadge = tipoBadges[contrib.tipo] || 'secondary';
+    const dataFormatada = contrib.data ? new Date(contrib.data).toLocaleString('pt-BR') : 'Data inválida';
+    
+    return `
+        <div class="contribuicao-card">
+            <div class="contribuicao-header">
+                <div>
+                    <h4>📝 ${contrib.nome || 'Anônimo'}</h4>
+                    <span class="badge badge-${tipoBadge}" style="margin-left:10px;">${tipoLabel}</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom:15px;">
+                <p style="margin:5px 0;"><strong>Pauta:</strong> ${contrib.pauta_title || contrib.pauta_slug || 'Não especificada'}</p>
+                <p style="margin:5px 0;"><strong>Email:</strong> ${contrib.email || 'Não fornecido'}</p>
+                <p style="margin:5px 0;"><strong>Data:</strong> ${dataFormatada}</p>
+                <p style="margin:5px 0;"><strong>ID:</strong> <code>${contrib.id || 'N/A'}</code></p>
+            </div>
+            
+            <div style="background:#f8f9fa;padding:15px;border-radius:5px;margin-bottom:15px;">
+                <strong>Conteúdo:</strong>
+                <p style="margin-top:8px;white-space:pre-wrap;">${contrib.conteudo || 'Sem conteúdo'}</p>
+            </div>
+            
+            <div style="display:flex;gap:10px;justify-content:flex-end;">
+                <button class="btn btn-success" onclick="aprovarContribuicaoConteudo('${contrib.id}', '${contrib.pauta_slug}')">
+                    ✅ Aprovar e Adicionar à Pauta
+                </button>
+                <button class="btn btn-danger" onclick="rejeitarContribuicaoConteudo('${contrib.id}')">
+                    ❌ Rejeitar
+                </button>
+            </div>
+        </div>`;
+}
+
+// Toggle checkbox visual
+function toggleCheck(elementId) {
+    const element = document.getElementById(elementId);
+    const checkbox = element.querySelector('input[type="checkbox"]');
+    
+    if (checkbox.checked) {
+        element.classList.add('checked');
+    } else {
+        element.classList.remove('checked');
+    }
+}
+
+// Selecionar todos os checkboxes de uma contribuição
+function selecionarTodos(index) {
+    const checkboxes = document.querySelectorAll(`[id^="check-"][id*="${index}"] input[type="checkbox"]`);
+    const todosChecked = Array.from(checkboxes).every(cb => cb.checked);
+    
+    checkboxes.forEach(cb => {
+        cb.checked = !todosChecked;
+        toggleCheck(cb.parentElement.id);
+    });
+}
+
+// Aprovar itens selecionados de uma contribuição de DADOS
+async function aprovarSelecionados(prNumber, index) {
+    const contrib = contribuicoesPendentes[index];
+    
+    if (!contrib || !contrib.dados_contato) {
+        alert('❌ Contribuição inválida');
+        return;
+    }
+    
+    // Coletar itens selecionados
+    const itensSelecionados = {
+        whatsapp: null,
+        instagram: null,
+        telefone_gabinete: null,
+        assessores: [],
+        evidencias: []
+    };
+    
+    // WhatsApp
+    const checkWhatsApp = document.getElementById(`check-whatsapp-${index}`);
+    if (checkWhatsApp && checkWhatsApp.querySelector('input').checked) {
+        itensSelecionados.whatsapp = contrib.dados_contato.whatsapp;
+    }
+    
+    // Instagram
+    const checkInstagram = document.getElementById(`check-instagram-${index}`);
+    if (checkInstagram && checkInstagram.querySelector('input').checked) {
+        itensSelecionados.instagram = contrib.dados_contato.instagram;
+    }
+    
+    // Telefone
+    const checkTelefone = document.getElementById(`check-telefone-${index}`);
+    if (checkTelefone && checkTelefone.querySelector('input').checked) {
+        itensSelecionados.telefone_gabinete = contrib.dados_contato.telefone_gabinete;
+    }
+    
+    // Assessores
+    if (contrib.dados_contato.assessores) {
+        contrib.dados_contato.assessores.forEach((ass, i) => {
+            const checkAssessor = document.getElementById(`check-assessor-${index}-${i}`);
+            if (checkAssessor && checkAssessor.querySelector('input').checked) {
+                itensSelecionados.assessores.push(ass);
+            }
+        });
+    }
+    
+    // Evidência
+    const checkEvidencia = document.getElementById(`check-evidencia-${index}`);
+    if (checkEvidencia && checkEvidencia.querySelector('input').checked && contrib.evidencia) {
+        itensSelecionados.evidencias.push(contrib.evidencia);
+    }
+    
+    // Verificar se pelo menos um item foi selecionado
+    const temSelecionados = itensSelecionados.whatsapp || 
+                           itensSelecionados.instagram || 
+                           itensSelecionados.telefone_gabinete || 
+                           itensSelecionados.assessores.length > 0 || 
+                           itensSelecionados.evidencias.length > 0;
+    
+    if (!temSelecionados) {
+        alert('⚠️ Selecione pelo menos um item para aprovar!');
+        return;
+    }
+    
+    // Confirmar
+    let mensagem = '✅ Deseja aprovar os seguintes itens?\n\n';
+    if (itensSelecionados.whatsapp) mensagem += `• WhatsApp: ${itensSelecionados.whatsapp}\n`;
+    if (itensSelecionados.instagram) mensagem += `• Instagram: ${itensSelecionados.instagram}\n`;
+    if (itensSelecionados.telefone_gabinete) mensagem += `• Telefone: ${itensSelecionados.telefone_gabinete}\n`;
+    if (itensSelecionados.assessores.length > 0) {
+        mensagem += `• ${itensSelecionados.assessores.length} assessor(es)\n`;
+    }
+    if (itensSelecionados.evidencias.length > 0) {
+        mensagem += `• ${itensSelecionados.evidencias.length} evidência(s)\n`;
+    }
+    mensagem += '\n⚠️ Se o dado já existir, será substituído ou adicionado.';
+    
+    if (!confirm(mensagem)) {
+        return;
+    }
+    
+    try {
+        console.log('✅ Aprovando itens:', itensSelecionados);
+        
+        // Enviar para API
+        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({
+                action: 'approve_partial',
+                pr_number: prNumber,
+                parlamentar_id: contrib.parlamentar_id,
+                itens: itensSelecionados
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Itens aprovados com sucesso!');
+            carregarContribuicoes(); // Recarregar lista
+        } else {
+            throw new Error(data.error || 'Erro desconhecido');
+        }
+        
+    } catch (error) {
+        console.error('❌ Erro ao aprovar:', error);
+        alert('❌ Erro ao aprovar itens: ' + error.message);
+    }
+}
+
+// Rejeitar contribuição de DADOS (PR inteiro)
+async function rejeitarContribuicao(prNumber) {
+    if (!confirm('❌ Deseja rejeitar toda esta contribuição?\n\nO Pull Request será fechado e nenhum dado será adicionado.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({
+                action: 'reject',
+                pr_number: prNumber
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Contribuição rejeitada!');
+            carregarContribuicoes();
+        } else {
+            throw new Error(data.error || 'Erro desconhecido');
+        }
+        
+    } catch (error) {
+        console.error('❌ Erro ao rejeitar:', error);
+        alert('❌ Erro: ' + error.message);
+    }
+}
+
+// Aprovar contribuição de CONTEÚDO
+async function aprovarContribuicaoConteudo(id, pautaSlug) {
+    alert('⚠️ Funcionalidade em desenvolvimento!\n\nPor enquanto:\n1. Copie o conteúdo da contribuição\n2. Vá em "Gerenciar Pautas"\n3. Clique em "Alterar" na pauta correspondente\n4. Adicione o conteúdo manualmente\n5. Volte aqui e rejeite a contribuição');
+}
+
+// Rejeitar contribuição de CONTEÚDO
+async function rejeitarContribuicaoConteudo(id) {
+    if (!confirm('❌ Deseja rejeitar esta contribuição?\n\nEla será removida permanentemente.')) {
+        return;
+    }
+    
+    try {
+        // TODO: Implementar API para remover do YAML
+        alert('⚠️ Funcionalidade em desenvolvimento!');
+        
+    } catch (error) {
+        console.error('❌ Erro:', error);
+        alert('❌ Erro: ' + error.message);
+    }
+}
+        
 function toggleCheck(id) {
     const el = document.getElementById(id);
     const checkbox = el.querySelector('input[type="checkbox"]');
