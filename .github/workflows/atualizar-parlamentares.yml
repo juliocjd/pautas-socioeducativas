@@ -1,0 +1,56 @@
+# .github/workflows/atualizar-parlamentares.yml
+# GitHub Action que roda semanalmente para atualizar cache de parlamentares
+
+name: Atualizar Cache de Parlamentares
+
+on:
+  schedule:
+    # Roda toda segunda-feira às 3h da manhã (UTC)
+    - cron: '0 3 * * 1'
+  workflow_dispatch: # Permite execução manual
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout do repositório
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: 📦 Instalar dependências
+        run: |
+          pip install requests
+      
+      - name: 🔄 Executar script de atualização
+        run: |
+          python scripts/atualizar-parlamentares.py
+      
+      - name: 📊 Verificar mudanças
+        id: check_changes
+        run: |
+          if git diff --quiet _data/parlamentares_cache.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 💾 Commit e Push
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add _data/parlamentares_cache.json
+          git commit -m "chore: Atualizar cache de parlamentares [automated]"
+          git push
+      
+      - name: ✅ Sem mudanças
+        if: steps.check_changes.outputs.changed == 'false'
+        run: |
+          echo "Nenhuma mudança nos dados de parlamentares"
