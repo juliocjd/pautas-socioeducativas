@@ -27,7 +27,7 @@ layout: default
   {% if page.campanha %}
   <div class="campanhas-section mb-5">
     <h3>📢 Mobilização</h3>
-    <p>Participe das campanhas de contato com os parlamentares:</p>
+    <p>Participe das campanhas de contato com os parlamentares. Basta clicar nos botões abaixo para enviar mensagens pedindo apoio aos parlamentares:</p>
     
     <div class="row">
       {% if page.campanha.email %}
@@ -143,14 +143,14 @@ layout: default
             Use este formulário para adicionar dados pessoais (WhatsApp, Instagram, assessores).
           </div>
           
-          <h6>📱 Dados Pessoais (Contribuições da Comunidade)</h6>
+          <h6>📱 Dados do Parlamentar que você tenha</h6>
           <div class="form-group">
-            <label>WhatsApp Pessoal</label>
+            <label>WhatsApp do Parlamentar</label>
             <input type="text" class="form-control" id="campo-whatsapp" placeholder="(XX) XXXXX-XXXX">
             <small class="text-muted">Para contato direto via WhatsApp</small>
           </div>
           <div class="form-group">
-            <label>Instagram</label>
+            <label>Instagram do Parlamentar</label>
             <input type="text" class="form-control" id="campo-instagram" placeholder="@usuario">
             <small class="text-muted">Para campanhas nas redes sociais</small>
           </div>
@@ -824,9 +824,9 @@ function verContato(parlamentar) {
     
     if (extras.whatsapp) {
       html += `<div class="contato-info">
-        <div class="contato-info-titulo">💬 WhatsApp Pessoal</div>
+        <div class="contato-info-titulo"><span id="icon-whatsapp"></span> WhatsApp Pessoal</div>
         <a href="https://wa.me/55${extras.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp">
-          💬 Enviar WhatsApp
+          <span id="icon-whatsapp"></span> Enviar WhatsApp
         </a>
         <div class="contato-fonte">Contribuído pela comunidade</div>
       </div>`;
@@ -834,9 +834,9 @@ function verContato(parlamentar) {
     
     if (extras.instagram) {
       html += `<div class="contato-info">
-        <div class="contato-info-titulo">📷 Instagram</div>
+        <div class="contato-info-titulo"><span id="icon-instagram"></span> Instagram</div>
         <a href="https://instagram.com/${extras.instagram.replace('@', '')}" target="_blank" class="btn-acao-contato btn-instagram">
-          📷 @${extras.instagram.replace('@', '')}
+          <span id="icon-instagram"></span> @${extras.instagram.replace('@', '')}
         </a>
         <div class="contato-fonte">Contribuído pela comunidade</div>
       </div>`;
@@ -1056,7 +1056,7 @@ function atualizarListaWhatsApp() {
         ${jaEnviado ? '✅' : ''}
       </div>
       <button class="btn btn-sm btn-success" onclick="enviarWhatsApp('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
-        💬 Enviar
+        <span id="icon-whatsapp"></span> Enviar
       </button>
     </div>`;
   }).join('');
@@ -1178,7 +1178,7 @@ function mostrarTracking() {
     temProgresso = true;
     const total = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.whatsapp).length;
     html += `<div class="tracking-item">
-      <span>💬 WhatsApp</span>
+      <span><span id="icon-whatsapp"></span> WhatsApp</span>
       <span>${dados.whatsapp.length}/${total}</span>
     </div>`;
   }
@@ -1187,7 +1187,7 @@ function mostrarTracking() {
     temProgresso = true;
     const total = parlamentaresBase.filter(p => congressistasExtras.congressistas?.[p.id]?.instagram).length;
     html += `<div class="tracking-item">
-      <span>📷 Instagram</span>
+      <span><span id="icon-instagram"></span> Instagram</span>
       <span>${dados.instagram.length}/${total}</span>
     </div>`;
   }
