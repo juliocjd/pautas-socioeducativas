@@ -957,7 +957,7 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
   };
   
   try {
-    const response = await fetch('/api/contribuicoes', {
+    const response = await fetch('/api/contribuir-dados', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
