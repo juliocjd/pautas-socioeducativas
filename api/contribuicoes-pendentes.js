@@ -1,7 +1,6 @@
 // API para gerenciar contribuições pendentes
 // Suporta: listagem, aprovação parcial, aprovação total, rejeição
 import { Octokit } from '@octokit/rest';
-import yaml from 'js-yaml';
 
 export default async function handler(req, res) {
   // CORS
@@ -34,7 +33,7 @@ export default async function handler(req, res) {
     try {
       console.log('📥 Buscando contribuições pendentes...');
 
-      // 1. Buscar contribuições de CONTEÚDO (arquivo YAML)
+      // 1. Buscar contribuições de CONTEÚDO (arquivo JSON)
       let contribuicoesConteudo = [];
       try {
         const { data: fileData } = await octokit.rest.repos.getContent({
@@ -45,7 +44,7 @@ export default async function handler(req, res) {
         });
 
         const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
-        const dados = yaml.load(content) || [];
+        const dados = JSON.parse(content) || [];
         contribuicoesConteudo = dados.filter(c => c.status === 'pendente');
         
         console.log(`✅ ${contribuicoesConteudo.length} contribuições de conteúdo encontradas`);
@@ -405,9 +404,6 @@ export default async function handler(req, res) {
         });
       }
 
-      // ==========================================
-      // REJEITAR CONTRIBUIÇÃO DE CONTEÚDO (YAML)
-      // ==========================================
       if (action === 'reject_content' && id) {
         console.log(`❌ Rejeitando contribuição de conteúdo ID: ${id}...`);
 
@@ -420,7 +416,7 @@ export default async function handler(req, res) {
         });
 
         const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
-        let contribuicoes = yaml.load(content) || [];
+        let contribuicoes = JSON.parse(content) || [];
 
         // Marcar como rejeitada
         contribuicoes = contribuicoes.map(c => 
@@ -428,7 +424,7 @@ export default async function handler(req, res) {
         );
 
         // Salvar
-        const newContent = yaml.dump(contribuicoes, { indent: 2, lineWidth: -1, noRefs: true });
+        const newContent = JSON.stringify(contribuicoes, { indent: 2, lineWidth: -1, noRefs: true });
 
         await octokit.rest.repos.createOrUpdateFileContents({
           owner,
