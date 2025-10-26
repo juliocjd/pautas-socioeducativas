@@ -99,7 +99,7 @@ export default async function handler(req, res) {
         congressistas = JSON.parse(content);
       } catch (error) {
         if (error.status === 404) {
-          console.log('ℹ️ Arquivo congressistas.json não existe, será criado');
+          console.log('ℹ️ Arquivo congressistas-dados.json não existe, será criado');
           congressistas = {};
         } else {
           throw error;
