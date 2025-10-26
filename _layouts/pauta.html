@@ -475,7 +475,7 @@ async function carregarParlamentaresComCache() {
   
   // 2. Tentar arquivo de cache do site
   try {
-    const response = await fetch('/_data/parlamentares_cache.json');
+    const response = await fetch('/assets/data/parlamentares_cache.json');
     if (response.ok) {
       const cacheData = await response.json();
       const parlamentares = cacheData.parlamentares;
