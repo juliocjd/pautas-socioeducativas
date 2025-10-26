@@ -1,0 +1,58 @@
+{
+  "parlamentares": [
+    {
+      "id": "204534",
+      "nome": "Acácio Favacho",
+      "partido": "MDB",
+      "uf": "AP",
+      "email": "dep.acaciofavacho@camara.leg.br",
+      "telefone_gabinete": "(61) 3215-5000",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220599",
+      "nome": "Adriana Ventura",
+      "partido": "NOVO",
+      "uf": "SP",
+      "email": "dep.adrianaventura@camara.leg.br",
+      "telefone_gabinete": "(61) 3215-5000",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204554",
+      "nome": "Alexandre Ramagem",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.alexandreramagem@camara.leg.br",
+      "telefone_gabinete": "(61) 3215-5000",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220571",
+      "nome": "Bia Kicis",
+      "partido": "PL",
+      "uf": "DF",
+      "email": "dep.biakicis@camara.leg.br",
+      "telefone_gabinete": "(61) 3215-5000",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204513",
+      "nome": "Cabo Gilberto Silva",
+      "partido": "PL",
+      "uf": "PB",
+      "email": "dep.cabogilbertosilva@camara.leg.br",
+      "telefone_gabinete": "(61) 3215-5000",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    }
+  ],
+  "ultima_atualizacao": "2025-10-26T09:00:00Z",
+  "total_deputados": 5,
+  "total_senadores": 0,
+  "nota": "Arquivo de exemplo com apenas 5 deputados. Execute a GitHub Action para popular com todos os parlamentares."
+}
