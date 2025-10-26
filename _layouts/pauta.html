@@ -401,46 +401,13 @@ let parlamentaresBase = [];
 
 // Extras de usuários
 let congressistasExtras = {};
-
-// Tentar carregar do Jekyll primeiro
 try {
   const tempExtras = {{ site.data.congressistas_extras | jsonify }};
   congressistasExtras = tempExtras && tempExtras.congressistas ? tempExtras : { congressistas: {} };
-  console.log('✅ Dados Jekyll carregados:', Object.keys(congressistasExtras.congressistas).length, 'parlamentares');
 } catch (e) {
-  console.log('⚠️ Dados Jekyll não disponíveis');
   congressistasExtras = { congressistas: {} };
 }
-
-// Carregar dados adicionais via fetch (se houver)
-async function carregarDadosExtrasAPI() {
-  try {
-    const response = await fetch('_data/congressistas_extras.json');
-    if (response.ok) {
-      const data = await response.json();
-      
-      // Mesclar com dados do Jekyll
-      if (!congressistasExtras.congressistas) {
-        congressistasExtras.congressistas = {};
-      }
-      
-      Object.keys(data).forEach(id => {
-        congressistasExtras.congressistas[id] = {
-          ...congressistasExtras.congressistas[id],
-          ...data[id]
-        };
-      });
-      
-      console.log('✅ Dados da API mesclados:', Object.keys(congressistasExtras.congressistas).length, 'parlamentares');
-    }
-  } catch (error) {
-    console.log('⚠️ API de dados extras não disponível:', error);
-  }
-}
-
-// Chamar ao carregar
-carregarDadosExtrasAPI();
-
+  
 // Evidências
 let evidenciasPautas = {};
 try {
@@ -990,7 +957,7 @@ document.getElementById('formEnviarInfo')?.addEventListener('submit', async func
   };
   
   try {
-    const response = await fetch('/api/contribuir-dados', {
+    const response = await fetch('/_data/contribuir-dados', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
