@@ -250,14 +250,26 @@ export default async function handler(req, res) {
 
         // WhatsApp (pode ter múltiplos)
         if (itens.whatsapp) {
+          // Garantir que é array
           if (!parlamentar.whatsapp) {
             parlamentar.whatsapp = [];
           }
           if (!Array.isArray(parlamentar.whatsapp)) {
             parlamentar.whatsapp = [parlamentar.whatsapp];
           }
-          if (!parlamentar.whatsapp.includes(itens.whatsapp)) {
-            parlamentar.whatsapp.push(itens.whatsapp);
+          
+          // Extrair número se vier em array
+          let numeroWhatsApp = itens.whatsapp;
+          if (Array.isArray(numeroWhatsApp)) {
+            numeroWhatsApp = numeroWhatsApp[0]; // Pegar primeiro elemento
+          }
+          
+          // Adicionar se não existir
+          if (!parlamentar.whatsapp.includes(numeroWhatsApp)) {
+            parlamentar.whatsapp.push(numeroWhatsApp);
+            console.log(`✅ WhatsApp adicionado: ${numeroWhatsApp}`);
+          } else {
+            console.log(`ℹ️ WhatsApp já existe: ${numeroWhatsApp}`);
           }
         }
 
