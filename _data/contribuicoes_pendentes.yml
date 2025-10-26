@@ -1,0 +1,9 @@
+- id: '1761486062587'
+  pauta_slug: teste
+  pauta_title: Teste
+  nome: João Teste
+  email: teste@example.com
+  tipo: sugestao
+  conteudo: Esta é uma contribuição de teste
+  data: '2025-10-26T13:41:02.587Z'
+  status: pendente
