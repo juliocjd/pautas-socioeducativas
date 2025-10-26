@@ -378,41 +378,91 @@ function extrairDadosDoPatch(patch) {
   };
 
   try {
-    // Extrair linhas adicionadas (+)
-    const linhasAdicionadas = patch.split('\n').filter(l => l.startsWith('+'));
+    console.log('🔍 Extraindo dados do patch...');
+    console.log('📄 Patch completo:', patch);
+    
+    // Extrair linhas adicionadas (+) e removidas (-)
+    const linhas = patch.split('\n');
+    const linhasAdicionadas = linhas.filter(l => l.startsWith('+') && !l.startsWith('+++'));
+    
+    console.log(`📋 ${linhasAdicionadas.length} linhas adicionadas`);
     
     for (const linha of linhasAdicionadas) {
-      // ID do parlamentar
-      if (linha.includes('"') && linha.includes(':')) {
-        const match = linha.match(/"([^"]+)":\s*{/);
-        if (match) dados.id = match[1];
+      // Limpar linha (remover + e espaços)
+      const linhaLimpa = linha.substring(1).trim();
+      
+      // ID do parlamentar (chave do objeto)
+      if (linhaLimpa.match(/^"[^"]+"\s*:\s*{/)) {
+        const match = linhaLimpa.match(/^"([^"]+)"\s*:\s*{/);
+        if (match) {
+          dados.id = match[1];
+          console.log('✅ ID encontrado:', dados.id);
+        }
       }
 
-      // WhatsApp
-      if (linha.includes('whatsapp')) {
-        const match = linha.match(/"whatsapp":\s*"([^"]+)"/);
-        if (match) dados.dados_contato.whatsapp = match[1];
+      // WhatsApp (pode ser string ou array)
+      if (linhaLimpa.includes('whatsapp')) {
+        // Formato: "whatsapp": "valor"
+        let match = linhaLimpa.match(/"whatsapp"\s*:\s*"([^"]+)"/);
+        if (match) {
+          dados.dados_contato.whatsapp = match[1];
+          console.log('✅ WhatsApp encontrado:', match[1]);
+        } else {
+          // Formato: "whatsapp": ["valor"]
+          match = linhaLimpa.match(/"whatsapp"\s*:\s*\[\s*"([^"]+)"/);
+          if (match) {
+            dados.dados_contato.whatsapp = match[1];
+            console.log('✅ WhatsApp (array) encontrado:', match[1]);
+          } else {
+            // Formato: linha dentro do array
+            match = linhaLimpa.match(/^\s*"([^"]+)"\s*[,\]]?\s*$/);
+            if (match && linha.includes('whatsapp')) {
+              dados.dados_contato.whatsapp = match[1];
+              console.log('✅ WhatsApp (item array) encontrado:', match[1]);
+            }
+          }
+        }
       }
 
       // Instagram
-      if (linha.includes('instagram')) {
-        const match = linha.match(/"instagram":\s*"([^"]+)"/);
-        if (match) dados.dados_contato.instagram = match[1];
+      if (linhaLimpa.includes('instagram')) {
+        const match = linhaLimpa.match(/"instagram"\s*:\s*"([^"]+)"/);
+        if (match) {
+          dados.dados_contato.instagram = match[1];
+          console.log('✅ Instagram encontrado:', match[1]);
+        }
       }
 
-      // Telefone
-      if (linha.includes('telefone_gabinete')) {
-        const match = linha.match(/"telefone_gabinete":\s*"([^"]+)"/);
-        if (match) dados.dados_contato.telefone_gabinete = match[1];
+      // Telefone gabinete
+      if (linhaLimpa.includes('telefone_gabinete')) {
+        const match = linhaLimpa.match(/"telefone_gabinete"\s*:\s*"([^"]+)"/);
+        if (match) {
+          dados.dados_contato.telefone_gabinete = match[1];
+          console.log('✅ Telefone encontrado:', match[1]);
+        }
       }
 
-      // Assessores (simplificado)
-      if (linha.includes('assessores')) {
-        dados.dados_contato.assessores = [];
+      // Assessores (detectar início do array)
+      if (linhaLimpa.includes('assessores')) {
+        if (linhaLimpa.includes('[')) {
+          dados.dados_contato.assessores = [];
+          console.log('✅ Assessores array iniciado');
+        }
+      }
+
+      // Evidências (detectar início do array)
+      if (linhaLimpa.includes('evidencias')) {
+        if (linhaLimpa.includes('[')) {
+          dados.evidencias = [];
+          console.log('✅ Evidências array iniciado');
+        }
       }
     }
+    
+    console.log('📊 Dados extraídos:', dados);
+    
   } catch (error) {
-    console.error('⚠️ Erro ao extrair dados do patch:', error);
+    console.error('❌ Erro ao extrair dados do patch:', error);
   }
 
   return dados;
