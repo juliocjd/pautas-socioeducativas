@@ -90,7 +90,7 @@ export default async function handler(req, res) {
         const { data: fileData } = await octokit.rest.repos.getContent({
           owner,
           repo,
-          path: 'api/congressistas.json',
+          path: 'api/congressistas-dados.json',
           ref: branch
         });
 
@@ -169,7 +169,7 @@ export default async function handler(req, res) {
       await octokit.rest.repos.createOrUpdateFileContents({
         owner,
         repo,
-        path: 'api/congressistas.json',
+        path: 'api/congressistas-dados.json',
         message: `Contribuição de dados: ${parlamentar_nome}`,
         content: Buffer.from(newContent).toString('base64'),
         branch: branchName,
