@@ -92,7 +92,7 @@ layout: default
         <tr>
           <th>Nome</th>
           <th>Partido</th>
-          <th>UF</th>
+          <th>Estado</th>
           <th>Posição</th>
           <th>Ações</th>
         </tr>
@@ -768,7 +768,6 @@ function renderTabela() {
     
     return `<tr>
       <td>${p.nome}</td>
-      <td>${p.casa}</td>
       <td>${p.partido}</td>
       <td>${p.uf}</td>
       <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
