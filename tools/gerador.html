@@ -975,68 +975,85 @@ async function excluirPauta(filename, title) {
 
 async function alterarPauta(filename) {
     try {
-        // Buscar dados da pauta
-        const response = await fetch(`${API_URL}/api/edit-pauta?filename=${filename}`);
-        const data = await response.json();
-        
-        if (!data.success) {
-            alert('❌ Erro ao buscar pauta: ' + data.error);
-            return;
-        }
-        
-        // Parse do conteúdo
-        const content = data.content;
-        const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-        
-        if (!frontMatterMatch) {
-            alert('❌ Formato de pauta inválido');
-            return;
-        }
-        
-        // Extrair dados
-        const frontMatter = frontMatterMatch[1];
-        const body = frontMatterMatch[2];
-        
-        // Preencher formulário
-        const lines = frontMatter.split('\n');
-        lines.forEach(line => {
-            const match = line.match(/^(\w+):\s*(.+)$/);
+    console.log('📝 Carregando pauta para edição:', filename);
+    
+    // Buscar dados da pauta
+    const response = await fetch(`${API_URL}/api/edit-pauta?filename=${filename}`);
+    const data = await response.json();
+    
+    if (!data.success) {
+        alert('❌ Erro ao buscar pauta: ' + data.error);
+        return;
+    }
+    
+    console.log('✅ Pauta carregada');
+    
+    // Parse do conteúdo
+    const content = data.content;
+    const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    
+    if (!frontMatterMatch) {
+        alert('❌ Formato de pauta inválido');
+        return;
+    }
+    
+    // Extrair dados
+    const frontMatter = frontMatterMatch[1];
+    const body = frontMatterMatch[2].trim();
+    
+    // Criar objeto com todos os dados
+    const pautaData = {
+        filename: filename
+    };
+    
+    // Preencher formulário e extrair dados
+    const lines = frontMatter.split('\n');
+    let currentKey = '';
+    let multilineValue = '';
+    let inMultiline = false;
+    
+    for (const line of lines) {
+        // Detectar campo multiline (com |)
+        if (line.includes('|')) {
+            const match = line.match(/^(\w+):\s*\|/);
             if (match) {
-                const key = match[1];
-                const value = match[2].replace(/^["']|["']$/g, '');
-                
-                const input = document.getElementById(key);
-                if (input) {
-                    if (input.type === 'checkbox') {
-                        input.checked = value === 'true';
-                    } else {
-                        input.value = value;
-                    }
+                currentKey = match[1];
+                inMultiline = true;
+                multilineValue = '';
+                continue;
+            }
+        }
+        
+        // Coletar linhas do campo multiline
+        if (inMultiline) {
+            if (line.match(/^\w+:/) && !line.includes('  ')) {
+                // Novo campo, salvar o anterior
+                pautaData[currentKey] = multilineValue.trim();
+                inMultiline = false;
+            } else {
+                multilineValue += line.replace(/^    /, '') + '\n';
+                continue;
+            }
+        }
+        
+        // Campo simples
+        const match = line.match(/^(\w+):\s*(.+)$/);
+        if (match) {
+            const key = match[1];
+            const value = match[2].replace(/^["']|["']$/g, '');
+            pautaData[key] = value;
+            
+            // Preencher input se existir
+            const input = document.getElementById(key);
+            if (input) {
+                if (input.type === 'checkbox') {
+                    input.checked = value === 'true';
+                } else {
+                    input.value = value;
                 }
             }
-        });
-        
-        document.getElementById('body').value = body;
-        
-        // Mudar para aba de criar
-        showTab('criar');
-        
-        // Adicionar indicador de edição
-        document.getElementById('title').parentElement.insertAdjacentHTML('afterbegin', 
-            '<div class="alert alert-warning" id="edit-mode">📝 <strong>Modo Edição:</strong> Você está editando a pauta <strong>' + filename + '</strong></div>');
-        
-        // Alterar botão de submit
-        const submitBtn = document.querySelector('#pautaForm button[type="submit"]');
-        submitBtn.textContent = '💾 Salvar Alterações';
-        submitBtn.onclick = function(e) {
-            e.preventDefault();
-            salvarAlteracoes(filename);
-        };
-        
-    } catch (error) {
-        alert('❌ Erro: ' + error.message);
+        }
     }
-}
 
 async function salvarAlteracoes(filename) {
     // Similar a gerarPauta(), mas usa PUT em vez de POST
