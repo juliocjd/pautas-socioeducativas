@@ -1,0 +1,17 @@
+---
+parlamentar_id: "204534"
+parlamentar_nome: "Acácio Favacho"
+pauta_slug: "novo-teste"
+data_envio: "2025-10-26T13:32:04.272Z"
+usuario_nome: "João"
+usuario_email: "joao@gmail.com"
+status: "pendente"
+
+# DADOS DE CONTATO (permanentes)
+dados_contato:
+  whatsapp: "44 999999262"
+  instagram: "@juliodornellas"
+
+# EVIDÊNCIA DE POSICIONAMENTO (específica da pauta)
+evidencia: null
+---
