@@ -72,37 +72,100 @@ export default async function handler(req, res) {
         );
 
         for (const pr of prsContribuicao) {
+        try {
+          console.log(`📋 Processando PR #${pr.number}: ${pr.title}`);
+          
+          // Buscar arquivos modificados no PR
+          const { data: files } = await octokit.rest.pulls.listFiles({
+            owner,
+            repo,
+            pull_number: pr.number
+          });
+      
+          // Verificar se modifica congressistas.json
+          const congressistasFile = files.find(f => f.filename === 'api/congressistas.json');
+          
+          if (!congressistasFile) {
+            console.log(`⚠️ PR #${pr.number} não modifica congressistas.json`);
+            continue;
+          }
+      
+          console.log(`✅ PR #${pr.number} modifica congressistas.json`);
+      
+          // BUSCAR ARQUIVO COMPLETO DA BRANCH DO PR (não parsear patch!)
+          let dadosExtraidos = {
+            id: null,
+            nome: null,
+            dados_contato: {},
+            evidencia: null
+          };
+      
           try {
-            // Buscar arquivos do PR
-            const { data: files } = await octokit.rest.pulls.listFiles({
+            // Buscar conteúdo do arquivo da branch do PR
+            const { data: fileContent } = await octokit.rest.repos.getContent({
               owner,
               repo,
-              pull_number: pr.number
+              path: 'api/congressistas.json',
+              ref: pr.head.ref  // Branch do PR (não main!)
             });
-
-            // Verificar se modifica congressistas.json
-            const congressistasFile = files.find(f => f.filename === 'api/congressistas.json');
+      
+            const content = Buffer.from(fileContent.content, 'base64').toString('utf-8');
+            const congressistas = JSON.parse(content);
+      
+            console.log(`📊 Congressistas no PR:`, Object.keys(congressistas));
+      
+            // Encontrar qual parlamentar foi modificado
+            // (comparar com main ou pegar o primeiro/último)
+            const parlamentarIds = Object.keys(congressistas);
             
-            if (congressistasFile && congressistasFile.patch) {
-              // Extrair dados do patch
-              const dadosExtraidos = extrairDadosDoPatch(congressistasFile.patch);
-              
-              contribuicoesDados.push({
-                pr_number: pr.number,
-                pr_url: pr.html_url,
-                parlamentar_id: dadosExtraidos.id,
-                parlamentar_nome: dadosExtraidos.nome,
-                pauta_slug: extrairPautaDoPR(pr),
-                usuario_nome: pr.user.login,
-                criado_em: pr.created_at,
-                dados_contato: dadosExtraidos.dados_contato,
-                evidencia: dadosExtraidos.evidencia
-              });
+            if (parlamentarIds.length > 0) {
+              // Assumir que é o último adicionado/modificado
+              // (pode melhorar comparando com main)
+              const parlamentarId = parlamentarIds[parlamentarIds.length - 1];
+              const parlamentar = congressistas[parlamentarId];
+      
+              dadosExtraidos = {
+                id: parlamentarId,
+                nome: extrairNomeDoPR(pr),
+                dados_contato: {
+                  whatsapp: parlamentar.whatsapp,
+                  instagram: parlamentar.instagram,
+                  telefone_gabinete: parlamentar.telefone_gabinete,
+                  assessores: parlamentar.assessores
+                },
+                evidencia: parlamentar.evidencias ? parlamentar.evidencias[parlamentar.evidencias.length - 1] : null
+              };
+      
+              console.log(`✅ Dados extraídos do arquivo:`, dadosExtraidos);
             }
+      
           } catch (error) {
-            console.error(`⚠️ Erro ao processar PR #${pr.number}:`, error.message);
+            console.error(`❌ Erro ao buscar arquivo do PR #${pr.number}:`, error.message);
+            
+            // Fallback: tentar extrair do patch
+            console.log('⚠️ Usando fallback: extrair do patch');
+            dadosExtraidos = extrairDadosDoPatch(congressistasFile.patch);
           }
+      
+          // Adicionar à lista de contribuições
+          contribuicoesDados.push({
+            pr_number: pr.number,
+            pr_url: pr.html_url,
+            parlamentar_id: dadosExtraidos.id,
+            parlamentar_nome: dadosExtraidos.nome,
+            pauta_slug: extrairPautaDoPR(pr),
+            usuario_nome: pr.user.login,
+            criado_em: pr.created_at,
+            dados_contato: dadosExtraidos.dados_contato,
+            evidencia: dadosExtraidos.evidencia
+          });
+      
+          console.log(`✅ Contribuição adicionada: ${dadosExtraidos.nome || dadosExtraidos.id}`);
+      
+        } catch (error) {
+          console.error(`❌ Erro ao processar PR #${pr.number}:`, error.message);
         }
+      }
 
         console.log(`✅ ${contribuicoesDados.length} contribuições de dados encontradas`);
       } catch (error) {
@@ -487,4 +550,21 @@ function gerarListaItensAprovados(itens) {
   }
   
   return lista.join('\n');
+}
+
+function extrairNomeDoPR(pr) {
+  // Extrair nome do parlamentar do título do PR
+  // Formato: "[CONTRIBUIÇÃO] Dados de NOME"
+  const match = pr.title.match(/Dados de (.+)/i);
+  if (match) {
+    return match[1].trim();
+  }
+  
+  // Ou do body
+  const bodyMatch = pr.body?.match(/\*\*Parlamentar:\*\*\s*(.+?)\s*\(/);
+  if (bodyMatch) {
+    return bodyMatch[1].trim();
+  }
+  
+  return null;
 }
