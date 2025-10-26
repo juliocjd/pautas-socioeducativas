@@ -756,7 +756,7 @@ function renderTabela() {
     const estadoMatch = !termoEstado || p.uf === termoEstado;
     const posicao = obterPosicao(p.id);
     const posicaoMatch = !termoPosicao || posicao === termoPosicao;
-    return nomeMatch && casaMatch && estadoMatch && posicaoMatch;
+    return nomeMatch && estadoMatch && posicaoMatch;
   });
   
   tbody.innerHTML = filtrados.map(p => {
