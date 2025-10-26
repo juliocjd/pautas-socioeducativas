@@ -975,86 +975,167 @@ async function excluirPauta(filename, title) {
 
 async function alterarPauta(filename) {
     try {
-    console.log('📝 Carregando pauta para edição:', filename);
-    
-    // Buscar dados da pauta
-    const response = await fetch(`${API_URL}/api/edit-pauta?filename=${filename}`);
-    const data = await response.json();
-    
-    if (!data.success) {
-        alert('❌ Erro ao buscar pauta: ' + data.error);
-        return;
-    }
-    
-    console.log('✅ Pauta carregada');
-    
-    // Parse do conteúdo
-    const content = data.content;
-    const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-    
-    if (!frontMatterMatch) {
-        alert('❌ Formato de pauta inválido');
-        return;
-    }
-    
-    // Extrair dados
-    const frontMatter = frontMatterMatch[1];
-    const body = frontMatterMatch[2].trim();
-    
-    // Criar objeto com todos os dados
-    const pautaData = {
-        filename: filename
-    };
-    
-    // Preencher formulário e extrair dados
-    const lines = frontMatter.split('\n');
-    let currentKey = '';
-    let multilineValue = '';
-    let inMultiline = false;
-    
-    for (const line of lines) {
-        // Detectar campo multiline (com |)
-        if (line.includes('|')) {
-            const match = line.match(/^(\w+):\s*\|/);
-            if (match) {
-                currentKey = match[1];
-                inMultiline = true;
-                multilineValue = '';
-                continue;
-            }
+        console.log('📝 Carregando pauta para edição:', filename);
+        
+        // Buscar dados da pauta
+        const response = await fetch(`${API_URL}/api/edit-pauta?filename=${filename}`);
+        const data = await response.json();
+        
+        if (!data.success) {
+            alert('❌ Erro ao buscar pauta: ' + data.error);
+            return;
         }
         
-        // Coletar linhas do campo multiline
-        if (inMultiline) {
-            if (line.match(/^\w+:/) && !line.includes('  ')) {
-                // Novo campo, salvar o anterior
-                pautaData[currentKey] = multilineValue.trim();
-                inMultiline = false;
-            } else {
-                multilineValue += line.replace(/^    /, '') + '\n';
-                continue;
-            }
+        console.log('✅ Pauta carregada');
+        
+        // Parse do conteúdo
+        const content = data.content;
+        const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+        
+        if (!frontMatterMatch) {
+            alert('❌ Formato de pauta inválido');
+            return;
         }
         
-        // Campo simples
-        const match = line.match(/^(\w+):\s*(.+)$/);
-        if (match) {
-            const key = match[1];
-            const value = match[2].replace(/^["']|["']$/g, '');
-            pautaData[key] = value;
+        // Extrair dados
+        const frontMatter = frontMatterMatch[1];
+        const body = frontMatterMatch[2].trim();
+        
+        // Criar objeto com todos os dados
+        const pautaData = {
+            filename: filename
+        };
+        
+        // Preencher formulário e extrair dados
+        const lines = frontMatter.split('\n');
+        let currentKey = '';
+        let multilineValue = '';
+        let inMultiline = false;
+        
+        for (const line of lines) {
+            // Detectar campo multiline (com |)
+            if (line.includes('|')) {
+                const match = line.match(/^(\w+):\s*\|/);
+                if (match) {
+                    currentKey = match[1];
+                    inMultiline = true;
+                    multilineValue = '';
+                    continue;
+                }
+            }
             
-            // Preencher input se existir
-            const input = document.getElementById(key);
-            if (input) {
-                if (input.type === 'checkbox') {
-                    input.checked = value === 'true';
+            // Coletar linhas do campo multiline
+            if (inMultiline) {
+                if (line.match(/^\w+:/) && !line.includes('  ')) {
+                    // Novo campo, salvar o anterior
+                    pautaData[currentKey] = multilineValue.trim();
+                    inMultiline = false;
                 } else {
-                    input.value = value;
+                    multilineValue += line.replace(/^    /, '') + '\n';
+                    continue;
+                }
+            }
+            
+            // Campo simples
+            const match = line.match(/^(\w+):\s*(.+)$/);
+            if (match) {
+                const key = match[1];
+                const value = match[2].replace(/^["']|["']$/g, '');
+                pautaData[key] = value;
+                
+                // Preencher input se existir
+                const input = document.getElementById(key);
+                if (input) {
+                    if (input.type === 'checkbox') {
+                        input.checked = value === 'true';
+                    } else {
+                        input.value = value;
+                    }
                 }
             }
         }
+        
+        // Salvar último campo multiline
+        if (inMultiline && currentKey) {
+            pautaData[currentKey] = multilineValue.trim();
+        }
+        
+        // Preencher body
+        document.getElementById('body').value = body;
+        
+        // Preencher campos de campanha se existirem
+        if (pautaData.campanha) {
+            // Email
+            const emailAssuntoInput = document.getElementById('emailAssunto');
+            const emailMensagemInput = document.getElementById('emailMensagem');
+            if (emailAssuntoInput && pautaData['campanha.email.assunto']) {
+                emailAssuntoInput.value = pautaData['campanha.email.assunto'];
+            }
+            if (emailMensagemInput && pautaData['campanha.email.mensagem']) {
+                emailMensagemInput.value = pautaData['campanha.email.mensagem'];
+            }
+            
+            // WhatsApp
+            const whatsappInput = document.getElementById('whatsappMensagem');
+            if (whatsappInput && pautaData['campanha.whatsapp.mensagem']) {
+                whatsappInput.value = pautaData['campanha.whatsapp.mensagem'];
+            }
+            
+            // Instagram
+            const instagramInput = document.getElementById('instagramMensagem');
+            if (instagramInput && pautaData['campanha.instagram.mensagem']) {
+                instagramInput.value = pautaData['campanha.instagram.mensagem'];
+            }
+        }
+        
+        // Mudar para aba de criar
+        showTab('criar');
+        
+        // Remover indicador de edição anterior se existir
+        const oldAlert = document.getElementById('edit-mode');
+        if (oldAlert) {
+            oldAlert.remove();
+        }
+        
+        // Adicionar indicador de edição
+        const titleInput = document.getElementById('title');
+        if (titleInput && titleInput.parentElement) {
+            titleInput.parentElement.insertAdjacentHTML('beforebegin', 
+                '<div class="alert alert-warning" id="edit-mode" style="background:#fff3cd;padding:15px;border-radius:8px;margin-bottom:20px;border-left:4px solid #ffc107;">📝 <strong>Modo Edição:</strong> Você está editando a pauta <strong>' + filename + '</strong></div>');
+        }
+        
+        // Alterar botão de submit
+        const submitBtn = document.querySelector('#pautaForm button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.textContent = '💾 Salvar Alterações';
+            submitBtn.setAttribute('data-editing', filename);
+            
+            // Remover evento antigo
+            const newBtn = submitBtn.cloneNode(true);
+            submitBtn.parentNode.replaceChild(newBtn, submitBtn);
+            
+            // Adicionar novo evento
+            newBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                const editingFilename = this.getAttribute('data-editing');
+                if (editingFilename) {
+                    salvarAlteracoes(editingFilename);
+                }
+            });
+        }
+        
+        // Scroll suave para o topo do formulário
+        setTimeout(() => {
+            titleInput?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 300);
+        
+        console.log('✅ Formulário preenchido com sucesso');
+        
+    } catch (error) {
+        console.error('❌ Erro ao carregar pauta:', error);
+        alert('❌ Erro: ' + error.message);
     }
-
+}
 async function salvarAlteracoes(filename) {
     // Similar a gerarPauta(), mas usa PUT em vez de POST
     // ... código de geração do YAML ...
