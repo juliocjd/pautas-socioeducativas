@@ -793,7 +793,7 @@ document.getElementById('filtro-nome')?.addEventListener('input', renderTabela);
 document.getElementById('filtro-estado')?.addEventListener('change', renderTabela);
 document.getElementById('filtro-posicao')?.addEventListener('change', renderTabela);
 
-// VER CONTATO - VERSÃO APRIMORADA
+// VER CONTATO - VERSÃO CORRIGIDA (suporta whatsapp como array)
 function verContato(parlamentar) {
   const extras = congressistasExtras.congressistas?.[parlamentar.id] || {};
   
@@ -822,13 +822,21 @@ function verContato(parlamentar) {
   if (extras.whatsapp || extras.instagram || (extras.assessores && extras.assessores.length > 0)) {
     html += '<div class="alert alert-success mt-3"><strong>📱 Dados da Comunidade (Contribuições Aprovadas)</strong></div>';
     
+    // CORREÇÃO: WhatsApp pode ser string ou array
     if (extras.whatsapp) {
       html += `<div class="contato-info">
-        <div class="contato-info-titulo"><span id="icon-whatsapp"></span> WhatsApp Pessoal</div>
-        <a href="https://wa.me/55${extras.whatsapp.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp">
-          <span id="icon-whatsapp"></span> Enviar WhatsApp
-        </a>
-        <div class="contato-fonte">Contribuído pela comunidade</div>
+        <div class="contato-info-titulo"><span id="icon-whatsapp"></span> WhatsApp Pessoal</div>`;
+      
+      // WhatsApp pode ser string ou array
+      const whatsappList = Array.isArray(extras.whatsapp) ? extras.whatsapp : [extras.whatsapp];
+      
+      whatsappList.forEach((numero, index) => {
+        html += `<a href="https://wa.me/55${numero.replace(/\D/g, '')}" target="_blank" class="btn-acao-contato btn-whatsapp" style="margin: 5px 5px 5px 0;">
+          <span id="icon-whatsapp"></span> ${whatsappList.length > 1 ? `WhatsApp ${index + 1}` : 'Enviar WhatsApp'}
+        </a>`;
+      });
+      
+      html += `<div class="contato-fonte">Contribuído pela comunidade</div>
       </div>`;
     }
     
@@ -1067,7 +1075,14 @@ function atualizarListaWhatsApp() {
 
 function enviarWhatsApp(parlamentarId) {
   const parlamentar = parlamentaresBase.find(p => p.id === parlamentarId);
-  const whatsapp = congressistasExtras.congressistas[parlamentarId].whatsapp;
+  const extras = congressistasExtras.congressistas[parlamentarId];
+  
+  // WhatsApp pode ser string ou array - pegar primeiro
+  let whatsapp = extras.whatsapp;
+  if (Array.isArray(whatsapp)) {
+    whatsapp = whatsapp[0];
+  }
+  
   const mensagem = document.getElementById('whatsapp-mensagem').value
     .replace(/\[NOME\]/g, parlamentar.nome)
     .replace(/\[ESTADO\]/g, parlamentar.uf)
