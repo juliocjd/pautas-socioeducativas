@@ -111,6 +111,10 @@ export default async function handler(req, res) {
         congressistas[parlamentar_id] = {};
       }
 
+      if (!congressistas.congressistas[parlamentar_id]) {
+        congressistas.congressistas[parlamentar_id] = {};
+      }
+
       const parlamentar = congressistas[parlamentar_id];
 
       // Adicionar dados de contato
