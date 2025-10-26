@@ -1,0 +1,16 @@
+---
+parlamentar_id: "204534"
+parlamentar_nome: "Acácio Favacho"
+pauta_slug: "novo-teste"
+data_envio: "2025-10-26T13:33:23.322Z"
+usuario_nome: "Julio"
+usuario_email: "a@a.com"
+status: "pendente"
+
+# DADOS DE CONTATO (permanentes)
+dados_contato:
+  whatsapp: "4449232131231"
+
+# EVIDÊNCIA DE POSICIONAMENTO (específica da pauta)
+evidencia: null
+---
