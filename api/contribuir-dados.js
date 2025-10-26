@@ -106,12 +106,14 @@ export default async function handler(req, res) {
         }
       }
 
-      // Atualizar ou criar entrada do parlamentar
-      if (!congressistas[parlamentar_id]) {
-        congressistas[parlamentar_id] = {};
+      if (!congressistas.congressistas) {
+        congressistas.congressistas = {};
       }
-      
-      const parlamentar = congressistas[parlamentar_id];
+      if (!congressistas.congressistas[parlamentar_id]) {
+        congressistas.congressistas[parlamentar_id] = {};
+      }
+
+      const parlamentar = congressistas.congressistas[parlamentar_id];
 
       // Adicionar dados de contato
       if (dados_contato) {
