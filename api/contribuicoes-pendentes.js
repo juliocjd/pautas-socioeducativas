@@ -298,24 +298,45 @@ export default async function handler(req, res) {
             }
           });
         }
-
+  
         // 3. Salvar arquivo atualizado
-        const { data: currentFile } = await octokit.rest.repos.getContent({
-          owner,
-          repo,
-          path: 'api/congressistas.json',
-          ref: branch
-        });
-
-        await octokit.rest.repos.createOrUpdateFileContents({
+        let fileSha = null;
+        
+        try {
+          const { data: currentFile } = await octokit.rest.repos.getContent({
+            owner,
+            repo,
+            path: 'api/congressistas.json',
+            ref: branch
+          });
+          fileSha = currentFile.sha;
+          console.log('✅ Arquivo existe, SHA:', fileSha);
+        } catch (error) {
+          if (error.status === 404) {
+            console.log('ℹ️ Arquivo não existe, será criado');
+            fileSha = null;
+          } else {
+            throw error;
+          }
+        }
+        
+        const commitData = {
           owner,
           repo,
           path: 'api/congressistas.json',
           message: `Aprovar dados de ${parlamentar_id} (parcial) - PR #${pr_number}`,
           content: Buffer.from(JSON.stringify(congressistas, null, 2)).toString('base64'),
-          branch,
-          sha: currentFile.sha
-        });
+          branch
+        };
+        
+        // Só adicionar SHA se arquivo já existe
+        if (fileSha) {
+          commitData.sha = fileSha;
+        }
+        
+        await octokit.rest.repos.createOrUpdateFileContents(commitData);
+        
+        console.log('✅ Arquivo salvo com sucesso');
 
         // 4. Comentar no PR
         await octokit.rest.issues.createComment({
