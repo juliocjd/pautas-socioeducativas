@@ -2,7 +2,7 @@
 """
 Script para atualizar cache de parlamentares
 Busca dados das APIs oficiais da Câmara e Senado
-Salva em _data/parlamentares_cache.json
+Salva em /parlamentares_cache.json
 Roda semanalmente via GitHub Actions
 """
 
@@ -139,7 +139,7 @@ def salvar_cache(parlamentares):
         "total_senadores": len([p for p in parlamentares if p['casa'] == 'Senado'])
     }
     
-    with open('_data/parlamentares_cache.json', 'w', encoding='utf-8') as f:
+    with open('parlamentares_cache.json', 'w', encoding='utf-8') as f:
         json.dump(cache, f, ensure_ascii=False, indent=2)
     
     print(f"✅ Cache salvo: {cache['total_deputados']} deputados + {cache['total_senadores']} senadores")
