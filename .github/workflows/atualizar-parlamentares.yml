@@ -32,23 +32,33 @@ jobs:
         run: |
           python scripts/atualizar-parlamentares.py
       
-      - name: 📊 Verificar mudanças
-        id: check_changes
+      - name: 📊 Verificar se arquivo foi criado
         run: |
-          if git diff --quiet _data/parlamentares_cache.json; then
-            echo "changed=false" >> $GITHUB_OUTPUT
+          echo "📁 Verificando arquivo..."
+          if [ -f parlamentares_cache.json ]; then
+            echo "✅ Arquivo criado com sucesso!"
+            ls -lh parlamentares_cache.json
+            echo "📊 Primeiras linhas:"
+            head -5 parlamentares_cache.json
           else
-            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "❌ Arquivo não foi criado!"
+            exit 1
           fi
       
       - name: 💾 Commit e Push
-        if: steps.check_changes.outputs.changed == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add _data/parlamentares_cache.json
-          git commit -m "chore: Atualizar cache de parlamentares [automated]"
-          git push
+          git add parlamentares_cache.json
+          
+          # Verificar se há mudanças para commitar
+          if git diff --cached --quiet; then
+            echo "ℹ️ Nenhuma mudança detectada. Arquivo já está atualizado."
+          else
+            git commit -m "chore: Atualizar cache de parlamentares [automated]"
+            git push
+            echo "✅ Cache atualizado e enviado para o GitHub!"
+          fi
       
       - name: ✅ Sem mudanças
         if: steps.check_changes.outputs.changed == 'false'
