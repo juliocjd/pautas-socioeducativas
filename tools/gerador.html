@@ -840,6 +840,8 @@ function configurarCarregamentoCondicional() {
     }
 }
 
+// SUBSTITUA DAS LINHAS 621 ATÉ 706 POR ESTE CÓDIGO ATUALIZADO:
+
 async function loadDeputados() {
     const statusEl = document.getElementById('loadingDeputados');
     
@@ -850,8 +852,7 @@ async function loadDeputados() {
             statusEl.classList.remove('hidden');
         }
         
-        // 1. Tenta carregar o cache do caminho relativo
-        // (../ sobe da pasta /tools/ para a raiz)
+        // 1. Tenta carregar o cache
         const cacheResponse = await fetch('../parlamentares_cache.json');
         
         if (!cacheResponse.ok) {
@@ -864,14 +865,14 @@ async function loadDeputados() {
         // 3. Lê a NOVA estrutura (cacheData.parlamentares)
         if (cacheData.parlamentares && cacheData.parlamentares.length > 0) {
             
-            // Mapeia os dados do cache para o formato que o resto do script espera
+            // Mapeia os dados do cache
             deputados = cacheData.parlamentares.map(p => ({
                 id: p.id,
                 nome: p.nome,
                 partido: p.partido,
                 uf: p.uf,
                 email: p.email || 'N/A',
-                casa: p.casa // O seu cache já tem 'casa', o que é perfeito!
+                casa: p.casa 
             }));
 
             if (statusEl) {
@@ -881,8 +882,68 @@ async function loadDeputados() {
             }
             console.log('Parlamentares carregados do cache (nova estrutura):', deputados.length);
         
+            // ==========================================================
+            // ATIVAR O AUTOCOMPLETE (O NOVO CÓDIGO ESTÁ AQUI)
+            // ==========================================================
+            const input = document.getElementById('autocomplete-input');
+            if (input) {
+                console.log('Ativando listeners no #autocomplete-input');
+                
+                // Prevenir submit do formulário ao pressionar "Enter"
+                input.onkeydown = function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); // Impede o submit
+                        return false;
+                    }
+                };
+                
+                // Event listener para autocomplete
+                input.oninput = function() {
+                    const list = document.getElementById('autocomplete-list');
+                    if (!list) return; // Proteção
+                    
+                    const termo = this.value.toLowerCase();
+                    
+                    if (termo.length < 2) {
+                        list.classList.remove('show');
+                        return;
+                    }
+                    
+                    const casaSelecionada = document.getElementById('casa').value;
+                    
+                    // Usar a variável global 'deputados' que acabamos de carregar
+                    const parlamentaresFiltrados = deputados.filter(p => { 
+                        const nomeMatch = p.nome.toLowerCase().includes(termo);
+                        const casaMatch = 
+                            (casaSelecionada.includes('Câmara') && p.casa === 'Câmara') ||
+                            (casaSelecionada.includes('Senado') && p.casa === 'Senado');
+                        return nomeMatch && casaMatch;
+                    }).slice(0, 10);
+                    
+                    if (parlamentaresFiltrados.length === 0) {
+                        list.innerHTML = '<div class="no-results">Nenhum resultado encontrado</div>';
+                        list.classList.add('show');
+                        return;
+                    }
+                    
+                    list.innerHTML = parlamentaresFiltrados.map(p => `
+                        <div class="autocomplete-item" onclick="selecionarParlamentar('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.partido}', '${p.uf}')">
+                            <strong>${p.nome}</strong><br>
+                            <small>${p.partido}-${p.uf}</small>
+                        </div>
+                    `).join('');
+                    
+                    list.classList.add('show');
+                };
+            } else {
+                console.error('Não foi possível encontrar o elemento #autocomplete-input para anexar listeners.');
+            }
+            // ==========================================================
+            // FIM DO CÓDIGO NOVO
+            // ==========================================================
+
         } else {
-            // O cache foi lido, mas a estrutura está errada (ex: não achou `cacheData.parlamentares`)
+            // O cache foi lido, mas a estrutura está errada
             throw new Error('Formato do cache JSON é inválido. Chave "parlamentares" não encontrada.');
         }
 
