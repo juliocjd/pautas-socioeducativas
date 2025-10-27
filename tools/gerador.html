@@ -844,10 +844,61 @@ async function loadDeputados() {
     try {
         // Mostrar loading
         const statusEl = document.getElementById('loadingDeputados');
-        statusEl.className = 'loading';
-        statusEl.innerHTML = '<span class="spinner"></span><span>Carregando parlamentares...</span>';
-        statusEl.classList.remove('hidden');
+        if (statusEl) {
+            statusEl.className = 'loading';
+            statusEl.innerHTML = '<span class="spinner"></span><span>Carregando parlamentares...</span>';
+            statusEl.classList.remove('hidden');
+        }
         
+        // Primeiro tentar carregar do cache local
+        try {
+            const cacheResponse = await fetch('/parlamentares_cache.json');
+            if (cacheResponse.ok) {
+                const cacheData = await cacheResponse.json();
+                
+                // Combinar deputados e senadores
+                deputados = [];
+                
+                // Adicionar deputados
+                if (cacheData.deputados && cacheData.deputados.dados) {
+                    const deputadosData = cacheData.deputados.dados.map(dep => ({
+                        id: dep.id,
+                        nome: dep.nome,
+                        partido: dep.siglaPartido,
+                        uf: dep.siglaUf,
+                        email: dep.email || 'N/A',
+                        casa: 'Câmara'
+                    }));
+                    deputados = deputados.concat(deputadosData);
+                }
+                
+                // Adicionar senadores
+                if (cacheData.senadores && cacheData.senadores.ListaParlamentarEmExercicio) {
+                    const senadoresData = cacheData.senadores.ListaParlamentarEmExercicio.Parlamentares.Parlamentar.map(sen => ({
+                        id: sen.IdentificacaoParlamentar.CodigoParlamentar,
+                        nome: sen.IdentificacaoParlamentar.NomeParlamentar,
+                        partido: sen.IdentificacaoParlamentar.SiglaPartidoParlamentar,
+                        uf: sen.IdentificacaoParlamentar.UfParlamentar,
+                        email: sen.IdentificacaoParlamentar.EmailParlamentar || 'N/A',
+                        casa: 'Senado'
+                    }));
+                    deputados = deputados.concat(senadoresData);
+                }
+                
+                if (statusEl) {
+                    statusEl.className = 'loading success';
+                    statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados do cache!</span>`;
+                    setTimeout(() => statusEl.classList.add('hidden'), 3000);
+                }
+                
+                console.log('Parlamentares carregados do cache:', deputados.length);
+                return;
+            }
+        } catch (cacheError) {
+            console.log('Cache não disponível, tentando API...', cacheError);
+        }
+        
+        // Se o cache falhar, tentar a API original
         const proxyUrl = 'https://api.allorigins.win/raw?url=';
         const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
         const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
@@ -862,16 +913,40 @@ async function loadDeputados() {
             casa: 'Câmara'
         }));
         
-        statusEl.className = 'loading success';
-        statusEl.innerHTML = `<span>✅ ${deputados.length} deputados carregados!</span>`;
+        // Tentar também carregar senadores da API
+        try {
+            const senadoresUrl = 'https://legis.senado.leg.br/dadosabertos/senador/lista/atual';
+            const senadoresResponse = await fetch(proxyUrl + encodeURIComponent(senadoresUrl));
+            const senadoresData = await senadoresResponse.json();
+            
+            if (senadoresData.ListaParlamentarEmExercicio) {
+                const senadores = senadoresData.ListaParlamentarEmExercicio.Parlamentares.Parlamentar.map(sen => ({
+                    id: sen.IdentificacaoParlamentar.CodigoParlamentar,
+                    nome: sen.IdentificacaoParlamentar.NomeParlamentar,
+                    partido: sen.IdentificacaoParlamentar.SiglaPartidoParlamentar,
+                    uf: sen.IdentificacaoParlamentar.UfParlamentar,
+                    email: sen.IdentificacaoParlamentar.EmailParlamentar || 'N/A',
+                    casa: 'Senado'
+                }));
+                deputados = deputados.concat(senadores);
+            }
+        } catch (senError) {
+            console.log('Não foi possível carregar senadores:', senError);
+        }
         
-        // Não habilitar botão aqui - será habilitado quando selecionar casa
+        if (statusEl) {
+            statusEl.className = 'loading success';
+            statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados!</span>`;
+            setTimeout(() => statusEl.classList.add('hidden'), 3000);
+        }
         
-        setTimeout(() => statusEl.classList.add('hidden'), 3000);
     } catch (error) {
-        const statusEl = document.getElementById('loadingDeputados');
-        statusEl.className = 'loading error';
-        statusEl.innerHTML = '<span>❌ Erro ao carregar deputados</span>';
+        console.error('Erro ao carregar parlamentares:', error);
+        if (document.getElementById('loadingDeputados')) {
+            const statusEl = document.getElementById('loadingDeputados');
+            statusEl.className = 'loading error';
+            statusEl.innerHTML = '<span>❌ Erro ao carregar parlamentares</span>';
+        }
     }
 }
 // Carregar todos os dados
@@ -1066,8 +1141,8 @@ async function alterarPauta(filename) {
         // Preencher campos de campanha se existirem
         if (pautaData.campanha) {
             // Email
-            const emailAssuntoInput = document.getElementById('emailAssunto');
-            const emailMensagemInput = document.getElementById('emailMensagem');
+            const emailAssuntoInput = document.getElementById('email-assunto');
+            const emailMensagemInput = document.getElementById('email-mensagem');
             if (emailAssuntoInput && pautaData['campanha.email.assunto']) {
                 emailAssuntoInput.value = pautaData['campanha.email.assunto'];
             }
@@ -1076,13 +1151,13 @@ async function alterarPauta(filename) {
             }
             
             // WhatsApp
-            const whatsappInput = document.getElementById('whatsappMensagem');
+            const whatsappInput = document.getElementById('whatsapp-mensagem');
             if (whatsappInput && pautaData['campanha.whatsapp.mensagem']) {
                 whatsappInput.value = pautaData['campanha.whatsapp.mensagem'];
             }
             
             // Instagram
-            const instagramInput = document.getElementById('instagramMensagem');
+            const instagramInput = document.getElementById('instagram-mensagem');
             if (instagramInput && pautaData['campanha.instagram.mensagem']) {
                 instagramInput.value = pautaData['campanha.instagram.mensagem'];
             }
@@ -1136,26 +1211,96 @@ async function alterarPauta(filename) {
         alert('❌ Erro: ' + error.message);
     }
 }
+
+// Função para salvar alterações na pauta
 async function salvarAlteracoes(filename) {
-    // Similar a gerarPauta(), mas usa PUT em vez de POST
-    // ... código de geração do YAML ...
-    
-    const response = await fetch(`${API_URL}/api/edit-pauta`, {
-        method: 'PUT',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${sessionToken}`
-        },
-        body: JSON.stringify({ filename, content: yaml })
-    });
-    
-    const data = await response.json();
-    
-    if (data.success) {
-        alert('✅ Pauta atualizada com sucesso!');
-        location.reload();
-    } else {
-        alert('❌ Erro: ' + data.error);
+    try {
+        // Coletar dados do formulário (similar a gerarPauta)
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const casa = document.getElementById('casa').value;
+        const status = document.getElementById('status').value;
+        const featured = document.getElementById('featured').checked;
+        const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
+        const body = document.getElementById('body').value;
+        
+        // Coletar parlamentares (apenas se não for votação em plenário)
+        const parlamentares = [];
+        if (!isPlenaryVote) {
+            document.querySelectorAll('.parl-role').forEach(input => {
+                if (input.value) {
+                    const dep = JSON.parse(input.dataset.deputado);
+                    parlamentares.push({ nome: dep.nome, role: input.value });
+                }
+            });
+        }
+        
+        // Campanhas
+        const emailAssunto = document.getElementById('email-assunto').value;
+        const emailMensagem = document.getElementById('email-mensagem').value;
+        const whatsappMensagem = document.getElementById('whatsapp-mensagem').value;
+        const instagramMensagem = document.getElementById('instagram-mensagem').value;
+        
+        // Gerar YAML
+        let yaml = `---
+layout: pauta
+title: ${title}
+description: ${description}
+casa: ${casa}
+status: ${status}
+featured: ${featured}
+is_plenary_vote: ${isPlenaryVote}
+`;
+        
+        // Adicionar membros-chave apenas se não for votação em plenário
+        if (!isPlenaryVote && parlamentares.length > 0) {
+            yaml += `key_players:\n`;
+            parlamentares.forEach(p => {
+                yaml += `  - nome: "${p.nome}"\n`;
+                yaml += `    role: "${p.role}"\n`;
+            });
+        }
+        
+        // Adicionar campanhas se preenchidas
+        if (emailAssunto || emailMensagem || whatsappMensagem || instagramMensagem) {
+            yaml += `campanha:\n`;
+            if (emailAssunto || emailMensagem) {
+                yaml += `  email:\n`;
+                if (emailAssunto) yaml += `    assunto: "${emailAssunto}"\n`;
+                if (emailMensagem) yaml += `    mensagem: |\n      ${emailMensagem.split('\n').join('\n      ')}\n`;
+            }
+            if (whatsappMensagem) {
+                yaml += `  whatsapp:\n`;
+                yaml += `    mensagem: |\n      ${whatsappMensagem.split('\n').join('\n      ')}\n`;
+            }
+            if (instagramMensagem) {
+                yaml += `  instagram:\n`;
+                yaml += `    mensagem: |\n      ${instagramMensagem.split('\n').join('\n      ')}\n`;
+            }
+        }
+        
+        yaml += `---\n\n${body}`;
+        
+        const response = await fetch(`${API_URL}/api/edit-pauta`, {
+            method: 'PUT',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ filename, content: yaml })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('✅ Pauta atualizada com sucesso!');
+            location.reload();
+        } else {
+            alert('❌ Erro: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Erro ao salvar alterações:', error);
+        alert('❌ Erro ao salvar: ' + error.message);
     }
 }
 
@@ -1592,6 +1737,116 @@ function filtrarDados() {
     });
 }
 
+
+// Função para editar dados cadastrados
+function editarDados(id, nome) {
+    // Obter dados atuais
+    const dadosAtuais = congressistasExtras[id] || {};
+    
+    // Criar formulário de edição
+    const formHtml = `
+        <div style="background: white; padding: 20px; border-radius: 8px; max-width: 500px; margin: 0 auto;">
+            <h3>Editar Dados de ${nome}</h3>
+            <form id="editDadosForm">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="edit-email" value="${dadosAtuais.email || ''}" 
+                           placeholder="exemplo@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Telefone:</label>
+                    <input type="text" id="edit-telefone" value="${dadosAtuais.telefone || ''}" 
+                           placeholder="(61) 99999-9999">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp:</label>
+                    <input type="text" id="edit-whatsapp" value="${dadosAtuais.whatsapp || ''}" 
+                           placeholder="(61) 99999-9999">
+                </div>
+                <div class="form-group">
+                    <label>Instagram:</label>
+                    <input type="text" id="edit-instagram" value="${dadosAtuais.instagram || ''}" 
+                           placeholder="@usuario">
+                </div>
+                <div class="form-group">
+                    <label>Twitter/X:</label>
+                    <input type="text" id="edit-twitter" value="${dadosAtuais.twitter || ''}" 
+                           placeholder="@usuario">
+                </div>
+                <div class="form-group">
+                    <label>Facebook:</label>
+                    <input type="text" id="edit-facebook" value="${dadosAtuais.facebook || ''}" 
+                           placeholder="usuario ou URL">
+                </div>
+                <div class="form-group">
+                    <label>Website:</label>
+                    <input type="url" id="edit-website" value="${dadosAtuais.website || ''}" 
+                           placeholder="https://exemplo.com">
+                </div>
+            </form>
+        </div>
+    `;
+    
+    // Criar modal
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    modal.innerHTML = formHtml;
+    
+    // Adicionar botões
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.style.cssText = 'display:flex;gap:10px;margin-top:20px;justify-content:center;';
+    buttonsDiv.innerHTML = `
+        <button onclick="salvarEdicaoDados('${id}', '${nome}')" class="btn btn-success">💾 Salvar</button>
+        <button onclick="this.closest('div[style*=position]').remove()" class="btn btn-secondary">Cancelar</button>
+    `;
+    modal.querySelector('div').appendChild(buttonsDiv);
+    
+    document.body.appendChild(modal);
+}
+
+// Função para salvar edição de dados
+async function salvarEdicaoDados(id, nome) {
+    try {
+        const dados = {
+            email: document.getElementById('edit-email').value,
+            telefone: document.getElementById('edit-telefone').value,
+            whatsapp: document.getElementById('edit-whatsapp').value,
+            instagram: document.getElementById('edit-instagram').value,
+            twitter: document.getElementById('edit-twitter').value,
+            facebook: document.getElementById('edit-facebook').value,
+            website: document.getElementById('edit-website').value,
+            ultima_atualizacao: new Date().toISOString()
+        };
+        
+        // Remover campos vazios
+        Object.keys(dados).forEach(key => {
+            if (!dados[key]) delete dados[key];
+        });
+        
+        const response = await fetch(`${API_URL}/api/congressistas`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ parlamentarId: id, nome, dados })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('✅ Dados atualizados com sucesso!');
+            // Remover modal
+            document.querySelector('div[style*="position:fixed"]').remove();
+            // Recarregar dados
+            carregarDados();
+        } else {
+            alert('❌ Erro ao salvar: ' + result.error);
+        }
+    } catch (error) {
+        alert('❌ Erro ao salvar: ' + error.message);
+    }
+}
 async function excluirDados(parlamentarId, nome) {
     if (!confirm(`Tem certeza que deseja excluir todos os dados de ${nome}?`)) return;
     
