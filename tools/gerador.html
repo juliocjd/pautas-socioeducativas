@@ -841,116 +841,61 @@ function configurarCarregamentoCondicional() {
 }
 
 async function loadDeputados() {
+    const statusEl = document.getElementById('loadingDeputados');
+    
     try {
-        // Mostrar loading
-        const statusEl = document.getElementById('loadingDeputados');
         if (statusEl) {
             statusEl.className = 'loading';
             statusEl.innerHTML = '<span class="spinner"></span><span>Carregando parlamentares...</span>';
             statusEl.classList.remove('hidden');
         }
         
-        // Primeiro tentar carregar do cache local
-        try {
-            const cacheResponse = await fetch('../parlamentares_cache.json');
-            if (cacheResponse.ok) {
-                const cacheData = await cacheResponse.json();
-                
-                // Combinar deputados e senadores
-                deputados = [];
-                
-                // Adicionar deputados
-                if (cacheData.deputados && cacheData.deputados.dados) {
-                    const deputadosData = cacheData.deputados.dados.map(dep => ({
-                        id: dep.id,
-                        nome: dep.nome,
-                        partido: dep.siglaPartido,
-                        uf: dep.siglaUf,
-                        email: dep.email || 'N/A',
-                        casa: 'Câmara'
-                    }));
-                    deputados = deputados.concat(deputadosData);
-                }
-                
-                // Adicionar senadores
-                if (cacheData.senadores && cacheData.senadores.ListaParlamentarEmExercicio) {
-                    const senadoresData = cacheData.senadores.ListaParlamentarEmExercicio.Parlamentares.Parlamentar.map(sen => ({
-                        id: sen.IdentificacaoParlamentar.CodigoParlamentar,
-                        nome: sen.IdentificacaoParlamentar.NomeParlamentar,
-                        partido: sen.IdentificacaoParlamentar.SiglaPartidoParlamentar,
-                        uf: sen.IdentificacaoParlamentar.UfParlamentar,
-                        email: sen.IdentificacaoParlamentar.EmailParlamentar || 'N/A',
-                        casa: 'Senado'
-                    }));
-                    deputados = deputados.concat(senadoresData);
-                }
-                
-                if (statusEl) {
-                    statusEl.className = 'loading success';
-                    statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados do cache!</span>`;
-                    setTimeout(() => statusEl.classList.add('hidden'), 3000);
-                }
-                
-                console.log('Parlamentares carregados do cache:', deputados.length);
-                return;
-            } else {
-                console.log('Não carregado...', cacheError);
-            } 
-        } catch (cacheError) {
-            console.log('Cache não disponível, tentando API...', cacheError);
+        // 1. Tenta carregar o cache do caminho relativo
+        // (../ sobe da pasta /tools/ para a raiz)
+        const cacheResponse = await fetch('../parlamentares_cache.json');
+        
+        if (!cacheResponse.ok) {
+            throw new Error(`Erro HTTP: ${cacheResponse.status} ${cacheResponse.statusText}`);
         }
         
-        // Se o cache falhar, tentar a API original
-        const proxyUrl = 'https://api.allorigins.win/raw?url=';
-        const apiUrl = 'https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome';
-        const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-        const data = await response.json();
+        // 2. Tenta ler o arquivo como JSON
+        const cacheData = await cacheResponse.json(); 
         
-        deputados = data.dados.map(dep => ({
-            id: dep.id,
-            nome: dep.nome,
-            partido: dep.siglaPartido,
-            uf: dep.siglaUf,
-            email: dep.email || 'N/A',
-            casa: 'Câmara'
-        }));
-        
-        // Tentar também carregar senadores da API
-        try {
-            const senadoresUrl = 'https://legis.senado.leg.br/dadosabertos/senador/lista/atual';
-            const senadoresResponse = await fetch(proxyUrl + encodeURIComponent(senadoresUrl));
-            const senadoresData = await senadoresResponse.json();
+        // 3. Lê a NOVA estrutura (cacheData.parlamentares)
+        if (cacheData.parlamentares && cacheData.parlamentares.length > 0) {
             
-            if (senadoresData.ListaParlamentarEmExercicio) {
-                const senadores = senadoresData.ListaParlamentarEmExercicio.Parlamentares.Parlamentar.map(sen => ({
-                    id: sen.IdentificacaoParlamentar.CodigoParlamentar,
-                    nome: sen.IdentificacaoParlamentar.NomeParlamentar,
-                    partido: sen.IdentificacaoParlamentar.SiglaPartidoParlamentar,
-                    uf: sen.IdentificacaoParlamentar.UfParlamentar,
-                    email: sen.IdentificacaoParlamentar.EmailParlamentar || 'N/A',
-                    casa: 'Senado'
-                }));
-                deputados = deputados.concat(senadores);
+            // Mapeia os dados do cache para o formato que o resto do script espera
+            deputados = cacheData.parlamentares.map(p => ({
+                id: p.id,
+                nome: p.nome,
+                partido: p.partido,
+                uf: p.uf,
+                email: p.email || 'N/A',
+                casa: p.casa // O seu cache já tem 'casa', o que é perfeito!
+            }));
+
+            if (statusEl) {
+                statusEl.className = 'loading success';
+                statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados do cache!</span>`;
+                setTimeout(() => statusEl.classList.add('hidden'), 3000);
             }
-        } catch (senError) {
-            console.log('Não foi possível carregar senadores:', senError);
-        }
+            console.log('Parlamentares carregados do cache (nova estrutura):', deputados.length);
         
-        if (statusEl) {
-            statusEl.className = 'loading success';
-            statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados!</span>`;
-            setTimeout(() => statusEl.classList.add('hidden'), 3000);
+        } else {
+            // O cache foi lido, mas a estrutura está errada (ex: não achou `cacheData.parlamentares`)
+            throw new Error('Formato do cache JSON é inválido. Chave "parlamentares" não encontrada.');
         }
-        
+
     } catch (error) {
+        // Se qualquer etapa falhar (fetch, .json(), ou parsing), o erro será pego aqui
         console.error('Erro ao carregar parlamentares:', error);
-        if (document.getElementById('loadingDeputados')) {
-            const statusEl = document.getElementById('loadingDeputados');
+        if (statusEl) {
             statusEl.className = 'loading error';
-            statusEl.innerHTML = '<span>❌ Erro ao carregar parlamentares</span>';
+            statusEl.innerHTML = `<span>❌ Erro ao carregar parlamentares. Verifique o console.</span>`;
         }
     }
 }
+        
 // Carregar todos os dados
 async function carregarDados() {
     await Promise.all([
