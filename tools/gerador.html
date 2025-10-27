@@ -1949,11 +1949,12 @@ function abrirAutocomplete() {
     
     const modal = document.getElementById('modalAddParlamentar');
     const input = document.getElementById('autocomplete-input');
-    const list = document.getElementById('autocomplete-list');
     
     // Limpar input
     input.value = '';
-    list.classList.remove('show');
+    // MODIFICADO: Buscar a lista aqui apenas para limpar
+    const listEl = document.getElementById('autocomplete-list');
+    if (listEl) listEl.classList.remove('show');
     
     // Mostrar modal
     $(modal).modal('show');
@@ -1962,9 +1963,22 @@ function abrirAutocomplete() {
     $(modal).on('shown.bs.modal', function() {
         input.focus();
     });
+
+    // ADICIONADO: Prevenir submit do formulário ao pressionar "Enter"
+    input.onkeydown = function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o submit
+            return false;
+        }
+    };
     
     // Event listener para autocomplete
     input.oninput = function() {
+        // MODIFICADO: Buscar a lista *dentro* do evento de input
+        // Isso garante que temos a referência correta do DOM
+        const list = document.getElementById('autocomplete-list');
+        if (!list) return; // Proteção caso a lista não exista
+        
         const termo = this.value.toLowerCase();
         
         if (termo.length < 2) {
@@ -1997,7 +2011,7 @@ function abrirAutocomplete() {
         list.classList.add('show');
     };
 }
-
+        
 // Selecionar parlamentar do autocomplete
 function selecionarParlamentar(id, nome, partido, uf) {
     // Fechar lista
