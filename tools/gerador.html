@@ -522,7 +522,7 @@
             
             <!-- Tab: Criar Pauta -->
             <div id="tab-criar" class="tab-content active">
-                <div id="loadingDeputados" class="loading">
+                <div id="loadingDeputados" class="loading" hidden>
                     <div class="spinner"></div>
                     <span>Carregando parlamentares...</span>
                 </div>
@@ -893,7 +893,9 @@ async function loadDeputados() {
                 
                 console.log('Parlamentares carregados do cache:', deputados.length);
                 return;
-            }
+            } else {
+                console.log('Não carregado...', cacheError);
+            } 
         } catch (cacheError) {
             console.log('Cache não disponível, tentando API...', cacheError);
         }
