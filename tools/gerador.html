@@ -524,7 +524,7 @@
             <div id="tab-criar" class="tab-content active">
                 <div id="loadingDeputados" class="loading">
                     <div class="spinner"></div>
-                    <span>Carregando deputados...</span>
+                    <span>Carregando parlamentares...</span>
                 </div>
                 
                 <form id="pautaForm" onsubmit="gerarPauta(event)">
@@ -852,7 +852,7 @@ async function loadDeputados() {
         
         // Primeiro tentar carregar do cache local
         try {
-            const cacheResponse = await fetch('/parlamentares_cache.json');
+            const cacheResponse = await fetch('../parlamentares_cache.json');
             if (cacheResponse.ok) {
                 const cacheData = await cacheResponse.json();
                 
