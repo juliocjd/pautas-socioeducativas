@@ -581,10 +581,6 @@
                         <div class="modal fade" id="modalAddParlamentar" tabindex="-1">
                           <div class="modal-dialog">
                             <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title">Adicionar Parlamentar</h5>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              </div>
                               <div class="modal-body">
                                 <div class="form-group">
                                   <label>Buscar por nome:</label>
@@ -1902,26 +1898,49 @@ async function atualizarEstatisticas() {
     }
 }
 
-// Handler para mudança no checkbox de votação em plenário
+// SUBSTITUA A PARTIR DA LINHA 1079 ATÉ A 1097 POR ESTE CÓDIGO:
+
 function handlePlenaryVoteChange() {
     const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
-    const btnAddParlamentar = document.getElementById('btnAddParlamentar');
     const parlamentaresList = document.getElementById('parlamentaresList');
     const infoMembrosChave = document.getElementById('infoMembrosChave');
     
+    // --- Nossos novos alvos ---
+    const autocompleteInput = document.getElementById('autocomplete-input'); // O campo de busca
+    const autocompleteList = document.getElementById('autocomplete-list'); // A lista de resultados
+    
     if (isPlenaryVote) {
+        // 1. Mostrar o aviso
         infoMembrosChave.classList.remove('hidden');
-        btnAddParlamentar.disabled = true;
-        btnAddParlamentar.style.opacity = '0.5';
+        
+        // 2. Limpar a lista (como já fazia)
         parlamentaresList.innerHTML = '<p style="color: #28a745; text-align: center; font-weight: 600;">✅ Votação em Plenário: Todos os deputados serão incluídos automaticamente</p>';
+
+        // 3. (A CORREÇÃO) Desativar o campo de busca
+        if (autocompleteInput) {
+            autocompleteInput.disabled = true;
+            autocompleteInput.placeholder = 'Desativado (Votação em Plenário)';
+            autocompleteInput.value = ''; // Limpa qualquer texto
+        }
+        if (autocompleteList) {
+            autocompleteList.classList.remove('show'); // Esconde a lista
+        }
+        
     } else {
+        // 1. Esconder o aviso
         infoMembrosChave.classList.add('hidden');
-        btnAddParlamentar.disabled = deputados.length === 0;
-        btnAddParlamentar.style.opacity = '1';
+        
+        // 2. Limpar a lista para o estado inicial
         parlamentaresList.innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
+
+        // 3. (A CORREÇÃO) Reativar o campo de busca
+        if (autocompleteInput) {
+            autocompleteInput.disabled = false;
+            autocompleteInput.placeholder = 'Digite o nome do parlamentar...';
+        }
     }
 }
-
+        
 // Handler para mudança no checkbox de pauta principal
 function handleFeaturedChange() {
     const isFeatured = document.getElementById('featured').checked;
