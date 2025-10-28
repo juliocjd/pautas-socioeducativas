@@ -1,270 +1,397 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Painel Admin - Pautas Socioeducativas</title>
-    <link rel="stylesheet" href="gerador.css">
-</head>
-<body>
+    <link rel="stylesheet" href="gerador.css" />
+  </head>
+  <body>
     <div class="container">
-        <h1>🏛️ Painel Administrativo</h1>
-        <p class="subtitle">Gerencie pautas, contribuições e mobilização</p>
-        
-        <div id="loginScreen">
-            <div class="output">
-                <h3>🔐 Acesso Restrito</h3>
-                <p style="margin-bottom: 20px; color: #666;">Digite a senha para acessar:</p>
-                <div style="display: flex; gap: 10px;">
-                    <input type="password" id="passwordInput" placeholder="Digite a senha..." style="flex: 1;" onkeypress="if(event.key==='Enter') login()">
-                    <button onclick="login()" class="btn">Entrar</button>
-                </div>
-                <p id="loginError" class="loading error hidden" style="margin-top: 15px;"></p>
-            </div>
+      <h1>🏛️ Painel Administrativo</h1>
+      <p class="subtitle">Gerencie pautas, contribuições e mobilização</p>
+
+      <div id="loginScreen">
+        <div class="output">
+          <h3>🔐 Acesso Restrito</h3>
+          <p style="margin-bottom: 20px; color: #666">
+            Digite a senha para acessar:
+          </p>
+          <div style="display: flex; gap: 10px">
+            <input
+              type="password"
+              id="passwordInput"
+              placeholder="Digite a senha..."
+              style="flex: 1"
+              onkeypress="if(event.key==='Enter') login()"
+            />
+            <button onclick="login()" class="btn">Entrar</button>
+          </div>
+          <p
+            id="loginError"
+            class="loading error hidden"
+            style="margin-top: 15px"
+          ></p>
         </div>
-        
-        <div id="mainContent" class="hidden">
-            <div class="tabs">
-                <button class="tab active" onclick="showTab('criar')">➕ Criar Pauta</button>
-                <button class="tab" onclick="showTab('gerenciar')">📋 Gerenciar Pautas</button>
-                <button class="tab" onclick="showTab('contribuicoes')">📬 Contribuições</button>
-                <button class="tab" onclick="showTab('dados')">💾 Dados Cadastrados</button>
-                <button class="tab" onclick="showTab('estatisticas')">📊 Estatísticas</button>
-            </div>
-            
-            <div id="tab-criar" class="tab-content active">
-                <div id="loadingDeputados" class="loading hidden">
-                    <div class="spinner"></div>
-                    <span>Carregando parlamentares...</span>
-                </div>
-                
-                <form id="pautaForm" onsubmit="gerarPauta(event)">
-                    <div class="form-group">
-                        <label for="title">Título da Pauta *</label>
-                        <input type="text" id="title" required placeholder="Ex: PEC 18/2025">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Descrição *</label>
-                        <textarea id="description" required placeholder="Descrição curta..."></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="casa">Casa Legislativa *</label>
-                        <select id="casa" required>
-                            <option value="">Selecione...</option>
-                            <option value="Câmara dos Deputados">Câmara dos Deputados</option>
-                            <option value="Senado Federal">Senado Federal</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="status">Status *</label>
-                        <input type="text" id="status" required placeholder="Ex: Em tramitação">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="body">Conteúdo da Página</label>
-                        <textarea id="body" rows="8" placeholder="Conteúdo em HTML ou texto..."></textarea>
-                    </div>
+      </div>
 
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="featured" onchange="handleFeaturedChange()">
-                            <label for="featured" style="margin: 0;">⭐ Pauta Principal (destaque no index)</label>
-                        </div>
-                        <small style="color: #666; margin-left: 30px;">Esta pauta aparecerá como "Nossa luta principal" na página inicial</small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="is_plenary_vote" onchange="handlePlenaryVoteChange()">
-                            <label for="is_plenary_vote" style="margin: 0;">🏛️ Votação em Plenário (todos os parlamentares)</label>
-                        </div>
-                        <small style="color: #666; margin-left: 30px;">Quando marcado, a mobilização incluirá TODOS os parlamentares em exercício</small>
-                    </div>
-                    
-                    <div class="form-group" id="membrosChaveSection">
-                        <label>Membros-Chave</label>
-                        <div id="infoMembrosChave" class="alert alert-info hidden">
-                            ℹ️ Como esta é uma votação em plenário, não é necessário selecionar membros-chave. A mobilização incluirá automaticamente todos os parlamentares em exercício.
-                        </div>
-                        <div id="parlamentaresList">
-                            <p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>
-                        </div>
-                       
-                        <div id="modalAddParlamentar" tabindex="-1">
-                          <div class="modal-dialog" style="max-width: none;">
-                            <div class="modal-content" style="border: none; box-shadow: none; padding: 0;">
-                              
-                              <div class="modal-body" style="padding: 10px 0 0 0;">
-                                <div class="form-group">
-                                  <label for="autocomplete-input">Buscar por nome:</label>
-                                  <div class="autocomplete-container">
-                                    <input 
-                                      type="text" 
-                                      id="autocomplete-input" 
-                                      class="autocomplete-input" 
-                                      placeholder="Digite o nome do parlamentar..."
-                                      autocomplete="off"
-                                    >
-                                    <div id="autocomplete-list" class="autocomplete-list"></div>
-                                  </div>
-                                  <small class="text-muted">Digite pelo menos 2 letras para buscar</small>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+      <div id="mainContent" class="hidden">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('criar')">
+            ➕ Criar Pauta
+          </button>
+          <button class="tab" onclick="showTab('gerenciar')">
+            📋 Gerenciar Pautas
+          </button>
+          <button class="tab" onclick="showTab('contribuicoes')">
+            📬 Contribuições
+          </button>
+          <button class="tab" onclick="showTab('dados')">
+            💾 Dados Cadastrados
+          </button>
+          <button class="tab" onclick="showTab('estatisticas')">
+            📊 Estatísticas
+          </button>
+        </div>
 
-                        </div>
-                    
-                    <div class="campanha-section">
-                        <h4>📢 Configurar Campanhas de Mobilização</h4>
-                        <p style="color: #666; margin-bottom: 20px;">
-                            Configure textos diferentes para quem apoia (agradecimento) e para quem não apoia (pedido).
-                        </p>
-                        
-                        <div class="campanha-canal">
-                            <h5>📧 Email</h5>
-                            <div class="form-group">
-                                <label>Assunto do Email</label>
-                                <input type="text" id="email-assunto" placeholder="Ex: Solicitação de Apoio à PEC 18/2025">
-                            </div>
+        <div id="tab-criar" class="tab-content active">
+          <div id="loadingDeputados" class="loading hidden">
+            <div class="spinner"></div>
+            <span>Carregando parlamentares...</span>
+          </div>
 
-                            <div class="campanha-sub-canal">
-                                <label><strong>Mensagem (Oposição/Neutro)</strong></label>
-                                <textarea id="email-mensagem-oposicao" rows="5" placeholder="Exmo(a) Sr(a) Deputado(a) [NOME]..."></textarea>
-                                <small style="color: #666;">Texto para quem é "Contrário" ou "Não se manifestou".</small>
-                            </div>
-
-                            <div class="campanha-sub-canal">
-                                <label><strong>Mensagem (Apoio/Agradecimento)</strong></label>
-                                <textarea id="email-mensagem-apoio" rows="4" placeholder="Exmo(a) Sr(a) Deputado(a) [NOME], obrigado pelo seu apoio..."></textarea>
-                                <small style="color: #666;">Texto para quem já "Apoia" a pauta.</small>
-                            </div>
-                            <small style="color: #666; margin-top: 15px; display: block;">💡 Use: [NOME]</small>
-                        </div>
-                        
-                        <div class="campanha-canal">
-                            <h5>💬 WhatsApp</h5>
-                            
-                            <div class="campanha-sub-canal">
-                                <label><strong>Mensagem (Oposição/Neutro)</strong></label>
-                                <textarea id="whatsapp-mensagem-oposicao" rows="4" placeholder="Olá! Sou eleitor e peço seu apoio..."></textarea>
-                                <small style="color: #666;">Texto para quem é "Contrário" ou "Não se manifestou".</small>
-                            </div>
-
-                            <div class="campanha-sub-canal">
-                                <label><strong>Mensagem (Apoio/Agradecimento)</strong></label>
-                                <textarea id="whatsapp-mensagem-apoio" rows="3" placeholder="Olá, [NOME]! Obrigado por apoiar nossa pauta..."></textarea>
-                                <small style="color: #666;">Texto para quem já "Apoia" a pauta.</small>
-                            </div>
-                            <small style="color: #666; margin-top: 15px; display: block;">💡 Use: [NOME]</small>
-                        </div>
-                        
-                        <div class="campanha-canal">
-                            <h5>📷 Instagram</h5>
-
-                            <div class="campanha-sub-canal">
-                                <label><strong>Mensagem (Oposição/Neutro)</strong></label>
-                                <textarea id="instagram-mensagem-oposicao" rows="3" placeholder="Oi! Conto com seu apoio..."></textarea>
-                                <small style="color: #666;">Texto para quem é "Contrário" ou "Não se manifestou".</small>
-                            </div>
-
-                            <div class="campanha-sub-canal">
-                                <label><strong>Mensagem (Apoio/Agradecimento)</strong></label>
-                                <textarea id="instagram-mensagem-apoio" rows="3" placeholder="Oi, [NOME]! Obrigado pelo apoio!"></textarea>
-                                <small style="color: #666;">Texto para quem já "Apoia" a pauta.</small>
-                            </div>
-                            <small style="color: #666; margin-top: 15px; display: block;">💡 Use: [NOME]</small>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn">🎯 Gerar Pauta</button>
-                </form>
-                
-                <div id="outputCriar" class="output hidden">
-                    <h3>✅ Pauta Criada!</h3>
-                    <p>Nome do arquivo: <strong id="filenameOutput"></strong></p>
-                    <div class="code-output" id="codeOutput"></div>
-                    <button class="btn" onclick="copiarCodigo()">📋 Copiar</button>
-                </div>
-            </div>
-            
-            <div id="tab-gerenciar" class="tab-content">
-                <input type="text" id="searchPautas" class="search-input" placeholder="🔍 Buscar pauta..." oninput="filterPautas()">
-                
-                <div id="loadingPautas" class="loading">
-                    <div class="spinner"></div>
-                    <span>Carregando pautas...</span>
-                </div>
-                
-                <div id="pautasGrid" class="grid"></div>
+          <form id="pautaForm" onsubmit="gerarPauta(event)">
+            <div class="form-group">
+              <label for="title">Título da Pauta *</label>
+              <input
+                type="text"
+                id="title"
+                required
+                placeholder="Ex: PEC 18/2025"
+              />
             </div>
 
-            <div id="tab-contribuicoes" class="tab-content">
-                <h3>📬 Contribuições Pendentes de Aprovação</h3>
-                <p style="color: #666; margin-bottom: 20px;">
-                    Revise as contribuições enviadas pelos usuários e aprove seletivamente.
+            <div class="form-group">
+              <label for="description">Descrição *</label>
+              <textarea
+                id="description"
+                required
+                placeholder="Descrição curta..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="casa">Casa Legislativa *</label>
+              <select id="casa" required>
+                <option value="">Selecione...</option>
+                <option value="Câmara dos Deputados">
+                  Câmara dos Deputados
+                </option>
+                <option value="Senado Federal">Senado Federal</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status *</label>
+              <input
+                type="text"
+                id="status"
+                required
+                placeholder="Ex: Em tramitação"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="body">Conteúdo da Página</label>
+              <textarea
+                id="body"
+                rows="8"
+                placeholder="Conteúdo em HTML ou texto..."
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="featured"
+                  onchange="handleFeaturedChange()"
+                />
+                <label for="featured" style="margin: 0"
+                  >⭐ Pauta Principal (destaque no index)</label
+                >
+              </div>
+              <small style="color: #666; margin-left: 30px"
+                >Esta pauta aparecerá como "Nossa luta principal" na página
+                inicial</small
+              >
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox-group">
+                <input
+                  type="checkbox"
+                  id="is_plenary_vote"
+                  onchange="handlePlenaryVoteChange()"
+                />
+                <label for="is_plenary_vote" style="margin: 0"
+                  >🏛️ Votação em Plenário (todos os parlamentares)</label
+                >
+              </div>
+              <small style="color: #666; margin-left: 30px"
+                >Quando marcado, a mobilização incluirá TODOS os parlamentares
+                em exercício</small
+              >
+            </div>
+
+            <div class="form-group" id="membrosChaveSection">
+              <label>Membros-Chave</label>
+              <div id="infoMembrosChave" class="alert alert-info hidden">
+                ℹ️ Como esta é uma votação em plenário, não é necessário
+                selecionar membros-chave. A mobilização incluirá automaticamente
+                todos os parlamentares em exercício.
+              </div>
+              <div id="parlamentaresList">
+                <p style="color: #999; text-align: center">
+                  Nenhum parlamentar adicionado
                 </p>
-                
-                <div id="loadingContribuicoes" class="loading">
-                    <div class="spinner"></div>
-                    <span>Carregando contribuições...</span>
+              </div>
+
+              <div id="modalAddParlamentar" tabindex="-1">
+                <div class="modal-dialog" style="max-width: none">
+                  <div
+                    class="modal-content"
+                    style="border: none; box-shadow: none; padding: 0"
+                  >
+                    <div class="modal-body" style="padding: 10px 0 0 0">
+                      <div class="form-group">
+                        <label for="autocomplete-input">Buscar por nome:</label>
+                        <div class="autocomplete-container">
+                          <input
+                            type="text"
+                            id="autocomplete-input"
+                            class="autocomplete-input"
+                            placeholder="Digite o nome do parlamentar..."
+                            autocomplete="off"
+                          />
+                          <div
+                            id="autocomplete-list"
+                            class="autocomplete-list"
+                          ></div>
+                        </div>
+                        <small class="text-muted"
+                          >Digite pelo menos 2 letras para buscar</small
+                        >
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                
-                <div id="contribuicoesLista"></div>
-                
-                <div id="semContribuicoes" class="hidden" style="text-align: center; padding: 40px; color: #999;">
-                    <h4>🎉 Nenhuma contribuição pendente!</h4>
-                    <p>Quando usuários enviarem informações, aparecerão aqui.</p>
-                </div>
+              </div>
             </div>
 
-            <div id="tab-dados" class="tab-content">
-                <h3>💾 Dados Cadastrados dos Congressistas</h3>
-                
+            <div class="campanha-section">
+              <h4>📢 Configurar Campanhas de Mobilização</h4>
+              <p style="color: #666; margin-bottom: 20px">
+                Defina uma mensagem base (para oposição/neutros) e uma de
+                agradecimento (para quem apoia). Ative os canais desejados.
+              </p>
+
+              <div class="form-group d-flex justify-content-around mb-4">
+                <div class="checkbox-group">
+                  <input
+                    type="checkbox"
+                    id="enable-campaign-email"
+                    onchange="toggleCampaignChannel('email')"
+                  />
+                  <label for="enable-campaign-email" style="margin: 0"
+                    >📧 Ativar Email</label
+                  >
+                </div>
+                <div class="checkbox-group">
+                  <input
+                    type="checkbox"
+                    id="enable-campaign-whatsapp"
+                    onchange="toggleCampaignChannel('whatsapp')"
+                  />
+                  <label for="enable-campaign-whatsapp" style="margin: 0"
+                    >💬 Ativar WhatsApp</label
+                  >
+                </div>
+                <div class="checkbox-group">
+                  <input
+                    type="checkbox"
+                    id="enable-campaign-instagram"
+                    onchange="toggleCampaignChannel('instagram')"
+                  />
+                  <label for="enable-campaign-instagram" style="margin: 0"
+                    >📷 Ativar Instagram</label
+                  >
+                </div>
+              </div>
+
+              <div class="campanha-canal">
+                <h5>📝 Mensagens Principais</h5>
+                <div class="campanha-sub-canal">
+                  <label><strong>Mensagem (Oposição/Neutro) *</strong></label>
+                  <textarea
+                    id="campaign-message-opposition"
+                    rows="5"
+                    placeholder="Mensagem para quem é 'Contrário' ou 'Não se manifestou'. Use [NOME]."
+                  ></textarea>
+                  <small style="color: #666"
+                    >Esta mensagem será usada em todos os canais ativos para
+                    pedir apoio.</small
+                  >
+                </div>
+                <div class="campanha-sub-canal">
+                  <label
+                    ><strong>Mensagem (Apoio/Agradecimento) *</strong></label
+                  >
+                  <textarea
+                    id="campaign-message-support"
+                    rows="4"
+                    placeholder="Mensagem de agradecimento para quem já 'Apoia'. Use [NOME]."
+                  ></textarea>
+                  <small style="color: #666"
+                    >Esta mensagem será usada em todos os canais ativos para
+                    agradecer.</small
+                  >
+                </div>
+              </div>
+
+              <div id="campaign-channel-email" class="campanha-canal hidden">
+                <h5>📧 Configurações Adicionais de Email</h5>
                 <div class="form-group">
-                    <input type="text" id="searchDados" class="search-input" placeholder="🔍 Buscar por nome..." oninput="filtrarDados()">
+                  <label>Assunto do Email *</label>
+                  <input
+                    type="text"
+                    id="email-assunto"
+                    placeholder="Ex: Solicitação de Apoio à PEC 18/2025"
+                  />
                 </div>
-                
-                <div id="loadingDados" class="loading">
-                    <div class="spinner"></div>
-                    <span>Carregando dados...</span>
+                <div class="form-group">
+                  <label>Complemento da Mensagem (Opcional)</label>
+                  <textarea
+                    id="campaign-message-email-extra"
+                    rows="4"
+                    placeholder="Texto adicional a ser incluído APENAS no final dos emails (para mais detalhes, links, etc.)."
+                  ></textarea>
+                  <small style="color: #666"
+                    >Este texto será adicionado após a mensagem principal
+                    (Oposição ou Apoio) nos emails.</small
+                  >
                 </div>
-                
-                <div id="dadosLista" class="grid"></div>
+              </div>
+
+              <div id="campaign-channel-whatsapp" class="hidden"></div>
+              <div id="campaign-channel-instagram" class="hidden"></div>
             </div>
 
-            <div id="tab-estatisticas" class="tab-content">
-                <h3>📊 Estatísticas de Mobilização</h3>
-                
-                <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                    <div class="card">
-                        <div class="card-title" id="stat-total-pautas">0</div>
-                        <div class="card-info">Pautas Cadastradas</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" id="stat-total-contribuicoes">0</div>
-                        <div class="card-info">Contribuições Recebidas</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" id="stat-total-dados">0</div>
-                        <div class="card-info">Congressistas com Dados Extras</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" id="stat-total-evidencias">0</div>
-                        <div class="card-info">Evidências Cadastradas</div>
-                    </div>
-                </div>
-                
-                <button class="btn btn-secondary" onclick="atualizarEstatisticas()">🔄 Atualizar</button>
-            </div>
+            <button type="submit" class="btn">🎯 Gerar Pauta</button>
+          </form>
+
+          <div id="outputCriar" class="output hidden">
+            <h3>✅ Pauta Criada!</h3>
+            <p>Nome do arquivo: <strong id="filenameOutput"></strong></p>
+            <div class="code-output" id="codeOutput"></div>
+            <button class="btn" onclick="copiarCodigo()">📋 Copiar</button>
+          </div>
         </div>
-    </div>
-    
-    <script src="gerador.js" defer></script>
 
-</body>
+        <div id="tab-gerenciar" class="tab-content">
+          <input
+            type="text"
+            id="searchPautas"
+            class="search-input"
+            placeholder="🔍 Buscar pauta..."
+            oninput="filterPautas()"
+          />
+
+          <div id="loadingPautas" class="loading">
+            <div class="spinner"></div>
+            <span>Carregando pautas...</span>
+          </div>
+
+          <div id="pautasGrid" class="grid"></div>
+        </div>
+
+        <div id="tab-contribuicoes" class="tab-content">
+          <h3>📬 Contribuições Pendentes de Aprovação</h3>
+          <p style="color: #666; margin-bottom: 20px">
+            Revise as contribuições enviadas pelos usuários e aprove
+            seletivamente.
+          </p>
+
+          <div id="loadingContribuicoes" class="loading">
+            <div class="spinner"></div>
+            <span>Carregando contribuições...</span>
+          </div>
+
+          <div id="contribuicoesLista"></div>
+
+          <div
+            id="semContribuicoes"
+            class="hidden"
+            style="text-align: center; padding: 40px; color: #999"
+          >
+            <h4>🎉 Nenhuma contribuição pendente!</h4>
+            <p>Quando usuários enviarem informações, aparecerão aqui.</p>
+          </div>
+        </div>
+
+        <div id="tab-dados" class="tab-content">
+          <h3>💾 Dados Cadastrados dos Congressistas</h3>
+
+          <div class="form-group">
+            <input
+              type="text"
+              id="searchDados"
+              class="search-input"
+              placeholder="🔍 Buscar por nome..."
+              oninput="filtrarDados()"
+            />
+          </div>
+
+          <div id="loadingDados" class="loading">
+            <div class="spinner"></div>
+            <span>Carregando dados...</span>
+          </div>
+
+          <div id="dadosLista" class="grid"></div>
+        </div>
+
+        <div id="tab-estatisticas" class="tab-content">
+          <h3>📊 Estatísticas de Mobilização</h3>
+
+          <div
+            class="grid"
+            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"
+          >
+            <div class="card">
+              <div class="card-title" id="stat-total-pautas">0</div>
+              <div class="card-info">Pautas Cadastradas</div>
+            </div>
+            <div class="card">
+              <div class="card-title" id="stat-total-contribuicoes">0</div>
+              <div class="card-info">Contribuições Recebidas</div>
+            </div>
+            <div class="card">
+              <div class="card-title" id="stat-total-dados">0</div>
+              <div class="card-info">Congressistas com Dados Extras</div>
+            </div>
+            <div class="card">
+              <div class="card-title" id="stat-total-evidencias">0</div>
+              <div class="card-info">Evidências Cadastradas</div>
+            </div>
+          </div>
+
+          <button class="btn btn-secondary" onclick="atualizarEstatisticas()">
+            🔄 Atualizar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="gerador.js" defer></script>
+  </body>
 </html>
