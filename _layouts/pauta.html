@@ -981,43 +981,74 @@ function abrirCampanhaWhatsApp() {
 }
 
 function atualizarListaWhatsApp() {
-  const lista = document.getElementById('lista-whatsapp');
-  const estadoSelecionado = document.getElementById('filtro-campanha-estado-wa').value;
+    const listaEl = document.getElementById('lista-whatsapp');
+    const totalEl = document.getElementById('total-whatsapp');
+    const estadoSelecionado = document.getElementById('filtro-campanha-estado-wa').value;
 
-  // Filtra parlamentares que têm WhatsApp E batem com o filtro de estado
-  const parlamentares = parlamentaresBase.filter(p => {
-    const temWhatsApp = congressistasExtras.congressistas?.[p.id]?.whatsapp;
-    const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
-    return temWhatsApp && estadoMatch;
-  });
-  
-  const enviados = trackingData[pautaSlug].whatsapp || [];
-  
-  lista.innerHTML = parlamentares.map(p => {
-    const jaEnviado = enviados.includes(p.id);
-    const posicao = obterPosicao(p.id);
-    const corBotao = (posicao === 'apoia') ? 'btn-primary' : 'btn-success';
-    const textoBotao = (posicao === 'apoia') ? 'Agradecer' : 'Enviar Pedido';
+    // --- Início da Nova Lógica de Texto ---
+    let cargo = "Parlamentares";
+    if (casaLegislativa.includes('Câmara')) {
+        cargo = "Deputados(as)";
+    } else if (casaLegislativa.includes('Senado')) {
+        cargo = "Senadores(as)";
+    }
 
-    return `<div class="parlamentar-envio-item ${jaEnviado ? 'enviado' : ''}" data-id="${p.id}">
-      <div>
-        <strong>${p.nome}</strong> (${p.partido}-${p.uf})
-        ${jaEnviado ? '✅' : ''}
-      </div>
-      <button class="btn btn-sm ${corBotao}" onclick="enviarWhatsApp('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
-        <span id="icon-whatsapp-btn-${p.id}"></span> ${textoBotao}
-      </button>
-    </div>`;
-  }).join('');
-  
-  // Inserir ícones dinamicamente
-  parlamentares.forEach(p => {
-    const iconEl = document.getElementById(`icon-whatsapp-btn-${p.id}`);
-    if (iconEl) iconEl.innerHTML = whatsappIcon;
-  });
+    let textoEstado = "de todos os estados";
+    if (estadoSelecionado) {
+        textoEstado = `do Estado do ${mapEstados[estadoSelecionado] || estadoSelecionado}`;
+    }
+    // --- Fim da Nova Lógica de Texto ---
 
-  document.getElementById('total-whatsapp').textContent = `${parlamentares.length} WhatsApps (da comunidade)`;
-  atualizarProgressoWhatsApp();
+    // Filtra parlamentares
+    const parlamentares = parlamentaresBase.filter(p => {
+        const temWhatsApp = congressistasExtras.congressistas?.[p.id]?.whatsapp;
+        const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+        return temWhatsApp && estadoMatch;
+    });
+    
+    const count = parlamentares.length;
+    
+    if (count > 0) {
+        // Se encontrou parlamentares, atualiza o total e mostra a lista
+        totalEl.innerHTML = `Total: <strong>${count}</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
+        
+        const enviados = trackingData[pautaSlug].whatsapp || [];
+        
+        listaEl.innerHTML = parlamentares.map(p => {
+            const jaEnviado = enviados.includes(p.id);
+            const posicao = obterPosicao(p.id);
+            const corBotao = (posicao === 'apoia') ? 'btn-primary' : 'btn-success';
+            const textoBotao = (posicao === 'apoia') ? 'Agradecer' : 'Enviar Pedido';
+
+            return `<div class="parlamentar-envio-item ${jaEnviado ? 'enviado' : ''}" data-id="${p.id}">
+            <div>
+                <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+                ${jaEnviado ? '✅' : ''}
+            </div>
+            <button class="btn btn-sm ${corBotao}" onclick="enviarWhatsApp('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
+                <span id="icon-whatsapp-btn-${p.id}"></span> ${textoBotao}
+            </button>
+            </div>`;
+        }).join('');
+        
+        // Inserir ícones dinamicamente
+        parlamentares.forEach(p => {
+            const iconEl = document.getElementById(`icon-whatsapp-btn-${p.id}`);
+            if (iconEl) iconEl.innerHTML = whatsappIcon;
+        });
+
+    } else {
+        // Se não encontrou, atualiza o total e mostra o aviso
+        totalEl.innerHTML = `Total: <strong>0</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado}.`;
+        
+        listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">
+            Não há nenhum WhatsApp cadastrado de <strong>${cargo}</strong> ${textoEstado}.
+            <br><br>
+            Caso você tenha, volte à tabela principal e clique em <strong>"Enviar Info"</strong> para contribuir!
+        </div>`;
+    }
+    
+    atualizarProgressoWhatsApp();
 }
 
 function enviarWhatsApp(parlamentarId) {
@@ -1099,42 +1130,73 @@ function abrirCampanhaInstagram() {
 }
 
 function atualizarListaInstagram() {
-  const lista = document.getElementById('lista-instagram');
-  const estadoSelecionado = document.getElementById('filtro-campanha-estado-ig').value;
+    const listaEl = document.getElementById('lista-instagram');
+    const totalEl = document.getElementById('total-instagram');
+    const estadoSelecionado = document.getElementById('filtro-campanha-estado-ig').value;
 
-  const parlamentares = parlamentaresBase.filter(p => {
-    const temIg = congressistasExtras.congressistas?.[p.id]?.instagram;
-    const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
-    return temIg && estadoMatch;
-  });
-  
-  const enviados = trackingData[pautaSlug].instagram || [];
-  
-  lista.innerHTML = parlamentares.map(p => {
-    const jaEnviado = enviados.includes(p.id);
-    const posicao = obterPosicao(p.id);
-    const corBotao = (posicao === 'apoia') ? 'btn-primary' : 'btn-success';
-    const textoBotao = (posicao === 'apoia') ? 'Agradecer' : 'Enviar Pedido';
+    // --- Início da Nova Lógica de Texto ---
+    let cargo = "Parlamentares";
+    if (casaLegislativa.includes('Câmara')) {
+        cargo = "Deputados(as)";
+    } else if (casaLegislativa.includes('Senado')) {
+        cargo = "Senadores(as)";
+    }
 
-    return `<div class="parlamentar-envio-item ${jaEnviado ? 'enviado' : ''}" data-id="${p.id}">
-      <div>
-        <strong>${p.nome}</strong> (${p.partido}-${p.uf})
-        ${jaEnviado ? '✅' : ''}
-      </div>
-      <button class="btn btn-sm ${corBotao}" onclick="enviarInstagram('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
-        <span id="icon-ig-btn-${p.id}"></span> ${textoBotao}
-      </button>
-    </div>`;
-  }).join('');
+    let textoEstado = "de todos os estados";
+    if (estadoSelecionado) {
+        textoEstado = `do Estado do ${mapEstados[estadoSelecionado] || estadoSelecionado}`;
+    }
+    // --- Fim da Nova Lógica de Texto ---
 
-  parlamentares.forEach(p => {
-    const iconEl = document.getElementById(`icon-ig-btn-${p.id}`);
-    if (iconEl) iconEl.innerHTML = instagramIcon;
-  });
+    // Filtra parlamentares
+    const parlamentares = parlamentaresBase.filter(p => {
+        const temIg = congressistasExtras.congressistas?.[p.id]?.instagram;
+        const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+        return temIg && estadoMatch;
+    });
 
-  const elTotal = document.getElementById('total-instagram');
-  if (elTotal) elTotal.textContent = `${parlamentares.length} perfis (da comunidade)`;
-  atualizarProgressoInstagram();
+    const count = parlamentares.length;
+
+    if (count > 0) {
+        // Se encontrou, mostra o total e a lista
+        totalEl.innerHTML = `Total: <strong>${count}</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
+        
+        const enviados = trackingData[pautaSlug].instagram || [];
+        
+        listaEl.innerHTML = parlamentares.map(p => {
+            const jaEnviado = enviados.includes(p.id);
+            const posicao = obterPosicao(p.id);
+            const corBotao = (posicao === 'apoia') ? 'btn-primary' : 'btn-success';
+            const textoBotao = (posicao === 'apoia') ? 'Agradecer' : 'Enviar Pedido';
+
+            return `<div class="parlamentar-envio-item ${jaEnviado ? 'enviado' : ''}" data-id="${p.id}">
+            <div>
+                <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+                ${jaEnviado ? '✅' : ''}
+            </div>
+            <button class="btn btn-sm ${corBotao}" onclick="enviarInstagram('${p.id}')" ${jaEnviado ? 'disabled' : ''}>
+                <span id="icon-ig-btn-${p.id}"></span> ${textoBotao}
+            </button>
+            </div>`;
+        }).join('');
+
+        parlamentares.forEach(p => {
+            const iconEl = document.getElementById(`icon-ig-btn-${p.id}`);
+            if (iconEl) iconEl.innerHTML = instagramIcon;
+        });
+
+    } else {
+        // Se for zero, mostra o total e o aviso
+        totalEl.innerHTML = `Total: <strong>0</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado}.`;
+        
+        listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">
+            Não há nenhum Instagram cadastrado de <strong>${cargo}</strong> ${textoEstado}.
+            <br><br>
+            Caso você tenha, volte à tabela principal e clique em <strong>"Enviar Info"</strong> para contribuir!
+        </div>`;
+    }
+
+    atualizarProgressoInstagram();
 }
 
 function enviarInstagram(parlamentarId) {
