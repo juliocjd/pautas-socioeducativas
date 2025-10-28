@@ -1113,6 +1113,8 @@ async function excluirPauta(filename, title) {
     }
 }
 
+// SUBSTITUA A FUNÇÃO 'alterarPauta' INTEIRA POR ESTA:
+
 async function alterarPauta(filename) {
     try {
         console.log('📝 Carregando pauta para edição:', filename);
@@ -1140,7 +1142,33 @@ async function alterarPauta(filename) {
         // Extrair dados
         const frontMatter = frontMatterMatch[1];
         const body = frontMatterMatch[2].trim();
+
+        // ===============================================
+        // INÍCIO DA CORREÇÃO DE RESET (BUGFIX)
+        // ===============================================
         
+        // 1. Limpa o formulário de pautas anteriores
+        document.getElementById('pautaForm').reset();
+        
+        // 2. Limpa a lista de membros-chave
+        const listaParl = document.getElementById('parlamentaresList');
+        if (listaParl) {
+            listaParl.innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
+        }
+        // Limpa também o autocomplete
+        const autocompleteInput = document.getElementById('autocomplete-input');
+        if (autocompleteInput) {
+            autocompleteInput.value = '';
+        }
+        const autocompleteList = document.getElementById('autocomplete-list');
+        if (autocompleteList) {
+            autocompleteList.classList.remove('show');
+        }
+
+        // ===============================================
+        // FIM DA CORREÇÃO DE RESET
+        // ===============================================
+
         // Criar objeto com todos os dados
         const pautaData = {
             filename: filename
@@ -1223,6 +1251,19 @@ async function alterarPauta(filename) {
         // Esta funcionalidade ainda precisa ser implementada
         // Por enquanto, a lista de membros-chave não é recarregada
         
+        // ===============================================
+        // INÍCIO DA CORREÇÃO DE UI-UPDATE (BUGFIX)
+        // ===============================================
+        
+        // 3. (Após preencher os inputs/checkboxes)
+        // Chame manualmente o handler para atualizar a UI
+        // Isso irá (por exemplo) desativar o input de parlamentar se 'is_plenary_vote' for true
+        handlePlenaryVoteChange();
+
+        // ===============================================
+        // FIM DA CORREÇÃO DE UI-UPDATE
+        // ===============================================
+
         // Mudar para aba de criar
         showTab('criar');
         
