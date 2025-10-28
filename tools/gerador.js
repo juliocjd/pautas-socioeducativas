@@ -382,457 +382,565 @@ async function excluirPauta(filename, title) {
 }
 
 function toggleCampaignChannel(channel) {
-    const checkbox = document.getElementById(`enable-campaign-${channel}`);
-    const section = document.getElementById(`campaign-channel-${channel}`); // Seção de configs específicas
-    const oppositionTextarea = document.getElementById('campaign-message-opposition');
-    const supportTextarea = document.getElementById('campaign-message-support');
-    const subjectInput = document.getElementById('email-assunto'); // Específico do email
+  const checkbox = document.getElementById(`enable-campaign-${channel}`);
+  const section = document.getElementById(`campaign-channel-${channel}`); // Seção de configs específicas
+  const oppositionTextarea = document.getElementById(
+    "campaign-message-opposition"
+  );
+  const supportTextarea = document.getElementById("campaign-message-support");
+  const subjectInput = document.getElementById("email-assunto"); // Específico do email
 
-    if (checkbox && checkbox.checked) {
-        // Se ativou, mostra a seção específica (se houver)
-        if (section) section.classList.remove('hidden');
-        // Garante que os campos principais são obrigatórios se *qualquer* canal estiver ativo
-        oppositionTextarea.required = true;
-        supportTextarea.required = true;
-        if(channel === 'email' && subjectInput) subjectInput.required = true;
+  if (checkbox && checkbox.checked) {
+    // Se ativou, mostra a seção específica (se houver)
+    if (section) section.classList.remove("hidden");
+    // Garante que os campos principais são obrigatórios se *qualquer* canal estiver ativo
+    oppositionTextarea.required = true;
+    supportTextarea.required = true;
+    if (channel === "email" && subjectInput) subjectInput.required = true;
+  } else {
+    // Se desativou, esconde a seção específica
+    if (section) section.classList.add("hidden");
+    if (channel === "email" && subjectInput) subjectInput.required = false;
 
-    } else {
-        // Se desativou, esconde a seção específica
-        if (section) section.classList.add('hidden');
-         if(channel === 'email' && subjectInput) subjectInput.required = false;
-
-        // Verifica se *nenhum* canal está ativo para tornar os campos principais não-obrigatórios
-        const anyActive = ['email', 'whatsapp', 'instagram'].some(ch =>
-            document.getElementById(`enable-campaign-${ch}`)?.checked
-        );
-        if (!anyActive) {
-            oppositionTextarea.required = false;
-            supportTextarea.required = false;
-        }
+    // Verifica se *nenhum* canal está ativo para tornar os campos principais não-obrigatórios
+    const anyActive = ["email", "whatsapp", "instagram"].some(
+      (ch) => document.getElementById(`enable-campaign-${ch}`)?.checked
+    );
+    if (!anyActive) {
+      oppositionTextarea.required = false;
+      supportTextarea.required = false;
     }
+  }
 }
 
 function coletarDadosFormulario() {
-    const title = document.getElementById('title').value;
-    const descriptionRaw = document.getElementById('description').value;
-    const casa = document.getElementById('casa').value;
-    const status = document.getElementById('status').value;
-    const featured = document.getElementById('featured').checked;
-    const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
-    const body = document.getElementById('body').value;
+  const title = document.getElementById("title").value;
+  const descriptionRaw = document.getElementById("description").value;
+  const casa = document.getElementById("casa").value;
+  const status = document.getElementById("status").value;
+  const featured = document.getElementById("featured").checked;
+  const isPlenaryVote = document.getElementById("is_plenary_vote").checked;
+  const body = document.getElementById("body").value;
 
-    let descriptionFormatted = '';
-    // ... (lógica de formatação da descrição igual à anterior) ...
-     if (descriptionRaw) {
-        const lines = descriptionRaw.split('\n');
-        descriptionFormatted = '|\n';
-        lines.forEach(line => {
-            descriptionFormatted += `  ${line}\n`;
+  let descriptionFormatted = "";
+  // ... (lógica de formatação da descrição igual à anterior) ...
+  if (descriptionRaw) {
+    const lines = descriptionRaw.split("\n");
+    descriptionFormatted = "|\n";
+    lines.forEach((line) => {
+      descriptionFormatted += `  ${line}\n`;
+    });
+    descriptionFormatted = descriptionFormatted.trimEnd();
+  }
+
+  const parlamentares = [];
+  // ... (lógica de coleta de parlamentares igual à anterior) ...
+  if (!isPlenaryVote) {
+    document.querySelectorAll(".parlamentar-item").forEach((item) => {
+      const roleInput = item.querySelector(".parl-role");
+      const positionSelect = item.querySelector(".parl-position");
+      if (roleInput && positionSelect) {
+        let dep = null;
+        try {
+          dep = JSON.parse(
+            roleInput.dataset.deputado
+              .replace(/&apos;/g, "'")
+              .replace(/&quot;/g, '"')
+          );
+        } catch (e) {
+          console.error(
+            "Erro ao parsear data-deputado:",
+            roleInput.dataset.deputado,
+            e
+          );
+          return;
+        }
+        parlamentares.push({
+          nome: dep.nome,
+          role: roleInput.value || "",
+          position: positionSelect.value,
         });
-        descriptionFormatted = descriptionFormatted.trimEnd();
-    }
+      }
+    });
+  }
 
+  // --- NOVA LÓGICA: Coleta de Dados das Campanhas ---
+  const enableEmail = document.getElementById("enable-campaign-email").checked;
+  const enableWhatsApp = document.getElementById(
+    "enable-campaign-whatsapp"
+  ).checked;
+  const enableInstagram = document.getElementById(
+    "enable-campaign-instagram"
+  ).checked;
 
-    const parlamentares = [];
-    // ... (lógica de coleta de parlamentares igual à anterior) ...
-     if (!isPlenaryVote) {
-        document.querySelectorAll('.parlamentar-item').forEach(item => {
-            const roleInput = item.querySelector('.parl-role');
-            const positionSelect = item.querySelector('.parl-position');
-            if (roleInput && positionSelect) {
-                 let dep = null;
-                 try {
-                    dep = JSON.parse(roleInput.dataset.deputado.replace(/&apos;/g, "'").replace(/&quot;/g, '"'));
-                 } catch (e) {
-                     console.error("Erro ao parsear data-deputado:", roleInput.dataset.deputado, e);
-                     return;
-                 }
-                parlamentares.push({
-                    nome: dep.nome,
-                    role: roleInput.value || '',
-                    position: positionSelect.value
-                });
-            }
-        });
-    }
+  const msgOpposition = document.getElementById(
+    "campaign-message-opposition"
+  ).value;
+  const msgSupport = document.getElementById("campaign-message-support").value;
+  const emailSubject = document.getElementById("email-assunto").value;
+  const emailExtra = document.getElementById(
+    "campaign-message-email-extra"
+  ).value;
+  // --- FIM DA NOVA LÓGICA ---
 
-
-    // --- NOVA LÓGICA: Coleta de Dados das Campanhas ---
-    const enableEmail = document.getElementById('enable-campaign-email').checked;
-    const enableWhatsApp = document.getElementById('enable-campaign-whatsapp').checked;
-    const enableInstagram = document.getElementById('enable-campaign-instagram').checked;
-
-    const msgOpposition = document.getElementById('campaign-message-opposition').value;
-    const msgSupport = document.getElementById('campaign-message-support').value;
-    const emailSubject = document.getElementById('email-assunto').value;
-    const emailExtra = document.getElementById('campaign-message-email-extra').value;
-    // --- FIM DA NOVA LÓGICA ---
-
-    // Gerar YAML
-    let yaml = `---
+  // Gerar YAML
+  let yaml = `---
 layout: pauta
 title: ${title}
-description: ${descriptionFormatted || ''}
+description: ${descriptionFormatted || ""}
 casa: ${casa}
 status: ${status}
 featured: ${featured}
 is_plenary_vote: ${isPlenaryVote}
 `;
 
-    if (!isPlenaryVote && parlamentares.length > 0) {
-        yaml += `key_players:\n`;
-        parlamentares.forEach(p => {
-            yaml += `  - nome: "${p.nome}"\n`;
-            yaml += `    role: "${p.role}"\n`;
-            yaml += `    position: "${p.position}"\n`;
-        });
+  if (!isPlenaryVote && parlamentares.length > 0) {
+    yaml += `key_players:\n`;
+    parlamentares.forEach((p) => {
+      yaml += `  - nome: "${p.nome}"\n`;
+      yaml += `    role: "${p.role}"\n`;
+      yaml += `    position: "${p.position}"\n`;
+    });
+  }
+
+  // --- NOVA LÓGICA: Geração do YAML das Campanhas ---
+  const hasAnyCampaign = enableEmail || enableWhatsApp || enableInstagram;
+  if (hasAnyCampaign && msgOpposition && msgSupport) {
+    // Só adiciona se tiver mensagens principais
+    yaml += `campanha:\n`;
+
+    // Função auxiliar para formatar mensagem multiline
+    const formatYamlMessage = (msg) =>
+      `|\n      ${msg.split("\n").join("\n      ")}`;
+
+    if (enableEmail) {
+      yaml += `  email:\n`;
+      if (emailSubject) yaml += `    assunto: "${emailSubject}"\n`;
+      yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
+      yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
+      if (emailExtra)
+        yaml += `    mensagem_extra: ${formatYamlMessage(emailExtra)}\n`;
     }
-
-    // --- NOVA LÓGICA: Geração do YAML das Campanhas ---
-    const hasAnyCampaign = enableEmail || enableWhatsApp || enableInstagram;
-    if (hasAnyCampaign && msgOpposition && msgSupport) { // Só adiciona se tiver mensagens principais
-        yaml += `campanha:\n`;
-
-        // Função auxiliar para formatar mensagem multiline
-        const formatYamlMessage = (msg) => `|\n      ${msg.split('\n').join('\n      ')}`;
-
-        if (enableEmail) {
-            yaml += `  email:\n`;
-            if (emailSubject) yaml += `    assunto: "${emailSubject}"\n`;
-            yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
-            yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
-            if (emailExtra) yaml += `    mensagem_extra: ${formatYamlMessage(emailExtra)}\n`;
-        }
-        if (enableWhatsApp) {
-            yaml += `  whatsapp:\n`;
-            yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
-            yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
-        }
-        if (enableInstagram) {
-            yaml += `  instagram:\n`;
-            yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
-            yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
-        }
+    if (enableWhatsApp) {
+      yaml += `  whatsapp:\n`;
+      yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
+      yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
     }
-    // --- FIM DA NOVA LÓGICA ---
+    if (enableInstagram) {
+      yaml += `  instagram:\n`;
+      yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
+      yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
+    }
+  }
+  // --- FIM DA NOVA LÓGICA ---
 
-    yaml += `---\n\n${body}`;
-    return yaml;
+  yaml += `---\n\n${body}`;
+  return yaml;
 }
 
+// SUBSTITUA A FUNÇÃO alterarPauta INTEIRA em gerador.js POR ESTA:
+
 async function alterarPauta(filename) {
-    try {
-        console.log('📝 Carregando pauta para edição:', filename);
+  try {
+    console.log("📝 Carregando pauta para edição:", filename);
 
-        // Resetar estado (como antes)
-        document.getElementById('pautaForm').reset();
-        // ... (resto do código de reset igual) ...
-        const listaParl = document.getElementById('parlamentaresList');
-        if (listaParl) listaParl.innerHTML = '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
-        const autocompleteInput = document.getElementById('autocomplete-input');
-        if (autocompleteInput) autocompleteInput.value = '';
-        const autocompleteList = document.getElementById('autocomplete-list');
-        if (autocompleteList) autocompleteList.classList.remove('show');
-        const oldAlert = document.getElementById('edit-mode');
-        if (oldAlert) oldAlert.remove();
-        // Resetar checkboxes de campanha
-        document.getElementById('enable-campaign-email').checked = false;
-        document.getElementById('enable-campaign-whatsapp').checked = false;
-        document.getElementById('enable-campaign-instagram').checked = false;
-        toggleCampaignChannel('email'); // Garante que seções extras estejam ocultas
-        toggleCampaignChannel('whatsapp');
-        toggleCampaignChannel('instagram');
+    // --- Resetar estado ANTES de carregar ---
+    document.getElementById("pautaForm").reset();
+    const listaParl = document.getElementById("parlamentaresList");
+    if (listaParl)
+      listaParl.innerHTML =
+        '<p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>';
+    const autocompleteInput = document.getElementById("autocomplete-input");
+    if (autocompleteInput) autocompleteInput.value = "";
+    const autocompleteList = document.getElementById("autocomplete-list");
+    if (autocompleteList) autocompleteList.classList.remove("show");
+    const oldAlert = document.getElementById("edit-mode");
+    if (oldAlert) oldAlert.remove();
+    // Resetar checkboxes de campanha
+    document.getElementById("enable-campaign-email").checked = false;
+    document.getElementById("enable-campaign-whatsapp").checked = false;
+    document.getElementById("enable-campaign-instagram").checked = false;
+    toggleCampaignChannel("email"); // Garante que seções extras estejam ocultas
+    toggleCampaignChannel("whatsapp");
+    toggleCampaignChannel("instagram");
+    // --- Fim do Reset ---
 
+    // Buscar dados da pauta
+    const response = await fetch(`/api/edit-pauta?filename=${filename}`);
+    const data = await response.json();
+    if (!data.success) throw new Error(data.error || "Erro ao buscar pauta");
 
-        // Buscar e parsear dados (como antes)
-        const response = await fetch(`/api/edit-pauta?filename=${filename}`);
-        const data = await response.json();
-        if (!data.success) throw new Error(data.error || 'Erro ao buscar pauta');
-        // ... (resto do parse do Front Matter e key_players igual) ...
-         const content = data.content;
-        const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-        if (!frontMatterMatch) throw new Error('Formato de pauta inválido');
+    console.log("✅ Pauta carregada");
+    const content = data.content;
+    const frontMatterMatch = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (!frontMatterMatch) throw new Error("Formato de pauta inválido");
 
-        const frontMatter = frontMatterMatch[1];
-        const body = frontMatterMatch[2].trim();
-        const pautaData = {};
-        let keyPlayersData = [];
-        let campanhaData = {}; // Objeto para guardar dados da campanha parseados
+    const frontMatter = frontMatterMatch[1];
+    const body = frontMatterMatch[2].trim();
+    const pautaData = {}; // Objeto para guardar dados parseados
+    let keyPlayersData = []; // Array para guardar key_players
+    let campanhaData = {}; // Objeto para guardar dados da campanha parseados
 
-        const lines = frontMatter.split('\n');
-        let currentKey = '';
-        let multilineValue = '';
-        let inMultiline = false;
-        let inKeyPlayers = false;
-        let inCampanha = false;
-        let currentCampanhaChannel = null;
+    // Parse do Front Matter
+    const lines = frontMatter.split("\n");
+    let currentKey = "";
+    let multilineValue = "";
+    let inMultiline = false;
+    let inKeyPlayers = false;
+    let inCampanha = false;
+    let currentCampanhaChannel = null;
 
-        for (const line of lines) {
-             // Tratamento de key_players (igual)
-             if (line.trim() === 'key_players:') { inKeyPlayers = true; inCampanha = false; continue; }
-             if (inKeyPlayers) { /* ... (código igual) ... */ }
-               if (line.match(/^\w+:/)) {
-                    inKeyPlayers = false;
-                } else {
-                    const nomeMatch = line.match(/^\s*-\s*nome:\s*"?([^"]*)"?\s*$/);
-                    const roleMatch = line.match(/^\s*role:\s*"?([^"]*)"?\s*$/);
-                    const positionMatch = line.match(/^\s*position:\s*"?([^"]*)"?\s*$/);
-                    if (nomeMatch) keyPlayersData.push({ nome: nomeMatch[1] });
-                    else if (roleMatch && keyPlayersData.length > 0) keyPlayersData[keyPlayersData.length - 1].role = roleMatch[1];
-                    else if (positionMatch && keyPlayersData.length > 0) keyPlayersData[keyPlayersData.length - 1].position = positionMatch[1];
-                    continue;
-                }
+    for (const line of lines) {
+      // Tratamento de key_players (CORRIGIDO)
+      if (line.trim() === "key_players:") {
+        inKeyPlayers = true;
+        inCampanha = false; // Garante que saiu de campanha
+        inMultiline = false; // Garante que saiu de multiline
+        continue; // Próxima linha
+      }
 
+      if (inKeyPlayers) {
+        // Se encontrar outra chave de nível superior (sem indentação), sai do key_players
+        if (line.match(/^\w+:/)) {
+          inKeyPlayers = false;
+          // NÃO continue aqui, deixa o resto do loop processar essa linha
+        } else {
+          // Processa linhas dentro de key_players
+          const nomeMatch = line.match(/^\s*-\s*nome:\s*"?([^"]*)"?\s*$/);
+          const roleMatch = line.match(/^\s*role:\s*"?([^"]*)"?\s*$/);
+          const positionMatch = line.match(/^\s*position:\s*"?([^"]*)"?\s*$/);
 
-             // --- NOVA LÓGICA: Tratamento de campanha ---
-            if (line.trim() === 'campanha:') {
-                inCampanha = true;
-                inKeyPlayers = false; // Garante que saiu de key_players
-                inMultiline = false; // Garante que saiu de multiline
-                campanhaData = {}; // Inicia objeto da campanha
-                continue;
+          if (nomeMatch) {
+            keyPlayersData.push({ nome: nomeMatch[1].trim() }); // Inicia novo player
+          } else if (roleMatch && keyPlayersData.length > 0) {
+            keyPlayersData[keyPlayersData.length - 1].role =
+              roleMatch[1].trim();
+          } else if (positionMatch && keyPlayersData.length > 0) {
+            keyPlayersData[keyPlayersData.length - 1].position =
+              positionMatch[1].trim();
+          }
+          // Se a linha está dentro de key_players, processamos e vamos para a próxima
+          continue; // Pula o resto do loop para esta linha
+        }
+        // Se saiu de inKeyPlayers (linha if(line.match...)), deixa o loop continuar
+      }
+      // --- FIM DA CORREÇÃO key_players ---
+
+      // --- LÓGICA: Tratamento de campanha ---
+      if (line.trim() === "campanha:") {
+        inCampanha = true;
+        inKeyPlayers = false;
+        inMultiline = false;
+        campanhaData = {};
+        continue;
+      }
+      if (inCampanha) {
+        const channelMatch = line.match(/^ {2}(\w+):$/);
+        if (channelMatch) {
+          currentCampanhaChannel = channelMatch[1];
+          campanhaData[currentCampanhaChannel] = {};
+          inMultiline = false;
+          continue;
+        }
+
+        if (currentCampanhaChannel) {
+          const subKeyMatchPipe = line.match(/^ {4}(\w+):\s*\|/);
+          const subKeyMatchSimple = line.match(/^ {4}(\w+):\s*(.+)$/);
+
+          if (subKeyMatchPipe) {
+            currentKey = subKeyMatchPipe[1];
+            inMultiline = true;
+            multilineValue = "";
+            continue;
+          } else if (inMultiline) {
+            if (
+              line.match(/^ {4}\w+:/) ||
+              line.match(/^ {2}\w+:/) ||
+              line.match(/^\w+:/)
+            ) {
+              campanhaData[currentCampanhaChannel][currentKey] =
+                multilineValue.trimEnd(); // Use trimEnd
+              inMultiline = false;
+              // REPROCESSA a linha atual (não continue)
+            } else {
+              multilineValue += line.replace(/^ {6}/, "") + "\n";
+              continue;
             }
-             if (inCampanha) {
-                 // Detecta novo canal (email, whatsapp, instagram)
-                 const channelMatch = line.match(/^ {2}(\w+):$/); // 2 espaços de indentação
-                 if (channelMatch) {
-                     currentCampanhaChannel = channelMatch[1];
-                     campanhaData[currentCampanhaChannel] = {};
-                     inMultiline = false; // Reseta multiline ao mudar de canal
-                     continue;
-                 }
+          }
 
-                 // Detecta subchave dentro do canal (assunto, mensagem_oposicao, etc.)
-                 if (currentCampanhaChannel) {
-                     const subKeyMatchPipe = line.match(/^ {4}(\w+):\s*\|/); // 4 espaços + pipe
-                     const subKeyMatchSimple = line.match(/^ {4}(\w+):\s*(.+)$/); // 4 espaços + valor simples
-
-                     if (subKeyMatchPipe) {
-                         currentKey = subKeyMatchPipe[1];
-                         inMultiline = true;
-                         multilineValue = '';
-                         continue;
-                     } else if (inMultiline) {
-                         // Coleta linhas multiline da campanha
-                         if (line.match(/^ {4}\w+:/) || line.match(/^ {2}\w+:/) || line.match(/^\w+:/)) { // Detecta nova subchave, canal ou chave principal
-                             campanhaData[currentCampanhaChannel][currentKey] = multilineValue.trim();
-                             inMultiline = false;
-                             // REPROCESSA a linha atual
-                         } else {
-                             multilineValue += line.replace(/^ {6}/, '') + '\n'; // Assume indentação de 6 espaços
-                             continue;
-                         }
-                     }
-
-                    if (!inMultiline && subKeyMatchSimple) { // Processa chave simples se não estiver em multiline
-                        const subKey = subKeyMatchSimple[1];
-                        const subValue = subKeyMatchSimple[2].replace(/^["']|["']$/g, '').trim();
-                        campanhaData[currentCampanhaChannel][subKey] = subValue;
-                        continue; // Próxima linha
-                    }
-                 }
-                // Se não caiu em nenhum if de campanha e inCampanha é true,
-                // pode ser o fim da seção campanha ou uma linha mal formatada.
-                // Se encontrar uma chave principal, sai da campanha.
-                if (line.match(/^\w+:/)) {
-                     inCampanha = false;
-                     // Salva a última multiline da campanha se houver
-                     if (inMultiline && currentCampanhaChannel && currentKey) {
-                        campanhaData[currentCampanhaChannel][currentKey] = multilineValue.trim();
-                        inMultiline = false;
-                     }
-                     // REPROCESSA a linha atual fora da campanha
-                } else {
-                     continue; // Ignora linhas dentro de campanha que não reconhece
-                }
-
-            }
-            // --- FIM DA NOVA LÓGICA DE CAMPANHA ---
-
-
-            // Tratamento de Multiline Geral (fora de key_players e campanha)
-             if (!inKeyPlayers && !inCampanha && line.includes('|') && !line.match(/^\s*-/)) { /* ... (código igual) ... */ }
-             if (inMultiline) { /* ... (código igual, mas salva em pautaData) ... */ }
-               if (line.includes('|') && !line.match(/^\s*-/)) {
-                  const match = line.match(/^(\w+):\s*\|/);
-                  if (match) {
-                      currentKey = match[1];
-                      inMultiline = true;
-                      multilineValue = '';
-                      continue;
-                  }
-               }
-               if (inMultiline) {
-                 if (line.match(/^\w+:/) && !line.includes('  ')) {
-                    pautaData[currentKey] = multilineValue.trim();
-                    inMultiline = false;
-                } else {
-                    multilineValue += line.replace(/^ {2}/, '') + '\n';
-                    continue;
-                }
-               }
-
-
-            // Tratamento de Campo Simples Geral (fora de key_players e campanha)
-            const match = line.match(/^(\w+):\s*(.+)$/);
-            if (match) { /* ... (código igual, mas salva em pautaData) ... */ }
-             if (match) {
-                const key = match[1];
-                let value = match[2].replace(/^["']|["']$/g, '').trim();
-                pautaData[key] = value;
-
-                const input = document.getElementById(key);
-                if (input) {
-                    if (input.type === 'checkbox') input.checked = value === 'true';
-                    else input.value = value;
-                }
-            }
+          if (!inMultiline && subKeyMatchSimple) {
+            const subKey = subKeyMatchSimple[1];
+            const subValue = subKeyMatchSimple[2]
+              .replace(/^["']|["']$/g, "")
+              .trim();
+            campanhaData[currentCampanhaChannel][subKey] = subValue;
+            continue;
+          }
         }
-        // Salvar últimos multiline (geral ou campanha)
-         if (inMultiline && currentKey) {
-             if (inCampanha && currentCampanhaChannel) {
-                 campanhaData[currentCampanhaChannel][currentKey] = multilineValue.trim();
-             } else {
-                 pautaData[currentKey] = multilineValue.trim();
-             }
-         }
-
-
-        // Preencher body
-        document.getElementById('body').value = body;
-
-        // --- NOVA LÓGICA: Preencher Campos das Campanhas ---
-        document.getElementById('campaign-message-opposition').value =
-            campanhaData.email?.mensagem_oposicao || // Tenta pegar do email primeiro
-            campanhaData.whatsapp?.mensagem_oposicao ||
-            campanhaData.instagram?.mensagem_oposicao || '';
-
-        document.getElementById('campaign-message-support').value =
-            campanhaData.email?.mensagem_apoio ||
-            campanhaData.whatsapp?.mensagem_apoio ||
-            campanhaData.instagram?.mensagem_apoio || '';
-
-        if (campanhaData.email) {
-            document.getElementById('enable-campaign-email').checked = true;
-            document.getElementById('email-assunto').value = campanhaData.email.assunto || '';
-            document.getElementById('campaign-message-email-extra').value = campanhaData.email.mensagem_extra || '';
-            toggleCampaignChannel('email'); // Mostra a seção de email
+        if (line.match(/^\w+:/)) {
+          inCampanha = false;
+          if (inMultiline && currentCampanhaChannel && currentKey) {
+            campanhaData[currentCampanhaChannel][currentKey] =
+              multilineValue.trimEnd(); // Use trimEnd
+            inMultiline = false;
+          }
+          // REPROCESSA a linha atual fora da campanha
+        } else {
+          continue;
         }
-        if (campanhaData.whatsapp) {
-            document.getElementById('enable-campaign-whatsapp').checked = true;
-            toggleCampaignChannel('whatsapp');
+      }
+      // --- FIM DA LÓGICA DE CAMPANHA ---
+
+      // Tratamento de Multiline Geral (fora de key_players e campanha)
+      if (
+        !inKeyPlayers &&
+        !inCampanha &&
+        line.includes("|") &&
+        !line.match(/^\s*-/)
+      ) {
+        const match = line.match(/^(\w+):\s*\|/);
+        if (match) {
+          currentKey = match[1];
+          inMultiline = true;
+          multilineValue = "";
+          continue;
         }
-        if (campanhaData.instagram) {
-            document.getElementById('enable-campaign-instagram').checked = true;
-            toggleCampaignChannel('instagram');
+      }
+      if (inMultiline) {
+        // Só entra aqui se for multiline GERAL
+        if (line.match(/^\w+:/) && !line.includes("  ")) {
+          pautaData[currentKey] = multilineValue.trimEnd(); // Use trimEnd
+          inMultiline = false;
+          // REPROCESSA a linha atual
+        } else {
+          multilineValue += line.replace(/^ {2}/, "") + "\n";
+          continue;
         }
-        // --- FIM DA NOVA LÓGICA ---
+      }
 
+      // Tratamento de Campo Simples Geral (se não for key_player nem campanha nem multiline)
+      const match = line.match(/^(\w+):\s*(.+)$/);
+      if (match) {
+        const key = match[1];
+        let value = match[2].replace(/^["']|["']$/g, "").trim();
+        pautaData[key] = value;
 
-        // Recarregar Membros-Chave (como na versão anterior)
-        if (keyPlayersData.length > 0) { /* ... (código igual) ... */ }
-         if (keyPlayersData.length > 0) {
-            listaParl.innerHTML = '';
-            keyPlayersData.forEach(player => {
-                const parlamentar = deputados.find(d => d.nome === player.nome);
-                if (parlamentar) {
-                    parlamentarCount++;
-                    const item = document.createElement('div');
-                    item.className = 'parlamentar-item';
-                    item.id = `parl-${parlamentarCount}`;
-                    const deputadoData = JSON.stringify({...}).replace(/'/g, "&apos;");
-                    item.innerHTML = `... (código igual para criar o item) ...`;
-                     const deputadoDataJSON = JSON.stringify({
-                        id: parlamentar.id, nome: parlamentar.nome, partido: parlamentar.partido, uf: parlamentar.uf
-                     }).replace(/'/g, "&apos;"); // Escapa apóstrofos para HTML
-
-                     item.innerHTML = `
-                        <div class="parlamentar-item-info">
-                            <strong>${parlamentar.nome}</strong> (${parlamentar.partido}-${parlamentar.uf})
-                            <div class="parlamentar-item-inputs">
-                                <input type="text" class="parl-role" placeholder="Função/Papel (Opcional)" value="${player.role || ''}" data-deputado='${deputadoDataJSON}'>
-                                <select class="parl-position" data-deputado-id="${parlamentar.id}">
-                                    <option value="nao-manifestado" ${(!player.position || player.position === 'nao-manifestado') ? 'selected' : ''}>Posição: Não se manifestou</option>
-                                    <option value="contrario" ${player.position === 'contrario' ? 'selected' : ''}>Posição: Contrário</option>
-                                    <option value="apoia" ${player.position === 'apoia' ? 'selected' : ''}>Posição: Apoia</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-small btn-danger" onclick="document.getElementById('parl-${parlamentarCount}').remove()">🗑️ Remover</button>
-                    `;
-
-                    listaParl.appendChild(item);
-                } else {
-                    console.warn(`Membro-chave "${player.nome}" não encontrado na lista de parlamentares.`);
-                }
-            });
+        // Preencher input se existir
+        const input = document.getElementById(key);
+        if (input) {
+          if (input.type === "checkbox") {
+            input.checked = value === "true";
+          } else {
+            input.value = value;
+          }
         }
+      }
+    } // Fim do loop for (const line of lines)
 
-
-        // Atualizar UI (como antes)
-        handlePlenaryVoteChange();
-        showTab('criar');
-        // ... (resto do código igual: adicionar alerta, alterar botão, scroll) ...
-         const titleInput = document.getElementById('title');
-         if (titleInput && titleInput.parentElement) {
-             titleInput.parentElement.insertAdjacentHTML('beforebegin', '<div class="alert alert-warning" id="edit-mode" ...>...</div>');
-         }
-         const submitBtn = document.querySelector('#pautaForm button[type="submit"]');
-          if (submitBtn) {
-            submitBtn.textContent = '💾 Salvar Alterações';
-            submitBtn.setAttribute('data-editing', filename);
-            const newBtn = submitBtn.cloneNode(true);
-            submitBtn.parentNode.replaceChild(newBtn, submitBtn);
-            newBtn.addEventListener('click', function(event) { /* ... */ });
-             newBtn.addEventListener('click', function(event) {
-                event.preventDefault();
-                const editingFilename = this.getAttribute('data-editing');
-                if (editingFilename) {
-                    salvarAlteracoes(editingFilename);
-                }
-            });
-         }
-         setTimeout(() => { titleInput?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
-
-
-        console.log('✅ Formulário preenchido com sucesso, incluindo key_players e nova campanha.');
-
-    } catch (error) {
-        console.error('❌ Erro ao carregar pauta para edição:', error);
-        alert('❌ Erro ao carregar pauta: ' + error.message);
-        document.getElementById('pautaForm').reset(); // Reseta em caso de erro
-        showTab('gerenciar');
+    // Salvar últimos multiline (geral ou campanha) que não foram fechados por uma nova chave
+    if (inMultiline && currentKey) {
+      if (inCampanha && currentCampanhaChannel) {
+        campanhaData[currentCampanhaChannel][currentKey] =
+          multilineValue.trimEnd(); // Use trimEnd
+      } else {
+        pautaData[currentKey] = multilineValue.trimEnd(); // Use trimEnd
+      }
     }
+
+    // Preencher body
+    document.getElementById("body").value = body;
+
+    // --- Preencher Campos das Campanhas (Nova Lógica) ---
+    document.getElementById("campaign-message-opposition").value =
+      campanhaData.email?.mensagem_oposicao ||
+      campanhaData.whatsapp?.mensagem_oposicao ||
+      campanhaData.instagram?.mensagem_oposicao ||
+      "";
+
+    document.getElementById("campaign-message-support").value =
+      campanhaData.email?.mensagem_apoio ||
+      campanhaData.whatsapp?.mensagem_apoio ||
+      campanhaData.instagram?.mensagem_apoio ||
+      "";
+
+    if (campanhaData.email) {
+      document.getElementById("enable-campaign-email").checked = true;
+      document.getElementById("email-assunto").value =
+        campanhaData.email.assunto || "";
+      document.getElementById("campaign-message-email-extra").value =
+        campanhaData.email.mensagem_extra || "";
+      toggleCampaignChannel("email");
+    }
+    if (campanhaData.whatsapp) {
+      document.getElementById("enable-campaign-whatsapp").checked = true;
+      toggleCampaignChannel("whatsapp");
+    }
+    if (campanhaData.instagram) {
+      document.getElementById("enable-campaign-instagram").checked = true;
+      toggleCampaignChannel("instagram");
+    }
+    // --- FIM ---
+
+    // --- Recarregar Membros-Chave na UI ---
+    if (keyPlayersData.length > 0 && !pautaData["is_plenary_vote"]) {
+      // Só carrega se não for plenário
+      listaParl.innerHTML = ""; // Limpa a mensagem padrão
+      keyPlayersData.forEach((player) => {
+        // Encontra o parlamentar correspondente na lista global 'deputados'
+        const parlamentar = deputados.find((d) => d.nome === player.nome);
+        if (parlamentar) {
+          parlamentarCount++;
+          const item = document.createElement("div");
+          item.className = "parlamentar-item";
+          item.id = `parl-${parlamentarCount}`;
+          const deputadoDataJSON = JSON.stringify({
+            id: parlamentar.id,
+            nome: parlamentar.nome,
+            partido: parlamentar.partido,
+            uf: parlamentar.uf,
+          }).replace(/'/g, "&apos;"); // Escapa apóstrofos para HTML
+
+          item.innerHTML = `
+                       <div class="parlamentar-item-info">
+                           <strong>${parlamentar.nome}</strong> (${
+            parlamentar.partido
+          }-${parlamentar.uf})
+                           <div class="parlamentar-item-inputs">
+                               <input type="text" class="parl-role" placeholder="Função/Papel (Opcional)" value="${
+                                 player.role || ""
+                               }" data-deputado='${deputadoDataJSON}'>
+                               <select class="parl-position" data-deputado-id="${
+                                 parlamentar.id
+                               }">
+                                   <option value="nao-manifestado" ${
+                                     !player.position ||
+                                     player.position === "nao-manifestado"
+                                       ? "selected"
+                                       : ""
+                                   }>Posição: Não se manifestou</option>
+                                   <option value="contrario" ${
+                                     player.position === "contrario"
+                                       ? "selected"
+                                       : ""
+                                   }>Posição: Contrário</option>
+                                   <option value="apoia" ${
+                                     player.position === "apoia"
+                                       ? "selected"
+                                       : ""
+                                   }>Posição: Apoia</option>
+                               </select>
+                           </div>
+                       </div>
+                       <button type="button" class="btn btn-small btn-danger" onclick="document.getElementById('parl-${parlamentarCount}').remove()">🗑️ Remover</button>
+                   `;
+          listaParl.appendChild(item);
+        } else {
+          console.warn(
+            `Membro-chave "${player.nome}" não encontrado na lista de parlamentares.`
+          );
+        }
+      });
+    }
+    // --- FIM ---
+
+    // Atualizar UI com base no estado carregado (Plenário ou não)
+    handlePlenaryVoteChange();
+
+    // Mudar para aba de criar e adicionar indicador
+    showTab("criar");
+    const titleInput = document.getElementById("title");
+    if (titleInput && titleInput.parentElement) {
+      titleInput.parentElement.insertAdjacentHTML(
+        "beforebegin",
+        '<div class="alert alert-warning" id="edit-mode" style="background:#fff3cd;padding:15px;border-radius:8px;margin-bottom:20px;border-left:4px solid #ffc107;">📝 <strong>Modo Edição:</strong> Você está editando a pauta <strong>' +
+          filename +
+          "</strong></div>"
+      );
+    }
+
+    // Alterar botão de submit
+    const submitBtn = document.querySelector(
+      '#pautaForm button[type="submit"]'
+    );
+    if (submitBtn) {
+      submitBtn.textContent = "💾 Salvar Alterações";
+      submitBtn.setAttribute("data-editing", filename);
+      // Remove evento antigo e adiciona novo para evitar duplicidade
+      const newBtn = submitBtn.cloneNode(true);
+      submitBtn.parentNode.replaceChild(newBtn, submitBtn);
+      newBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        const editingFilename = this.getAttribute("data-editing");
+        if (editingFilename) {
+          salvarAlteracoes(editingFilename);
+        }
+      });
+    }
+
+    // Habilitar ou desabilitar a aba de Plenário (como antes)
+    const tabBtnPlenario = document.getElementById("tab-btn-plenario");
+    const isPlenary = pautaData["is_plenary_vote"] === "true"; // Verifica o valor carregado
+    if (isPlenary) {
+      tabBtnPlenario.disabled = false;
+      tabBtnPlenario.title =
+        "Editar posicionamento dos parlamentares para esta pauta";
+      currentPlenarioPauta = {
+        filename,
+        slug: slugify(pautaData["title"]),
+        title: pautaData["title"],
+        casa: pautaData["casa"],
+      };
+    } else {
+      tabBtnPlenario.disabled = true;
+      tabBtnPlenario.title =
+        "Disponível apenas ao editar pautas de Votação em Plenário";
+      currentPlenarioPauta = null;
+    }
+
+    // Scroll
+    setTimeout(() => {
+      titleInput?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300);
+
+    console.log(
+      "✅ Formulário preenchido com sucesso, incluindo key_players e nova campanha."
+    );
+  } catch (error) {
+    console.error("❌ Erro ao carregar pauta para edição:", error);
+    alert("❌ Erro ao carregar pauta: " + error.message);
+    document.getElementById("pautaForm").reset(); // Reseta em caso de erro
+    showTab("gerenciar");
+  }
 }
 
 // Função para salvar alterações na pauta
 async function salvarAlteracoes(filename) {
-    try {
-        // Coletar dados do formulário (similar a gerarPauta)
-        const pautaContent = coletarDadosFormulario();
+  try {
+    // Coletar dados do formulário (similar a gerarPauta)
+    const pautaContent = coletarDadosFormulario();
 
-        const response = await fetch(`/api/edit-pauta`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${sessionToken}`
-            },
-            body: JSON.stringify({ filename, content: pautaContent })
-        });
+    const response = await fetch(`/api/edit-pauta`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionToken}`,
+      },
+      body: JSON.stringify({ filename, content: pautaContent }),
+    });
 
-        const data = await response.json();
+    const data = await response.json();
 
-        if (data.success) {
-            alert('✅ Pauta atualizada com sucesso!');
-            location.reload();
-        } else {
-            alert('❌ Erro: ' + data.error);
-        }
-    } catch (error) {
-        console.error('Erro ao salvar alterações:', error);
-        alert('❌ Erro ao salvar: ' + error.message);
+    if (data.success) {
+      alert("✅ Pauta atualizada com sucesso!");
+      location.reload();
+    } else {
+      alert("❌ Erro: " + data.error);
     }
-} 
+  } catch (error) {
+    console.error("Erro ao salvar alterações:", error);
+    alert("❌ Erro ao salvar: " + error.message);
+  }
+}
 
 // Carregar congressistas extras
 async function carregarCongressistas() {
@@ -1643,7 +1751,6 @@ document.addEventListener("click", function (e) {
 // ==========================================
 // GERAR/SALVAR PAUTA (LÓGICA CENTRALIZADA)
 // ==========================================
-
 
 // Gerar Pauta (Função principal de submit)
 async function gerarPauta(e) {
