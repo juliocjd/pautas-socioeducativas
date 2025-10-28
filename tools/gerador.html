@@ -382,6 +382,14 @@
             border-left: 4px solid #667eea;
         }
 
+        .campanha-sub-canal {
+            background: #fdfdfd;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
         .alert {
             padding: 12px 20px;
             border-radius: 8px;
@@ -415,7 +423,32 @@
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start; /* Alinhado ao topo */
+        }
+        
+        .parlamentar-item-info {
+            flex: 1;
+            margin-right: 15px;
+        }
+        
+        .parlamentar-item-info strong {
+            font-size: 16px;
+        }
+        
+        .parlamentar-item-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .parlamentar-item-inputs input,
+        .parlamentar-item-inputs select {
+            width: 100%;
+            padding: 8px 10px;
+            font-size: 13px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
         }
 
         /* Autocomplete de parlamentares */
@@ -496,7 +529,6 @@
         <h1>🏛️ Painel Administrativo</h1>
         <p class="subtitle">Gerencie pautas, contribuições e mobilização</p>
         
-        <!-- Tela de Login -->
         <div id="loginScreen">
             <div class="output">
                 <h3>🔐 Acesso Restrito</h3>
@@ -509,9 +541,7 @@
             </div>
         </div>
         
-        <!-- Conteúdo Principal -->
         <div id="mainContent" class="hidden">
-            <!-- Tabs -->
             <div class="tabs">
                 <button class="tab active" onclick="showTab('criar')">➕ Criar Pauta</button>
                 <button class="tab" onclick="showTab('gerenciar')">📋 Gerenciar Pautas</button>
@@ -520,7 +550,6 @@
                 <button class="tab" onclick="showTab('estatisticas')">📊 Estatísticas</button>
             </div>
             
-            <!-- Tab: Criar Pauta -->
             <div id="tab-criar" class="tab-content active">
                 <div id="loadingDeputados" class="loading hidden">
                     <div class="spinner"></div>
@@ -553,6 +582,11 @@
                     </div>
                     
                     <div class="form-group">
+                        <label for="body">Conteúdo da Página</label>
+                        <textarea id="body" rows="8" placeholder="Conteúdo em HTML ou texto..."></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <div class="checkbox-group">
                             <input type="checkbox" id="featured" onchange="handleFeaturedChange()">
                             <label for="featured" style="margin: 0;">⭐ Pauta Principal (destaque no index)</label>
@@ -563,27 +597,27 @@
                     <div class="form-group">
                         <div class="checkbox-group">
                             <input type="checkbox" id="is_plenary_vote" onchange="handlePlenaryVoteChange()">
-                            <label for="is_plenary_vote" style="margin: 0;">🏛️ Votação em Plenário (todos os deputados)</label>
+                            <label for="is_plenary_vote" style="margin: 0;">🏛️ Votação em Plenário (todos os parlamentares)</label>
                         </div>
-                        <small style="color: #666; margin-left: 30px;">Quando marcado, a mobilização incluirá TODOS os deputados em exercício</small>
+                        <small style="color: #666; margin-left: 30px;">Quando marcado, a mobilização incluirá TODOS os parlamentares em exercício</small>
                     </div>
                     
                     <div class="form-group" id="membrosChaveSection">
                         <label>Membros-Chave</label>
                         <div id="infoMembrosChave" class="alert alert-info hidden">
-                            ℹ️ Como esta é uma votação em plenário, não é necessário selecionar membros-chave. A mobilização incluirá automaticamente todos os deputados em exercício.
+                            ℹ️ Como esta é uma votação em plenário, não é necessário selecionar membros-chave. A mobilização incluirá automaticamente todos os parlamentares em exercício.
                         </div>
                         <div id="parlamentaresList">
                             <p style="color: #999; text-align: center;">Nenhum parlamentar adicionado</p>
                         </div>
                        
-                        <!-- Modal: Adicionar Parlamentar com Autocomplete -->
-                        <div class="modal fade" id="modalAddParlamentar" tabindex="-1">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-body">
+                        <div id="modalAddParlamentar" tabindex="-1">
+                          <div class="modal-dialog" style="max-width: none;">
+                            <div class="modal-content" style="border: none; box-shadow: none; padding: 0;">
+                              
+                              <div class="modal-body" style="padding: 10px 0 0 0;">
                                 <div class="form-group">
-                                  <label>Buscar por nome:</label>
+                                  <label for="autocomplete-input">Buscar por nome:</label>
                                   <div class="autocomplete-container">
                                     <input 
                                       type="text" 
@@ -601,12 +635,13 @@
                           </div>
                         </div>
 
-                                                <button type="button" class="btn btn-secondary" onclick="abrirAutocomplete()" id="btnAddParlamentar" disabled>+ Adicionar Parlamentar</button>
                         </div>
                     
-                    <!-- SEÇÃO DE CAMPANHAS -->
                     <div class="campanha-section">
                         <h4>📢 Configurar Campanhas de Mobilização</h4>
+                        <p style="color: #666; margin-bottom: 20px;">
+                            Configure textos diferentes para quem apoia (agradecimento) e para quem não apoia (pedido).
+                        </p>
                         
                         <div class="campanha-canal">
                             <h5>📧 Email</h5>
@@ -614,35 +649,54 @@
                                 <label>Assunto do Email</label>
                                 <input type="text" id="email-assunto" placeholder="Ex: Solicitação de Apoio à PEC 18/2025">
                             </div>
-                            <div class="form-group">
-                                <label>Mensagem do Email</label>
-                                <textarea id="email-mensagem" rows="6" placeholder="Exmo(a) Sr(a) Deputado(a) [NOME]..."></textarea>
-                                <small style="color: #666;">💡 Use: [NOME], [PARTIDO], [ESTADO], [CARGO]</small>
+
+                            <div class="campanha-sub-canal">
+                                <label><strong>Mensagem (Oposição/Neutro)</strong></label>
+                                <textarea id="email-mensagem-oposicao" rows="5" placeholder="Exmo(a) Sr(a) Deputado(a) [NOME]..."></textarea>
+                                <small style="color: #666;">Texto para quem é "Contrário" ou "Não se manifestou".</small>
                             </div>
+
+                            <div class="campanha-sub-canal">
+                                <label><strong>Mensagem (Apoio/Agradecimento)</strong></label>
+                                <textarea id="email-mensagem-apoio" rows="4" placeholder="Exmo(a) Sr(a) Deputado(a) [NOME], obrigado pelo seu apoio..."></textarea>
+                                <small style="color: #666;">Texto para quem já "Apoia" a pauta.</small>
+                            </div>
+                            <small style="color: #666; margin-top: 15px; display: block;">💡 Use: [NOME]</small>
                         </div>
                         
                         <div class="campanha-canal">
                             <h5>💬 WhatsApp</h5>
-                            <div class="form-group">
-                                <label>Mensagem do WhatsApp</label>
-                                <textarea id="whatsapp-mensagem" rows="5" placeholder="Olá! Sou eleitor de [ESTADO]..."></textarea>
-                                <small style="color: #666;">💡 Use: [NOME], [PARTIDO], [ESTADO]</small>
+                            
+                            <div class="campanha-sub-canal">
+                                <label><strong>Mensagem (Oposição/Neutro)</strong></label>
+                                <textarea id="whatsapp-mensagem-oposicao" rows="4" placeholder="Olá! Sou eleitor e peço seu apoio..."></textarea>
+                                <small style="color: #666;">Texto para quem é "Contrário" ou "Não se manifestou".</small>
                             </div>
+
+                            <div class="campanha-sub-canal">
+                                <label><strong>Mensagem (Apoio/Agradecimento)</strong></label>
+                                <textarea id="whatsapp-mensagem-apoio" rows="3" placeholder="Olá, [NOME]! Obrigado por apoiar nossa pauta..."></textarea>
+                                <small style="color: #666;">Texto para quem já "Apoia" a pauta.</small>
+                            </div>
+                            <small style="color: #666; margin-top: 15px; display: block;">💡 Use: [NOME]</small>
                         </div>
                         
                         <div class="campanha-canal">
                             <h5>📷 Instagram</h5>
-                            <div class="form-group">
-                                <label>Mensagem do Instagram</label>
-                                <textarea id="instagram-mensagem" rows="4" placeholder="Oi! Conto com seu apoio..."></textarea>
-                                <small style="color: #666;">💡 Mensagens mais curtas funcionam melhor no Instagram</small>
+
+                            <div class="campanha-sub-canal">
+                                <label><strong>Mensagem (Oposição/Neutro)</strong></label>
+                                <textarea id="instagram-mensagem-oposicao" rows="3" placeholder="Oi! Conto com seu apoio..."></textarea>
+                                <small style="color: #666;">Texto para quem é "Contrário" ou "Não se manifestou".</small>
                             </div>
+
+                            <div class="campanha-sub-canal">
+                                <label><strong>Mensagem (Apoio/Agradecimento)</strong></label>
+                                <textarea id="instagram-mensagem-apoio" rows="3" placeholder="Oi, [NOME]! Obrigado pelo apoio!"></textarea>
+                                <small style="color: #666;">Texto para quem já "Apoia" a pauta.</small>
+                            </div>
+                            <small style="color: #666; margin-top: 15px; display: block;">💡 Use: [NOME]</small>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="body">Conteúdo da Página</label>
-                        <textarea id="body" rows="8" placeholder="Conteúdo em HTML ou texto..."></textarea>
                     </div>
                     
                     <button type="submit" class="btn">🎯 Gerar Pauta</button>
@@ -656,7 +710,6 @@
                 </div>
             </div>
             
-            <!-- Tab: Gerenciar Pautas -->
             <div id="tab-gerenciar" class="tab-content">
                 <input type="text" id="searchPautas" class="search-input" placeholder="🔍 Buscar pauta..." oninput="filterPautas()">
                 
@@ -668,7 +721,6 @@
                 <div id="pautasGrid" class="grid"></div>
             </div>
 
-            <!-- Tab: Contribuições -->
             <div id="tab-contribuicoes" class="tab-content">
                 <h3>📬 Contribuições Pendentes de Aprovação</h3>
                 <p style="color: #666; margin-bottom: 20px;">
@@ -688,7 +740,6 @@
                 </div>
             </div>
 
-            <!-- Tab: Dados Cadastrados -->
             <div id="tab-dados" class="tab-content">
                 <h3>💾 Dados Cadastrados dos Congressistas</h3>
                 
@@ -704,7 +755,6 @@
                 <div id="dadosLista" class="grid"></div>
             </div>
 
-            <!-- Tab: Estatísticas -->
             <div id="tab-estatisticas" class="tab-content">
                 <h3>📊 Estatísticas de Mobilização</h3>
                 
@@ -741,7 +791,7 @@ let congressistasExtras = {};
 let sessionToken = null;
 let parlamentarCount = 0;
 
-const API_URL = window.location.origin;
+const API_URL = ''; // Usar caminhos absolutos do servidor
 
 // Login
 async function login() {
@@ -749,7 +799,7 @@ async function login() {
     const errorEl = document.getElementById('loginError');
     
     try {
-        const response = await fetch(`${API_URL}/api/auth-admin`, {
+        const response = await fetch(`/api/auth-admin`, { // Caminho absoluto
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ password })
@@ -765,8 +815,8 @@ async function login() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('mainContent').classList.remove('hidden');
             
-            loadDeputados();
             carregarDados();
+            configurarCarregamentoCondicional(); // Configurar listener da "Casa"
         } else {
             errorEl.textContent = '❌ Senha incorreta!';
             errorEl.classList.remove('hidden');
@@ -788,11 +838,9 @@ function checkAuth() {
         sessionToken = token;
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('mainContent').classList.remove('hidden');
-        // NÃO carregar deputados automaticamente
-        carregarDados();
         
-        // Adicionar listener no select de casa
-        configurarCarregamentoCondicional();
+        carregarDados();
+        configurarCarregamentoCondicional(); // Configurar listener da "Casa"
     }
 }
 
@@ -804,18 +852,19 @@ function configurarCarregamentoCondicional() {
     if (casaSelect) {
         casaSelect.addEventListener('change', function() {
             const casa = this.value;
-            const btnAdd = document.getElementById('btnAddParlamentar');
+            const inputAdd = document.getElementById('autocomplete-input');
             
-            // Habilitar botão se casa selecionada
-            if (casa) {
-                btnAdd.disabled = false;
+            // Habilitar input se casa selecionada (e não for plenário)
+            const isPlenary = document.getElementById('is_plenary_vote').checked;
+            if (casa && !isPlenary) {
+                inputAdd.disabled = false;
                 
                 // Carregar deputados se necessário (primeira vez)
                 if (deputados.length === 0) {
                     loadDeputados();
                 }
-            } else {
-                btnAdd.disabled = true;
+            } else if (!isPlenary) {
+                inputAdd.disabled = true;
             }
             
             // Limpar parlamentares se mudar de casa
@@ -836,8 +885,9 @@ function configurarCarregamentoCondicional() {
     }
 }
 
-// SUBSTITUA DAS LINHAS 621 ATÉ 706 POR ESTE CÓDIGO ATUALIZADO:
-
+// ==========================================
+// CARREGAR PARLAMENTARES (NOVA VERSÃO)
+// ==========================================
 async function loadDeputados() {
     const statusEl = document.getElementById('loadingDeputados');
     
@@ -848,100 +898,24 @@ async function loadDeputados() {
             statusEl.classList.remove('hidden');
         }
         
-        // 1. Tenta carregar o cache
-        const cacheResponse = await fetch('../parlamentares_cache.json');
+        // 1. Tenta carregar o cache (caminho relativo à raiz do site)
+        const cacheResponse = await fetch('/parlamentares_cache.json');
         
         if (!cacheResponse.ok) {
-            throw new Error(`Erro HTTP: ${cacheResponse.status} ${cacheResponse.statusText}`);
-        }
-        
-        // 2. Tenta ler o arquivo como JSON
-        const cacheData = await cacheResponse.json(); 
-        
-        // 3. Lê a NOVA estrutura (cacheData.parlamentares)
-        if (cacheData.parlamentares && cacheData.parlamentares.length > 0) {
+            // Se o gerador.html estiver em /tools/, o ../ é necessário
+            // Vamos tentar o caminho relativo
+            console.log('Cache /parlamentares_cache.json não encontrado, tentando ../');
+            const relativeCacheResponse = await fetch('../parlamentares_cache.json');
             
-            // Mapeia os dados do cache
-            deputados = cacheData.parlamentares.map(p => ({
-                id: p.id,
-                nome: p.nome,
-                partido: p.partido,
-                uf: p.uf,
-                email: p.email || 'N/A',
-                casa: p.casa 
-            }));
-
-            if (statusEl) {
-                statusEl.className = 'loading success';
-                statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados do cache!</span>`;
-                setTimeout(() => statusEl.classList.add('hidden'), 3000);
+            if (!relativeCacheResponse.ok) {
+                throw new Error(`Erro HTTP: ${relativeCacheResponse.status} (Ambas tentativas de cache falharam)`);
             }
-            console.log('Parlamentares carregados do cache (nova estrutura):', deputados.length);
-        
-            // ==========================================================
-            // ATIVAR O AUTOCOMPLETE (O NOVO CÓDIGO ESTÁ AQUI)
-            // ==========================================================
-            const input = document.getElementById('autocomplete-input');
-            if (input) {
-                console.log('Ativando listeners no #autocomplete-input');
-                
-                // Prevenir submit do formulário ao pressionar "Enter"
-                input.onkeydown = function(event) {
-                    if (event.key === 'Enter') {
-                        event.preventDefault(); // Impede o submit
-                        return false;
-                    }
-                };
-                
-                // Event listener para autocomplete
-                input.oninput = function() {
-                    const list = document.getElementById('autocomplete-list');
-                    if (!list) return; // Proteção
-                    
-                    const termo = this.value.toLowerCase();
-                    
-                    if (termo.length < 2) {
-                        list.classList.remove('show');
-                        return;
-                    }
-                    
-                    const casaSelecionada = document.getElementById('casa').value;
-                    
-                    // Usar a variável global 'deputados' que acabamos de carregar
-                    const parlamentaresFiltrados = deputados.filter(p => { 
-                        const nomeMatch = p.nome.toLowerCase().includes(termo);
-                        const casaMatch = 
-                            (casaSelecionada.includes('Câmara') && p.casa === 'Câmara') ||
-                            (casaSelecionada.includes('Senado') && p.casa === 'Senado');
-                        return nomeMatch && casaMatch;
-                    }).slice(0, 10);
-                    
-                    if (parlamentaresFiltrados.length === 0) {
-                        list.innerHTML = '<div class="no-results">Nenhum resultado encontrado</div>';
-                        list.classList.add('show');
-                        return;
-                    }
-                    
-                    list.innerHTML = parlamentaresFiltrados.map(p => `
-                        <div class="autocomplete-item" onclick="selecionarParlamentar('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.partido}', '${p.uf}')">
-                            <strong>${p.nome}</strong><br>
-                            <small>${p.partido}-${p.uf}</small>
-                        </div>
-                    `).join('');
-                    
-                    list.classList.add('show');
-                };
-            } else {
-                console.error('Não foi possível encontrar o elemento #autocomplete-input para anexar listeners.');
-            }
-            // ==========================================================
-            // FIM DO CÓDIGO NOVO
-            // ==========================================================
-
-        } else {
-            // O cache foi lido, mas a estrutura está errada
-            throw new Error('Formato do cache JSON é inválido. Chave "parlamentares" não encontrada.');
+            // Se chegou aqui, o ../ funcionou
+            return processarCache(await relativeCacheResponse.json(), statusEl);
         }
+        
+        // Se chegou aqui, o / funcionou
+        return processarCache(await cacheResponse.json(), statusEl);
 
     } catch (error) {
         // Se qualquer etapa falhar (fetch, .json(), ou parsing), o erro será pego aqui
@@ -952,7 +926,94 @@ async function loadDeputados() {
         }
     }
 }
+
+function processarCache(cacheData, statusEl) {
+    // 3. Lê a NOVA estrutura (cacheData.parlamentares)
+    if (cacheData.parlamentares && cacheData.parlamentares.length > 0) {
         
+        // Mapeia os dados do cache
+        deputados = cacheData.parlamentares.map(p => ({
+            id: p.id,
+            nome: p.nome,
+            partido: p.partido,
+            uf: p.uf,
+            email: p.email || 'N/A',
+            casa: p.casa 
+        }));
+
+        if (statusEl) {
+            statusEl.className = 'loading success';
+            statusEl.innerHTML = `<span>✅ ${deputados.length} parlamentares carregados do cache!</span>`;
+            setTimeout(() => statusEl.classList.add('hidden'), 3000);
+        }
+        console.log('Parlamentares carregados do cache (nova estrutura):', deputados.length);
+    
+        // ==========================================================
+        // ATIVAR O AUTOCOMPLETE
+        // ==========================================================
+        const input = document.getElementById('autocomplete-input');
+        if (input) {
+            console.log('Ativando listeners no #autocomplete-input');
+            
+            // Prevenir submit do formulário ao pressionar "Enter"
+            input.onkeydown = function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Impede o submit
+                    return false;
+                }
+            };
+            
+            // Event listener para autocomplete
+            input.oninput = function() {
+                const list = document.getElementById('autocomplete-list');
+                if (!list) return; // Proteção
+                
+                const termo = this.value.toLowerCase();
+                
+                if (termo.length < 2) {
+                    list.classList.remove('show');
+                    return;
+                }
+                
+                const casaSelecionada = document.getElementById('casa').value;
+                
+                // Usar a variável global 'deputados' que acabamos de carregar
+                const parlamentaresFiltrados = deputados.filter(p => { 
+                    const nomeMatch = p.nome.toLowerCase().includes(termo);
+                    const casaMatch = 
+                        (casaSelecionada.includes('Câmara') && p.casa === 'Câmara') ||
+                        (casaSelecionada.includes('Senado') && p.casa === 'Senado');
+                    return nomeMatch && casaMatch;
+                }).slice(0, 10);
+                
+                if (parlamentaresFiltrados.length === 0) {
+                    list.innerHTML = '<div class="no-results">Nenhum resultado encontrado</div>';
+                    list.classList.add('show');
+                    return;
+                }
+                
+                list.innerHTML = parlamentaresFiltrados.map(p => `
+                    <div class="autocomplete-item" onclick="selecionarParlamentar('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.partido}', '${p.uf}')">
+                        <strong>${p.nome}</strong><br>
+                        <small>${p.partido}-${p.uf}</small>
+                    </div>
+                `).join('');
+                
+                list.classList.add('show');
+            };
+        } else {
+            console.error('Não foi possível encontrar o elemento #autocomplete-input para anexar listeners.');
+        }
+        // ==========================================================
+        // FIM DO CÓDIGO NOVO
+        // ==========================================================
+
+    } else {
+        // O cache foi lido, mas a estrutura está errada
+        throw new Error('Formato do cache JSON é inválido. Chave "parlamentares" não encontrada.');
+    }
+}
+
 // Carregar todos os dados
 async function carregarDados() {
     await Promise.all([
@@ -968,7 +1029,7 @@ async function carregarPautas() {
     try {
         document.getElementById('loadingPautas').classList.remove('hidden');
         
-        const response = await fetch(`${API_URL}/api/pautas`);
+        const response = await fetch(`/api/pautas`);
         const data = await response.json();
         pautas = data.pautas || [];
         
@@ -1030,7 +1091,7 @@ async function excluirPauta(filename, title) {
     }
     
     try {
-        const response = await fetch(`${API_URL}/api/pautas`, {
+        const response = await fetch(`/api/pautas`, {
             method: 'DELETE',
             headers: { 
                 'Content-Type': 'application/json',
@@ -1057,7 +1118,7 @@ async function alterarPauta(filename) {
         console.log('📝 Carregando pauta para edição:', filename);
         
         // Buscar dados da pauta
-        const response = await fetch(`${API_URL}/api/edit-pauta?filename=${filename}`);
+        const response = await fetch(`/api/edit-pauta?filename=${filename}`);
         const data = await response.json();
         
         if (!data.success) {
@@ -1142,30 +1203,25 @@ async function alterarPauta(filename) {
         // Preencher body
         document.getElementById('body').value = body;
         
-        // Preencher campos de campanha se existirem
+        // Preencher campos de campanha (NOVA LÓGICA)
         if (pautaData.campanha) {
             // Email
-            const emailAssuntoInput = document.getElementById('email-assunto');
-            const emailMensagemInput = document.getElementById('email-mensagem');
-            if (emailAssuntoInput && pautaData['campanha.email.assunto']) {
-                emailAssuntoInput.value = pautaData['campanha.email.assunto'];
-            }
-            if (emailMensagemInput && pautaData['campanha.email.mensagem']) {
-                emailMensagemInput.value = pautaData['campanha.email.mensagem'];
-            }
+            document.getElementById('email-assunto').value = pautaData['campanha.email.assunto'] || '';
+            document.getElementById('email-mensagem-oposicao').value = pautaData['campanha.email.mensagem_oposicao'] || '';
+            document.getElementById('email-mensagem-apoio').value = pautaData['campanha.email.mensagem_apoio'] || '';
             
             // WhatsApp
-            const whatsappInput = document.getElementById('whatsapp-mensagem');
-            if (whatsappInput && pautaData['campanha.whatsapp.mensagem']) {
-                whatsappInput.value = pautaData['campanha.whatsapp.mensagem'];
-            }
+            document.getElementById('whatsapp-mensagem-oposicao').value = pautaData['campanha.whatsapp.mensagem_oposicao'] || '';
+            document.getElementById('whatsapp-mensagem-apoio').value = pautaData['campanha.whatsapp.mensagem_apoio'] || '';
             
             // Instagram
-            const instagramInput = document.getElementById('instagram-mensagem');
-            if (instagramInput && pautaData['campanha.instagram.mensagem']) {
-                instagramInput.value = pautaData['campanha.instagram.mensagem'];
-            }
+            document.getElementById('instagram-mensagem-oposicao').value = pautaData['campanha.instagram.mensagem_oposicao'] || '';
+            document.getElementById('instagram-mensagem-apoio').value = pautaData['campanha.instagram.mensagem_apoio'] || '';
         }
+
+        // TODO: Carregar Membros-Chave salvos
+        // Esta funcionalidade ainda precisa ser implementada
+        // Por enquanto, a lista de membros-chave não é recarregada
         
         // Mudar para aba de criar
         showTab('criar');
@@ -1220,78 +1276,15 @@ async function alterarPauta(filename) {
 async function salvarAlteracoes(filename) {
     try {
         // Coletar dados do formulário (similar a gerarPauta)
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const casa = document.getElementById('casa').value;
-        const status = document.getElementById('status').value;
-        const featured = document.getElementById('featured').checked;
-        const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
-        const body = document.getElementById('body').value;
+        const pautaContent = coletarDadosFormulario();
         
-        // Coletar parlamentares (apenas se não for votação em plenário)
-        const parlamentares = [];
-        if (!isPlenaryVote) {
-            document.querySelectorAll('.parl-role').forEach(input => {
-                if (input.value) {
-                    const dep = JSON.parse(input.dataset.deputado);
-                    parlamentares.push({ nome: dep.nome, role: input.value });
-                }
-            });
-        }
-        
-        // Campanhas
-        const emailAssunto = document.getElementById('email-assunto').value;
-        const emailMensagem = document.getElementById('email-mensagem').value;
-        const whatsappMensagem = document.getElementById('whatsapp-mensagem').value;
-        const instagramMensagem = document.getElementById('instagram-mensagem').value;
-        
-        // Gerar YAML
-        let yaml = `---
-layout: pauta
-title: ${title}
-description: ${description}
-casa: ${casa}
-status: ${status}
-featured: ${featured}
-is_plenary_vote: ${isPlenaryVote}
-`;
-        
-        // Adicionar membros-chave apenas se não for votação em plenário
-        if (!isPlenaryVote && parlamentares.length > 0) {
-            yaml += `key_players:\n`;
-            parlamentares.forEach(p => {
-                yaml += `  - nome: "${p.nome}"\n`;
-                yaml += `    role: "${p.role}"\n`;
-            });
-        }
-        
-        // Adicionar campanhas se preenchidas
-        if (emailAssunto || emailMensagem || whatsappMensagem || instagramMensagem) {
-            yaml += `campanha:\n`;
-            if (emailAssunto || emailMensagem) {
-                yaml += `  email:\n`;
-                if (emailAssunto) yaml += `    assunto: "${emailAssunto}"\n`;
-                if (emailMensagem) yaml += `    mensagem: |\n      ${emailMensagem.split('\n').join('\n      ')}\n`;
-            }
-            if (whatsappMensagem) {
-                yaml += `  whatsapp:\n`;
-                yaml += `    mensagem: |\n      ${whatsappMensagem.split('\n').join('\n      ')}\n`;
-            }
-            if (instagramMensagem) {
-                yaml += `  instagram:\n`;
-                yaml += `    mensagem: |\n      ${instagramMensagem.split('\n').join('\n      ')}\n`;
-            }
-        }
-        
-        yaml += `---\n\n${body}`;
-        
-        const response = await fetch(`${API_URL}/api/edit-pauta`, {
+        const response = await fetch(`/api/edit-pauta`, {
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${sessionToken}`
             },
-            body: JSON.stringify({ filename, content: yaml })
+            body: JSON.stringify({ filename, content: pautaContent })
         });
         
         const data = await response.json();
@@ -1311,7 +1304,7 @@ is_plenary_vote: ${isPlenaryVote}
 // Carregar congressistas extras
 async function carregarCongressistas() {
     try {
-        const response = await fetch(`${API_URL}/api/congressistas`);
+        const response = await fetch(`/api/congressistas`);
         const data = await response.json();
         congressistasExtras = data.congressistas || {};
         renderDados();
@@ -1329,7 +1322,7 @@ async function carregarContribuicoes() {
     try {
         document.getElementById('loadingContribuicoes').classList.remove('hidden');
         
-        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+        const response = await fetch(`/api/contribuicoes-pendentes`, {
             cache: 'no-cache',
             headers: {
                 'Cache-Control': 'no-cache',
@@ -1611,7 +1604,7 @@ async function aprovarSelecionados(prNumber, index) {
         console.log('✅ Aprovando itens:', itensSelecionados);
         
         // Enviar para API
-        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+        const response = await fetch(`/api/contribuicoes-pendentes`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1647,7 +1640,7 @@ async function rejeitarContribuicao(prNumber) {
     }
     
     try {
-        const response = await fetch(`${API_URL}/api/contribuicoes-pendentes`, {
+        const response = await fetch(`/api/contribuicoes-pendentes`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -1827,7 +1820,7 @@ async function salvarEdicaoDados(id, nome) {
             if (!dados[key]) delete dados[key];
         });
         
-        const response = await fetch(`${API_URL}/api/congressistas`, {
+        const response = await fetch(`/api/congressistas`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -1855,7 +1848,7 @@ async function excluirDados(parlamentarId, nome) {
     if (!confirm(`Tem certeza que deseja excluir todos os dados de ${nome}?`)) return;
     
     try {
-        const response = await fetch(`${API_URL}/api/congressistas`, {
+        const response = await fetch(`/api/congressistas`, {
             method: 'DELETE',
             headers: { 
                 'Content-Type': 'application/json',
@@ -1870,7 +1863,7 @@ async function excluirDados(parlamentarId, nome) {
             alert('✅ Dados excluídos!');
             carregarCongressistas();
         } else {
-            alert('❌ Erro: ' + data.message);
+            alert('❌ Erro: 'D + data.message);
         }
     } catch (error) {
         alert('❌ Erro: ' + error.message);
@@ -1884,7 +1877,7 @@ async function atualizarEstatisticas() {
     document.getElementById('stat-total-dados').textContent = Object.keys(congressistasExtras).length || '0';
     
     try {
-        const response = await fetch(`${API_URL}/api/evidencias`);
+        const response = await fetch(`/api/evidencias`);
         const data = await response.json();
         let totalEvidencias = 0;
         if (data.pautas) {
@@ -1898,23 +1891,22 @@ async function atualizarEstatisticas() {
     }
 }
 
-// SUBSTITUA A PARTIR DA LINHA 1079 ATÉ A 1097 POR ESTE CÓDIGO:
-
+// Handler para mudança no checkbox de votação em plenário
 function handlePlenaryVoteChange() {
     const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
     const parlamentaresList = document.getElementById('parlamentaresList');
     const infoMembrosChave = document.getElementById('infoMembrosChave');
     
-    // --- Nossos novos alvos ---
-    const autocompleteInput = document.getElementById('autocomplete-input'); // O campo de busca
-    const autocompleteList = document.getElementById('autocomplete-list'); // A lista de resultados
+    // Nossos novos alvos
+    const autocompleteInput = document.getElementById('autocomplete-input');
+    const autocompleteList = document.getElementById('autocomplete-list');
     
     if (isPlenaryVote) {
         // 1. Mostrar o aviso
         infoMembrosChave.classList.remove('hidden');
         
         // 2. Limpar a lista (como já fazia)
-        parlamentaresList.innerHTML = '<p style="color: #28a745; text-align: center; font-weight: 600;">✅ Votação em Plenário: Todos os deputados serão incluídos automaticamente</p>';
+        parlamentaresList.innerHTML = '<p style="color: #28a745; text-align: center; font-weight: 600;">✅ Votação em Plenário: Todos os parlamentares serão incluídos automaticamente</p>';
 
         // 3. (A CORREÇÃO) Desativar o campo de busca
         if (autocompleteInput) {
@@ -1935,12 +1927,13 @@ function handlePlenaryVoteChange() {
 
         // 3. (A CORREÇÃO) Reativar o campo de busca
         if (autocompleteInput) {
-            autocompleteInput.disabled = false;
+            // Reativar apenas se a 'Casa' já estiver selecionada
+            autocompleteInput.disabled = !document.getElementById('casa').value;
             autocompleteInput.placeholder = 'Digite o nome do parlamentar...';
         }
     }
 }
-        
+
 // Handler para mudança no checkbox de pauta principal
 function handleFeaturedChange() {
     const isFeatured = document.getElementById('featured').checked;
@@ -1960,83 +1953,9 @@ function handleFeaturedChange() {
     }
 }
 
-// Abrir modal de autocomplete
-function abrirAutocomplete() {
-    if (document.getElementById('is_plenary_vote').checked) {
-        alert('⚠️ Esta é uma votação em plenário. Não é necessário adicionar membros-chave.');
-        return;
-    }
-    
-    if (deputados.length === 0) {
-        alert('⚠️ Aguarde o carregamento dos parlamentares...');
-        return;
-    }
-    
-    const modal = document.getElementById('modalAddParlamentar');
-    const input = document.getElementById('autocomplete-input');
-    
-    // Limpar input
-    input.value = '';
-    // MODIFICADO: Buscar a lista aqui apenas para limpar
-    const listEl = document.getElementById('autocomplete-list');
-    if (listEl) listEl.classList.remove('show');
-    
-    // Mostrar modal
-    $(modal).modal('show');
-    
-    // Focar input após modal abrir
-    $(modal).on('shown.bs.modal', function() {
-        input.focus();
-    });
+// Abrir modal de autocomplete (Função antiga removida, pois agora é inline)
 
-    // ADICIONADO: Prevenir submit do formulário ao pressionar "Enter"
-    input.onkeydown = function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Impede o submit
-            return false;
-        }
-    };
-    
-    // Event listener para autocomplete
-    input.oninput = function() {
-        // MODIFICADO: Buscar a lista *dentro* do evento de input
-        // Isso garante que temos a referência correta do DOM
-        const list = document.getElementById('autocomplete-list');
-        if (!list) return; // Proteção caso a lista não exista
-        
-        const termo = this.value.toLowerCase();
-        
-        if (termo.length < 2) {
-            list.classList.remove('show');
-            return;
-        }
-        
-        const casaSelecionada = document.getElementById('casa').value;
-        const parlamentaresFiltrados = deputados.filter(p => {
-            const nomeMatch = p.nome.toLowerCase().includes(termo);
-            const casaMatch = 
-                (casaSelecionada.includes('Câmara') && p.casa === 'Câmara') ||
-                (casaSelecionada.includes('Senado') && p.casa === 'Senado');
-            return nomeMatch && casaMatch;
-        }).slice(0, 10);
-        
-        if (parlamentaresFiltrados.length === 0) {
-            list.innerHTML = '<div class="no-results">Nenhum resultado encontrado</div>';
-            list.classList.add('show');
-            return;
-        }
-        
-        list.innerHTML = parlamentaresFiltrados.map(p => `
-            <div class="autocomplete-item" onclick="selecionarParlamentar('${p.id}', '${p.nome.replace(/'/g, "\\'")}', '${p.partido}', '${p.uf}')">
-                <strong>${p.nome}</strong><br>
-                <small>${p.partido}-${p.uf}</small>
-            </div>
-        `).join('');
-        
-        list.classList.add('show');
-    };
-}
-        
+// Selecionar parlamentar do autocomplete (NOVA VERSÃO COM INPUTS)
 function selecionarParlamentar(id, nome, partido, uf) {
     
     // 1. Fechar a lista de autocomplete (usando JavaScript puro)
@@ -2051,11 +1970,7 @@ function selecionarParlamentar(id, nome, partido, uf) {
         autocompleteInput.value = '';
     }
     
-    // 3. (REMOVIDO) Não usamos mais o prompt() nem o jQuery ($)
-    // const role = prompt(...);
-    // $('#modalAddParlamentar').modal('hide'); // <-- Linha que causava o erro
-    
-    // 4. Adicionar o parlamentar à lista
+    // 3. Adicionar o parlamentar à lista
     parlamentarCount++;
     const lista = document.getElementById('parlamentaresList');
     
@@ -2064,7 +1979,7 @@ function selecionarParlamentar(id, nome, partido, uf) {
         lista.innerHTML = '';
     }
     
-    // 5. Criar o novo item da lista com o textbox
+    // 4. Criar o novo item da lista com os inputs
     const item = document.createElement('div');
     item.className = 'parlamentar-item';
     item.id = `parl-${parlamentarCount}`;
@@ -2073,16 +1988,23 @@ function selecionarParlamentar(id, nome, partido, uf) {
     const deputadoData = JSON.stringify({id, nome, partido, uf}).replace(/'/g, "&apos;");
     
     item.innerHTML = `
-        <div style="flex: 1; margin-right: 15px;">
+        <div class="parlamentar-item-info">
             <strong>${nome}</strong> (${partido}-${uf})
             
-            <input 
-                type="text" 
-                class="parl-role" 
-                placeholder="Função/Papel (Opcional, Ex: Relator)" 
-                style="width: 100%; margin-top: 8px; padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px;"
-                data-deputado='${deputadoData}'
-            >
+            <div class="parlamentar-item-inputs">
+                <input 
+                    type="text" 
+                    class="parl-role" 
+                    placeholder="Função/Papel (Opcional, Ex: Relator)" 
+                    data-deputado='${deputadoData}'
+                >
+                
+                <select class="parl-position" data-deputado-id="${id}">
+                    <option value="nao-manifestado" selected>Posição: Não se manifestou</option>
+                    <option value="contrario">Posição: Contrário</option>
+                    <option value="apoia">Posição: Apoia</option>
+                </select>
+            </div>
         </div>
         <button 
             type="button" 
@@ -2094,7 +2016,8 @@ function selecionarParlamentar(id, nome, partido, uf) {
     
     lista.appendChild(item);
 }
-        
+
+
 // Fechar autocomplete ao clicar fora
 document.addEventListener('click', function(e) {
     const list = document.getElementById('autocomplete-list');
@@ -2103,7 +2026,107 @@ document.addEventListener('click', function(e) {
         list.classList.remove('show');
     }
 });
-// Gerar Pauta
+
+// ==========================================
+// GERAR/SALVAR PAUTA (LÓGICA CENTRALIZADA)
+// ==========================================
+
+// Função auxiliar para coletar todos os dados do formulário
+function coletarDadosFormulario() {
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const casa = document.getElementById('casa').value;
+    const status = document.getElementById('status').value;
+    const featured = document.getElementById('featured').checked;
+    const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
+    const body = document.getElementById('body').value;
+    
+    // Coletar parlamentares (apenas se não for votação em plenário)
+    const parlamentares = [];
+    if (!isPlenaryVote) {
+        document.querySelectorAll('.parlamentar-item').forEach(item => {
+            const roleInput = item.querySelector('.parl-role');
+            const positionSelect = item.querySelector('.parl-position');
+            
+            if (roleInput && positionSelect) {
+                const dep = JSON.parse(roleInput.dataset.deputado);
+                parlamentares.push({ 
+                    nome: dep.nome, 
+                    role: roleInput.value || '', // Papel (opcional)
+                    position: positionSelect.value // Posição (obrigatório)
+                });
+            }
+        });
+    }
+    
+    // Coletar Campanhas (NOVA LÓGICA)
+    const campanha = {
+        email: {
+            assunto: document.getElementById('email-assunto').value,
+            mensagem_oposicao: document.getElementById('email-mensagem-oposicao').value,
+            mensagem_apoio: document.getElementById('email-mensagem-apoio').value
+        },
+        whatsapp: {
+            mensagem_oposicao: document.getElementById('whatsapp-mensagem-oposicao').value,
+            mensagem_apoio: document.getElementById('whatsapp-mensagem-apoio').value
+        },
+        instagram: {
+            mensagem_oposicao: document.getElementById('instagram-mensagem-oposicao').value,
+            mensagem_apoio: document.getElementById('instagram-mensagem-apoio').value
+        }
+    };
+    
+    // Gerar YAML
+    let yaml = `---
+layout: pauta
+title: ${title}
+description: ${description}
+casa: ${casa}
+status: ${status}
+featured: ${featured}
+is_plenary_vote: ${isPlenaryVote}
+`;
+    
+    // Adicionar membros-chave apenas se não for votação em plenário
+    if (!isPlenaryVote && parlamentares.length > 0) {
+        yaml += `key_players:\n`;
+        parlamentares.forEach(p => {
+            yaml += `  - nome: "${p.nome}"\n`;
+            yaml += `    role: "${p.role}"\n`;
+            yaml += `    position: "${p.position}"\n`; // Salva a posição
+        });
+    }
+    
+    // Adicionar campanhas (NOVA LÓGICA)
+    yaml += `campanha:\n`;
+    
+    // Email
+    if (campanha.email.assunto || campanha.email.mensagem_oposicao || campanha.email.mensagem_apoio) {
+        yaml += `  email:\n`;
+        if (campanha.email.assunto) yaml += `    assunto: "${campanha.email.assunto}"\n`;
+        if (campanha.email.mensagem_oposicao) yaml += `    mensagem_oposicao: |\n      ${campanha.email.mensagem_oposicao.split('\n').join('\n      ')}\n`;
+        if (campanha.email.mensagem_apoio) yaml += `    mensagem_apoio: |\n      ${campanha.email.mensagem_apoio.split('\n').join('\n      ')}\n`;
+    }
+    
+    // WhatsApp
+    if (campanha.whatsapp.mensagem_oposicao || campanha.whatsapp.mensagem_apoio) {
+        yaml += `  whatsapp:\n`;
+        if (campanha.whatsapp.mensagem_oposicao) yaml += `    mensagem_oposicao: |\n      ${campanha.whatsapp.mensagem_oposicao.split('\n').join('\n      ')}\n`;
+        if (campanha.whatsapp.mensagem_apoio) yaml += `    mensagem_apoio: |\n      ${campanha.whatsapp.mensagem_apoio.split('\n').join('\n      ')}\n`;
+    }
+    
+    // Instagram
+    if (campanha.instagram.mensagem_oposicao || campanha.instagram.mensagem_apoio) {
+        yaml += `  instagram:\n`;
+        if (campanha.instagram.mensagem_oposicao) yaml += `    mensagem_oposicao: |\n      ${campanha.instagram.mensagem_oposicao.split('\n').join('\n      ')}\n`;
+        if (campanha.instagram.mensagem_apoio) yaml += `    mensagem_apoio: |\n      ${campanha.instagram.mensagem_apoio.split('\n').join('\n      ')}\n`;
+    }
+    
+    yaml += `---\n\n${body}`;
+    return yaml;
+}
+
+// Gerar Pauta (Função principal de submit)
 async function gerarPauta(e) {
     e.preventDefault();
     
@@ -2113,75 +2136,15 @@ async function gerarPauta(e) {
     btnSubmit.innerHTML = '⏳ Criando pauta...';
     
     try {
+        // 1. Coletar dados
+        const yaml = coletarDadosFormulario();
         const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const casa = document.getElementById('casa').value;
-        const status = document.getElementById('status').value;
+        const filename = slugify(title) + '.md';
         const featured = document.getElementById('featured').checked;
         const isPlenaryVote = document.getElementById('is_plenary_vote').checked;
-        const body = document.getElementById('body').value;
-        
-        // Coletar parlamentares (apenas se não for votação em plenário)
-        const parlamentares = [];
-        if (!isPlenaryVote) {
-            document.querySelectorAll('.parl-role').forEach(input => {
-                if (input.value) {
-                    const dep = JSON.parse(input.dataset.deputado);
-                    parlamentares.push({ nome: dep.nome, role: input.value });
-                }
-            });
-        }
-        
-        // Campanhas
-        const emailAssunto = document.getElementById('email-assunto').value;
-        const emailMensagem = document.getElementById('email-mensagem').value;
-        const whatsappMensagem = document.getElementById('whatsapp-mensagem').value;
-        const instagramMensagem = document.getElementById('instagram-mensagem').value;
-        
-        // Gerar YAML
-        let yaml = `---
-layout: pauta
-title: ${title}
-description: ${description}
-casa: ${casa}
-status: ${status}
-featured: ${featured}
-is_plenary_vote: ${isPlenaryVote}
-`;
-        
-        // Adicionar membros-chave apenas se não for votação em plenário
-        if (!isPlenaryVote && parlamentares.length > 0) {
-            yaml += `key_players:\n`;
-            parlamentares.forEach(p => {
-                yaml += `  - nome: "${p.nome}"\n`;
-                yaml += `    role: "${p.role}"\n`;
-            });
-        }
-        
-        // Adicionar campanhas se preenchidas
-        if (emailAssunto || emailMensagem || whatsappMensagem || instagramMensagem) {
-            yaml += `campanha:\n`;
-            if (emailAssunto || emailMensagem) {
-                yaml += `  email:\n`;
-                if (emailAssunto) yaml += `    assunto: "${emailAssunto}"\n`;
-                if (emailMensagem) yaml += `    mensagem: |\n      ${emailMensagem.split('\n').join('\n      ')}\n`;
-            }
-            if (whatsappMensagem) {
-                yaml += `  whatsapp:\n`;
-                yaml += `    mensagem: |\n      ${whatsappMensagem.split('\n').join('\n      ')}\n`;
-            }
-            if (instagramMensagem) {
-                yaml += `  instagram:\n`;
-                yaml += `    mensagem: |\n      ${instagramMensagem.split('\n').join('\n      ')}\n`;
-            }
-        }
-        
-        yaml += `---\n\n${body}`;
-        
-        const filename = slugify(title) + '.md';
-        
-        // CRIAR AUTOMATICAMENTE NO GITHUB
-        const response = await fetch(`${API_URL}/api/criar-pauta`, {
+
+        // 2. CRIAR AUTOMATICAMENTE NO GITHUB
+        const response = await fetch(`/api/criar-pauta`, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -2204,7 +2167,7 @@ is_plenary_vote: ${isPlenaryVote}
             }
             
             if (isPlenaryVote) {
-                alertMsg += '\n\n🏛️ VOTAÇÃO EM PLENÁRIO: Todos os deputados estarão incluídos automaticamente na mobilização!';
+                alertMsg += '\n\n🏛️ VOTAÇÃO EM PLENÁRIO: Todos os parlamentares estarão incluídos automaticamente na mobilização!';
             }
             
             alertMsg += '\n\nAguarde 2-5 minutos para o deploy completar.';
