@@ -1,9 +1,11 @@
 ---
 layout: pauta
 title: PEC 18/2025 - Categoria do art. 144 (Seg. Pública)
-description: A PEC 18/2025 propõe incluir novas categorias na segurança pública, modificando o art. 144 da Constituição. A nossa luta é pela inclusão dos Agentes de Segurança Socioeducativos nesse artigo.
+# DESCRIÇÃO CORRIGIDA COM '|' E INDENTAÇÃO
+description: |
+  A PEC 18/2025 propõe incluir novas categorias na segurança pública, modificando o art. 144 da Constituição. A nossa luta é pela inclusão dos Agentes de Segurança Socioeducativos nesse artigo.
 
-⚠️ O apoio do relator é decisivo! A Comissão só aprovará a inclusão dos Agentes Socioeducativos se o relator emitir um parecer favorável e a maioria dos membros da Comissão votar a favor. É essencial garantir um relatório positivo e a aprovação da Comissão Especial para que a proposta avance.
+  ⚠️ O apoio do relator é decisivo! A Comissão só aprovará a inclusão dos Agentes Socioeducativos se o relator emitir um parecer favorável e a maioria dos membros da Comissão votar a favor. É essencial garantir um relatório positivo e a aprovação da Comissão Especial para que a proposta avance.
 casa: Câmara dos Deputados
 status: Em tramitação na Comissão Especial
 featured: true
@@ -21,7 +23,9 @@ key_players:
   - nome: "Delegada Adriana Accorsi"
     role: "3ª Vice-Presidente"
     position: "nao-manifestado"
-campanha:
+# CAMPANHA ESTAVA VAZIA, REMOVIDA OU COMPLETE-A SE NECESSÁRIO
+# Se não houver dados de campanha, remova a linha 'campanha:'
+# campanha: 
 ---
 
 <section id="pec18">
