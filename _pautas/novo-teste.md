@@ -1,11 +1,8 @@
 ---
 layout: pauta
 title: PEC 18/2025 - Categoria do art. 144 (Seg. Pública)
-# DESCRIÇÃO CORRIGIDA COM '|' E INDENTAÇÃO
 description: |
-  A PEC 18/2025 propõe incluir novas categorias na segurança pública, modificando o art. 144 da Constituição. A nossa luta é pela inclusão dos Agentes de Segurança Socioeducativos nesse artigo.
-
-  ⚠️ O apoio do relator é decisivo! A Comissão só aprovará a inclusão dos Agentes Socioeducativos se o relator emitir um parecer favorável e a maioria dos membros da Comissão votar a favor. É essencial garantir um relatório positivo e a aprovação da Comissão Especial para que a proposta avance.
+  Teste
 casa: Câmara dos Deputados
 status: Em tramitação na Comissão Especial
 featured: true
@@ -15,58 +12,51 @@ key_players:
     role: "Presidente"
     position: "apoia"
   - nome: "Mendonça Filho"
-    role: "RELATOR"
+    role: ""
     position: "nao-manifestado"
-  - nome: "Alberto Fraga"
-    role: "1º Vice-Presidente"
-    position: "nao-manifestado"
-  - nome: "Delegada Adriana Accorsi"
-    role: "3ª Vice-Presidente"
-    position: "nao-manifestado"
-# CAMPANHA ESTAVA VAZIA, REMOVIDA OU COMPLETE-A SE NECESSÁRIO
-# Se não houver dados de campanha, remova a linha 'campanha:'
-# campanha: 
+campanha:
+  email:
+    assunto: "Apoio a inclusão do agente de segurança socioeducativo na PEC 18/2025"
+    mensagem_oposicao: |
+      Olá, Deputado(a). Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria. 
+    mensagem_apoio: |
+      Deputado(a), agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
+    mensagem_extra: |
+      A valorização dos Agentes de Segurança Socioeducativos na PEC 18/2025 representa o reconhecimento de uma atividade essencial e de risco. Contamos com seu compromisso com a justiça e a segurança pública. Seu apoio pode fazer a diferença para milhares de profissionais que atuam na base do sistema socioeducativo.
+  whatsapp:
+    mensagem_oposicao: |
+      Olá, Deputado(a). Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria. 
+    mensagem_apoio: |
+      Deputado(a), agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
+  instagram:
+    mensagem_oposicao: |
+      Olá, Deputado(a). Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria. 
+    mensagem_apoio: |
+      Deputado(a), agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
 ---
 
-<section id="pec18">
-  <h2>📌 O Que Está Acontecendo com a PEC 18/2025?</h2>
-  <p>A <strong>PEC 18/2025</strong> propõe incluir novas categorias na segurança pública, modificando o art. 144 da Constituição. A nossa luta é pela <strong>inclusão dos Agentes de Segurança Socioeducativos</strong> nesse artigo.</p>
+<section id="pec18" style="font-size: 15px; line-height: 1.5;">
+  <p><strong>📌 PEC 18/2025:</strong> propõe incluir novas categorias na segurança pública. A luta da categoria é para garantir a <strong>inclusão dos Agentes Socioeducativos</strong> no art. 144 da Constituição.</p>
 
-  <hr>
+  <p><strong>🛠️ Situação atual:</strong> a proposta está com <strong>Comissão Especial</strong> na Câmara (34 titulares + 34 suplentes), que analisa o texto e as emendas apresentadas.</p>
 
-  <h3>🛠️ Em que fase está?</h3>
-  <ul>
-    <li>📋 Está sendo analisada por uma <strong>Comissão Especial</strong> na Câmara dos Deputados</li>
-    <li>👥 <strong>34 deputados titulares</strong> + <strong>34 suplentes</strong></li>
-    <li>📑 Avaliam o texto e as emendas apresentadas</li>
-    <li>✍️ Elaboram um <strong>parecer</strong> recomendando a aprovação ou rejeição das emendas</li>
-  </ul>
-
-  <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 1em; border-radius: 6px; margin: 1em 0;">
-    ⚠️ <strong>O apoio do relator é decisivo!</strong><br>
-    A Comissão só aprovará a inclusão dos Agentes Socioeducativos se o relator emitir um parecer favorável <u>e</u> a maioria dos membros da Comissão votar a favor. É essencial garantir um <strong>relatório positivo</strong> e a <strong>aprovação da Comissão Especial</strong> para que a proposta avance.
+  <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 0.8em; border-radius: 5px; margin: 1em 0;">
+    ⚠️ É essencial que o <strong>relator apresente parecer favorável</strong> e que a maioria da Comissão aprove o relatório para que a proposta avance.
   </div>
 
-  <hr>
-
-  <h3>✍️ Quais emendas defendem os Agentes Socioeducativos?</h3>
-  <p>Três emendas importantes propõem a inclusão da categoria na Constituição:</p>
-  <ul>
-    <li><strong>Emenda nº 9</strong> → <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3011065&filename=EMC%209%20PEC01825%20=%3E%20PEC%2018/2025" target="_blank">Ver texto</a></li>
-    <li><strong>Emenda nº 13</strong> → <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3011563&filename=EMC%2013%20PEC01825%20=%3E%20PEC%2018/2025" target="_blank">Ver texto</a></li>
-    <li><strong>Emenda nº 11</strong> → Cria o art. 144-A, reconhecendo a atividade como de risco e essencial ao Estado — <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3011531&filename=EMC+11+PEC01825+%3D%3E+PEC+18/2025" target="_blank">Ver texto</a></li>
+  <p><strong>✍️ Emendas que nos contemplam:</strong></p>
+  <ul style="margin-left: 1em;">
+    <li><strong>Emenda 9</strong> – <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3011065&filename=EMC%209%20PEC01825%20=%3E%20PEC%2018/2025" target="_blank">ver texto</a></li>
+    <li><strong>Emenda 13</strong> – <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3011563&filename=EMC%2013%20PEC01825%20=%3E%20PEC%2018/2025" target="_blank">ver texto</a></li>
+    <li><strong>Emenda 11</strong> – Cria art. 144-A, reconhecendo a atividade como de risco. <a href="https://www.camara.leg.br/proposicoesWeb/prop_mostrarintegra?codteor=3011531&filename=EMC+11+PEC01825+%3D%3E+PEC+18/2025" target="_blank">ver texto</a></li>
   </ul>
 
-  <hr>
+  <p><strong>⏭️ Próximos passos:</strong></p>
+  <ul style="margin-left: 1em;">
+    <li>✔️ Comissão vota o parecer</li>
+    <li>✔️ Se aprovado, vai ao Plenário da Câmara (2 turnos, 308 votos)</li>
+    <li>✔️ Após isso, segue ao Senado (2 turnos, 49 votos)</li>
+  </ul>
 
-  <h3>⏭️ O que vem agora?</h3>
-  <ol>
-    <li>✅ <strong>Comissão Especial vota o parecer do relator</strong> (que pode aceitar ou rejeitar as emendas)</li>
-    <li>☑️ <strong>Plenário da Câmara vota a PEC em dois turnos</strong> (são necessários 308 votos favoráveis em cada turno)</li>
-    <li>📨 Se aprovada, segue para o <strong>Senado Federal</strong>, com votação também em dois turnos (49 votos)</li>
-  </ol>
-
-  <hr>
-
-  <p>🚀 <strong>Este é o momento de mobilização para garantir a inclusão da categoria!</strong> Acompanhe, pressione os parlamentares e fortaleça o apoio dentro da Comissão Especial.</p>
+  <p><strong>🚀 Mobilize-se:</strong> pressione parlamentares e fortaleça o apoio à causa na Comissão.</p>
 </section>
