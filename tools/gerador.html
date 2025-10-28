@@ -43,6 +43,15 @@
           <button class="tab" onclick="showTab('gerenciar')">
             📋 Gerenciar Pautas
           </button>
+          <button
+            class="tab"
+            id="tab-btn-plenario"
+            onclick="showTab('plenario')"
+            disabled
+            title="Disponível apenas ao editar pautas de Votação em Plenário"
+          >
+            🗳️ Editar Plenário
+          </button>
           <button class="tab" onclick="showTab('contribuicoes')">
             📬 Contribuições
           </button>
@@ -388,6 +397,90 @@
           <button class="btn btn-secondary" onclick="atualizarEstatisticas()">
             🔄 Atualizar
           </button>
+        </div>
+
+        <div id="tab-plenario" class="tab-content">
+          <h3>🗳️ Editor de Posicionamento - Votação em Plenário</h3>
+          <div id="plenario-info" class="alert alert-info hidden">
+            Editando posicionamentos para a pauta:
+            <strong id="plenario-pauta-titulo"></strong> (<span
+              id="plenario-pauta-casa"
+            ></span
+            >)
+          </div>
+          <div id="plenario-loading" class="loading hidden">
+            <div class="spinner"></div>
+            <span>Carregando dados do plenário...</span>
+          </div>
+          <div id="plenario-error" class="loading error hidden">
+            <span>Erro ao carregar. Verifique o console.</span>
+          </div>
+
+          <div id="plenario-filters" class="card mb-4 hidden">
+            <div class="card-body">
+              <h5 class="card-title">🔍 Filtrar Parlamentares do Plenário</h5>
+              <div class="row">
+                <div class="col-md-4">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    id="plenario-filtro-nome"
+                    placeholder="Filtrar por nome..."
+                  />
+                </div>
+                <div class="col-md-3">
+                  <select
+                    class="form-control form-control-sm"
+                    id="plenario-filtro-estado"
+                  >
+                    <option value="">Todos os Estados</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <select
+                    class="form-control form-control-sm"
+                    id="plenario-filtro-posicao"
+                  >
+                    <option value="">Todas as Posições</option>
+                    <option value="nao-manifestado">Não se manifestou</option>
+                    <option value="contrario">Contrário</option>
+                    <option value="apoia">Apoia</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="plenario-list"
+            style="
+              max-height: 600px;
+              overflow-y: auto;
+              border: 1px solid #eee;
+              padding: 15px;
+              border-radius: 8px;
+            "
+          >
+            <p style="color: #999; text-align: center">
+              Selecione uma pauta de plenário em "Gerenciar Pautas > Alterar"
+              para habilitar o editor.
+            </p>
+          </div>
+
+          <button
+            id="plenario-save-btn"
+            class="btn btn-success mt-3 hidden"
+            onclick="savePlenarioChanges()"
+          >
+            💾 Salvar Alterações no Plenário
+          </button>
+          <span id="plenario-saving" class="ml-2 hidden"
+            ><div
+              class="spinner d-inline-block"
+              style="width: 1rem; height: 1rem"
+            ></div>
+            Salvando...</span
+          >
         </div>
       </div>
     </div>

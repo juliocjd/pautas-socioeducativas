@@ -552,3 +552,64 @@ input[type="checkbox"] {
 .mb-4 {
   margin-bottom: 1.5rem;
 }
+
+/* Estilos para o Editor de Plenário */
+#tab-plenario .card-body {
+  padding: 1rem;
+}
+
+#plenario-list .parlamentar-plenario-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+#plenario-list .parlamentar-plenario-item:last-child {
+  border-bottom: none;
+}
+
+#plenario-list .parlamentar-plenario-item span {
+  flex: 1;
+  margin-right: 15px;
+  color: #333;
+}
+#plenario-list .parlamentar-plenario-item small {
+  color: #777;
+  margin-left: 8px;
+}
+
+#plenario-list .parlamentar-plenario-item select {
+  width: 200px; /* Ajuste a largura conforme necessário */
+  padding: 6px 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white; /* Garante fundo branco */
+}
+
+/* Cores para o select baseado na seleção */
+#plenario-list select[data-original-value="apoia"] {
+  border-left: 4px solid #28a745;
+}
+#plenario-list select[data-original-value="contrario"] {
+  border-left: 4px solid #dc3545;
+}
+#plenario-list select[data-original-value="nao-manifestado"] {
+  border-left: 4px solid #6c757d;
+}
+
+#plenario-list select.changed {
+  border-color: #ffc107; /* Borda amarela para indicar mudança */
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+/* Estilo auxiliar para spinner inline */
+.d-inline-block {
+  display: inline-block;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}

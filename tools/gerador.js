@@ -5,6 +5,9 @@ let contribuicoesPendentes = [];
 let congressistasExtras = {};
 let sessionToken = null;
 let parlamentarCount = 0;
+let plenarioData = {}; // Armazena os dados carregados para a pauta atual
+let currentPlenarioPauta = null; // Guarda o slug da pauta sendo editada no plenário
+let plenarionParlamentaresFiltrados = []; // Guarda a lista filtrada para renderização
 
 const API_URL = ""; // Usar caminhos absolutos do servidor
 
@@ -877,24 +880,30 @@ async function alterarPauta(filename) {
       });
     }
 
-    // Habilitar ou desabilitar a aba de Plenário (como antes)
+    // Habilitar ou desabilitar a aba de Plenário (ADICIONE OU VERIFIQUE ESTE BLOCO NO FINAL)
     const tabBtnPlenario = document.getElementById("tab-btn-plenario");
-    const isPlenary = pautaData["is_plenary_vote"] === "true"; // Verifica o valor carregado
-    if (isPlenary) {
-      tabBtnPlenario.disabled = false;
-      tabBtnPlenario.title =
-        "Editar posicionamento dos parlamentares para esta pauta";
-      currentPlenarioPauta = {
-        filename,
-        slug: slugify(pautaData["title"]),
-        title: pautaData["title"],
-        casa: pautaData["casa"],
-      };
+    const isPlenary = pautaData["is_plenary_vote"] === "true";
+    if (tabBtnPlenario) {
+      // Adiciona verificação se o botão existe
+      if (isPlenary) {
+        tabBtnPlenario.disabled = false;
+        tabBtnPlenario.title =
+          "Editar posicionamento dos parlamentares para esta pauta";
+        // Armazena os dados da pauta atual para o editor de plenário usar
+        currentPlenarioPauta = {
+          filename: filename,
+          slug: slugify(pautaData["title"]),
+          title: pautaData["title"],
+          casa: pautaData["casa"],
+        };
+      } else {
+        tabBtnPlenario.disabled = true;
+        tabBtnPlenario.title =
+          "Disponível apenas ao editar pautas de Votação em Plenário";
+        currentPlenarioPauta = null; // Limpa a pauta selecionada
+      }
     } else {
-      tabBtnPlenario.disabled = true;
-      tabBtnPlenario.title =
-        "Disponível apenas ao editar pautas de Votação em Plenário";
-      currentPlenarioPauta = null;
+      console.warn("Botão da aba Plenário (#tab-btn-plenario) não encontrado.");
     }
 
     // Scroll
@@ -1858,16 +1867,16 @@ function showTab(tabName, event) {
     .forEach((t) => t.classList.remove("active"));
 
   // Adicionar classe active no botão clicado (se event existir)
+  let tabButton = null;
   if (event && event.target) {
-    event.target.classList.add("active");
+    tabButton = event.target;
+    tabButton.classList.add("active");
   } else {
     // Se chamado programaticamente, encontrar o botão correto
-    const tabButton = Array.from(document.querySelectorAll(".tab")).find(
-      (tab) => {
-        const onclick = tab.getAttribute("onclick");
-        return onclick && onclick.includes(`'${tabName}'`);
-      }
-    );
+    tabButton = Array.from(document.querySelectorAll(".tab")).find((tab) => {
+      const onclick = tab.getAttribute("onclick");
+      return onclick && onclick.includes(`'${tabName}'`);
+    });
     if (tabButton) {
       tabButton.classList.add("active");
     }
@@ -1884,6 +1893,304 @@ function showTab(tabName, event) {
   if (tabName === "contribuicoes") carregarContribuicoes();
   if (tabName === "dados") renderDados();
   if (tabName === "estatisticas") atualizarEstatisticas();
+
+  // Carregar editor de plenário APENAS se uma pauta estiver selecionada
+  if (tabName === "plenario") {
+    if (currentPlenarioPauta) {
+      loadPlenarioEditor(); // Não precisa passar filename, usa a global
+    } else {
+      // Limpa a lista e mostra aviso se nenhuma pauta estiver selecionada
+      document.getElementById("plenario-list").innerHTML =
+        '<p style="color: #999; text-align: center;">Selecione uma pauta de plenário em "Gerenciar Pautas > Alterar" para habilitar o editor.</p>';
+      document.getElementById("plenario-info").classList.add("hidden");
+      document.getElementById("plenario-filters").classList.add("hidden");
+      document.getElementById("plenario-save-btn").classList.add("hidden");
+    }
+  }
+}
+
+// ==========================================
+// EDITOR DE PLENÁRIO - NOVAS FUNÇÕES
+// ==========================================
+
+async function loadPlenarioEditor() {
+  if (!currentPlenarioPauta) {
+    console.error("Nenhuma pauta de plenário selecionada para edição.");
+    document.getElementById("plenario-error").textContent =
+      "Nenhuma pauta selecionada.";
+    document.getElementById("plenario-error").classList.remove("hidden");
+    return;
+  }
+
+  const { slug, title, casa } = currentPlenarioPauta;
+  console.log(`Iniciando editor de plenário para: ${slug}`);
+
+  const loadingEl = document.getElementById("plenario-loading");
+  const errorEl = document.getElementById("plenario-error");
+  const listEl = document.getElementById("plenario-list");
+  const infoEl = document.getElementById("plenario-info");
+  const filtersEl = document.getElementById("plenario-filters");
+  const saveBtn = document.getElementById("plenario-save-btn");
+
+  // Resetar estado
+  loadingEl.classList.remove("hidden");
+  errorEl.classList.add("hidden");
+  listEl.innerHTML = ""; // Limpa lista anterior
+  infoEl.classList.add("hidden");
+  filtersEl.classList.add("hidden");
+  saveBtn.classList.add("hidden");
+  plenarioData = {}; // Limpa dados anteriores
+
+  try {
+    // --- SIMULAÇÃO DA CHAMADA GET API ---
+    console.log(`Simulando GET /api/evidencias?pauta_slug=${slug}`);
+    // Em um cenário real, você faria:
+    // const response = await fetch(`/api/evidencias?pauta_slug=${slug}`);
+    // if (!response.ok) throw new Error('Falha ao buscar dados do plenário');
+    // const responseData = await response.json();
+    // plenarioData = responseData.evidencias || {}; // Ajuste conforme a estrutura da sua API
+
+    // Simulação:
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    const simulacao = {
+      204554: { posicao: "apoia" },
+      74057: { posicao: "contrario" },
+    };
+    plenarioData = simulacao;
+    console.log("Dados simulados carregados:", plenarioData);
+    // --- FIM DA SIMULAÇÃO ---
+
+    // Filtrar parlamentares pela casa da pauta atual (garante que 'deputados' está carregado)
+    if (deputados.length === 0) {
+      console.log("Lista 'deputados' vazia, tentando carregar...");
+      await loadDeputados(); // Espera carregar se ainda não o fez
+      if (deputados.length === 0)
+        throw new Error("Falha ao carregar a lista base de parlamentares.");
+    }
+    plenarionParlamentaresFiltrados = deputados.filter((p) => {
+      if (casa.includes("Câmara") && p.casa === "Câmara") return true;
+      if (casa.includes("Senado") && p.casa === "Senado") return true;
+      return false;
+    });
+
+    if (plenarionParlamentaresFiltrados.length === 0) {
+      throw new Error(
+        `Nenhum parlamentar encontrado para a ${casa}. Verifique o cache.`
+      );
+    }
+
+    // Preencher filtros de estado
+    carregarEstadosPlenario();
+
+    // Renderizar a lista inicial
+    renderPlenarioList();
+
+    // Mostrar informações e controles
+    document.getElementById("plenario-pauta-titulo").textContent = title;
+    document.getElementById("plenario-pauta-casa").textContent = casa;
+    infoEl.classList.remove("hidden");
+    filtersEl.classList.remove("hidden");
+    saveBtn.classList.remove("hidden");
+
+    // Adiciona listeners aos filtros APÓS garantir que existem
+    const nomeInput = document.getElementById("plenario-filtro-nome");
+    const estadoSelect = document.getElementById("plenario-filtro-estado");
+    const posicaoSelect = document.getElementById("plenario-filtro-posicao");
+
+    if (nomeInput) nomeInput.addEventListener("input", renderPlenarioList);
+    if (estadoSelect)
+      estadoSelect.addEventListener("change", renderPlenarioList);
+    if (posicaoSelect)
+      posicaoSelect.addEventListener("change", renderPlenarioList);
+  } catch (error) {
+    console.error("Erro ao carregar editor de plenário:", error);
+    errorEl.textContent = `Erro: ${error.message}`;
+    errorEl.classList.remove("hidden");
+  } finally {
+    loadingEl.classList.add("hidden");
+  }
+}
+
+function renderPlenarioList() {
+  const listEl = document.getElementById("plenario-list");
+  const filtroNome =
+    document.getElementById("plenario-filtro-nome")?.value.toLowerCase() || ""; // Add fallback
+  const filtroEstado =
+    document.getElementById("plenario-filtro-estado")?.value || ""; // Add fallback
+  const filtroPosicao =
+    document.getElementById("plenario-filtro-posicao")?.value || ""; // Add fallback
+
+  if (!listEl) return; // Proteção
+  listEl.innerHTML = ""; // Limpa a lista
+
+  let countRendered = 0;
+
+  plenarionParlamentaresFiltrados.forEach((p) => {
+    // Usa plenarioData (carregado da API/simulação) para obter a posição atual
+    const currentPosition = plenarioData[p.id]?.posicao || "nao-manifestado";
+
+    // Aplicar Filtros
+    const nomeMatch = !filtroNome || p.nome.toLowerCase().includes(filtroNome);
+    const estadoMatch = !filtroEstado || p.uf === filtroEstado;
+    const posicaoMatch = !filtroPosicao || currentPosition === filtroPosicao;
+
+    if (!nomeMatch || !estadoMatch || !posicaoMatch) {
+      return; // Pula este parlamentar
+    }
+
+    const item = document.createElement("div");
+    item.className = "parlamentar-plenario-item";
+    // Usa currentPosition para marcar o 'selected'
+    item.innerHTML = `
+            <span>${p.nome} <small>(${p.partido}-${p.uf})</small></span>
+            <select data-parlamentar-id="${
+              p.id
+            }" data-original-value="${currentPosition}" onchange="markChanged(this)">
+                <option value="nao-manifestado" ${
+                  currentPosition === "nao-manifestado" ? "selected" : ""
+                }>Não se manifestou</option>
+                <option value="contrario" ${
+                  currentPosition === "contrario" ? "selected" : ""
+                }>Contrário</option>
+                <option value="apoia" ${
+                  currentPosition === "apoia" ? "selected" : ""
+                }>Apoia</option>
+            </select>
+        `;
+    listEl.appendChild(item);
+    countRendered++;
+  });
+
+  if (countRendered === 0) {
+    listEl.innerHTML =
+      '<p style="color: #999; text-align: center;">Nenhum parlamentar encontrado com os filtros aplicados.</p>';
+  }
+}
+
+function carregarEstadosPlenario() {
+  const select = document.getElementById("plenario-filtro-estado");
+  // Verifica se select existe E se já não foi preenchido
+  if (!select || select.options.length > 1) return;
+
+  // Garante que plenarionParlamentaresFiltrados existe e tem itens
+  if (
+    !plenarionParlamentaresFiltrados ||
+    plenarionParlamentaresFiltrados.length === 0
+  )
+    return;
+
+  const estados = [
+    ...new Set(plenarionParlamentaresFiltrados.map((p) => p.uf)),
+  ].sort();
+  estados.forEach((uf) => {
+    const option = new Option(uf, uf); // Simples UF por enquanto
+    select.add(option);
+  });
+}
+
+// Marca o select quando o valor muda
+function markChanged(selectElement) {
+  const originalValue = selectElement.dataset.originalValue;
+  if (selectElement.value !== originalValue) {
+    selectElement.classList.add("changed");
+  } else {
+    selectElement.classList.remove("changed");
+  }
+}
+
+// Adiciona listeners aos filtros (movido para dentro de loadPlenarioEditor após render inicial)
+
+async function savePlenarioChanges() {
+  if (!currentPlenarioPauta) {
+    alert("Erro: Nenhuma pauta selecionada.");
+    return;
+  }
+
+  const saveBtn = document.getElementById("plenario-save-btn");
+  const savingIndicator = document.getElementById("plenario-saving");
+  if (!saveBtn || !savingIndicator) return; // Proteção
+
+  saveBtn.disabled = true;
+  savingIndicator.classList.remove("hidden");
+
+  const changes = {};
+  let changeCount = 0;
+  document.querySelectorAll("#plenario-list select").forEach((select) => {
+    // Verifica se o valor realmente mudou
+    if (select.value !== select.dataset.originalValue) {
+      const parlamentarId = select.dataset.parlamentarId;
+      changes[parlamentarId] = select.value;
+      changeCount++;
+      // Marca como 'changed' visualmente (se ainda não estiver)
+      select.classList.add("changed");
+    } else {
+      select.classList.remove("changed"); // Remove se voltou ao original
+    }
+  });
+
+  if (changeCount === 0) {
+    alert("Nenhuma alteração detectada para salvar.");
+    saveBtn.disabled = false;
+    savingIndicator.classList.add("hidden");
+    return;
+  }
+
+  const payload = {
+    pauta_slug: currentPlenarioPauta.slug,
+    changes: changes, // Envia apenas as mudanças { "idParlamentar": "novaPosicao", ... }
+  };
+
+  try {
+    // --- SIMULAÇÃO DA CHAMADA POST API ---
+    console.log(`Simulando POST /api/evidencias com payload:`, payload);
+    // Em um cenário real:
+    // const response = await fetch('/api/evidencias', { // Ajuste endpoint se necessário
+    //     method: 'POST', // Ou PUT, dependendo da sua API
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${sessionToken}`
+    //     },
+    //     body: JSON.stringify(payload)
+    // });
+    // if (!response.ok) {
+    //     const errorData = await response.json();
+    //     throw new Error(errorData.error || `Falha ao salvar (${response.status})`);
+    // }
+    // const result = await response.json();
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const result = { success: true, message: "Alterações salvas (simulado)!" };
+    // --- FIM DA SIMULAÇÃO ---
+
+    if (result.success) {
+      alert(`✅ ${changeCount} alteraçõe(s) salva(s) com sucesso!`);
+      // Atualizar os dados locais (plenarioData)
+      Object.keys(changes).forEach((parlamentarId) => {
+        // Garante que o objeto existe antes de setar a posição
+        if (!plenarioData[parlamentarId]) {
+          plenarioData[parlamentarId] = {};
+        }
+        plenarioData[parlamentarId].posicao = changes[parlamentarId];
+      });
+      // Resetar a classe 'changed' e atualizar o 'data-original-value' na UI
+      document
+        .querySelectorAll("#plenario-list select.changed")
+        .forEach((select) => {
+          select.dataset.originalValue = select.value;
+          select.classList.remove("changed");
+        });
+      // Opcional: Re-renderizar a lista para garantir consistência
+      // renderPlenarioList();
+    } else {
+      throw new Error(result.message || "Erro desconhecido ao salvar.");
+    }
+  } catch (error) {
+    console.error("Erro ao salvar alterações do plenário:", error);
+    alert(`❌ Erro ao salvar: ${error.message}`);
+  } finally {
+    saveBtn.disabled = false;
+    savingIndicator.classList.add("hidden");
+  }
 }
 
 // Inicializar
