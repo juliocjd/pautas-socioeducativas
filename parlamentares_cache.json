@@ -19,6 +19,5929 @@
       "telefone_gabinete": "3215-5531",
       "casa": "Câmara",
       "situacao": "Exercício"
+    },
+    {
+      "id": "221328",
+      "nome": "Adilson Barroso",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.adilsonbarroso@camara.leg.br",
+      "telefone_gabinete": "3215-5750",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204560",
+      "nome": "Adolfo Viana",
+      "partido": "PSDB",
+      "uf": "BA",
+      "email": "dep.adolfoviana@camara.leg.br",
+      "telefone_gabinete": "3215-5911",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204528",
+      "nome": "Adriana Ventura",
+      "partido": "NOVO",
+      "uf": "SP",
+      "email": "dep.adrianaventura@camara.leg.br",
+      "telefone_gabinete": "3215-5802",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "121948",
+      "nome": "Adriano do Baldy",
+      "partido": "PP",
+      "uf": "GO",
+      "email": "dep.adrianodobaldy@camara.leg.br",
+      "telefone_gabinete": "3215-5419",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74646",
+      "nome": "Aécio Neves",
+      "partido": "PSDB",
+      "uf": "MG",
+      "email": "dep.aecioneves@camara.leg.br",
+      "telefone_gabinete": "3215-5964",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "136811",
+      "nome": "Afonso Hamm",
+      "partido": "PP",
+      "uf": "RS",
+      "email": "dep.afonsohamm@camara.leg.br",
+      "telefone_gabinete": "3215-5604",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178835",
+      "nome": "Afonso Motta",
+      "partido": "PDT",
+      "uf": "RS",
+      "email": "dep.afonsomotta@camara.leg.br",
+      "telefone_gabinete": "3215-5528",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160527",
+      "nome": "Aguinaldo Ribeiro",
+      "partido": "PP",
+      "uf": "PB",
+      "email": "dep.aguinaldoribeiro@camara.leg.br",
+      "telefone_gabinete": "3215-5735",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204495",
+      "nome": "Airton Faleiro",
+      "partido": "PT",
+      "uf": "PA",
+      "email": "dep.airtonfaleiro@camara.leg.br",
+      "telefone_gabinete": "3215-5327",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204549",
+      "nome": "AJ Albuquerque",
+      "partido": "PP",
+      "uf": "CE",
+      "email": "dep.ajalbuquerque@camara.leg.br",
+      "telefone_gabinete": "3215-5708",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73579",
+      "nome": "Alberto Fraga",
+      "partido": "PL",
+      "uf": "DF",
+      "email": "dep.albertofraga@camara.leg.br",
+      "telefone_gabinete": "3215-5816",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220538",
+      "nome": "Albuquerque",
+      "partido": "REPUBLICANOS",
+      "uf": "RR",
+      "email": "dep.albuquerque@camara.leg.br",
+      "telefone_gabinete": "3215-5675",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160559",
+      "nome": "Alceu Moreira",
+      "partido": "MDB",
+      "uf": "RS",
+      "email": "dep.alceumoreira@camara.leg.br",
+      "telefone_gabinete": "3215-5238",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204501",
+      "nome": "Alencar Santana",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.alencarsantana@camara.leg.br",
+      "telefone_gabinete": "3215-5256",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178972",
+      "nome": "Alex Manente",
+      "partido": "CIDADANIA",
+      "uf": "SP",
+      "email": "dep.alexmanente@camara.leg.br",
+      "telefone_gabinete": "3215-5205",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204571",
+      "nome": "Alex Santana",
+      "partido": "REPUBLICANOS",
+      "uf": "BA",
+      "email": "dep.alexsantana@camara.leg.br",
+      "telefone_gabinete": "3215-5541",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220542",
+      "nome": "Alexandre Guimarães",
+      "partido": "MDB",
+      "uf": "TO",
+      "email": "dep.alexandreguimaraes@camara.leg.br",
+      "telefone_gabinete": "3215-5941",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220554",
+      "nome": "Alexandre Lindenmeyer",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "dep.alexandrelindenmeyer@camara.leg.br",
+      "telefone_gabinete": "3215-5452",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "221148",
+      "nome": "Alfredinho",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.alfredinho@camara.leg.br",
+      "telefone_gabinete": "3215-5956",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220576",
+      "nome": "Alfredo Gaspar",
+      "partido": "UNIÃO",
+      "uf": "AL",
+      "email": "dep.alfredogaspar@camara.leg.br",
+      "telefone_gabinete": "3215-5543",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74057",
+      "nome": "Alice Portugal",
+      "partido": "PCdoB",
+      "uf": "BA",
+      "email": "dep.aliceportugal@camara.leg.br",
+      "telefone_gabinete": "3215-5420",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178927",
+      "nome": "Aliel Machado",
+      "partido": "PV",
+      "uf": "PR",
+      "email": "dep.alielmachado@camara.leg.br",
+      "telefone_gabinete": "3215-5220",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "226708",
+      "nome": "Allan Garcês",
+      "partido": "PP",
+      "uf": "MA",
+      "email": "dep.allangarces@camara.leg.br",
+      "telefone_gabinete": "3215-5558",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178937",
+      "nome": "Altineu Côrtes",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.altineucortes@camara.leg.br",
+      "telefone_gabinete": "3215-5336",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178881",
+      "nome": "Aluisio Mendes",
+      "partido": "REPUBLICANOS",
+      "uf": "MA",
+      "email": "dep.aluisiomendes@camara.leg.br",
+      "telefone_gabinete": "3215-5931",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220707",
+      "nome": "Amanda Gentil",
+      "partido": "PP",
+      "uf": "MA",
+      "email": "dep.amandagentil@camara.leg.br",
+      "telefone_gabinete": "3215-5862",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204356",
+      "nome": "Amaro Neto",
+      "partido": "REPUBLICANOS",
+      "uf": "ES",
+      "email": "dep.amaroneto@camara.leg.br",
+      "telefone_gabinete": "3215-5223",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220715",
+      "nome": "Amom Mandel",
+      "partido": "CIDADANIA",
+      "uf": "AM",
+      "email": "dep.amommandel@camara.leg.br",
+      "telefone_gabinete": "3215-5760",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "107970",
+      "nome": "Ana Paula Leão",
+      "partido": "PP",
+      "uf": "MG",
+      "email": "dep.anapaulaleao@camara.leg.br",
+      "telefone_gabinete": "3215-5658",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220556",
+      "nome": "Ana Paula Lima",
+      "partido": "PT",
+      "uf": "SC",
+      "email": "dep.anapaulalima@camara.leg.br",
+      "telefone_gabinete": "3215-5206",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220632",
+      "nome": "Ana Pimentel",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.anapimentel@camara.leg.br",
+      "telefone_gabinete": "3215-5234",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178831",
+      "nome": "André Abdon",
+      "partido": "PP",
+      "uf": "AP",
+      "email": "dep.andreabdon@camara.leg.br",
+      "telefone_gabinete": "3215-5445",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220657",
+      "nome": "André Fernandes",
+      "partido": "PL",
+      "uf": "CE",
+      "email": "dep.andrefernandes@camara.leg.br",
+      "telefone_gabinete": "3215-5578",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204423",
+      "nome": "André Ferreira",
+      "partido": "PL",
+      "uf": "PE",
+      "email": "dep.andreferreira@camara.leg.br",
+      "telefone_gabinete": "3215-5450",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "133439",
+      "nome": "André Figueiredo",
+      "partido": "PDT",
+      "uf": "CE",
+      "email": "dep.andrefigueiredo@camara.leg.br",
+      "telefone_gabinete": "3215-5940",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204515",
+      "nome": "André Janones",
+      "partido": "AVANTE",
+      "uf": "MG",
+      "email": "dep.andrejanones@camara.leg.br",
+      "telefone_gabinete": "3215-5687",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220676",
+      "nome": "Andreia Siqueira",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.andreiasiqueira@camara.leg.br",
+      "telefone_gabinete": "3215-5408",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "123756",
+      "nome": "Antônia Lúcia",
+      "partido": "REPUBLICANOS",
+      "uf": "AC",
+      "email": "dep.antonialucia@camara.leg.br",
+      "telefone_gabinete": "3215-5544",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220544",
+      "nome": "Antonio Andrade",
+      "partido": "REPUBLICANOS",
+      "uf": "TO",
+      "email": "dep.antonioandrade@camara.leg.br",
+      "telefone_gabinete": "3215-5540",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160553",
+      "nome": "Antonio Brito",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "dep.antoniobrito@camara.leg.br",
+      "telefone_gabinete": "3215-5985",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220638",
+      "nome": "Antonio Carlos Rodrigues",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.antoniocarlosrodrigues@camara.leg.br",
+      "telefone_gabinete": "3215-5683",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220675",
+      "nome": "Antônio Doido",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.antoniodoido@camara.leg.br",
+      "telefone_gabinete": "3215-5460",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220549",
+      "nome": "Any Ortiz",
+      "partido": "CIDADANIA",
+      "uf": "RS",
+      "email": "dep.anyortiz@camara.leg.br",
+      "telefone_gabinete": "3215-5810",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73433",
+      "nome": "Arlindo Chinaglia",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.arlindochinaglia@camara.leg.br",
+      "telefone_gabinete": "3215-5966",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141391",
+      "nome": "Arnaldo Jardim",
+      "partido": "CIDADANIA",
+      "uf": "SP",
+      "email": "dep.arnaldojardim@camara.leg.br",
+      "telefone_gabinete": "3215-5245",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160541",
+      "nome": "Arthur Lira",
+      "partido": "PP",
+      "uf": "AL",
+      "email": "dep.arthurlira@camara.leg.br",
+      "telefone_gabinete": "3215-5969",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160600",
+      "nome": "Arthur Oliveira Maia",
+      "partido": "UNIÃO",
+      "uf": "BA",
+      "email": "dep.arthuroliveiramaia@camara.leg.br",
+      "telefone_gabinete": "3215-5830",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74090",
+      "nome": "Átila Lins",
+      "partido": "PSD",
+      "uf": "AM",
+      "email": "dep.atilalins@camara.leg.br",
+      "telefone_gabinete": "3215-5730",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "123086",
+      "nome": "Átila Lira",
+      "partido": "PP",
+      "uf": "PI",
+      "email": "dep.atilamlira@camara.leg.br",
+      "telefone_gabinete": "3215-5640",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160665",
+      "nome": "Augusto Coutinho",
+      "partido": "REPUBLICANOS",
+      "uf": "PE",
+      "email": "dep.augustocoutinho@camara.leg.br",
+      "telefone_gabinete": "3215-5314",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160512",
+      "nome": "Aureo Ribeiro",
+      "partido": "SOLIDARIEDADE",
+      "uf": "RJ",
+      "email": "dep.aureoribeiro@camara.leg.br",
+      "telefone_gabinete": "3215-5212",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "69871",
+      "nome": "Bacelar",
+      "partido": "PV",
+      "uf": "BA",
+      "email": "dep.bacelar@camara.leg.br",
+      "telefone_gabinete": "3215-5783",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178975",
+      "nome": "Baleia Rossi",
+      "partido": "MDB",
+      "uf": "SP",
+      "email": "dep.baleiarossi@camara.leg.br",
+      "telefone_gabinete": "3215-5829",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220605",
+      "nome": "Bandeira de Mello",
+      "partido": "PSB",
+      "uf": "RJ",
+      "email": "dep.bandeirademello@camara.leg.br",
+      "telefone_gabinete": "3215-5804",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220612",
+      "nome": "Bebeto",
+      "partido": "PP",
+      "uf": "RJ",
+      "email": "dep.bebeto@camara.leg.br",
+      "telefone_gabinete": "3215-5821",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73701",
+      "nome": "Benedita da Silva",
+      "partido": "PT",
+      "uf": "RJ",
+      "email": "dep.beneditadasilva@camara.leg.br",
+      "telefone_gabinete": "3215-5330",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "109429",
+      "nome": "Benes Leocádio",
+      "partido": "UNIÃO",
+      "uf": "RN",
+      "email": "dep.benesleocadio@camara.leg.br",
+      "telefone_gabinete": "3215-5724",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204358",
+      "nome": "Beto Pereira",
+      "partido": "PSDB",
+      "uf": "MS",
+      "email": "dep.betopereira@camara.leg.br",
+      "telefone_gabinete": "3215-5240",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220683",
+      "nome": "Beto Richa",
+      "partido": "PSDB",
+      "uf": "PR",
+      "email": "dep.betoricha@camara.leg.br",
+      "telefone_gabinete": "3215-5521",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204374",
+      "nome": "Bia Kicis",
+      "partido": "PL",
+      "uf": "DF",
+      "email": "dep.biakicis@camara.leg.br",
+      "telefone_gabinete": "3215-5309",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204388",
+      "nome": "Bibo Nunes",
+      "partido": "PL",
+      "uf": "RS",
+      "email": "dep.bibonunes@camara.leg.br",
+      "telefone_gabinete": "3215-5518",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160538",
+      "nome": "Bohn Gass",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "dep.bohngass@camara.leg.br",
+      "telefone_gabinete": "3215-5873",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "210989",
+      "nome": "Bruno Farias",
+      "partido": "AVANTE",
+      "uf": "MG",
+      "email": "dep.brunofarias@camara.leg.br",
+      "telefone_gabinete": "3215-5637",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220635",
+      "nome": "Bruno Ganem",
+      "partido": "PODE",
+      "uf": "SP",
+      "email": "dep.brunoganem@camara.leg.br",
+      "telefone_gabinete": "3215-5201",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220574",
+      "nome": "Cabo Gilberto Silva",
+      "partido": "PL",
+      "uf": "PB",
+      "email": "dep.cabogilbertosilva@camara.leg.br",
+      "telefone_gabinete": "3215-5350",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "143942",
+      "nome": "Caio Vianna",
+      "partido": "PSD",
+      "uf": "RJ",
+      "email": "dep.caiovianna@camara.leg.br",
+      "telefone_gabinete": "3215-5576",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220548",
+      "nome": "Camila Jara",
+      "partido": "PT",
+      "uf": "MS",
+      "email": "dep.camilajara@camara.leg.br",
+      "telefone_gabinete": "3215-5860",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204572",
+      "nome": "Capitão Alberto Neto",
+      "partido": "PL",
+      "uf": "AM",
+      "email": "dep.capitaoalbertoneto@camara.leg.br",
+      "telefone_gabinete": "3215-5946",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220690",
+      "nome": "Capitão Alden",
+      "partido": "PL",
+      "uf": "BA",
+      "email": "dep.capitaoalden@camara.leg.br",
+      "telefone_gabinete": "3215-5127",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178829",
+      "nome": "Capitão Augusto",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.capitaoaugusto@camara.leg.br",
+      "telefone_gabinete": "3215-5883",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "213762",
+      "nome": "Carla Dickson",
+      "partido": "UNIÃO",
+      "uf": "RN",
+      "email": "dep.carladickson@camara.leg.br",
+      "telefone_gabinete": "3215-5656",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204507",
+      "nome": "Carla Zambelli",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.carlazambelli@camara.leg.br",
+      "telefone_gabinete": "3215-5885",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178993",
+      "nome": "Carlos Henrique Gaguim",
+      "partido": "UNIÃO",
+      "uf": "TO",
+      "email": "dep.carloshenriquegaguim@camara.leg.br",
+      "telefone_gabinete": "3215-5214",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204460",
+      "nome": "Carlos Jordy",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.carlosjordy@camara.leg.br",
+      "telefone_gabinete": "3215-5786",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74262",
+      "nome": "Carlos Sampaio",
+      "partido": "PSD",
+      "uf": "SP",
+      "email": "dep.carlossampaio@camara.leg.br",
+      "telefone_gabinete": "3215-5207",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204426",
+      "nome": "Carlos Veras",
+      "partido": "PT",
+      "uf": "PE",
+      "email": "dep.carlosveras@camara.leg.br",
+      "telefone_gabinete": "3215-5870",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141398",
+      "nome": "Carlos Zarattini",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.carloszarattini@camara.leg.br",
+      "telefone_gabinete": "3215-5808",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220704",
+      "nome": "Carol Dartora",
+      "partido": "PT",
+      "uf": "PR",
+      "email": "dep.caroldartora@camara.leg.br",
+      "telefone_gabinete": "3215-5623",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204369",
+      "nome": "Caroline de Toni",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "dep.carolinedetoni@camara.leg.br",
+      "telefone_gabinete": "3215-5772",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220699",
+      "nome": "Castro Neto",
+      "partido": "PSD",
+      "uf": "PI",
+      "email": "dep.castroneto@camara.leg.br",
+      "telefone_gabinete": "3215-5803",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "206018",
+      "nome": "Célia Xakriabá",
+      "partido": "PSOL",
+      "uf": "MG",
+      "email": "dep.celiaxakriaba@camara.leg.br",
+      "telefone_gabinete": "3215-5619",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178876",
+      "nome": "Célio Silveira",
+      "partido": "MDB",
+      "uf": "GO",
+      "email": "dep.celiosilveira@camara.leg.br",
+      "telefone_gabinete": "3215-5511",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204488",
+      "nome": "Célio Studart",
+      "partido": "PSD",
+      "uf": "CE",
+      "email": "dep.celiostudart@camara.leg.br",
+      "telefone_gabinete": "3215-5634",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73441",
+      "nome": "Celso Russomanno",
+      "partido": "REPUBLICANOS",
+      "uf": "SP",
+      "email": "dep.celsorussomanno@camara.leg.br",
+      "telefone_gabinete": "3215-5960",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204504",
+      "nome": "Cezinha de Madureira",
+      "partido": "PSD",
+      "uf": "SP",
+      "email": "dep.cezinhademadureira@camara.leg.br",
+      "telefone_gabinete": "3215-5533",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "205476",
+      "nome": "Charles Fernandes",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "dep.charlesfernandes@camara.leg.br",
+      "telefone_gabinete": "3215-5638",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74171",
+      "nome": "Chico Alencar",
+      "partido": "PSOL",
+      "uf": "RJ",
+      "email": "dep.chicoalencar@camara.leg.br",
+      "telefone_gabinete": "3215-5970",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204462",
+      "nome": "Chris Tonietto",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.christonietto@camara.leg.br",
+      "telefone_gabinete": "3215-5446",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220665",
+      "nome": "Clarissa Tércio",
+      "partido": "PP",
+      "uf": "PE",
+      "email": "dep.clarissatercio@camara.leg.br",
+      "telefone_gabinete": "3215-5506",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74537",
+      "nome": "Claudio Cajado",
+      "partido": "PP",
+      "uf": "BA",
+      "email": "dep.claudiocajado@camara.leg.br",
+      "telefone_gabinete": "3215-5630",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141408",
+      "nome": "Cleber Verde",
+      "partido": "MDB",
+      "uf": "MA",
+      "email": "dep.cleberverde@camara.leg.br",
+      "telefone_gabinete": "3215-5710",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "88256",
+      "nome": "Clodoaldo Magalhães",
+      "partido": "PV",
+      "uf": "PE",
+      "email": "dep.clodoaldomagalhaes@camara.leg.br",
+      "telefone_gabinete": "3215-5917",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "98148",
+      "nome": "Cobalchini",
+      "partido": "MDB",
+      "uf": "SC",
+      "email": "dep.cobalchini@camara.leg.br",
+      "telefone_gabinete": "3215-5358",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220594",
+      "nome": "Coronel Assis",
+      "partido": "UNIÃO",
+      "uf": "MT",
+      "email": "dep.coronelassis@camara.leg.br",
+      "telefone_gabinete": "3215-5415",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204378",
+      "nome": "Coronel Chrisóstomo",
+      "partido": "PL",
+      "uf": "RO",
+      "email": "dep.coronelchrisostomo@camara.leg.br",
+      "telefone_gabinete": "3215-5672",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220595",
+      "nome": "Coronel Fernanda",
+      "partido": "PL",
+      "uf": "MT",
+      "email": "dep.coronelfernanda@camara.leg.br",
+      "telefone_gabinete": "3215-5242",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220666",
+      "nome": "Coronel Meira",
+      "partido": "PL",
+      "uf": "PE",
+      "email": "dep.coronelmeira@camara.leg.br",
+      "telefone_gabinete": "3215-5474",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220590",
+      "nome": "Coronel Ulysses",
+      "partido": "UNIÃO",
+      "uf": "AC",
+      "email": "dep.coronelulysses@camara.leg.br",
+      "telefone_gabinete": "3215-5231",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178963",
+      "nome": "Covatti Filho",
+      "partido": "PP",
+      "uf": "RS",
+      "email": "dep.covattifilho@camara.leg.br",
+      "telefone_gabinete": "3215-5228",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220608",
+      "nome": "Cristiane Lopes",
+      "partido": "UNIÃO",
+      "uf": "RO",
+      "email": "dep.cristianelopes@camara.leg.br",
+      "telefone_gabinete": "3215-5618",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204355",
+      "nome": "Da Vitoria",
+      "partido": "PP",
+      "uf": "ES",
+      "email": "dep.davitoria@camara.leg.br",
+      "telefone_gabinete": "3215-5779",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141411",
+      "nome": "Dagoberto Nogueira",
+      "partido": "PSDB",
+      "uf": "MS",
+      "email": "dep.dagobertonogueira@camara.leg.br",
+      "telefone_gabinete": "3215-5522",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220555",
+      "nome": "Daiana Santos",
+      "partido": "PCdoB",
+      "uf": "RS",
+      "email": "dep.daianasantos@camara.leg.br",
+      "telefone_gabinete": "3215-5901",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220692",
+      "nome": "Dal Barreto",
+      "partido": "UNIÃO",
+      "uf": "BA",
+      "email": "dep.dalbarreto@camara.leg.br",
+      "telefone_gabinete": "3215-5520",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74467",
+      "nome": "Damião Feliciano",
+      "partido": "UNIÃO",
+      "uf": "PB",
+      "email": "dep.damiaofeliciano@camara.leg.br",
+      "telefone_gabinete": "3215-5938",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220629",
+      "nome": "Dandara",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.dandara@camara.leg.br",
+      "telefone_gabinete": "3215-5233",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220603",
+      "nome": "Dani Cunha",
+      "partido": "UNIÃO",
+      "uf": "RJ",
+      "email": "dep.danicunha@camara.leg.br",
+      "telefone_gabinete": "3215-5950",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220571",
+      "nome": "Daniel Agrobom",
+      "partido": "PL",
+      "uf": "GO",
+      "email": "dep.danielagrobom@camara.leg.br",
+      "telefone_gabinete": "3215-5572",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74060",
+      "nome": "Daniel Almeida",
+      "partido": "PCdoB",
+      "uf": "BA",
+      "email": "dep.danielalmeida@camara.leg.br",
+      "telefone_gabinete": "3215-5317",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220582",
+      "nome": "Daniel Barbosa",
+      "partido": "PP",
+      "uf": "AL",
+      "email": "dep.danielbarbosa@camara.leg.br",
+      "telefone_gabinete": "3215-5352",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204367",
+      "nome": "Daniel Freitas",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "dep.danielfreitas@camara.leg.br",
+      "telefone_gabinete": "3215-5194",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204409",
+      "nome": "Daniel Trzeciak",
+      "partido": "PSDB",
+      "uf": "RS",
+      "email": "dep.danieltrzeciak@camara.leg.br",
+      "telefone_gabinete": "3215-5924",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204459",
+      "nome": "Daniela do Waguinho",
+      "partido": "UNIÃO",
+      "uf": "RJ",
+      "email": "dep.danieladowaguinho@camara.leg.br",
+      "telefone_gabinete": "3215-5550",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220557",
+      "nome": "Daniela Reinehr",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "dep.danielareinehr@camara.leg.br",
+      "telefone_gabinete": "3215-5677",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "62881",
+      "nome": "Danilo Forte",
+      "partido": "UNIÃO",
+      "uf": "CE",
+      "email": "dep.daniloforte@camara.leg.br",
+      "telefone_gabinete": "3215-5219",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160552",
+      "nome": "Danrlei de Deus Hinterholz",
+      "partido": "PSD",
+      "uf": "RS",
+      "email": "dep.danrleidedeushinterholz@camara.leg.br",
+      "telefone_gabinete": "3215-5971",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204511",
+      "nome": "David Soares",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.davidsoares@camara.leg.br",
+      "telefone_gabinete": "3215-5235",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220659",
+      "nome": "Dayany Bittencourt",
+      "partido": "UNIÃO",
+      "uf": "CE",
+      "email": "dep.dayanybittencourt@camara.leg.br",
+      "telefone_gabinete": "3215-5711",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220539",
+      "nome": "Defensor Stélio Dener",
+      "partido": "REPUBLICANOS",
+      "uf": "RR",
+      "email": "dep.defensorsteliodener@camara.leg.br",
+      "telefone_gabinete": "3215-5435",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220565",
+      "nome": "Delegada Adriana Accorsi",
+      "partido": "PT",
+      "uf": "GO",
+      "email": "dep.delegadaadrianaaccorsi@camara.leg.br",
+      "telefone_gabinete": "3215-5740",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220625",
+      "nome": "Delegada Ione",
+      "partido": "AVANTE",
+      "uf": "MG",
+      "email": "dep.delegadaione@camara.leg.br",
+      "telefone_gabinete": "3215-5606",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220561",
+      "nome": "Delegada Katarina",
+      "partido": "PSD",
+      "uf": "SE",
+      "email": "dep.delegadakatarina@camara.leg.br",
+      "telefone_gabinete": "3215-5756",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220642",
+      "nome": "Delegado Bruno Lima",
+      "partido": "PP",
+      "uf": "SP",
+      "email": "dep.delegadobrunolima@camara.leg.br",
+      "telefone_gabinete": "3215-5933",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220673",
+      "nome": "Delegado Caveira",
+      "partido": "PL",
+      "uf": "PA",
+      "email": "dep.delegadocaveira@camara.leg.br",
+      "telefone_gabinete": "3215-5775",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220649",
+      "nome": "Delegado da Cunha",
+      "partido": "PP",
+      "uf": "SP",
+      "email": "dep.delegadodacunha@camara.leg.br",
+      "telefone_gabinete": "3215-5831",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178908",
+      "nome": "Delegado Éder Mauro",
+      "partido": "PL",
+      "uf": "PA",
+      "email": "dep.delegadoedermauro@camara.leg.br",
+      "telefone_gabinete": "3215-5884",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220583",
+      "nome": "Delegado Fabio Costa",
+      "partido": "PP",
+      "uf": "AL",
+      "email": "dep.delegadofabiocosta@camara.leg.br",
+      "telefone_gabinete": "3215-5741",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204512",
+      "nome": "Delegado Marcelo Freitas",
+      "partido": "UNIÃO",
+      "uf": "MG",
+      "email": "dep.delegadomarcelofreitas@camara.leg.br",
+      "telefone_gabinete": "3215-5111",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220701",
+      "nome": "Delegado Matheus Laiola",
+      "partido": "UNIÃO",
+      "uf": "PR",
+      "email": "dep.delegadomatheuslaiola@camara.leg.br",
+      "telefone_gabinete": "3215-5505",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220652",
+      "nome": "Delegado Palumbo",
+      "partido": "MDB",
+      "uf": "SP",
+      "email": "dep.delegadopalumbo@camara.leg.br",
+      "telefone_gabinete": "3215-5192",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220654",
+      "nome": "Delegado Paulo Bilynskyj",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.delegadopaulobilynskyj@camara.leg.br",
+      "telefone_gabinete": "3215-5509",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220619",
+      "nome": "Delegado Ramagem",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.delegadoramagem@camara.leg.br",
+      "telefone_gabinete": "3215-5401",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220553",
+      "nome": "Denise Pessôa",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "dep.denisepessoa@camara.leg.br",
+      "telefone_gabinete": "3215-5832",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220689",
+      "nome": "Detinha",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.detinha@camara.leg.br",
+      "telefone_gabinete": "3215-5714",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160588",
+      "nome": "Diego Andrade",
+      "partido": "PSD",
+      "uf": "MG",
+      "email": "dep.diegoandrade@camara.leg.br",
+      "telefone_gabinete": "3215-5307",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220691",
+      "nome": "Diego Coronel",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "dep.diegocoronel@camara.leg.br",
+      "telefone_gabinete": "3215-5754",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178929",
+      "nome": "Diego Garcia",
+      "partido": "REPUBLICANOS",
+      "uf": "PR",
+      "email": "dep.diegogarcia@camara.leg.br",
+      "telefone_gabinete": "3215-5910",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73768",
+      "nome": "Dilceu Sperafico",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.dilceusperafico@camara.leg.br",
+      "telefone_gabinete": "3215-5322",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220671",
+      "nome": "Dilvanda Faro",
+      "partido": "PT",
+      "uf": "PA",
+      "email": "dep.dilvandafaro@camara.leg.br",
+      "telefone_gabinete": "3215-5723",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160599",
+      "nome": "Dimas Fabiano",
+      "partido": "PP",
+      "uf": "MG",
+      "email": "dep.dimasfabiano@camara.leg.br",
+      "telefone_gabinete": "3215-5736",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220602",
+      "nome": "Dimas Gadelha",
+      "partido": "PT",
+      "uf": "RJ",
+      "email": "dep.dimasgadelha@camara.leg.br",
+      "telefone_gabinete": "3215-5603",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "143632",
+      "nome": "Domingos Neto",
+      "partido": "PSD",
+      "uf": "CE",
+      "email": "dep.domingosneto@camara.leg.br",
+      "telefone_gabinete": "3215-5546",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160758",
+      "nome": "Domingos Sávio",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.domingossavio@camara.leg.br",
+      "telefone_gabinete": "3215-5345",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220573",
+      "nome": "Dorinaldo Malafaia",
+      "partido": "PDT",
+      "uf": "AP",
+      "email": "dep.dorinaldomalafaia@camara.leg.br",
+      "telefone_gabinete": "3215-5733",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "227433",
+      "nome": "Douglas Viegas",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.douglasviegas@camara.leg.br",
+      "telefone_gabinete": "3215-5841",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204450",
+      "nome": "Doutor Luizinho",
+      "partido": "PP",
+      "uf": "RJ",
+      "email": "dep.doutorluizinho@camara.leg.br",
+      "telefone_gabinete": "3215-5577",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220610",
+      "nome": "Dr. Fernando Máximo",
+      "partido": "UNIÃO",
+      "uf": "RO",
+      "email": "dep.dr.fernandomaximo@camara.leg.br",
+      "telefone_gabinete": "3215-5813",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220688",
+      "nome": "Dr. Francisco",
+      "partido": "PT",
+      "uf": "PI",
+      "email": "dep.dr.francisco@camara.leg.br",
+      "telefone_gabinete": "3215-5909",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204518",
+      "nome": "Dr. Frederico",
+      "partido": "PRD",
+      "uf": "MG",
+      "email": "dep.dr.frederico@camara.leg.br",
+      "telefone_gabinete": "3215-5673",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220570",
+      "nome": "Dr. Ismael Alexandrino",
+      "partido": "PSD",
+      "uf": "GO",
+      "email": "dep.dr.ismaelalexandrino@camara.leg.br",
+      "telefone_gabinete": "3215-5854",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204481",
+      "nome": "Dr. Jaziel",
+      "partido": "PL",
+      "uf": "CE",
+      "email": "dep.dr.jaziel@camara.leg.br",
+      "telefone_gabinete": "3215-5705",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204351",
+      "nome": "Dr. Luiz Ovando",
+      "partido": "PP",
+      "uf": "MS",
+      "email": "dep.dr.luizovando@camara.leg.br",
+      "telefone_gabinete": "3215-5644",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220528",
+      "nome": "Dr. Victor Linhalis",
+      "partido": "PODE",
+      "uf": "ES",
+      "email": "dep.dr.victorlinhalis@camara.leg.br",
+      "telefone_gabinete": "3215-5845",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204412",
+      "nome": "Dr. Zacharias Calil",
+      "partido": "UNIÃO",
+      "uf": "GO",
+      "email": "dep.dr.zachariascalil@camara.leg.br",
+      "telefone_gabinete": "3215-5616",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220674",
+      "nome": "Dra. Alessandra Haber",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.dra.alessandrahaber@camara.leg.br",
+      "telefone_gabinete": "3215-5432",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220686",
+      "nome": "Duarte Jr.",
+      "partido": "PSB",
+      "uf": "MA",
+      "email": "dep.duartejr@camara.leg.br",
+      "telefone_gabinete": "3215-5344",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220540",
+      "nome": "Duda Ramos",
+      "partido": "MDB",
+      "uf": "RR",
+      "email": "dep.dudaramos@camara.leg.br",
+      "telefone_gabinete": "3215-5246",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220623",
+      "nome": "Duda Salabert",
+      "partido": "PDT",
+      "uf": "MG",
+      "email": "dep.dudasalabert@camara.leg.br",
+      "telefone_gabinete": "3215-5840",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "92346",
+      "nome": "Eduardo Bolsonaro",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.eduardobolsonaro@camara.leg.br",
+      "telefone_gabinete": "3215-5785",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141421",
+      "nome": "Eduardo da Fonte",
+      "partido": "PP",
+      "uf": "PE",
+      "email": "dep.eduardodafonte@camara.leg.br",
+      "telefone_gabinete": "3215-5628",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220589",
+      "nome": "Eduardo Velloso",
+      "partido": "UNIÃO",
+      "uf": "AC",
+      "email": "dep.eduardovelloso@camara.leg.br",
+      "telefone_gabinete": "3215-5292",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74075",
+      "nome": "Elcione Barbalho",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.elcionebarbalho@camara.leg.br",
+      "telefone_gabinete": "3215-5216",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204364",
+      "nome": "Eli Borges",
+      "partido": "PL",
+      "uf": "TO",
+      "email": "dep.eliborges@camara.leg.br",
+      "telefone_gabinete": "3215-5248",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178854",
+      "nome": "Elmar Nascimento",
+      "partido": "UNIÃO",
+      "uf": "BA",
+      "email": "dep.elmarnascimento@camara.leg.br",
+      "telefone_gabinete": "3215-5332",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "218086",
+      "nome": "Ely Santos",
+      "partido": "REPUBLICANOS",
+      "uf": "SP",
+      "email": "dep.elysantos@camara.leg.br",
+      "telefone_gabinete": "3215-5926",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "198783",
+      "nome": "Emanuel Pinheiro Neto",
+      "partido": "MDB",
+      "uf": "MT",
+      "email": "dep.emanuelpinheironeto@camara.leg.br",
+      "telefone_gabinete": "3215-5678",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "161550",
+      "nome": "Emidinho Madeira",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.emidinhomadeira@camara.leg.br",
+      "telefone_gabinete": "3215-5837",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "225730",
+      "nome": "Enfermeira Ana Paula",
+      "partido": "PODE",
+      "uf": "CE",
+      "email": "dep.enfermeiraanapaula@camara.leg.br",
+      "telefone_gabinete": "3215-5936",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "230765",
+      "nome": "Enfermeira Rejane",
+      "partido": "PCdoB",
+      "uf": "RJ",
+      "email": "dep.enfermeirarejane@camara.leg.br",
+      "telefone_gabinete": "3215-5313",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220663",
+      "nome": "Eriberto Medeiros",
+      "partido": "PSB",
+      "uf": "PE",
+      "email": "dep.eribertomedeiros@camara.leg.br",
+      "telefone_gabinete": "3215-5311",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220645",
+      "nome": "Erika Hilton",
+      "partido": "PSOL",
+      "uf": "SP",
+      "email": "dep.erikahilton@camara.leg.br",
+      "telefone_gabinete": "3215-5636",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160575",
+      "nome": "Erika Kokay",
+      "partido": "PT",
+      "uf": "DF",
+      "email": "dep.erikakokay@camara.leg.br",
+      "telefone_gabinete": "3215-5203",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160640",
+      "nome": "Eros Biondini",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.erosbiondini@camara.leg.br",
+      "telefone_gabinete": "3215-5321",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204482",
+      "nome": "Euclydes Pettersen",
+      "partido": "REPUBLICANOS",
+      "uf": "MG",
+      "email": "dep.euclydespettersen@camara.leg.br",
+      "telefone_gabinete": "3215-5456",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74454",
+      "nome": "Eunício Oliveira",
+      "partido": "MDB",
+      "uf": "CE",
+      "email": "dep.euniciooliveira@camara.leg.br",
+      "telefone_gabinete": "3215-5975",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178871",
+      "nome": "Evair Vieira de Melo",
+      "partido": "PP",
+      "uf": "ES",
+      "email": "dep.evairvieirademelo@camara.leg.br",
+      "telefone_gabinete": "3215-5443",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220681",
+      "nome": "Fábio Macedo",
+      "partido": "PODE",
+      "uf": "MA",
+      "email": "dep.fabiomacedo@camara.leg.br",
+      "telefone_gabinete": "3215-5515",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "171623",
+      "nome": "Fabio Reis",
+      "partido": "PSD",
+      "uf": "SE",
+      "email": "dep.fabioreis@camara.leg.br",
+      "telefone_gabinete": "3215-5410",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204368",
+      "nome": "Fabio Schiochet",
+      "partido": "UNIÃO",
+      "uf": "SC",
+      "email": "dep.fabioschiochet@camara.leg.br",
+      "telefone_gabinete": "3215-5758",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220653",
+      "nome": "Fábio Teruel",
+      "partido": "MDB",
+      "uf": "SP",
+      "email": "dep.fabioteruel@camara.leg.br",
+      "telefone_gabinete": "3215-5294",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74065",
+      "nome": "Fatima Pelaes",
+      "partido": "REPUBLICANOS",
+      "uf": "AP",
+      "email": "dep.fatimapelaes@camara.leg.br",
+      "telefone_gabinete": "3215-5403",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220712",
+      "nome": "Fausto Jr.",
+      "partido": "UNIÃO",
+      "uf": "AM",
+      "email": "dep.faustosantosjr@camara.leg.br",
+      "telefone_gabinete": "3215-5777",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "66828",
+      "nome": "Fausto Pinato",
+      "partido": "PP",
+      "uf": "SP",
+      "email": "dep.faustopinato@camara.leg.br",
+      "telefone_gabinete": "3215-5562",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220646",
+      "nome": "Felipe Becari",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.felipebecari@camara.leg.br",
+      "telefone_gabinete": "3215-5476",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "72442",
+      "nome": "Felipe Carreras",
+      "partido": "PSB",
+      "uf": "PE",
+      "email": "dep.felipecarreras@camara.leg.br",
+      "telefone_gabinete": "3215-5318",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204398",
+      "nome": "Felipe Francischini",
+      "partido": "UNIÃO",
+      "uf": "PR",
+      "email": "dep.felipefrancischini@camara.leg.br",
+      "telefone_gabinete": "3215-5265",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160666",
+      "nome": "Félix Mendonça Júnior",
+      "partido": "PDT",
+      "uf": "BA",
+      "email": "dep.felixmendoncajunior@camara.leg.br",
+      "telefone_gabinete": "3215-5912",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204407",
+      "nome": "Fernanda Melchionna",
+      "partido": "PSOL",
+      "uf": "RS",
+      "email": "dep.fernandamelchionna@camara.leg.br",
+      "telefone_gabinete": "3215-5621",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220656",
+      "nome": "Fernanda Pessoa",
+      "partido": "UNIÃO",
+      "uf": "CE",
+      "email": "dep.fernandapessoa@camara.leg.br",
+      "telefone_gabinete": "3215-5209",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141431",
+      "nome": "Fernando Coelho Filho",
+      "partido": "UNIÃO",
+      "uf": "PE",
+      "email": "dep.fernandocoelhofilho@camara.leg.br",
+      "telefone_gabinete": "3215-5662",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204445",
+      "nome": "Fernando Mineiro",
+      "partido": "PT",
+      "uf": "RN",
+      "email": "dep.fernandomineiro@camara.leg.br",
+      "telefone_gabinete": "3215-5987",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "92699",
+      "nome": "Fernando Monteiro",
+      "partido": "REPUBLICANOS",
+      "uf": "PE",
+      "email": "dep.fernandomonteiro@camara.leg.br",
+      "telefone_gabinete": "3215-5243",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204427",
+      "nome": "Fernando Rodolfo",
+      "partido": "PL",
+      "uf": "PE",
+      "email": "dep.fernandorodolfo@camara.leg.br",
+      "telefone_gabinete": "3215-5554",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204411",
+      "nome": "Filipe Barros",
+      "partido": "PL",
+      "uf": "PR",
+      "email": "dep.filipebarros@camara.leg.br",
+      "telefone_gabinete": "3215-5745",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220545",
+      "nome": "Filipe Martins",
+      "partido": "PL",
+      "uf": "TO",
+      "email": "dep.filipemartins@camara.leg.br",
+      "telefone_gabinete": "3215-5517",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160598",
+      "nome": "Flávia Morais",
+      "partido": "PDT",
+      "uf": "GO",
+      "email": "dep.flaviamorais@camara.leg.br",
+      "telefone_gabinete": "3215-5738",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "191923",
+      "nome": "Flávio Nogueira",
+      "partido": "PT",
+      "uf": "PI",
+      "email": "dep.flavionogueira@camara.leg.br",
+      "telefone_gabinete": "3215-5811",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220700",
+      "nome": "Florentino Neto",
+      "partido": "PT",
+      "uf": "PI",
+      "email": "dep.florentinoneto@camara.leg.br",
+      "telefone_gabinete": "3215-5440",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220551",
+      "nome": "Franciane Bayer",
+      "partido": "REPUBLICANOS",
+      "uf": "RS",
+      "email": "dep.francianebayer@camara.leg.br",
+      "telefone_gabinete": "3215-5538",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204494",
+      "nome": "Fred Costa",
+      "partido": "PRD",
+      "uf": "MG",
+      "email": "dep.fredcosta@camara.leg.br",
+      "telefone_gabinete": "3215-5633",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220534",
+      "nome": "Fred Linhares",
+      "partido": "REPUBLICANOS",
+      "uf": "DF",
+      "email": "dep.fredlinhares@camara.leg.br",
+      "telefone_gabinete": "3215-5825",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "224117",
+      "nome": "Gabriel Mota",
+      "partido": "REPUBLICANOS",
+      "uf": "RR",
+      "email": "dep.gabrielmota@camara.leg.br",
+      "telefone_gabinete": "3215-5535",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220708",
+      "nome": "Gabriel Nunes",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "dep.gabrielnunes@camara.leg.br",
+      "telefone_gabinete": "3215-5732",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204473",
+      "nome": "General Girão",
+      "partido": "PL",
+      "uf": "RN",
+      "email": "dep.generalgirao@camara.leg.br",
+      "telefone_gabinete": "3215-5914",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220611",
+      "nome": "General Pazuello",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.generalpazuello@camara.leg.br",
+      "telefone_gabinete": "3215-5919",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178966",
+      "nome": "Geovania de Sá",
+      "partido": "PSDB",
+      "uf": "SC",
+      "email": "dep.geovaniadesa@camara.leg.br",
+      "telefone_gabinete": "3215-5418",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220702",
+      "nome": "Geraldo Mendes",
+      "partido": "UNIÃO",
+      "uf": "PR",
+      "email": "dep.geraldomendes@camara.leg.br",
+      "telefone_gabinete": "3215-5131",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74374",
+      "nome": "Geraldo Resende",
+      "partido": "PSDB",
+      "uf": "MS",
+      "email": "dep.geraldoresende@camara.leg.br",
+      "telefone_gabinete": "3215-5304",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204394",
+      "nome": "Gervásio Maia",
+      "partido": "PSB",
+      "uf": "PB",
+      "email": "dep.gervasiomaia@camara.leg.br",
+      "telefone_gabinete": "3215-5308",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74383",
+      "nome": "Giacobo",
+      "partido": "PL",
+      "uf": "PR",
+      "email": "dep.giacobo@camara.leg.br",
+      "telefone_gabinete": "3215-5629",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204491",
+      "nome": "Gilberto Abramo",
+      "partido": "REPUBLICANOS",
+      "uf": "MG",
+      "email": "dep.gilbertoabramo@camara.leg.br",
+      "telefone_gabinete": "3215-5601",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74270",
+      "nome": "Gilberto Nascimento",
+      "partido": "PSD",
+      "uf": "SP",
+      "email": "dep.gilbertonascimento@camara.leg.br",
+      "telefone_gabinete": "3215-5836",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220529",
+      "nome": "Gilson Daniel",
+      "partido": "PODE",
+      "uf": "ES",
+      "email": "dep.gilsondaniel@camara.leg.br",
+      "telefone_gabinete": "3215-5433",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204365",
+      "nome": "Gilson Marques",
+      "partido": "NOVO",
+      "uf": "SC",
+      "email": "dep.gilsonmarques@camara.leg.br",
+      "telefone_gabinete": "3215-5431",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220526",
+      "nome": "Gilvan da Federal",
+      "partido": "PL",
+      "uf": "ES",
+      "email": "dep.gilvandafederal@camara.leg.br",
+      "telefone_gabinete": "3215-5650",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160673",
+      "nome": "Giovani Cherini",
+      "partido": "PL",
+      "uf": "RS",
+      "email": "dep.giovanicherini@camara.leg.br",
+      "telefone_gabinete": "3215-5872",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "226179",
+      "nome": "Gisela Simona",
+      "partido": "UNIÃO",
+      "uf": "MT",
+      "email": "dep.giselasimona@camara.leg.br",
+      "telefone_gabinete": "3215-5602",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "152605",
+      "nome": "Glauber Braga",
+      "partido": "PSOL",
+      "uf": "RJ",
+      "email": "dep.glauberbraga@camara.leg.br",
+      "telefone_gabinete": "3215-5362",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "198197",
+      "nome": "Greyce Elias",
+      "partido": "AVANTE",
+      "uf": "MG",
+      "email": "dep.greyceelias@camara.leg.br",
+      "telefone_gabinete": "3215-5340",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220639",
+      "nome": "Guilherme Boulos",
+      "partido": "PSOL",
+      "uf": "SP",
+      "email": "dep.guilhermeboulos@camara.leg.br",
+      "telefone_gabinete": "3215-5935",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220664",
+      "nome": "Guilherme Uchoa",
+      "partido": "PSB",
+      "uf": "PE",
+      "email": "dep.guilhermeuchoa@camara.leg.br",
+      "telefone_gabinete": "3215-5430",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220568",
+      "nome": "Gustavo Gayer",
+      "partido": "PL",
+      "uf": "GO",
+      "email": "dep.gustavogayer@camara.leg.br",
+      "telefone_gabinete": "3215-5737",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204408",
+      "nome": "Gustinho Ribeiro",
+      "partido": "REPUBLICANOS",
+      "uf": "SE",
+      "email": "dep.gustinhoribeiro@camara.leg.br",
+      "telefone_gabinete": "3215-5784",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204456",
+      "nome": "Gutemberg Reis",
+      "partido": "MDB",
+      "uf": "RJ",
+      "email": "dep.gutembergreis@camara.leg.br",
+      "telefone_gabinete": "3215-5856",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178964",
+      "nome": "Heitor Schuch",
+      "partido": "PSB",
+      "uf": "RS",
+      "email": "dep.heitorschuch@camara.leg.br",
+      "telefone_gabinete": "3215-5680",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178873",
+      "nome": "Helder Salomão",
+      "partido": "PT",
+      "uf": "ES",
+      "email": "dep.heldersalomao@camara.leg.br",
+      "telefone_gabinete": "3215-5679",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220537",
+      "nome": "Helena Lima",
+      "partido": "MDB",
+      "uf": "RR",
+      "email": "dep.helenalima@camara.leg.br",
+      "telefone_gabinete": "3215-5191",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204444",
+      "nome": "Helio Lopes",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.heliolopes@camara.leg.br",
+      "telefone_gabinete": "3215-5405",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220672",
+      "nome": "Henderson Pinto",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.hendersonpinto@camara.leg.br",
+      "telefone_gabinete": "3215-5625",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204539",
+      "nome": "Hercílio Coelho Diniz",
+      "partido": "MDB",
+      "uf": "MG",
+      "email": "dep.herciliocoelhodiniz@camara.leg.br",
+      "telefone_gabinete": "3215-5510",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178884",
+      "nome": "Hildo Rocha",
+      "partido": "MDB",
+      "uf": "MA",
+      "email": "dep.hildorocha@camara.leg.br",
+      "telefone_gabinete": "3215-5734",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141450",
+      "nome": "Hugo Leal",
+      "partido": "PSD",
+      "uf": "RJ",
+      "email": "dep.hugoleal@camara.leg.br",
+      "telefone_gabinete": "3215-5886",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160674",
+      "nome": "Hugo Motta",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.hugomotta@camara.leg.br",
+      "telefone_gabinete": "3215-5237",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220563",
+      "nome": "Icaro de Valmir",
+      "partido": "PL",
+      "uf": "SE",
+      "email": "dep.icarodevalmir@camara.leg.br",
+      "telefone_gabinete": "3215-5129",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204508",
+      "nome": "Igor Timo",
+      "partido": "PSD",
+      "uf": "MG",
+      "email": "dep.igortimo@camara.leg.br",
+      "telefone_gabinete": "3215-5726",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "98615",
+      "nome": "Ismael",
+      "partido": "PSD",
+      "uf": "SC",
+      "email": "dep.ismael@camara.leg.br",
+      "telefone_gabinete": "3215-5325",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204436",
+      "nome": "Isnaldo Bulhões Jr.",
+      "partido": "MDB",
+      "uf": "AL",
+      "email": "dep.isnaldobulhoesjr@camara.leg.br",
+      "telefone_gabinete": "3215-5639",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73531",
+      "nome": "Ivan Valente",
+      "partido": "PSOL",
+      "uf": "SP",
+      "email": "dep.ivanvalente@camara.leg.br",
+      "telefone_gabinete": "3215-5230",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220696",
+      "nome": "Ivoneide Caetano",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.ivoneidecaetano@camara.leg.br",
+      "telefone_gabinete": "3215-5224",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220670",
+      "nome": "Iza Arruda",
+      "partido": "MDB",
+      "uf": "PE",
+      "email": "dep.izaarruda@camara.leg.br",
+      "telefone_gabinete": "3215-5828",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220527",
+      "nome": "Jack Rocha",
+      "partido": "PT",
+      "uf": "ES",
+      "email": "dep.jackrocha@camara.leg.br",
+      "telefone_gabinete": "3215-5252",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220697",
+      "nome": "Jadyel Alencar",
+      "partido": "REPUBLICANOS",
+      "uf": "PI",
+      "email": "dep.jadyelalencar@camara.leg.br",
+      "telefone_gabinete": "3215-5519",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74848",
+      "nome": "Jandira Feghali",
+      "partido": "PCdoB",
+      "uf": "RJ",
+      "email": "dep.jandirafeghali@camara.leg.br",
+      "telefone_gabinete": "3215-5622",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220567",
+      "nome": "Jeferson Rodrigues",
+      "partido": "REPUBLICANOS",
+      "uf": "GO",
+      "email": "dep.jefersonrodrigues@camara.leg.br",
+      "telefone_gabinete": "3215-5725",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74273",
+      "nome": "Jefferson Campos",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.jeffersoncampos@camara.leg.br",
+      "telefone_gabinete": "3215-5346",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141456",
+      "nome": "Jilmar Tatto",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.jilmartatto@camara.leg.br",
+      "telefone_gabinete": "3215-5548",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141458",
+      "nome": "João Carlos Bacelar",
+      "partido": "PL",
+      "uf": "BA",
+      "email": "dep.joaocarlosbacelar@camara.leg.br",
+      "telefone_gabinete": "3215-5928",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "230957",
+      "nome": "João Cury",
+      "partido": "MDB",
+      "uf": "SP",
+      "email": "dep.joaocury@camara.leg.br",
+      "telefone_gabinete": "3215-5132",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178970",
+      "nome": "João Daniel",
+      "partido": "PT",
+      "uf": "SE",
+      "email": "dep.joaodaniel@camara.leg.br",
+      "telefone_gabinete": "3215-5605",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74550",
+      "nome": "João Leão",
+      "partido": "PP",
+      "uf": "BA",
+      "email": "dep.joaoleao@camara.leg.br",
+      "telefone_gabinete": "3215-5320",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141459",
+      "nome": "João Maia",
+      "partido": "PP",
+      "uf": "RN",
+      "email": "dep.joaomaia@camara.leg.br",
+      "telefone_gabinete": "3215-5439",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178910",
+      "nome": "Joaquim Passarinho",
+      "partido": "PL",
+      "uf": "PA",
+      "email": "dep.joaquimpassarinho@camara.leg.br",
+      "telefone_gabinete": "3215-5334",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160548",
+      "nome": "Jonas Donizette",
+      "partido": "PSB",
+      "uf": "SP",
+      "email": "dep.jonasdonizette@camara.leg.br",
+      "telefone_gabinete": "3215-5716",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "205550",
+      "nome": "Jorge Braz",
+      "partido": "REPUBLICANOS",
+      "uf": "RJ",
+      "email": "dep.jorgebraz@camara.leg.br",
+      "telefone_gabinete": "3215-5213",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "214694",
+      "nome": "Jorge Goetten",
+      "partido": "REPUBLICANOS",
+      "uf": "SC",
+      "email": "dep.jorgegoetten@camara.leg.br",
+      "telefone_gabinete": "3215-5983",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178857",
+      "nome": "Jorge Solla",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.jorgesolla@camara.leg.br",
+      "telefone_gabinete": "3215-5134",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141464",
+      "nome": "José Airton Félix Cirilo",
+      "partido": "PT",
+      "uf": "CE",
+      "email": "dep.joseairtonfelixcirilo@camara.leg.br",
+      "telefone_gabinete": "3215-5319",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141470",
+      "nome": "José Guimarães",
+      "partido": "PT",
+      "uf": "CE",
+      "email": "dep.joseguimaraes@camara.leg.br",
+      "telefone_gabinete": "3215-5306",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204472",
+      "nome": "José Medeiros",
+      "partido": "PL",
+      "uf": "MT",
+      "email": "dep.josemedeiros@camara.leg.br",
+      "telefone_gabinete": "3215-5335",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204391",
+      "nome": "José Nelto",
+      "partido": "UNIÃO",
+      "uf": "GO",
+      "email": "dep.josenelto@camara.leg.br",
+      "telefone_gabinete": "3215-5703",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74079",
+      "nome": "José Priante",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.josepriante@camara.leg.br",
+      "telefone_gabinete": "3215-5752",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74554",
+      "nome": "José Rocha",
+      "partido": "UNIÃO",
+      "uf": "BA",
+      "email": "dep.joserocha@camara.leg.br",
+      "telefone_gabinete": "3215-5908",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "209189",
+      "nome": "Joseildo Ramos",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.joseildoramos@camara.leg.br",
+      "telefone_gabinete": "3215-5728",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220578",
+      "nome": "Josenildo",
+      "partido": "PDT",
+      "uf": "AP",
+      "email": "dep.josenildo@camara.leg.br",
+      "telefone_gabinete": "3215-5645",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74141",
+      "nome": "Josias Gomes",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.josiasgomes@camara.leg.br",
+      "telefone_gabinete": "3215-5305",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204563",
+      "nome": "Josimar Maranhãozinho",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.josimarmaranhaozinho@camara.leg.br",
+      "telefone_gabinete": "3215-5715",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "215043",
+      "nome": "Josivaldo JP",
+      "partido": "PSD",
+      "uf": "MA",
+      "email": "dep.josivaldojp@camara.leg.br",
+      "telefone_gabinete": "3215-5778",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204474",
+      "nome": "Juarez Costa",
+      "partido": "MDB",
+      "uf": "MT",
+      "email": "dep.juarezcosta@camara.leg.br",
+      "telefone_gabinete": "3215-5871",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220559",
+      "nome": "Julia Zanatta",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "dep.juliazanatta@camara.leg.br",
+      "telefone_gabinete": "3215-5448",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220640",
+      "nome": "Juliana Cardoso",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.julianacardoso@camara.leg.br",
+      "telefone_gabinete": "3215-5411",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "66385",
+      "nome": "Julio Arcoverde",
+      "partido": "PP",
+      "uf": "PI",
+      "email": "dep.julioarcoverde@camara.leg.br",
+      "telefone_gabinete": "3215-5729",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74317",
+      "nome": "Júlio Cesar",
+      "partido": "PSD",
+      "uf": "PI",
+      "email": "dep.juliocesar@camara.leg.br",
+      "telefone_gabinete": "3215-5944",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204372",
+      "nome": "Julio Cesar Ribeiro",
+      "partido": "REPUBLICANOS",
+      "uf": "DF",
+      "email": "dep.juliocesarribeiro@camara.leg.br",
+      "telefone_gabinete": "3215-5328",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74253",
+      "nome": "Julio Lopes",
+      "partido": "PP",
+      "uf": "RJ",
+      "email": "dep.juliolopes@camara.leg.br",
+      "telefone_gabinete": "3215-5428",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204457",
+      "nome": "Juninho do Pneu",
+      "partido": "UNIÃO",
+      "uf": "RJ",
+      "email": "dep.juninhodopneu@camara.leg.br",
+      "telefone_gabinete": "3215-5641",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204520",
+      "nome": "Junio Amaral",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.junioamaral@camara.leg.br",
+      "telefone_gabinete": "3215-5302",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204497",
+      "nome": "Júnior Ferrari",
+      "partido": "PSD",
+      "uf": "PA",
+      "email": "dep.juniorferrari@camara.leg.br",
+      "telefone_gabinete": "3215-5930",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204574",
+      "nome": "Junior Lourenço",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.juniorlourenco@camara.leg.br",
+      "telefone_gabinete": "3215-5513",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204550",
+      "nome": "Júnior Mano",
+      "partido": "PSB",
+      "uf": "CE",
+      "email": "dep.juniormano@camara.leg.br",
+      "telefone_gabinete": "3215-5807",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178886",
+      "nome": "Juscelino Filho",
+      "partido": "UNIÃO",
+      "uf": "MA",
+      "email": "dep.juscelinofilho@camara.leg.br",
+      "telefone_gabinete": "3215-5222",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220677",
+      "nome": "Keniston Braga",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.kenistonbraga@camara.leg.br",
+      "telefone_gabinete": "3215-5707",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "162067",
+      "nome": "Kiko Celeguim",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.kikoceleguim@camara.leg.br",
+      "telefone_gabinete": "3215-5337",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204536",
+      "nome": "Kim Kataguiri",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.kimkataguiri@camara.leg.br",
+      "telefone_gabinete": "3215-5744",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "98057",
+      "nome": "Lafayette de Andrada",
+      "partido": "REPUBLICANOS",
+      "uf": "MG",
+      "email": "dep.lafayettedeandrada@camara.leg.br",
+      "telefone_gabinete": "3215-5208",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74856",
+      "nome": "Laura Carneiro",
+      "partido": "PSD",
+      "uf": "RJ",
+      "email": "dep.lauracarneiro@camara.leg.br",
+      "telefone_gabinete": "3215-5210",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220566",
+      "nome": "Lêda Borges",
+      "partido": "PSDB",
+      "uf": "GO",
+      "email": "dep.ledaborges@camara.leg.br",
+      "telefone_gabinete": "3215-5742",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "231911",
+      "nome": "Lenir de Assis",
+      "partido": "PT",
+      "uf": "PR",
+      "email": "dep.lenirdeassis@camara.leg.br",
+      "telefone_gabinete": "3215-5232",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "80815",
+      "nome": "Leo Prates",
+      "partido": "PDT",
+      "uf": "BA",
+      "email": "dep.leoprates@camara.leg.br",
+      "telefone_gabinete": "3215-5646",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74156",
+      "nome": "Leonardo Monteiro",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.leonardomonteiro@camara.leg.br",
+      "telefone_gabinete": "3215-5922",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74299",
+      "nome": "Leônidas Cristino",
+      "partido": "PDT",
+      "uf": "CE",
+      "email": "dep.leonidascristino@camara.leg.br",
+      "telefone_gabinete": "3215-5948",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "92102",
+      "nome": "Leur Lomanto Júnior",
+      "partido": "UNIÃO",
+      "uf": "BA",
+      "email": "dep.leurlomantojunior@camara.leg.br",
+      "telefone_gabinete": "3215-5406",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "139285",
+      "nome": "Lídice da Mata",
+      "partido": "PSB",
+      "uf": "BA",
+      "email": "dep.lidicedamata@camara.leg.br",
+      "telefone_gabinete": "3215-5913",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74585",
+      "nome": "Lincoln Portela",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.lincolnportela@camara.leg.br",
+      "telefone_gabinete": "3215-5615",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74858",
+      "nome": "Lindbergh Farias",
+      "partido": "PT",
+      "uf": "RJ",
+      "email": "dep.lindberghfarias@camara.leg.br",
+      "telefone_gabinete": "3215-5227",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220662",
+      "nome": "Lucas Ramos",
+      "partido": "PSB",
+      "uf": "PE",
+      "email": "dep.lucasramos@camara.leg.br",
+      "telefone_gabinete": "3215-5315",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204404",
+      "nome": "Lucas Redecker",
+      "partido": "PSDB",
+      "uf": "RS",
+      "email": "dep.lucasredecker@camara.leg.br",
+      "telefone_gabinete": "3215-5905",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "138286",
+      "nome": "Luciano Alves",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.lucianoalves@camara.leg.br",
+      "telefone_gabinete": "3215-5635",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220581",
+      "nome": "Luciano Amaral",
+      "partido": "PSD",
+      "uf": "AL",
+      "email": "dep.lucianoamaral@camara.leg.br",
+      "telefone_gabinete": "3215-5409",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74478",
+      "nome": "Luciano Bivar",
+      "partido": "UNIÃO",
+      "uf": "PE",
+      "email": "dep.lucianobivar@camara.leg.br",
+      "telefone_gabinete": "3215-5215",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178931",
+      "nome": "Luciano Ducci",
+      "partido": "PSB",
+      "uf": "PR",
+      "email": "dep.lucianoducci@camara.leg.br",
+      "telefone_gabinete": "3215-5427",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220616",
+      "nome": "Luciano Vieira",
+      "partido": "REPUBLICANOS",
+      "uf": "RJ",
+      "email": "dep.lucianovieira@camara.leg.br",
+      "telefone_gabinete": "3215-5329",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178954",
+      "nome": "Lucio Mosquini",
+      "partido": "MDB",
+      "uf": "RO",
+      "email": "dep.luciomosquini@camara.leg.br",
+      "telefone_gabinete": "3215-5918",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "222429",
+      "nome": "Luis Carlos Gomes",
+      "partido": "REPUBLICANOS",
+      "uf": "RJ",
+      "email": "dep.luiscarlosgomes@camara.leg.br",
+      "telefone_gabinete": "3215-5438",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160510",
+      "nome": "Luis Tibé",
+      "partido": "AVANTE",
+      "uf": "MG",
+      "email": "dep.luistibe@camara.leg.br",
+      "telefone_gabinete": "3215-5632",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204410",
+      "nome": "Luisa Canziani",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.luisacanziani@camara.leg.br",
+      "telefone_gabinete": "3215-5842",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204448",
+      "nome": "Luiz Antonio Corrêa",
+      "partido": "PP",
+      "uf": "RJ",
+      "email": "dep.luizantoniocorrea@camara.leg.br",
+      "telefone_gabinete": "3215-5929",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141485",
+      "nome": "Luiz Carlos Busato",
+      "partido": "UNIÃO",
+      "uf": "RS",
+      "email": "dep.luizcarlosbusato@camara.leg.br",
+      "telefone_gabinete": "3215-5579",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73778",
+      "nome": "Luiz Carlos Hauly",
+      "partido": "PODE",
+      "uf": "PR",
+      "email": "dep.luizcarloshauly@camara.leg.br",
+      "telefone_gabinete": "3215-5421",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204485",
+      "nome": "Luiz Carlos Motta",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.luizcarlosmotta@camara.leg.br",
+      "telefone_gabinete": "3215-5818",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74041",
+      "nome": "Luiz Couto",
+      "partido": "PT",
+      "uf": "PB",
+      "email": "dep.luizcouto@camara.leg.br",
+      "telefone_gabinete": "3215-5442",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141487",
+      "nome": "Luiz Fernando Faria",
+      "partido": "PSD",
+      "uf": "MG",
+      "email": "dep.luizfernandofaria@camara.leg.br",
+      "telefone_gabinete": "3215-5916",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "229432",
+      "nome": "Luiz Fernando Vampiro",
+      "partido": "MDB",
+      "uf": "SC",
+      "email": "dep.luizfernandovampiro@camara.leg.br",
+      "telefone_gabinete": "3215-5925",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220658",
+      "nome": "Luiz Gastão",
+      "partido": "PSD",
+      "uf": "CE",
+      "email": "dep.luizgastao@camara.leg.br",
+      "telefone_gabinete": "3215-5709",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204455",
+      "nome": "Luiz Lima",
+      "partido": "NOVO",
+      "uf": "RJ",
+      "email": "dep.luizlima@camara.leg.br",
+      "telefone_gabinete": "3215-5504",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "162332",
+      "nome": "Luiz Nishimori",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.luiznishimori@camara.leg.br",
+      "telefone_gabinete": "3215-5907",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204526",
+      "nome": "Luiz Philippe de Orleans e Bragança",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.luizphilippedeorleansebraganca@camara.leg.br",
+      "telefone_gabinete": "3215-5719",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74784",
+      "nome": "Luiza Erundina",
+      "partido": "PSOL",
+      "uf": "SP",
+      "email": "dep.luizaerundina@camara.leg.br",
+      "telefone_gabinete": "3215-5620",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178866",
+      "nome": "Luizianne Lins",
+      "partido": "PT",
+      "uf": "CE",
+      "email": "dep.luiziannelins@camara.leg.br",
+      "telefone_gabinete": "3215-5713",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220669",
+      "nome": "Lula da Fonte",
+      "partido": "PP",
+      "uf": "PE",
+      "email": "dep.luladafonte@camara.leg.br",
+      "telefone_gabinete": "3215-5626",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "166402",
+      "nome": "Magda Mofatto",
+      "partido": "PRD",
+      "uf": "GO",
+      "email": "dep.magdamofatto@camara.leg.br",
+      "telefone_gabinete": "3215-5934",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220648",
+      "nome": "Marangoni",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.marangoni@camara.leg.br",
+      "telefone_gabinete": "3215-5609",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "156190",
+      "nome": "Marcel van Hattem",
+      "partido": "NOVO",
+      "uf": "RS",
+      "email": "dep.marcelvanhattem@camara.leg.br",
+      "telefone_gabinete": "3215-5958",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "179000",
+      "nome": "Marcelo Álvaro Antônio",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.marceloalvaroantonio@camara.leg.br",
+      "telefone_gabinete": "3215-5824",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220599",
+      "nome": "Marcelo Crivella",
+      "partido": "REPUBLICANOS",
+      "uf": "RJ",
+      "email": "dep.marcelocrivella@camara.leg.br",
+      "telefone_gabinete": "3215-5218",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "133810",
+      "nome": "Marcelo Moraes",
+      "partido": "PL",
+      "uf": "RS",
+      "email": "dep.marcelomoraes@camara.leg.br",
+      "telefone_gabinete": "3215-5258",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178983",
+      "nome": "Marcio Alvino",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.marcioalvino@camara.leg.br",
+      "telefone_gabinete": "3215-5331",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "179001",
+      "nome": "Márcio Biolchi",
+      "partido": "MDB",
+      "uf": "RS",
+      "email": "dep.marciobiolchi@camara.leg.br",
+      "telefone_gabinete": "3215-5843",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220687",
+      "nome": "Márcio Honaiser",
+      "partido": "PDT",
+      "uf": "MA",
+      "email": "dep.marciohonaiser@camara.leg.br",
+      "telefone_gabinete": "3215-5643",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "81055",
+      "nome": "Márcio Jerry",
+      "partido": "PCdoB",
+      "uf": "MA",
+      "email": "dep.marciojerry@camara.leg.br",
+      "telefone_gabinete": "3215-5195",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "150418",
+      "nome": "Márcio Marinho",
+      "partido": "REPUBLICANOS",
+      "uf": "BA",
+      "email": "dep.marciomarinho@camara.leg.br",
+      "telefone_gabinete": "3215-5326",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160535",
+      "nome": "Marcon",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "dep.marcon@camara.leg.br",
+      "telefone_gabinete": "3215-5196",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204431",
+      "nome": "Marcos Aurélio Sampaio",
+      "partido": "PSD",
+      "uf": "PI",
+      "email": "dep.marcosaureliosampaio@camara.leg.br",
+      "telefone_gabinete": "3215-5771",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204506",
+      "nome": "Marcos Pereira",
+      "partido": "REPUBLICANOS",
+      "uf": "SP",
+      "email": "dep.marcospereira@camara.leg.br",
+      "telefone_gabinete": "3215-5523",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220547",
+      "nome": "Marcos Pollon",
+      "partido": "PL",
+      "uf": "MS",
+      "email": "dep.marcospollon@camara.leg.br",
+      "telefone_gabinete": "3215-5136",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178943",
+      "nome": "Marcos Soares",
+      "partido": "UNIÃO",
+      "uf": "RJ",
+      "email": "dep.marcossoares@camara.leg.br",
+      "telefone_gabinete": "3215-5310",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220604",
+      "nome": "Marcos Tavares",
+      "partido": "PDT",
+      "uf": "RJ",
+      "email": "dep.marcostavares@camara.leg.br",
+      "telefone_gabinete": "3215-5611",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220668",
+      "nome": "Maria Arraes",
+      "partido": "SOLIDARIEDADE",
+      "uf": "PE",
+      "email": "dep.mariaarraes@camara.leg.br",
+      "telefone_gabinete": "3215-5654",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74398",
+      "nome": "Maria do Rosário",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "dep.mariadorosario@camara.leg.br",
+      "telefone_gabinete": "3215-5312",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204540",
+      "nome": "Maria Rosas",
+      "partido": "REPUBLICANOS",
+      "uf": "SP",
+      "email": "dep.mariarosas@camara.leg.br",
+      "telefone_gabinete": "3215-5436",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220655",
+      "nome": "Mario Frias",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.mariofrias@camara.leg.br",
+      "telefone_gabinete": "3215-5826",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74158",
+      "nome": "Mário Heringer",
+      "partido": "PDT",
+      "uf": "MG",
+      "email": "dep.marioheringer@camara.leg.br",
+      "telefone_gabinete": "3215-5211",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178858",
+      "nome": "Mário Negromonte Jr.",
+      "partido": "PP",
+      "uf": "BA",
+      "email": "dep.marionegromontejr@camara.leg.br",
+      "telefone_gabinete": "3215-5424",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204566",
+      "nome": "Marreca Filho",
+      "partido": "PRD",
+      "uf": "MA",
+      "email": "dep.marrecafilho@camara.leg.br",
+      "telefone_gabinete": "3215-5537",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220572",
+      "nome": "Marussa Boldrin",
+      "partido": "MDB",
+      "uf": "GO",
+      "email": "dep.marussaboldrin@camara.leg.br",
+      "telefone_gabinete": "3215-5125",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178843",
+      "nome": "Marx Beltrão",
+      "partido": "PP",
+      "uf": "AL",
+      "email": "dep.marxbeltrao@camara.leg.br",
+      "telefone_gabinete": "3215-5722",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220661",
+      "nome": "Matheus Noronha",
+      "partido": "PL",
+      "uf": "CE",
+      "email": "dep.matheusnoronha@camara.leg.br",
+      "telefone_gabinete": "3215-5244",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220609",
+      "nome": "Maurício Carvalho",
+      "partido": "UNIÃO",
+      "uf": "RO",
+      "email": "dep.mauriciocarvalho@camara.leg.br",
+      "telefone_gabinete": "3215-5508",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220628",
+      "nome": "Mauricio do Vôlei",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.mauriciodovolei@camara.leg.br",
+      "telefone_gabinete": "3215-5539",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220550",
+      "nome": "Mauricio Marcon",
+      "partido": "PODE",
+      "uf": "RS",
+      "email": "dep.mauriciomarcon@camara.leg.br",
+      "telefone_gabinete": "3215-5339",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220647",
+      "nome": "Mauricio Neves",
+      "partido": "PP",
+      "uf": "SP",
+      "email": "dep.mauricioneves@camara.leg.br",
+      "telefone_gabinete": "3215-5712",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204486",
+      "nome": "Mauro Benevides Filho",
+      "partido": "PDT",
+      "uf": "CE",
+      "email": "dep.maurobenevidesfilho@camara.leg.br",
+      "telefone_gabinete": "3215-5731",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220607",
+      "nome": "Max Lemos",
+      "partido": "PDT",
+      "uf": "RJ",
+      "email": "dep.maxlemos@camara.leg.br",
+      "telefone_gabinete": "3215-5429",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220591",
+      "nome": "Meire Serafim",
+      "partido": "UNIÃO",
+      "uf": "AC",
+      "email": "dep.meireserafim@camara.leg.br",
+      "telefone_gabinete": "3215-5202",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74428",
+      "nome": "Mendonça Filho",
+      "partido": "UNIÃO",
+      "uf": "PE",
+      "email": "dep.mendoncafilho@camara.leg.br",
+      "telefone_gabinete": "3215-5516",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "188097",
+      "nome": "Merlong Solano",
+      "partido": "PT",
+      "uf": "PI",
+      "email": "dep.merlongsolano@camara.leg.br",
+      "telefone_gabinete": "3215-5624",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220585",
+      "nome": "Mersinho Lucena",
+      "partido": "PP",
+      "uf": "PB",
+      "email": "dep.mersinholucena@camara.leg.br",
+      "telefone_gabinete": "3215-5425",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220530",
+      "nome": "Messias Donato",
+      "partido": "REPUBLICANOS",
+      "uf": "ES",
+      "email": "dep.messiasdonato@camara.leg.br",
+      "telefone_gabinete": "3215-5417",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "171786",
+      "nome": "Miguel Ângelo",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.miguelangelo@camara.leg.br",
+      "telefone_gabinete": "3215-5343",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178985",
+      "nome": "Miguel Lombardi",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.miguellombardi@camara.leg.br",
+      "telefone_gabinete": "3215-5835",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178895",
+      "nome": "Misael Varella",
+      "partido": "PSD",
+      "uf": "MG",
+      "email": "dep.misaelvarella@camara.leg.br",
+      "telefone_gabinete": "3215-5721",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178997",
+      "nome": "Moses Rodrigues",
+      "partido": "UNIÃO",
+      "uf": "CE",
+      "email": "dep.mosesrodrigues@camara.leg.br",
+      "telefone_gabinete": "3215-5809",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220617",
+      "nome": "Murillo Gouvea",
+      "partido": "UNIÃO",
+      "uf": "RJ",
+      "email": "dep.murillogouvea@camara.leg.br",
+      "telefone_gabinete": "3215-5631",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220584",
+      "nome": "Murilo Galdino",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.murilogaldino@camara.leg.br",
+      "telefone_gabinete": "3215-5815",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204453",
+      "nome": "Natália Bonavides",
+      "partido": "PT",
+      "uf": "RN",
+      "email": "dep.nataliabonavides@camara.leg.br",
+      "telefone_gabinete": "3215-5748",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204449",
+      "nome": "Nelson Barbudo",
+      "partido": "PL",
+      "uf": "MT",
+      "email": "dep.nelsonbarbudo@camara.leg.br",
+      "telefone_gabinete": "3215-5739",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220622",
+      "nome": "Nely Aquino",
+      "partido": "PODE",
+      "uf": "MG",
+      "email": "dep.nelyaquino@camara.leg.br",
+      "telefone_gabinete": "3215-5943",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220703",
+      "nome": "Neto Carletto",
+      "partido": "AVANTE",
+      "uf": "BA",
+      "email": "dep.netocarletto@camara.leg.br",
+      "telefone_gabinete": "3215-5262",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178896",
+      "nome": "Newton Cardoso Jr",
+      "partido": "MDB",
+      "uf": "MG",
+      "email": "dep.newtoncardosojr@camara.leg.br",
+      "telefone_gabinete": "3215-5932",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204479",
+      "nome": "Nicoletti",
+      "partido": "UNIÃO",
+      "uf": "RR",
+      "email": "dep.nicoletti@camara.leg.br",
+      "telefone_gabinete": "3215-5746",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "209787",
+      "nome": "Nikolas Ferreira",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.nikolasferreira@camara.leg.br",
+      "telefone_gabinete": "3215-5743",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178986",
+      "nome": "Nilto Tatto",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.niltotatto@camara.leg.br",
+      "telefone_gabinete": "3215-5502",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74159",
+      "nome": "Odair Cunha",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.odaircunha@camara.leg.br",
+      "telefone_gabinete": "3215-5556",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204498",
+      "nome": "Olival Marques",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.olivalmarques@camara.leg.br",
+      "telefone_gabinete": "3215-5982",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178987",
+      "nome": "Orlando Silva",
+      "partido": "PCdoB",
+      "uf": "SP",
+      "email": "dep.orlandosilva@camara.leg.br",
+      "telefone_gabinete": "3215-5217",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73692",
+      "nome": "Osmar Terra",
+      "partido": "PL",
+      "uf": "RS",
+      "email": "dep.osmarterra@camara.leg.br",
+      "telefone_gabinete": "3215-5927",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204422",
+      "nome": "Ossesio Silva",
+      "partido": "REPUBLICANOS",
+      "uf": "PE",
+      "email": "dep.ossesiosilva@camara.leg.br",
+      "telefone_gabinete": "3215-5402",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204441",
+      "nome": "Otoni de Paula",
+      "partido": "MDB",
+      "uf": "RJ",
+      "email": "dep.otonidepaula@camara.leg.br",
+      "telefone_gabinete": "3215-5682",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204573",
+      "nome": "Otto Alencar Filho",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "dep.ottoalencarfilho@camara.leg.br",
+      "telefone_gabinete": "3215-5444",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220706",
+      "nome": "Padovani",
+      "partido": "UNIÃO",
+      "uf": "PR",
+      "email": "dep.padovani@camara.leg.br",
+      "telefone_gabinete": "3215-5923",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160556",
+      "nome": "Padre João",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.padrejoao@camara.leg.br",
+      "telefone_gabinete": "3215-5762",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "230762",
+      "nome": "Pastor Claudio Mariano",
+      "partido": "UNIÃO",
+      "uf": "PA",
+      "email": "dep.pastorclaudiomariano@camara.leg.br",
+      "telefone_gabinete": "3215-5236",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "180214",
+      "nome": "Pastor Diniz",
+      "partido": "UNIÃO",
+      "uf": "RR",
+      "email": "dep.pastordiniz@camara.leg.br",
+      "telefone_gabinete": "3215-5423",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160642",
+      "nome": "Pastor Eurico",
+      "partido": "PL",
+      "uf": "PE",
+      "email": "dep.pastoreurico@camara.leg.br",
+      "telefone_gabinete": "3215-5906",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204570",
+      "nome": "Pastor Gil",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.pastorgil@camara.leg.br",
+      "telefone_gabinete": "3215-5660",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220615",
+      "nome": "Pastor Henrique Vieira",
+      "partido": "PSOL",
+      "uf": "RJ",
+      "email": "dep.pastorhenriquevieira@camara.leg.br",
+      "telefone_gabinete": "3215-5882",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204553",
+      "nome": "Pastor Sargento Isidório",
+      "partido": "AVANTE",
+      "uf": "BA",
+      "email": "dep.pastorsargentoisidorio@camara.leg.br",
+      "telefone_gabinete": "3215-5817",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74160",
+      "nome": "Patrus Ananias",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.patrusananias@camara.leg.br",
+      "telefone_gabinete": "3215-5720",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74095",
+      "nome": "Pauderney Avelino",
+      "partido": "UNIÃO",
+      "uf": "AM",
+      "email": "dep.pauderneyavelino@camara.leg.br",
+      "telefone_gabinete": "3215-5607",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "171617",
+      "nome": "Paulão",
+      "partido": "PT",
+      "uf": "AL",
+      "email": "dep.paulao@camara.leg.br",
+      "telefone_gabinete": "3215-5671",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141518",
+      "nome": "Paulinho da Força",
+      "partido": "SOLIDARIEDADE",
+      "uf": "SP",
+      "email": "dep.paulinhodaforca@camara.leg.br",
+      "telefone_gabinete": "3215-5241",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141516",
+      "nome": "Paulo Abi-Ackel",
+      "partido": "PSDB",
+      "uf": "MG",
+      "email": "dep.pauloabiackel@camara.leg.br",
+      "telefone_gabinete": "3215-5718",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220650",
+      "nome": "Paulo Alexandre Barbosa",
+      "partido": "PSDB",
+      "uf": "SP",
+      "email": "dep.pauloalexandrebarbosa@camara.leg.br",
+      "telefone_gabinete": "3215-5937",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178860",
+      "nome": "Paulo Azi",
+      "partido": "UNIÃO",
+      "uf": "BA",
+      "email": "dep.pauloazi@camara.leg.br",
+      "telefone_gabinete": "3215-5422",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160517",
+      "nome": "Paulo Folletto",
+      "partido": "PSB",
+      "uf": "ES",
+      "email": "dep.paulofolletto@camara.leg.br",
+      "telefone_gabinete": "3215-5839",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160558",
+      "nome": "Paulo Freire Costa",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.paulofreirecosta@camara.leg.br",
+      "telefone_gabinete": "3215-5416",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204492",
+      "nome": "Paulo Guedes",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.pauloguedes@camara.leg.br",
+      "telefone_gabinete": "3215-5833",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "233592",
+      "nome": "Paulo Lemos",
+      "partido": "PSOL",
+      "uf": "AP",
+      "email": "dep.paulolemos@camara.leg.br",
+      "telefone_gabinete": "3215-5503",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220685",
+      "nome": "Paulo Litro",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.paulolitro@camara.leg.br",
+      "telefone_gabinete": "3215-5612",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74574",
+      "nome": "Paulo Magalhães",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "dep.paulomagalhaes@camara.leg.br",
+      "telefone_gabinete": "3215-5903",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74400",
+      "nome": "Paulo Pimenta",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "dep.paulopimenta@camara.leg.br",
+      "telefone_gabinete": "3215-5552",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220630",
+      "nome": "Pedro Aihara",
+      "partido": "PRD",
+      "uf": "MG",
+      "email": "dep.pedroaihara@camara.leg.br",
+      "telefone_gabinete": "3215-5323",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220667",
+      "nome": "Pedro Campos",
+      "partido": "PSB",
+      "uf": "PE",
+      "email": "dep.pedrocampos@camara.leg.br",
+      "telefone_gabinete": "3215-5846",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "122974",
+      "nome": "Pedro Lucas Fernandes",
+      "partido": "UNIÃO",
+      "uf": "MA",
+      "email": "dep.pedrolucasfernandes@camara.leg.br",
+      "telefone_gabinete": "3215-5814",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204395",
+      "nome": "Pedro Lupion",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.pedrolupion@camara.leg.br",
+      "telefone_gabinete": "3215-5812",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "122158",
+      "nome": "Pedro Paulo",
+      "partido": "PSD",
+      "uf": "RJ",
+      "email": "dep.pedropaulo@camara.leg.br",
+      "telefone_gabinete": "3215-5727",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160604",
+      "nome": "Pedro Uczai",
+      "partido": "PT",
+      "uf": "SC",
+      "email": "dep.pedrouczai@camara.leg.br",
+      "telefone_gabinete": "3215-5229",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204406",
+      "nome": "Pedro Westphalen",
+      "partido": "PP",
+      "uf": "RS",
+      "email": "dep.pedrowestphalen@camara.leg.br",
+      "telefone_gabinete": "3215-5526",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "161440",
+      "nome": "Pezenti",
+      "partido": "MDB",
+      "uf": "SC",
+      "email": "dep.pezenti@camara.leg.br",
+      "telefone_gabinete": "3215-5801",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204524",
+      "nome": "Pinheirinho",
+      "partido": "PP",
+      "uf": "MG",
+      "email": "dep.pinheirinho@camara.leg.br",
+      "telefone_gabinete": "3215-5685",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73486",
+      "nome": "Pompeo de Mattos",
+      "partido": "PDT",
+      "uf": "RS",
+      "email": "dep.pompeodemattos@camara.leg.br",
+      "telefone_gabinete": "3215-5704",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160601",
+      "nome": "Pr. Marco Feliciano",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.pr.marcofeliciano@camara.leg.br",
+      "telefone_gabinete": "3215-5254",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220533",
+      "nome": "Prof. Reginaldo Veras",
+      "partido": "PV",
+      "uf": "DF",
+      "email": "dep.prof.reginaldoveras@camara.leg.br",
+      "telefone_gabinete": "3215-5293",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204390",
+      "nome": "Professor Alcides",
+      "partido": "PL",
+      "uf": "GO",
+      "email": "dep.professoralcides@camara.leg.br",
+      "telefone_gabinete": "3215-5441",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "221338",
+      "nome": "Professora Luciene Cavalcante",
+      "partido": "PSOL",
+      "uf": "SP",
+      "email": "dep.professoralucienecavalcante@camara.leg.br",
+      "telefone_gabinete": "3215-5617",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160641",
+      "nome": "Professora Marcivania",
+      "partido": "PCdoB",
+      "uf": "AP",
+      "email": "dep.professoramarcivania@camara.leg.br",
+      "telefone_gabinete": "3215-5530",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220586",
+      "nome": "Rafael Brito",
+      "partido": "MDB",
+      "uf": "AL",
+      "email": "dep.rafaelbrito@camara.leg.br",
+      "telefone_gabinete": "3215-5462",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "233594",
+      "nome": "Rafael Fera",
+      "partido": "PODE",
+      "uf": "RO",
+      "email": "dep.rafaelfera@camara.leg.br",
+      "telefone_gabinete": "3215-5333",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220532",
+      "nome": "Rafael Prudente",
+      "partido": "MDB",
+      "uf": "DF",
+      "email": "dep.rafaelprudente@camara.leg.br",
+      "telefone_gabinete": "3215-5260",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220626",
+      "nome": "Rafael Simoes",
+      "partido": "UNIÃO",
+      "uf": "MG",
+      "email": "dep.rafaelsimoes@camara.leg.br",
+      "telefone_gabinete": "3215-5806",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204567",
+      "nome": "Raimundo Costa",
+      "partido": "PODE",
+      "uf": "BA",
+      "email": "dep.raimundocosta@camara.leg.br",
+      "telefone_gabinete": "3215-5226",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74084",
+      "nome": "Raimundo Santos",
+      "partido": "PSD",
+      "uf": "PA",
+      "email": "dep.raimundosantos@camara.leg.br",
+      "telefone_gabinete": "3215-5787",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74161",
+      "nome": "Reginaldo Lopes",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.reginaldolopes@camara.leg.br",
+      "telefone_gabinete": "3215-5426",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220606",
+      "nome": "Reimont",
+      "partido": "PT",
+      "uf": "RJ",
+      "email": "dep.reimont@camara.leg.br",
+      "telefone_gabinete": "3215-5348",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "205865",
+      "nome": "Reinhold Stephanes",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.reinholdstephanes@camara.leg.br",
+      "telefone_gabinete": "3215-5221",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178989",
+      "nome": "Renata Abreu",
+      "partido": "PODE",
+      "uf": "SP",
+      "email": "dep.renataabreu@camara.leg.br",
+      "telefone_gabinete": "3215-5717",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "153423",
+      "nome": "Renilce Nicodemos",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "dep.renilcenicodemos@camara.leg.br",
+      "telefone_gabinete": "3215-5822",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73801",
+      "nome": "Renildo Calheiros",
+      "partido": "PCdoB",
+      "uf": "PE",
+      "email": "dep.renildocalheiros@camara.leg.br",
+      "telefone_gabinete": "3215-5915",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "175765",
+      "nome": "Ribamar Silva",
+      "partido": "PSD",
+      "uf": "SP",
+      "email": "dep.ribamarsilva@camara.leg.br",
+      "telefone_gabinete": "3215-5904",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "221329",
+      "nome": "Ricardo Abrão",
+      "partido": "UNIÃO",
+      "uf": "RJ",
+      "email": "dep.ricardoabrao@camara.leg.br",
+      "telefone_gabinete": "3215-5507",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220543",
+      "nome": "Ricardo Ayres",
+      "partido": "REPUBLICANOS",
+      "uf": "TO",
+      "email": "dep.ricardoayres@camara.leg.br",
+      "telefone_gabinete": "3215-5676",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73788",
+      "nome": "Ricardo Barros",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.ricardobarros@camara.leg.br",
+      "telefone_gabinete": "3215-5412",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204362",
+      "nome": "Ricardo Guidi",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "dep.ricardoguidi@camara.leg.br",
+      "telefone_gabinete": "3215-5407",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220694",
+      "nome": "Ricardo Maia",
+      "partido": "MDB",
+      "uf": "BA",
+      "email": "dep.ricardomaia@camara.leg.br",
+      "telefone_gabinete": "3215-5805",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220633",
+      "nome": "Ricardo Salles",
+      "partido": "NOVO",
+      "uf": "SP",
+      "email": "dep.ricardosalles@camara.leg.br",
+      "telefone_gabinete": "3215-5458",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204489",
+      "nome": "Robério Monteiro",
+      "partido": "PDT",
+      "uf": "CE",
+      "email": "dep.roberiomonteiro@camara.leg.br",
+      "telefone_gabinete": "3215-5652",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220693",
+      "nome": "Roberta Roma",
+      "partido": "PL",
+      "uf": "BA",
+      "email": "dep.robertaroma@camara.leg.br",
+      "telefone_gabinete": "3215-5670",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220588",
+      "nome": "Roberto Duarte",
+      "partido": "REPUBLICANOS",
+      "uf": "AC",
+      "email": "dep.robertoduarte@camara.leg.br",
+      "telefone_gabinete": "3215-5827",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220613",
+      "nome": "Roberto Monteiro Pai",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.robertomonteiropai@camara.leg.br",
+      "telefone_gabinete": "3215-5316",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220624",
+      "nome": "Robinson Faria",
+      "partido": "PP",
+      "uf": "RN",
+      "email": "dep.robinsonfaria@camara.leg.br",
+      "telefone_gabinete": "3215-5706",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220546",
+      "nome": "Rodolfo Nogueira",
+      "partido": "PL",
+      "uf": "MS",
+      "email": "dep.rodolfonogueira@camara.leg.br",
+      "telefone_gabinete": "3215-5776",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "230767",
+      "nome": "Rodrigo da Zaeli",
+      "partido": "PL",
+      "uf": "MT",
+      "email": "dep.rodrigodazaeli@camara.leg.br",
+      "telefone_gabinete": "3215-5648",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141531",
+      "nome": "Rodrigo de Castro",
+      "partido": "UNIÃO",
+      "uf": "MG",
+      "email": "dep.rodrigodecastro@camara.leg.br",
+      "telefone_gabinete": "3215-5701",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "223128",
+      "nome": "Rodrigo Estacho",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.rodrigoestacho@camara.leg.br",
+      "telefone_gabinete": "3215-5454",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220641",
+      "nome": "Rodrigo Gambale",
+      "partido": "PODE",
+      "uf": "SP",
+      "email": "dep.rodrigogambale@camara.leg.br",
+      "telefone_gabinete": "3215-5939",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141533",
+      "nome": "Rodrigo Rollemberg",
+      "partido": "PSB",
+      "uf": "DF",
+      "email": "dep.rodrigorollemberg@camara.leg.br",
+      "telefone_gabinete": "3215-5542",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "165470",
+      "nome": "Rodrigo Valadares",
+      "partido": "UNIÃO",
+      "uf": "SE",
+      "email": "dep.rodrigovaladares@camara.leg.br",
+      "telefone_gabinete": "3215-5945",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220695",
+      "nome": "Rogéria Santos",
+      "partido": "REPUBLICANOS",
+      "uf": "BA",
+      "email": "dep.rogeriasantos@camara.leg.br",
+      "telefone_gabinete": "3215-5338",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204480",
+      "nome": "Rogério Correia",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.rogeriocorreia@camara.leg.br",
+      "telefone_gabinete": "3215-5614",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160629",
+      "nome": "Romero Rodrigues",
+      "partido": "PODE",
+      "uf": "PB",
+      "email": "dep.romerorodrigues@camara.leg.br",
+      "telefone_gabinete": "3215-5610",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "163321",
+      "nome": "Ronaldo Nogueira",
+      "partido": "REPUBLICANOS",
+      "uf": "RS",
+      "email": "dep.ronaldonogueira@camara.leg.br",
+      "telefone_gabinete": "3215-5686",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204525",
+      "nome": "Rosana Valle",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.rosanavalle@camara.leg.br",
+      "telefone_gabinete": "3215-5529",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220644",
+      "nome": "Rosangela Moro",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.rosangelamoro@camara.leg.br",
+      "telefone_gabinete": "3215-5434",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220620",
+      "nome": "Rosângela Reis",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.rosangelareis@camara.leg.br",
+      "telefone_gabinete": "3215-5844",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74371",
+      "nome": "Rubens Otoni",
+      "partido": "PT",
+      "uf": "GO",
+      "email": "dep.rubensotoni@camara.leg.br",
+      "telefone_gabinete": "3215-5501",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178887",
+      "nome": "Rubens Pereira Júnior",
+      "partido": "PT",
+      "uf": "MA",
+      "email": "dep.rubenspereirajunior@camara.leg.br",
+      "telefone_gabinete": "3215-5773",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "73604",
+      "nome": "Rui Falcão",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.ruifalcao@camara.leg.br",
+      "telefone_gabinete": "3215-5819",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160635",
+      "nome": "Ruy Carneiro",
+      "partido": "PODE",
+      "uf": "PB",
+      "email": "dep.ruycarneiro@camara.leg.br",
+      "telefone_gabinete": "3215-5536",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204535",
+      "nome": "Sâmia Bomfim",
+      "partido": "PSOL",
+      "uf": "SP",
+      "email": "dep.samiabomfim@camara.leg.br",
+      "telefone_gabinete": "3215-5642",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "233598",
+      "nome": "Samuel Santos",
+      "partido": "PODE",
+      "uf": "GO",
+      "email": "dep.samuelsantos@camara.leg.br",
+      "telefone_gabinete": "3215-5295",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220631",
+      "nome": "Samuel Viana",
+      "partido": "REPUBLICANOS",
+      "uf": "MG",
+      "email": "dep.samuelviana@camara.leg.br",
+      "telefone_gabinete": "3215-5627",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204416",
+      "nome": "Sanderson",
+      "partido": "PL",
+      "uf": "RS",
+      "email": "dep.sanderson@camara.leg.br",
+      "telefone_gabinete": "3215-5354",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204387",
+      "nome": "Sargento Fahur",
+      "partido": "PSD",
+      "uf": "PR",
+      "email": "dep.sargentofahur@camara.leg.br",
+      "telefone_gabinete": "3215-5858",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220621",
+      "nome": "Sargento Gonçalves",
+      "partido": "PL",
+      "uf": "RN",
+      "email": "dep.sargentogoncalves@camara.leg.br",
+      "telefone_gabinete": "3215-5569",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220618",
+      "nome": "Sargento Portugal",
+      "partido": "PODE",
+      "uf": "RJ",
+      "email": "dep.sargentoportugal@camara.leg.br",
+      "telefone_gabinete": "3215-5527",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "226837",
+      "nome": "Saulo Pedroso",
+      "partido": "PSD",
+      "uf": "SP",
+      "email": "dep.saulopedroso@camara.leg.br",
+      "telefone_gabinete": "3215-5820",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178933",
+      "nome": "Sergio Souza",
+      "partido": "MDB",
+      "uf": "PR",
+      "email": "dep.sergiosouza@camara.leg.br",
+      "telefone_gabinete": "3215-5702",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204557",
+      "nome": "Sidney Leite",
+      "partido": "PSD",
+      "uf": "AM",
+      "email": "dep.sidneyleite@camara.leg.br",
+      "telefone_gabinete": "3215-5770",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74356",
+      "nome": "Silas Câmara",
+      "partido": "REPUBLICANOS",
+      "uf": "AM",
+      "email": "dep.silascamara@camara.leg.br",
+      "telefone_gabinete": "3215-5532",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204360",
+      "nome": "Silvia Cristina",
+      "partido": "PP",
+      "uf": "RO",
+      "email": "dep.silviacristina@camara.leg.br",
+      "telefone_gabinete": "3215-5524",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220569",
+      "nome": "Silvye Alves",
+      "partido": "UNIÃO",
+      "uf": "GO",
+      "email": "dep.silvyealves@camara.leg.br",
+      "telefone_gabinete": "3215-5850",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220651",
+      "nome": "Simone Marquetto",
+      "partido": "MDB",
+      "uf": "SP",
+      "email": "dep.simonemarquetto@camara.leg.br",
+      "telefone_gabinete": "3215-5834",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "104552",
+      "nome": "Socorro Neri",
+      "partido": "PP",
+      "uf": "AC",
+      "email": "dep.socorroneri@camara.leg.br",
+      "telefone_gabinete": "3215-5342",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178946",
+      "nome": "Soraya Santos",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.sorayasantos@camara.leg.br",
+      "telefone_gabinete": "3215-5324",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178947",
+      "nome": "Sóstenes Cavalcante",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "dep.sostenescavalcante@camara.leg.br",
+      "telefone_gabinete": "3215-5560",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "92776",
+      "nome": "Stefano Aguiar",
+      "partido": "PSD",
+      "uf": "MG",
+      "email": "dep.stefanoaguiar@camara.leg.br",
+      "telefone_gabinete": "3215-5341",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204534",
+      "nome": "Tabata Amaral",
+      "partido": "PSB",
+      "uf": "SP",
+      "email": "dep.tabataamaral@camara.leg.br",
+      "telefone_gabinete": "3215-5848",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220682",
+      "nome": "Tadeu Veneri",
+      "partido": "PT",
+      "uf": "PR",
+      "email": "dep.tadeuveneri@camara.leg.br",
+      "telefone_gabinete": "3215-5952",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204464",
+      "nome": "Talíria Petrone",
+      "partido": "PSOL",
+      "uf": "RJ",
+      "email": "dep.taliriapetrone@camara.leg.br",
+      "telefone_gabinete": "3215-5193",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220598",
+      "nome": "Tarcísio Motta",
+      "partido": "PSOL",
+      "uf": "RJ",
+      "email": "dep.tarcisiomotta@camara.leg.br",
+      "telefone_gabinete": "3215-5413",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220560",
+      "nome": "Thiago de Joaldo",
+      "partido": "PP",
+      "uf": "SE",
+      "email": "dep.thiagodejoaldo@camara.leg.br",
+      "telefone_gabinete": "3215-5291",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220597",
+      "nome": "Thiago Flores",
+      "partido": "REPUBLICANOS",
+      "uf": "RO",
+      "email": "dep.thiagoflores@camara.leg.br",
+      "telefone_gabinete": "3215-5437",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "143084",
+      "nome": "Tiago Dimas",
+      "partido": "PODE",
+      "uf": "TO",
+      "email": "dep.tiagodimas@camara.leg.br",
+      "telefone_gabinete": "3215-5512",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220684",
+      "nome": "Tião Medeiros",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.tiaomedeiros@camara.leg.br",
+      "telefone_gabinete": "3215-5942",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160976",
+      "nome": "Tiririca",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "dep.tiririca@camara.leg.br",
+      "telefone_gabinete": "3215-5404",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178934",
+      "nome": "Toninho Wandscheer",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.toninhowandscheer@camara.leg.br",
+      "telefone_gabinete": "3215-5902",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "157130",
+      "nome": "Túlio Gadêlha",
+      "partido": "REDE",
+      "uf": "PE",
+      "email": "dep.tuliogadelha@camara.leg.br",
+      "telefone_gabinete": "3215-5360",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160610",
+      "nome": "Valmir Assunção",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.valmirassuncao@camara.leg.br",
+      "telefone_gabinete": "3215-5887",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74376",
+      "nome": "Vander Loubet",
+      "partido": "PT",
+      "uf": "MS",
+      "email": "dep.vanderloubet@camara.leg.br",
+      "telefone_gabinete": "3215-5838",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204396",
+      "nome": "Vermelho",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.vermelho@camara.leg.br",
+      "telefone_gabinete": "3215-5920",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74283",
+      "nome": "Vicentinho",
+      "partido": "PT",
+      "uf": "SP",
+      "email": "dep.vicentinho@camara.leg.br",
+      "telefone_gabinete": "3215-5684",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "137070",
+      "nome": "Vicentinho Júnior",
+      "partido": "PP",
+      "uf": "TO",
+      "email": "dep.vicentinhojunior@camara.leg.br",
+      "telefone_gabinete": "3215-5204",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "141555",
+      "nome": "Vinicius Carvalho",
+      "partido": "REPUBLICANOS",
+      "uf": "SP",
+      "email": "dep.viniciuscarvalho@camara.leg.br",
+      "telefone_gabinete": "3215-5356",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160591",
+      "nome": "Vinicius Gurgel",
+      "partido": "PL",
+      "uf": "AP",
+      "email": "dep.viniciusgurgel@camara.leg.br",
+      "telefone_gabinete": "3215-5852",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178992",
+      "nome": "Vitor Lippi",
+      "partido": "PSDB",
+      "uf": "SP",
+      "email": "dep.vitorlippi@camara.leg.br",
+      "telefone_gabinete": "3215-5823",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "91228",
+      "nome": "Waldemar Oliveira",
+      "partido": "AVANTE",
+      "uf": "PE",
+      "email": "dep.waldemaroliveira@camara.leg.br",
+      "telefone_gabinete": "3215-5225",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160569",
+      "nome": "Waldenor Pereira",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.waldenorpereira@camara.leg.br",
+      "telefone_gabinete": "3215-5954",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160518",
+      "nome": "Weliton Prado",
+      "partido": "SOLIDARIEDADE",
+      "uf": "MG",
+      "email": "dep.welitonprado@camara.leg.br",
+      "telefone_gabinete": "3215-5250",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74043",
+      "nome": "Wellington Roberto",
+      "partido": "PL",
+      "uf": "PB",
+      "email": "dep.wellingtonroberto@camara.leg.br",
+      "telefone_gabinete": "3215-5514",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "224333",
+      "nome": "Welter",
+      "partido": "PT",
+      "uf": "PR",
+      "email": "dep.welter@camara.leg.br",
+      "telefone_gabinete": "3215-5303",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74044",
+      "nome": "Wilson Santiago",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.wilsonsantiago@camara.leg.br",
+      "telefone_gabinete": "3215-5534",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220564",
+      "nome": "Yandra Moura",
+      "partido": "UNIÃO",
+      "uf": "SE",
+      "email": "dep.yandramoura@camara.leg.br",
+      "telefone_gabinete": "3215-5475",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220660",
+      "nome": "Yury do Paredão",
+      "partido": "MDB",
+      "uf": "CE",
+      "email": "dep.yurydoparedao@camara.leg.br",
+      "telefone_gabinete": "3215-5545",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "230768",
+      "nome": "Zé Adriano",
+      "partido": "PP",
+      "uf": "AC",
+      "email": "dep.zeadriano@camara.leg.br",
+      "telefone_gabinete": "3215-5301",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220536",
+      "nome": "Zé Haroldo Cathedral",
+      "partido": "PSD",
+      "uf": "RR",
+      "email": "dep.zeharoldocathedral@camara.leg.br",
+      "telefone_gabinete": "3215-5782",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204559",
+      "nome": "Zé Neto",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "dep.zeneto@camara.leg.br",
+      "telefone_gabinete": "3215-5986",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160632",
+      "nome": "Zé Silva",
+      "partido": "SOLIDARIEDADE",
+      "uf": "MG",
+      "email": "dep.zesilva@camara.leg.br",
+      "telefone_gabinete": "3215-5608",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220558",
+      "nome": "Zé Trovão",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "dep.zetrovao@camara.leg.br",
+      "telefone_gabinete": "3215-5921",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204517",
+      "nome": "Zé Vitor",
+      "partido": "PL",
+      "uf": "MG",
+      "email": "dep.zevitor@camara.leg.br",
+      "telefone_gabinete": "3215-5525",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160592",
+      "nome": "Zeca Dirceu",
+      "partido": "PT",
+      "uf": "PR",
+      "email": "dep.zecadirceu@camara.leg.br",
+      "telefone_gabinete": "3215-5613",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220592",
+      "nome": "Zezinho Barbary",
+      "partido": "PP",
+      "uf": "AC",
+      "email": "dep.zezinhobarbary@camara.leg.br",
+      "telefone_gabinete": "3215-5239",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220552",
+      "nome": "Zucco",
+      "partido": "PL",
+      "uf": "RS",
+      "email": "dep.zucco@camara.leg.br",
+      "telefone_gabinete": "3215-5962",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5672",
+      "nome": "Alan Rick",
+      "partido": "UNIÃO",
+      "uf": "AC",
+      "email": "",
+      "telefone_gabinete": "33036333",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5982",
+      "nome": "Alessandro Vieira",
+      "partido": "MDB",
+      "uf": "SE",
+      "email": "",
+      "telefone_gabinete": "33039011",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6358",
+      "nome": "Ana Paula Lobato",
+      "partido": "PDT",
+      "uf": "MA",
+      "email": "",
+      "telefone_gabinete": "33032967",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5967",
+      "nome": "Angelo Coronel",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "",
+      "telefone_gabinete": "33036103",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6009",
+      "nome": "Astronauta Marcos Pontes",
+      "partido": "PL",
+      "uf": "SP",
+      "email": "",
+      "telefone_gabinete": "33031177",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6350",
+      "nome": "Augusta Brito",
+      "partido": "PT",
+      "uf": "CE",
+      "email": "",
+      "telefone_gabinete": "33035940",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4639",
+      "nome": "Beto Faro",
+      "partido": "PT",
+      "uf": "PA",
+      "email": "",
+      "telefone_gabinete": "33035220",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5936",
+      "nome": "Carlos Portinho",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "",
+      "telefone_gabinete": "33036640",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5990",
+      "nome": "Carlos Viana",
+      "partido": "PODEMOS",
+      "uf": "MG",
+      "email": "",
+      "telefone_gabinete": "33033100",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-470",
+      "nome": "Chico Rodrigues",
+      "partido": "PSB",
+      "uf": "RR",
+      "email": "",
+      "telefone_gabinete": "33032281",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5973",
+      "nome": "Cid Gomes",
+      "partido": "PSB",
+      "uf": "CE",
+      "email": "",
+      "telefone_gabinete": "33036460",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-739",
+      "nome": "Ciro Nogueira",
+      "partido": "PP",
+      "uf": "PI",
+      "email": "",
+      "telefone_gabinete": "33036187",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6337",
+      "nome": "Cleitinho",
+      "partido": "REPUBLICANOS",
+      "uf": "MG",
+      "email": "",
+      "telefone_gabinete": "33033811",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-475",
+      "nome": "Confúcio Moura",
+      "partido": "MDB",
+      "uf": "RO",
+      "email": "",
+      "telefone_gabinete": "33032470",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6335",
+      "nome": "Damares Alves",
+      "partido": "REPUBLICANOS",
+      "uf": "DF",
+      "email": "",
+      "telefone_gabinete": "33033265",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5998",
+      "nome": "Daniella Ribeiro",
+      "partido": "PP",
+      "uf": "PB",
+      "email": "",
+      "telefone_gabinete": "33036788",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-3830",
+      "nome": "Davi Alcolumbre",
+      "partido": "UNIÃO",
+      "uf": "AP",
+      "email": "",
+      "telefone_gabinete": "33036717",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5793",
+      "nome": "Dr. Hiran",
+      "partido": "PP",
+      "uf": "RR",
+      "email": "",
+      "telefone_gabinete": "33036251",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5906",
+      "nome": "Dra. Eudócia",
+      "partido": "PL",
+      "uf": "AL",
+      "email": "",
+      "telefone_gabinete": "33036083",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4994",
+      "nome": "Eduardo Braga",
+      "partido": "MDB",
+      "uf": "AM",
+      "email": "",
+      "telefone_gabinete": "33036230",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5976",
+      "nome": "Eduardo Girão",
+      "partido": "NOVO",
+      "uf": "CE",
+      "email": "",
+      "telefone_gabinete": "33036677",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-3777",
+      "nome": "Eduardo Gomes",
+      "partido": "PL",
+      "uf": "TO",
+      "email": "",
+      "telefone_gabinete": "33036349",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4642",
+      "nome": "Efraim Filho",
+      "partido": "UNIÃO",
+      "uf": "PB",
+      "email": "",
+      "telefone_gabinete": "33035934",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5718",
+      "nome": "Eliziane Gama",
+      "partido": "PSD",
+      "uf": "MA",
+      "email": "",
+      "telefone_gabinete": "33036741",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-22",
+      "nome": "Esperidião Amin",
+      "partido": "PP",
+      "uf": "SC",
+      "email": "",
+      "telefone_gabinete": "33036446",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5953",
+      "nome": "Fabiano Contarato",
+      "partido": "PT",
+      "uf": "ES",
+      "email": "",
+      "telefone_gabinete": "33039054",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5917",
+      "nome": "Fernando Dueire",
+      "partido": "MDB",
+      "uf": "PE",
+      "email": "",
+      "telefone_gabinete": "33033522",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6345",
+      "nome": "Fernando Farias",
+      "partido": "MDB",
+      "uf": "AL",
+      "email": "",
+      "telefone_gabinete": "33036266",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-345",
+      "nome": "Flávio Arns",
+      "partido": "PSB",
+      "uf": "PR",
+      "email": "",
+      "telefone_gabinete": "33036301",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5894",
+      "nome": "Flávio Bolsonaro",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "",
+      "telefone_gabinete": "33031717",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6008",
+      "nome": "Giordano",
+      "partido": "MDB",
+      "uf": "SP",
+      "email": "",
+      "telefone_gabinete": "33034177",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6341",
+      "nome": "Hamilton Mourão",
+      "partido": "REPUBLICANOS",
+      "uf": "RS",
+      "email": "",
+      "telefone_gabinete": "33031837",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5008",
+      "nome": "Humberto Costa",
+      "partido": "PT",
+      "uf": "PE",
+      "email": "",
+      "telefone_gabinete": "33036285",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5385",
+      "nome": "Irajá",
+      "partido": "PSD",
+      "uf": "TO",
+      "email": "",
+      "telefone_gabinete": "33036469",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6010",
+      "nome": "Ivete da Silveira",
+      "partido": "MDB",
+      "uf": "SC",
+      "email": "",
+      "telefone_gabinete": "33032200",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4770",
+      "nome": "Izalci Lucas",
+      "partido": "PL",
+      "uf": "DF",
+      "email": "",
+      "telefone_gabinete": "33036049",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-35",
+      "nome": "Jader Barbalho",
+      "partido": "MDB",
+      "uf": "PA",
+      "email": "",
+      "telefone_gabinete": "33039831",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6340",
+      "nome": "Jaime Bagattoli",
+      "partido": "PL",
+      "uf": "RO",
+      "email": "",
+      "telefone_gabinete": "33032714",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-581",
+      "nome": "Jaques Wagner",
+      "partido": "PT",
+      "uf": "BA",
+      "email": "",
+      "telefone_gabinete": "33036390",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4531",
+      "nome": "Jayme Campos",
+      "partido": "UNIÃO",
+      "uf": "MT",
+      "email": "",
+      "telefone_gabinete": "33032390",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5895",
+      "nome": "Jorge Kajuru",
+      "partido": "PSB",
+      "uf": "GO",
+      "email": "",
+      "telefone_gabinete": "33032844",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6342",
+      "nome": "Jorge Seif",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "",
+      "telefone_gabinete": "33033784",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6305",
+      "nome": "José Lacerda",
+      "partido": "PSD",
+      "uf": "MT",
+      "email": "",
+      "telefone_gabinete": "33036408",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6369",
+      "nome": "Jussara Lima",
+      "partido": "PSD",
+      "uf": "PI",
+      "email": "",
+      "telefone_gabinete": "33035800",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4811",
+      "nome": "Laércio Oliveira",
+      "partido": "PP",
+      "uf": "SE",
+      "email": "",
+      "telefone_gabinete": "33031763",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5979",
+      "nome": "Leila Barros",
+      "partido": "PDT",
+      "uf": "DF",
+      "email": "",
+      "telefone_gabinete": "33036427",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5926",
+      "nome": "Lucas Barreto",
+      "partido": "PSD",
+      "uf": "AP",
+      "email": "",
+      "telefone_gabinete": "33034851",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-1186",
+      "nome": "Luis Carlos Heinze",
+      "partido": "PP",
+      "uf": "RS",
+      "email": "",
+      "telefone_gabinete": "33034124",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-631",
+      "nome": "Magno Malta",
+      "partido": "PL",
+      "uf": "ES",
+      "email": "",
+      "telefone_gabinete": "33036370",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5376",
+      "nome": "Mara Gabrilli",
+      "partido": "PSD",
+      "uf": "SP",
+      "email": "",
+      "telefone_gabinete": "33032191",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-742",
+      "nome": "Marcelo Castro",
+      "partido": "MDB",
+      "uf": "PI",
+      "email": "",
+      "telefone_gabinete": "33034078",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-285",
+      "nome": "Marcio Bittar",
+      "partido": "PL",
+      "uf": "AC",
+      "email": "",
+      "telefone_gabinete": "33032115",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5422",
+      "nome": "Marcos Rogério",
+      "partido": "PL",
+      "uf": "RO",
+      "email": "",
+      "telefone_gabinete": "33036148",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5942",
+      "nome": "Marcos do Val",
+      "partido": "PODEMOS",
+      "uf": "ES",
+      "email": "",
+      "telefone_gabinete": "33036747",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6027",
+      "nome": "Mecias de Jesus",
+      "partido": "REPUBLICANOS",
+      "uf": "RR",
+      "email": "",
+      "telefone_gabinete": "33035291",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5985",
+      "nome": "Nelsinho Trad",
+      "partido": "PSD",
+      "uf": "MS",
+      "email": "",
+      "telefone_gabinete": "33036767",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5525",
+      "nome": "Omar Aziz",
+      "partido": "PSD",
+      "uf": "AM",
+      "email": "",
+      "telefone_gabinete": "33036579",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5924",
+      "nome": "Oriovisto Guimarães",
+      "partido": "PSDB",
+      "uf": "PR",
+      "email": "",
+      "telefone_gabinete": "33031635",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5523",
+      "nome": "Otto Alencar",
+      "partido": "PSD",
+      "uf": "BA",
+      "email": "",
+      "telefone_gabinete": "33033172",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-825",
+      "nome": "Paulo Paim",
+      "partido": "PT",
+      "uf": "RS",
+      "email": "",
+      "telefone_gabinete": "33035232",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-453",
+      "nome": "Pedro Chaves",
+      "partido": "MDB",
+      "uf": "GO",
+      "email": "",
+      "telefone_gabinete": "33032092",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5502",
+      "nome": "Plínio Valério",
+      "partido": "PSDB",
+      "uf": "AM",
+      "email": "",
+      "telefone_gabinete": "33032898",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5386",
+      "nome": "Professora Dorinha Seabra",
+      "partido": "UNIÃO",
+      "uf": "TO",
+      "email": "",
+      "telefone_gabinete": "33035990",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5012",
+      "nome": "Randolfe Rodrigues",
+      "partido": "PT",
+      "uf": "AP",
+      "email": "",
+      "telefone_gabinete": "33036777",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-70",
+      "nome": "Renan Calheiros",
+      "partido": "MDB",
+      "uf": "AL",
+      "email": "",
+      "telefone_gabinete": "33032261",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5732",
+      "nome": "Rodrigo Pacheco",
+      "partido": "PSD",
+      "uf": "MG",
+      "email": "",
+      "telefone_gabinete": "33032794",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4694",
+      "nome": "Rogerio Marinho",
+      "partido": "PL",
+      "uf": "RN",
+      "email": "",
+      "telefone_gabinete": "33031826",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5352",
+      "nome": "Rogério Carvalho",
+      "partido": "PT",
+      "uf": "SE",
+      "email": "",
+      "telefone_gabinete": "33032201",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5322",
+      "nome": "Romário",
+      "partido": "PL",
+      "uf": "RJ",
+      "email": "",
+      "telefone_gabinete": "33036519",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6331",
+      "nome": "Sergio Moro",
+      "partido": "UNIÃO",
+      "uf": "PR",
+      "email": "",
+      "telefone_gabinete": "33036202",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5988",
+      "nome": "Soraya Thronicke",
+      "partido": "PODEMOS",
+      "uf": "MS",
+      "email": "",
+      "telefone_gabinete": "33031775",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5959",
+      "nome": "Styvenson Valentim",
+      "partido": "PSDB",
+      "uf": "RN",
+      "email": "",
+      "telefone_gabinete": "33031148",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-4560",
+      "nome": "Sérgio Petecão",
+      "partido": "PSD",
+      "uf": "AC",
+      "email": "",
+      "telefone_gabinete": "33034086",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6338",
+      "nome": "Teresa Leitão",
+      "partido": "PT",
+      "uf": "PE",
+      "email": "",
+      "telefone_gabinete": "33032423",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5736",
+      "nome": "Tereza Cristina",
+      "partido": "PP",
+      "uf": "MS",
+      "email": "",
+      "telefone_gabinete": "33032431",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5748",
+      "nome": "Veneziano Vital do Rêgo",
+      "partido": "MDB",
+      "uf": "PB",
+      "email": "",
+      "telefone_gabinete": "33032252",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-1173",
+      "nome": "Wellington Fagundes",
+      "partido": "PL",
+      "uf": "MT",
+      "email": "",
+      "telefone_gabinete": "33036219",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5411",
+      "nome": "Weverton",
+      "partido": "PDT",
+      "uf": "MA",
+      "email": "",
+      "telefone_gabinete": "33034161",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5070",
+      "nome": "Wilder Morais",
+      "partido": "PL",
+      "uf": "GO",
+      "email": "",
+      "telefone_gabinete": "33036440",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5783",
+      "nome": "Zenaide Maia",
+      "partido": "PSD",
+      "uf": "RN",
+      "email": "",
+      "telefone_gabinete": "33032371",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-3806",
+      "nome": "Zequinha Marinho",
+      "partido": "PODEMOS",
+      "uf": "PA",
+      "email": "",
+      "telefone_gabinete": "33036623",
+      "casa": "Senado",
+      "situacao": "Exercício"
     }
-  ]
+  ],
+  "ultima_atualizacao": "2025-10-28T14:53:11.311091",
+  "total_deputados": 513,
+  "total_senadores": 81
 }
