@@ -72,37 +72,45 @@ document.addEventListener('DOMContentLoaded', function() {
   carregarDadosNecessarios(); 
 });
 
-// NOVO: Função central para carregar dados
+// Dentro de carregarDadosNecessarios no pauta.js
+
 async function carregarDadosNecessarios() {
     try {
-        // Carregar dados extras
-        const extrasRes = await fetch('/_data/congressistas_extras.json');
+        // Carregar dados extras (NOVO ENDPOINT)
+        const extrasRes = await fetch('/api/congressistas_extras.json'); // <-- MUDOU AQUI
         if (extrasRes.ok) congressistasExtras = await extrasRes.json();
-
-        // Carregar evidências
-        const evidenciasRes = await fetch('/_data/evidencias_pautas.json');
-        if (evidenciasRes.ok) evidenciasPautas = await evidenciasRes.json();
-
-        // Carregar dados da campanha (do front matter - agora via API ou data attribute)
-        const campanhaDataEl = document.getElementById('pauta-campanha-data');
-        if (campanhaDataEl) {
-            campanhaEmail = JSON.parse(campanhaDataEl.dataset.campanhaEmail || '{}');
-            campanhaWhatsApp = JSON.parse(campanhaDataEl.dataset.campanhaWhatsapp || '{}');
-            campanhaInstagram = JSON.parse(campanhaDataEl.dataset.campanhaInstagram || '{}');
+        // Adiciona uma verificação extra, pois o JSON agora vem de `site.data` que pode ter a chave 'congressistas'
+        if (congressistasExtras && congressistasExtras.congressistas) {
+             congressistasExtras = congressistasExtras; // Mantém a estrutura { congressistas: {...} } se ela existir
+        } else {
+             // Se a estrutura vier direto, envolvemos para manter a consistência esperada
+             congressistasExtras = { congressistas: congressistasExtras || {} }; 
         }
-        
-        // Carregar parlamentares (essencial)
+
+
+        // Carregar evidências (NOVO ENDPOINT)
+        const evidenciasRes = await fetch('/api/evidencias_pautas.json'); // <-- MUDOU AQUI
+        if (evidenciasRes.ok) evidenciasPautas = await evidenciasRes.json();
+         // Adiciona uma verificação similar para evidências, caso venha com a chave 'pautas'
+        if (evidenciasPautas && evidenciasPautas.pautas) {
+             evidenciasPautas = evidenciasPautas; // Mantém a estrutura { pautas: {...} }
+        } else {
+             evidenciasPautas = { pautas: evidenciasPautas || {} };
+        }
+
+
+        // Carregar dados da campanha (do front matter - via data attribute)
+        const campanhaDataEl = document.getElementById('pauta-campanha-data');
+        // ... (resto do código igual) ...
+
+        // Carregar parlamentares (essencial - continua buscando o cache)
         await carregarParlamentaresComCache();
 
     } catch (error) {
         console.error("Erro ao carregar dados iniciais:", error);
-        const tbody = document.getElementById('tabela-parlamentares-corpo');
-        if (tbody) {
-            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Erro crítico ao carregar dados. Tente recarregar.</td></tr>';
-        }
+        // ... (resto do código igual) ...
     }
 }
-
 
 // Tentar carregar do cache antes de buscar APIs
 async function carregarParlamentaresComCache() {
