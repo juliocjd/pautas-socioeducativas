@@ -15,6 +15,8 @@ const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
   <path d="M13.5 1a.5.5 0 0 0-.5.5V3h-2a.5.5 0 0 0 0 1h2v1.5a.5.5 0 0 0 1 0V4h1.5a.5.5 0 0 0 0-1H14V1.5a.5.5 0 0 0-.5-.5z"/>
 </svg>`;
 
+let parlamentaresAtuaisParaTabela = []; // Guarda a lista correta para os filtros
+
 // NOVO: Mapa de Estados
 const mapEstados = {
   AC: "Acre",
@@ -217,50 +219,90 @@ async function carregarParlamentaresComCache() {
 
 // Função chamada após o carregamento (do cache)
 function finalizarCarregamento() {
-  // Agora que temos a lista completa, filtramos pela Casa
-  parlamentaresBase = parlamentaresBase.filter((p) => {
-    if (!casaLegislativa) return true; // Se não especificado, mostra todos
-    if (casaLegislativa.includes("Câmara") && p.casa === "Câmara") return true;
-    if (casaLegislativa.includes("Senado") && p.casa === "Senado") return true;
-    return false;
-  });
+  // Dados da pauta (lidos dos data attributes)
+  const isPlenaryVote = pautaDataElement?.dataset.isPlenaryVote === "true";
+  let keyPlayers = [];
+  try {
+    const keyPlayersStr =
+      document.getElementById("pauta-keyplayers-data")?.dataset.keyPlayers ||
+      "[]";
+    const parsedKP = JSON.parse(keyPlayersStr);
+    if (Array.isArray(parsedKP)) {
+      keyPlayers = parsedKP;
+    }
+  } catch (e) {
+    console.error("Erro ao parsear key_players em finalizarCarregamento", e);
+  }
+
+  let parlamentaresParaExibir = [];
+
+  if (isPlenaryVote) {
+    // Votação em Plenário: Filtra o cache pela casa
+    console.log(
+      `🏛️ Pauta de Plenário. Filtrando ${parlamentaresBase.length} pela casa: ${casaLegislativa}`
+    );
+    parlamentaresParaExibir = parlamentaresBase.filter((p) => {
+      if (!casaLegislativa) return true;
+      if (casaLegislativa.includes("Câmara") && p.casa === "Câmara")
+        return true;
+      if (casaLegislativa.includes("Senado") && p.casa === "Senado")
+        return true;
+      return false;
+    });
+    console.log(`Filtrados para plenário: ${parlamentaresParaExibir.length}`);
+  } else if (keyPlayers.length > 0) {
+    // Não é Plenário E TEM Key Players: Filtra o cache pelos nomes dos key players
+    console.log(
+      `🔑 Pauta com ${keyPlayers.length} Membros-Chave. Buscando no cache...`
+    );
+    const keyPlayerNames = keyPlayers.map((kp) => kp.nome);
+    parlamentaresParaExibir = parlamentaresBase.filter((p) =>
+      keyPlayerNames.includes(p.nome)
+    );
+    console.log(`Encontrados no cache: ${parlamentaresParaExibir.length}`);
+  } else {
+    // Não é Plenário e NÃO TEM Key Players: Lista vazia
+    console.log(
+      "ℹ️ Pauta sem votação em plenário e sem membros-chave definidos."
+    );
+    parlamentaresParaExibir = [];
+  }
+
+  // Atualiza a variável global
+  parlamentaresAtuaisParaTabela = parlamentaresParaExibir;
 
   console.log(
-    "✅ Total de parlamentares (filtrados):",
-    parlamentaresBase.length
+    `✅ Total de parlamentares para exibir na tabela: ${parlamentaresAtuaisParaTabela.length}`
   );
 
-  carregarEstados();
-  renderTabela();
-  carregarContadores();
+  carregarEstados(parlamentaresAtuaisParaTabela);
+  renderTabela(parlamentaresAtuaisParaTabela);
+  carregarContadores(parlamentaresAtuaisParaTabela);
   mostrarTracking();
 }
 
 // Carregar estados no filtro (ATUALIZADO)
-function carregarEstados() {
-  if (parlamentaresBase.length === 0) return;
+// Modifique carregarEstados para aceitar a lista
+function carregarEstados(listaParlamentares) {
+  // Adiciona parâmetro
+  if (!listaParlamentares || listaParlamentares.length === 0) return;
+  const estados = [...new Set(listaParlamentares.map((p) => p.uf))].sort(); // Usa o parâmetro
 
-  const estados = [...new Set(parlamentaresBase.map((p) => p.uf))].sort();
-
-  // Lista de todos os dropdowns de estado
+  // ... (resto da função igual) ...
   const selectsIds = [
     "filtro-estado",
     "filtro-campanha-estado-email",
     "filtro-campanha-estado-wa",
     "filtro-campanha-estado-ig",
   ];
-
   selectsIds.forEach((id) => {
     const select = document.getElementById(id);
     if (select) {
-      // Manter a primeira opção
       const primeiraOpcaoHTML =
         select.options[0]?.outerHTML ||
-        '<option value="">Todos os Estados</option>'; // Fallback
-      select.innerHTML = primeiraOpcaoHTML; // Limpa mantendo a primeira
-
+        '<option value="">Todos os Estados</option>';
+      select.innerHTML = primeiraOpcaoHTML;
       estados.forEach((uf) => {
-        // Usar o mapa para mostrar o nome completo
         const nomeCompleto = mapEstados[uf] || uf;
         const option = new Option(`${uf} - ${nomeCompleto}`, uf);
         select.add(option);
@@ -270,14 +312,15 @@ function carregarEstados() {
 }
 
 // Renderizar tabela
-function renderTabela() {
+function renderTabela(listaParlamentares) {
+  // Adiciona parâmetro
   const tbody = document.getElementById("tabela-parlamentares-corpo");
+  if (!tbody) return;
 
-  if (!tbody) return; // Proteção
-
-  if (parlamentaresBase.length === 0) {
+  if (!listaParlamentares || listaParlamentares.length === 0) {
+    // Usa o parâmetro
     tbody.innerHTML =
-      '<tr><td colspan="5" class="text-center">Nenhum parlamentar encontrado para esta Casa.</td></tr>';
+      '<tr><td colspan="5" class="text-center">Nenhum parlamentar a ser exibido para esta pauta.</td></tr>';
     return;
   }
 
@@ -285,7 +328,9 @@ function renderTabela() {
   const termoEstado = document.getElementById("filtro-estado").value;
   const termoPosicao = document.getElementById("filtro-posicao").value;
 
-  const filtrados = parlamentaresBase.filter((p) => {
+  const filtrados = listaParlamentares.filter((p) => {
+    // Filtra a lista recebida
+    // ... (lógica de filtro interna igual) ...
     const nomeMatch = p.nome.toLowerCase().includes(termoNome);
     const estadoMatch = !termoEstado || p.uf === termoEstado;
     const posicao = obterPosicao(p.id);
@@ -299,39 +344,36 @@ function renderTabela() {
     return;
   }
 
+  // O resto da função continua igual, usando 'filtrados'
   tbody.innerHTML = filtrados
     .map((p) => {
+      // ... (código igual para gerar o HTML da linha) ...
       const posicao = obterPosicao(p.id);
       const badgeClass =
         posicao === "apoia"
           ? "badge-apoia"
           : posicao === "contrario"
           ? "badge-contrario"
-          : "badge-nao-manifestado"; // ATUALIZADO
+          : "badge-nao-manifestado";
       const statusTexto =
         posicao === "apoia"
           ? "Apoia"
           : posicao === "contrario"
           ? "Contrário"
-          : "Não se Manifestou"; // ATUALIZADO
-
-      // Escapar nome para uso em JS
+          : "Não se Manifestou";
       const nomeEscapado = p.nome.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+      const parlamentarJsonString = JSON.stringify(p).replace(/'/g, "&apos;");
 
       return `<tr>
-      <td>${p.nome}</td>
-      <td>${p.partido}</td>
-      <td>${p.uf}</td>
-      <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
-      <td>
-        <button class="btn btn-sm btn-info" onclick='verContato(${JSON.stringify(
-          p
-        )})'>Ver Contato</button>
-        <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${
-          p.id
-        }', '${nomeEscapado}')">Enviar Info</button>
-      </td>
-    </tr>`;
+          <td>${p.nome}</td>
+          <td>${p.partido}</td>
+          <td>${p.uf}</td>
+          <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
+          <td>
+            <button class="btn btn-sm btn-info" onclick='verContato(${parlamentarJsonString})'>Ver Contato</button>
+            <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${p.id}', '${nomeEscapado}')">Enviar Info</button>
+          </td>
+        </tr>`;
     })
     .join("");
 }
@@ -448,9 +490,28 @@ document
     // Necessário carregar jQuery para $('#modalEnviarInfo').modal('hide');
   });
 
-// CAMPANHAS - Contadores (sem mudanças)
-function carregarContadores() {
-  /* ... */
+function carregarContadores(listaParlamentares) {
+  // Adiciona parâmetro
+  if (!listaParlamentares) listaParlamentares = []; // Garante que é um array
+
+  const totalEmails = listaParlamentares.filter((p) => p.email).length;
+  const elEmails = document.getElementById("contador-emails");
+  if (elEmails)
+    elEmails.textContent = `${totalEmails} emails disponíveis (API)`;
+
+  const totalWhatsApp = listaParlamentares.filter(
+    (p) => congressistasExtras.congressistas?.[p.id]?.whatsapp
+  ).length;
+  const elWhatsApp = document.getElementById("contador-whatsapp");
+  if (elWhatsApp)
+    elWhatsApp.textContent = `${totalWhatsApp} WhatsApps (comunidade)`;
+
+  const totalInstagram = listaParlamentares.filter(
+    (p) => congressistasExtras.congressistas?.[p.id]?.instagram
+  ).length;
+  const elInstagram = document.getElementById("contador-instagram");
+  if (elInstagram)
+    elInstagram.textContent = `${totalInstagram} perfis (comunidade)`;
 }
 
 // ==========================================

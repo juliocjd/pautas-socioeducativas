@@ -541,6 +541,8 @@ is_plenary_vote: ${isPlenaryVote}
   return yaml;
 }
 
+// SUBSTITUA A FUNÇÃO alterarPauta INTEIRA em gerador.js POR ESTA:
+
 async function alterarPauta(filename) {
   try {
     console.log("📝 Carregando pauta para edição:", filename);
@@ -596,28 +598,32 @@ async function alterarPauta(filename) {
       const indentLevel = line.length - line.trimStart().length;
 
       // --- Gerenciamento de Seção ---
-      if (trimmedLine === "key_players:") {
+      if (trimmedLine.startsWith("key_players:")) {
         inKeyPlayers = true;
         inCampanha = false;
         inMultiline = false;
         currentDataObject = null;
+        // Se key_players: está vazio (sem sub-itens), reseta o array
+        if (trimmedLine === "key_players:") keyPlayersData = [];
         continue;
-      } else if (trimmedLine === "campanha:") {
+      } else if (trimmedLine.startsWith("campanha:")) {
         inCampanha = true;
         inKeyPlayers = false;
         inMultiline = false;
         currentDataObject = campanhaData;
+        // Se campanha: está vazio (sem sub-itens), reseta o objeto
+        if (trimmedLine === "campanha:") campanhaData = {};
         continue;
       } else if (line.match(/^\w+:/) && indentLevel === 0) {
         // Nova chave de nível 0 reseta tudo
+        // Salva multiline anterior se houver
+        if (inMultiline && currentKey && currentDataObject) {
+          currentDataObject[currentKey] = multilineValue.trimEnd();
+        }
         inKeyPlayers = false;
         inCampanha = false;
         inMultiline = false;
         currentDataObject = pautaData;
-        // Salva multiline anterior se houver
-        if (multilineValue && currentKey) {
-          /* (lógica de save multiline abaixo) */
-        }
       }
 
       // --- Processamento Key Players ---
@@ -646,9 +652,10 @@ async function alterarPauta(filename) {
             campanhaData[currentCampanhaChannel][currentKey] =
               multilineValue.trimEnd();
           currentCampanhaChannel = channelMatch[1];
-          campanhaData[currentCampanhaChannel] = {};
+          if (!campanhaData[currentCampanhaChannel])
+            campanhaData[currentCampanhaChannel] = {}; // Inicializa se não existir
           inMultiline = false;
-          currentDataObject = campanhaData[currentCampanhaChannel]; // Objeto atual é o do canal
+          currentDataObject = campanhaData[currentCampanhaChannel];
           continue;
         }
 
@@ -663,7 +670,6 @@ async function alterarPauta(filename) {
             continue;
           } else if (inMultiline) {
             // Linha pertence a um multiline de campanha
-            // Verifica se a indentação indica o fim do bloco (menos de 6 espaços ou nova chave no nível 2 ou 1)
             if (
               indentLevel < 6 ||
               line.match(/^ {4}\w+:/) ||
@@ -671,7 +677,7 @@ async function alterarPauta(filename) {
             ) {
               currentDataObject[currentKey] = multilineValue.trimEnd();
               inMultiline = false;
-              // REPROCESSA a linha atual
+              // REPROCESSA a linha atual (não continue)
             } else {
               multilineValue += line.substring(6) + "\n"; // Remove 6 espaços
               continue;
@@ -679,7 +685,6 @@ async function alterarPauta(filename) {
           }
 
           if (!inMultiline && subKeyMatchSimple) {
-            // Chave simples dentro do canal
             const subKey = subKeyMatchSimple[1];
             const subValue = subKeyMatchSimple[2]
               .replace(/^["']|["']$/g, "")
@@ -688,17 +693,16 @@ async function alterarPauta(filename) {
             continue;
           }
         }
-        // Se a linha está em campanha mas não correspondeu a nada, pode ser o fim
-        // Deixa o processamento geral tratar (se for chave nível 0) ou ignora
+        // Deixa o processamento geral tratar se for chave nível 0
       }
 
       // --- Processamento Geral (Chaves Simples e Multiline Nível 0) ---
+      // Só executa se não estiver em key_players e não estiver em campanha (ou for uma chave nível 0)
       if (!inKeyPlayers && !inCampanha) {
         const simpleMatch = line.match(/^(\w+):\s*(.+)$/);
         const pipeMatch = line.match(/^(\w+):\s*\|/);
 
         if (pipeMatch) {
-          // Salva multiline anterior se houver
           if (inMultiline && currentKey)
             pautaData[currentKey] = multilineValue.trimEnd();
           currentKey = pipeMatch[1];
@@ -707,29 +711,22 @@ async function alterarPauta(filename) {
           currentDataObject = pautaData; // Garante que salva no objeto principal
           continue;
         } else if (inMultiline) {
-          // Linha pertence a um multiline geral
-          // Verifica se a indentação indica o fim (menos de 2 espaços ou nova chave nível 0)
           if (indentLevel < 2 || line.match(/^\w+:/)) {
             pautaData[currentKey] = multilineValue.trimEnd();
             inMultiline = false;
             // REPROCESSA a linha atual
           } else {
-            multilineValue += line.substring(2) + "\n"; // Remove 2 espaços
+            // Adiciona a linha ao valor, removendo 2 espaços de indentação
+            multilineValue += line.substring(2) + "\n";
             continue;
           }
         }
 
         if (!inMultiline && simpleMatch) {
-          // Chave simples nível 0
-          // Salva multiline anterior se houver
-          if (inMultiline && currentKey)
-            pautaData[currentKey] = multilineValue.trimEnd(); // Deveria ter sido salvo antes, mas por segurança
-          inMultiline = false; // Garante que saiu do multiline
-
           const key = simpleMatch[1];
           let value = simpleMatch[2].replace(/^["']|["']$/g, "").trim();
           pautaData[key] = value;
-          currentDataObject = pautaData; // Garante que está no objeto principal
+          currentDataObject = pautaData;
 
           // Preencher input se existir
           const input = document.getElementById(key);
@@ -737,7 +734,7 @@ async function alterarPauta(filename) {
             if (input.type === "checkbox") input.checked = value === "true";
             else input.value = value;
           }
-          continue; // Processou linha simples, vai para a próxima
+          continue;
         }
       }
     } // Fim do loop for
@@ -749,10 +746,14 @@ async function alterarPauta(filename) {
 
     // --- Preencher campos que não são inputs diretos ---
     document.getElementById("body").value = body;
+    // Preenche a descrição explicitamente
     document.getElementById("description").value =
-      pautaData["description"] || ""; // Preenche a descrição explicitamente
+      pautaData["description"] || "";
 
     // --- Preencher Campos das Campanhas (Nova Lógica) ---
+    // Garante que campanhaData não é nulo
+    campanhaData = campanhaData || {};
+
     document.getElementById("campaign-message-opposition").value =
       campanhaData.email?.mensagem_oposicao ||
       campanhaData.whatsapp?.mensagem_oposicao ||
@@ -765,7 +766,6 @@ async function alterarPauta(filename) {
       campanhaData.instagram?.mensagem_apoio ||
       "";
 
-    // Ativa checkboxes e preenche campos específicos
     if (campanhaData.email) {
       document.getElementById("enable-campaign-email").checked = true;
       document.getElementById("email-assunto").value =
@@ -785,9 +785,12 @@ async function alterarPauta(filename) {
     // --- FIM ---
 
     // --- Recarregar Membros-Chave na UI ---
-    if (keyPlayersData.length > 0 && pautaData["is_plenary_vote"] !== "true") {
-      // Verifica flag corretamente
-      if (deputados.length === 0) await loadDeputados(); // Garante que deputados estão carregados
+    // Verifica se a flag 'is_plenary_vote' (lida do YAML) é 'false'
+    if (keyPlayersData.length > 0 && pautaData["is_plenary_vote"] === "false") {
+      if (deputados.length === 0) {
+        console.log("Carregando deputados para preencher key-players...");
+        await loadDeputados(); // Garante que deputados estão carregados
+      }
 
       listaParl.innerHTML = ""; // Limpa a mensagem padrão
       keyPlayersData.forEach((player) => {

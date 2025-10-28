@@ -3,350 +3,517 @@ layout: default
 ---
 
 <head>
-    <link rel="stylesheet" href="/assets/css/pauta.css"> </head>
+  <link rel="stylesheet" href="/assets/css/pauta.css" />
+</head>
 <body>
-
-<div class="container">
-  <div class="jumbotron">
-    <h1 class="display-4">{{ page.title }}</h1>
-    <p class="lead">{{ page.description }}</p>
-    <hr class="my-4">
-    <div class="row">
-      <div class="col-md-6">
-        <p><strong>Casa:</strong> {{ page.casa }}</p>
-      </div>
-      <div class="col-md-6">
-        <p><strong>Status:</strong> {{ page.status }}</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="pauta-data" 
-       data-pauta-slug="{{ page.slug | default: page.title | slugify }}"
-       data-casa-legislativa="{{ page.casa }}">
-       data-is-plenary-vote="{{ page.is_plenary_vote | default: false }}">
-  </div>
-  <div id="pauta-keyplayers-data"
-       data-key-players="{{ page.key_players | jsonify | escape }}">
-  </div>
-    <div id="pauta-campanha-data"
-     data-campanha-email="{{ page.campanha.email | jsonify | escape }}"
-     data-campanha-whatsapp="{{ page.campanha.whatsapp | jsonify | escape }}"
-     data-campanha-instagram="{{ page.campanha.instagram | jsonify | escape }}">
-</div> 
-  </div>
-
-
-  <div class="content-section mb-5">
-    {{ content }}
-  </div>
-
-  {% if page.campanha %}
-      <div class="campanhas-section mb-5">
-        <h3>📢 Mobilização</h3>
-        <p>Sua participação é fundamental! Contate os parlamentares diretamente para pressionar por apoio às nossas pautas.</p>
-        
-        <div class="alert alert-info" role="alert">
-          <h5 class="alert-heading">É fácil participar!</h5>
-          <p>Nós já preparamos as mensagens e reunimos os contatos disponíveis.</p>
-          <hr>
-          <p class="mb-0">👇 <strong>Basta clicar nos botões abaixo</strong> para abrir seu aplicativo (Email, WhatsApp) com tudo pronto para enviar ou copiar a mensagem para o Instagram.</p>
-        </div>
-        <div class="row">
-          {% if page.campanha.email %}
-          <div class="col-md-4 mb-3">
-            <button class="btn btn-primary btn-block" onclick="abrirCampanhaEmail()">
-              📧 Campanha de Email
-            </button>
-            <small id="contador-emails" class="text-muted">Carregando...</small>
-          </div>
-          {% endif %}
-          
-          {% if page.campanha.whatsapp %}
-          <div class="col-md-4 mb-3">
-            <button class="btn btn-success btn-block" onclick="abrirCampanhaWhatsApp()">
-              <span id="icon-whatsapp"></span> Campanha WhatsApp
-            </button>
-            <small id="contador-whatsapp" class="text-muted">Carregando...</small>
-          </div>
-          {% endif %}
-          
-          {% if page.campanha.instagram %}
-          <div class="col-md-4 mb-3">
-            <button class="btn btn-danger btn-block" onclick="abrirCampanhaInstagram()">
-              <span id="icon-instagram"></span> Campanha Instagram
-            </button>
-            <small id="contador-instagram" class="text-muted">Carregando...</small>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    {% endif %}
-    
-  <div class="card mb-4">
-    <div class="card-body">
-      <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">{{ page.title }}</h1>
+      <p class="lead">{{ page.description }}</p>
+      <hr class="my-4" />
       <div class="row">
-        <div class="col-md-3">
-          <input type="text" class="form-control" id="filtro-nome" placeholder="Nome do parlamentar">
+        <div class="col-md-6">
+          <p><strong>Casa:</strong> {{ page.casa }}</p>
         </div>
-        <div class="col-md-2">
-          <select class="form-control" id="filtro-estado">
-            <option value="">Todos os Estados</option>
-          </select>
-        </div>
-        <div class="col-md-3">
-          <select class="form-control" id="filtro-posicao">
-            <option value="">Todas as Posições</option>
-            <option value="apoia">Apoia</option>
-            <option value="contrario">Contrário</option> 
-            <option value="nao-manifestado">Não se Manifestou</option>
-          </select>
+        <div class="col-md-6">
+          <p><strong>Status:</strong> {{ page.status }}</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="table-responsive">
-    <table class="table table-striped" id="tabela-parlamentares">
-      <thead class="thead-dark">
-        <tr>
-          <th>Nome</th>
-          <th>Partido</th>
-          <th>Estado</th>
-          <th>Posição</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="tabela-parlamentares-corpo">
-        <tr>
-          <td colspan="5" style="text-align: center;">
-            <div class="spinner-border" role="status">
-              <span class="sr-only">Carregando...</span>
-            </div>
-            <p class="mt-2">Carregando parlamentares...</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div
+      id="pauta-data"
+      data-pauta-slug="{{ page.slug | default: page.title | slugify }}"
+      data-casa-legislativa="{{ page.casa }}"
+      data-is-plenary-vote="{{ page.is_plenary_vote | default: false }}"
+    ></div>
+    <div
+      id="pauta-keyplayers-data"
+      data-key-players="{{ page.key_players | jsonify | escape }}"
+    ></div>
+    <div
+      id="pauta-campanha-data"
+      data-campanha-email="{{ page.campanha.email | jsonify | escape }}"
+      data-campanha-whatsapp="{{ page.campanha.whatsapp | jsonify | escape }}"
+      data-campanha-instagram="{{ page.campanha.instagram | jsonify | escape }}"
+    ></div>
 
-<div class="modal fade" id="modalVerContato" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Contatos: <span id="contato-nome"></span></h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="content-section mb-5">{{ content }}</div>
+
+    {% if page.campanha %}
+    <div class="campanhas-section mb-5">
+      <h3>📢 Mobilização</h3>
+      <p>
+        Sua participação é fundamental! Contate os parlamentares diretamente
+        para pressionar por apoio às nossas pautas.
+      </p>
+
+      <div class="alert alert-info" role="alert">
+        <h5 class="alert-heading">É fácil participar!</h5>
+        <p>
+          Nós já preparamos as mensagens e reunimos os contatos disponíveis.
+        </p>
+        <hr />
+        <p class="mb-0">
+          👇 <strong>Basta clicar nos botões abaixo</strong> para abrir seu
+          aplicativo (Email, WhatsApp) com tudo pronto para enviar ou copiar a
+          mensagem para o Instagram.
+        </p>
       </div>
-      <div class="modal-body" id="contato-conteudo"></div>
+      <div class="row">
+        {% if page.campanha.email %}
+        <div class="col-md-4 mb-3">
+          <button
+            class="btn btn-primary btn-block"
+            onclick="abrirCampanhaEmail()"
+          >
+            📧 Campanha de Email
+          </button>
+          <small id="contador-emails" class="text-muted">Carregando...</small>
+        </div>
+        {% endif %} {% if page.campanha.whatsapp %}
+        <div class="col-md-4 mb-3">
+          <button
+            class="btn btn-success btn-block"
+            onclick="abrirCampanhaWhatsApp()"
+          >
+            <span id="icon-whatsapp"></span> Campanha WhatsApp
+          </button>
+          <small id="contador-whatsapp" class="text-muted">Carregando...</small>
+        </div>
+        {% endif %} {% if page.campanha.instagram %}
+        <div class="col-md-4 mb-3">
+          <button
+            class="btn btn-danger btn-block"
+            onclick="abrirCampanhaInstagram()"
+          >
+            <span id="icon-instagram"></span> Campanha Instagram
+          </button>
+          <small id="contador-instagram" class="text-muted"
+            >Carregando...</small
+          >
+        </div>
+        {% endif %}
+      </div>
     </div>
-  </div>
-</div>
+    {% endif %}
 
-<div class="modal fade" id="modalEnviarInfo" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Enviar Informações: <span id="enviar-info-nome"></span></h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="formEnviarInfo">
-          <input type="hidden" id="parlamentar-id-hidden">
-          <input type="hidden" id="parlamentar-nome-hidden">
-          
-          <div class="alert alert-info">
-            <strong>ℹ️ Informação:</strong> Email e telefone do gabinete já vêm das APIs oficiais. Use este formulário para adicionar dados pessoais (WhatsApp, Instagram, assessores).
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
+        <div class="row">
+          <div class="col-md-3">
+            <input
+              type="text"
+              class="form-control"
+              id="filtro-nome"
+              placeholder="Nome do parlamentar"
+            />
           </div>
-          
-          <h6>📱 Dados do Parlamentar que você tenha</h6>
-          <div class="form-group">
-            <label>WhatsApp</label>
-            <input type="text" class="form-control" id="campo-whatsapp" placeholder="(XX) XXXXX-XXXX">
-          </div>
-          <div class="form-group">
-            <label>Instagram</label>
-            <input type="text" class="form-control" id="campo-instagram" placeholder="@usuario">
-          </div>
-          
-          <h6>👥 Assessores</h6>
-          <div id="assessores-lista"></div>
-          <button type="button" class="btn btn-sm btn-secondary" onclick="adicionarAssessor()">+ Add Assessor</button>
-          
-          <hr>
-          
-          <h6>📄 Evidência de Posicionamento (Específica desta Pauta)</h6>
-          <div class="form-group">
-            <label>Tipo</label>
-            <select class="form-control" id="campo-evidencia-tipo">
-              <option value="link">Link/Notícia</option>
-              <option value="video">Vídeo</option>
-              <option value="audio">Áudio</option>
-              <option value="documento">Documento</option>
+          <div class="col-md-2">
+            <select class="form-control" id="filtro-estado">
+              <option value="">Todos os Estados</option>
             </select>
           </div>
-          <div class="form-group">
-            <label>URL</label>
-            <input type="url" class="form-control" id="campo-evidencia-url" placeholder="https://...">
+          <div class="col-md-3">
+            <select class="form-control" id="filtro-posicao">
+              <option value="">Todas as Posições</option>
+              <option value="apoia">Apoia</option>
+              <option value="contrario">Contrário</option>
+              <option value="nao-manifestado">Não se Manifestou</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label>Descrição</label>
-            <textarea class="form-control" id="campo-evidencia-desc" rows="2"></textarea>
-          </div>
-          
-          <hr>
-          
-          <h6>👤 Seus Dados (Para Contato)</h6>
-          <div class="form-group">
-            <label>Nome *</label>
-            <input type="text" class="form-control" id="campo-usuario-nome" required>
-          </div>
-          <div class="form-group">
-            <label>Email *</label>
-            <input type="email" class="form-control" id="campo-usuario-email" required>
-          </div>
-          
-          <button type="submit" class="btn btn-primary">✅ Enviar</button>
-        </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped" id="tabela-parlamentares">
+        <thead class="thead-dark">
+          <tr>
+            <th>Nome</th>
+            <th>Partido</th>
+            <th>Estado</th>
+            <th>Posição</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-parlamentares-corpo">
+          <tr>
+            <td colspan="5" style="text-align: center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Carregando...</span>
+              </div>
+              <p class="mt-2">Carregando parlamentares...</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalVerContato" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Contatos: <span id="contato-nome"></span></h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="contato-conteudo"></div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="modalCampanhaEmail" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">📧 Campanha de Email</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        
-        <div class="form-group">
-          <label for="filtro-campanha-estado-email">
-            <strong>Filtrar por seu Estado (Opcional)</strong>
-          </label>
-          <select class="form-control" id="filtro-campanha-estado-email">
-            <option value="">Todos os Estados (Apenas quem não apoia)</option>
-          </select>
+  <div class="modal fade" id="modalEnviarInfo" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Enviar Informações: <span id="enviar-info-nome"></span>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
         </div>
+        <div class="modal-body">
+          <form id="formEnviarInfo">
+            <input type="hidden" id="parlamentar-id-hidden" />
+            <input type="hidden" id="parlamentar-nome-hidden" />
 
-        <div class="form-group">
-          <label for="campo-nome-email">Seu Nome (Opcional)</label>
-          <input type="text" class="form-control" id="campo-nome-email" placeholder="Digite seu nome...">
-        </div>
-        
-        <p id="total-emails-campanha"><strong>Total:</strong> Calculando...</p>
+            <div class="alert alert-info">
+              <strong>ℹ️ Informação:</strong> Email e telefone do gabinete já
+              vêm das APIs oficiais. Use este formulário para adicionar dados
+              pessoais (WhatsApp, Instagram, assessores).
+            </div>
 
-        <div class="form-group position-relative">
-          <label for="emails-lista">Lista de Emails (CCO)</label>
-          <textarea class="form-control" id="emails-lista" rows="3" readonly></textarea>
-          <span class="copy-icon" onclick="copiarParaClipboard('emails-lista', this)" title="Copiar lista de emails"></span>
-        </div>
-        
-        <div class="form-group position-relative">
-          <label for="email-assunto">Assunto</label>
-          <input type="text" class="form-control" id="email-assunto">
-          <span class="copy-icon" onclick="copiarParaClipboard('email-assunto', this)" title="Copiar assunto"></span>
-        </div>
-        
-        <div class="form-group position-relative">
-          <label for="email-mensagem">Mensagem</label>
-          <textarea class="form-control" id="email-mensagem" rows="8"></textarea>
-          <span class="copy-icon" onclick="copiarParaClipboard('email-mensagem', this)" title="Copiar mensagem"></span>
-        </div>
-        
-        <button class="btn btn-primary" onclick="abrirClienteEmail()">📧 Abrir no Cliente de Email</button>
-      </div>
-    </div>
-  </div>
-</div>
+            <h6>📱 Dados do Parlamentar que você tenha</h6>
+            <div class="form-group">
+              <label>WhatsApp</label>
+              <input
+                type="text"
+                class="form-control"
+                id="campo-whatsapp"
+                placeholder="(XX) XXXXX-XXXX"
+              />
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input
+                type="text"
+                class="form-control"
+                id="campo-instagram"
+                placeholder="@usuario"
+              />
+            </div>
 
-<div class="modal fade" id="modalCampanhaWhatsApp" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><span id="icon-whatsapp-2"></span> Campanha WhatsApp</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        
-        <div class="form-group">
-          <label for="filtro-campanha-estado-wa">
-            <strong>Filtrar por seu Estado (Opcional)</strong>
-          </label>
-          <select class="form-control" id="filtro-campanha-estado-wa">
-            <option value="">Todos os Estados</option>
-          </select>
-        </div>
+            <h6>👥 Assessores</h6>
+            <div id="assessores-lista"></div>
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              onclick="adicionarAssessor()"
+            >
+              + Add Assessor
+            </button>
 
-        <div class="form-group">
-          <label for="campo-nome-wa">Seu Nome (Opcional)</label>
-          <input type="text" class="form-control" id="campo-nome-wa" placeholder="Digite seu nome...">
-        </div>
+            <hr />
 
-        <p id="total-whatsapp"><strong>Total:</strong> Calculando...</p>
-        <div class="progress mb-3">
-          <div id="progress-whatsapp" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
-        </div>
-        
-        <textarea id="whatsapp-mensagem-apoio" class="hidden-textarea"></textarea>
-        <textarea id="whatsapp-mensagem-oposicao" class="hidden-textarea"></textarea>
-        
-        <div id="lista-whatsapp" style="max-height: 400px; overflow-y: auto;"></div>
-      </div>
-    </div>
-  </div>
-</div>
+            <h6>📄 Evidência de Posicionamento (Específica desta Pauta)</h6>
+            <div class="form-group">
+              <label>Tipo</label>
+              <select class="form-control" id="campo-evidencia-tipo">
+                <option value="link">Link/Notícia</option>
+                <option value="video">Vídeo</option>
+                <option value="audio">Áudio</option>
+                <option value="documento">Documento</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>URL</label>
+              <input
+                type="url"
+                class="form-control"
+                id="campo-evidencia-url"
+                placeholder="https://..."
+              />
+            </div>
+            <div class="form-group">
+              <label>Descrição</label>
+              <textarea
+                class="form-control"
+                id="campo-evidencia-desc"
+                rows="2"
+              ></textarea>
+            </div>
 
-<div class="modal fade" id="modalCampanhaInstagram" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><span id="icon-instagram-2"></span> Campanha Instagram</h5>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        
-        <div class="form-group">
-          <label for="filtro-campanha-estado-ig">
-            <strong>Filtrar por seu Estado (Opcional)</strong>
-          </label>
-          <select class="form-control" id="filtro-campanha-estado-ig">
-            <option value="">Todos os Estados</option>
-          </select>
-        </div>
+            <hr />
 
-        <div class="form-group">
-          <label for="campo-nome-ig">Seu Nome (Opcional)</label>
-          <input type="text" class="form-control" id="campo-nome-ig" placeholder="Digite seu nome...">
-        </div>
+            <h6>👤 Seus Dados (Para Contato)</h6>
+            <div class="form-group">
+              <label>Nome *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="campo-usuario-nome"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input
+                type="email"
+                class="form-control"
+                id="campo-usuario-email"
+                required
+              />
+            </div>
 
-        <p id="total-instagram"><strong>Total:</strong> Calculando...</p>
-        <div class="progress mb-3">
-          <div id="progress-instagram" class="progress-bar" role="progressbar" style="width: 0%">0/0</div>
+            <button type="submit" class="btn btn-primary">✅ Enviar</button>
+          </form>
         </div>
-        
-        <textarea id="instagram-mensagem-apoio" class="hidden-textarea"></textarea>
-        <textarea id="instagram-mensagem-oposicao" class="hidden-textarea"></textarea>
-        
-        <div id="lista-instagram" style="max-height: 400px; overflow-y: auto;"></div>
       </div>
     </div>
   </div>
-</div>
 
-<div id="tracking-container" style="position: fixed; bottom: 20px; right: 20px; background: white; border: 2px solid #667eea; border-radius: 12px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; z-index: 1000;">
-  <h6 style="margin: 0 0 10px 0;">📊 Seu Progresso</h6>
-  <div id="tracking-items"></div>
-  <button onclick="fecharTracking()" style="margin-top: 10px; background: none; border: none; color: #999; font-size: 12px; cursor: pointer;">Fechar</button>
-</div>
+  <div class="modal fade" id="modalCampanhaEmail" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">📧 Campanha de Email</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="filtro-campanha-estado-email">
+              <strong>Filtrar por seu Estado (Opcional)</strong>
+            </label>
+            <select class="form-control" id="filtro-campanha-estado-email">
+              <option value="">Todos os Estados (Apenas quem não apoia)</option>
+            </select>
+          </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+          <div class="form-group">
+            <label for="campo-nome-email">Seu Nome (Opcional)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="campo-nome-email"
+              placeholder="Digite seu nome..."
+            />
+          </div>
 
-<script src="/assets/js/pauta.js" defer></script>
+          <p id="total-emails-campanha">
+            <strong>Total:</strong> Calculando...
+          </p>
 
+          <div class="form-group position-relative">
+            <label for="emails-lista">Lista de Emails (CCO)</label>
+            <textarea
+              class="form-control"
+              id="emails-lista"
+              rows="3"
+              readonly
+            ></textarea>
+            <span
+              class="copy-icon"
+              onclick="copiarParaClipboard('emails-lista', this)"
+              title="Copiar lista de emails"
+            ></span>
+          </div>
+
+          <div class="form-group position-relative">
+            <label for="email-assunto">Assunto</label>
+            <input type="text" class="form-control" id="email-assunto" />
+            <span
+              class="copy-icon"
+              onclick="copiarParaClipboard('email-assunto', this)"
+              title="Copiar assunto"
+            ></span>
+          </div>
+
+          <div class="form-group position-relative">
+            <label for="email-mensagem">Mensagem</label>
+            <textarea
+              class="form-control"
+              id="email-mensagem"
+              rows="8"
+            ></textarea>
+            <span
+              class="copy-icon"
+              onclick="copiarParaClipboard('email-mensagem', this)"
+              title="Copiar mensagem"
+            ></span>
+          </div>
+
+          <button class="btn btn-primary" onclick="abrirClienteEmail()">
+            📧 Abrir no Cliente de Email
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalCampanhaWhatsApp" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span id="icon-whatsapp-2"></span> Campanha WhatsApp
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="filtro-campanha-estado-wa">
+              <strong>Filtrar por seu Estado (Opcional)</strong>
+            </label>
+            <select class="form-control" id="filtro-campanha-estado-wa">
+              <option value="">Todos os Estados</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="campo-nome-wa">Seu Nome (Opcional)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="campo-nome-wa"
+              placeholder="Digite seu nome..."
+            />
+          </div>
+
+          <p id="total-whatsapp"><strong>Total:</strong> Calculando...</p>
+          <div class="progress mb-3">
+            <div
+              id="progress-whatsapp"
+              class="progress-bar"
+              role="progressbar"
+              style="width: 0%"
+            >
+              0/0
+            </div>
+          </div>
+
+          <textarea
+            id="whatsapp-mensagem-apoio"
+            class="hidden-textarea"
+          ></textarea>
+          <textarea
+            id="whatsapp-mensagem-oposicao"
+            class="hidden-textarea"
+          ></textarea>
+
+          <div
+            id="lista-whatsapp"
+            style="max-height: 400px; overflow-y: auto"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalCampanhaInstagram" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <span id="icon-instagram-2"></span> Campanha Instagram
+          </h5>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="filtro-campanha-estado-ig">
+              <strong>Filtrar por seu Estado (Opcional)</strong>
+            </label>
+            <select class="form-control" id="filtro-campanha-estado-ig">
+              <option value="">Todos os Estados</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="campo-nome-ig">Seu Nome (Opcional)</label>
+            <input
+              type="text"
+              class="form-control"
+              id="campo-nome-ig"
+              placeholder="Digite seu nome..."
+            />
+          </div>
+
+          <p id="total-instagram"><strong>Total:</strong> Calculando...</p>
+          <div class="progress mb-3">
+            <div
+              id="progress-instagram"
+              class="progress-bar"
+              role="progressbar"
+              style="width: 0%"
+            >
+              0/0
+            </div>
+          </div>
+
+          <textarea
+            id="instagram-mensagem-apoio"
+            class="hidden-textarea"
+          ></textarea>
+          <textarea
+            id="instagram-mensagem-oposicao"
+            class="hidden-textarea"
+          ></textarea>
+
+          <div
+            id="lista-instagram"
+            style="max-height: 400px; overflow-y: auto"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="tracking-container"
+    style="
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      border: 2px solid #667eea;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 1000;
+    "
+  >
+    <h6 style="margin: 0 0 10px 0">📊 Seu Progresso</h6>
+    <div id="tracking-items"></div>
+    <button
+      onclick="fecharTracking()"
+      style="
+        margin-top: 10px;
+        background: none;
+        border: none;
+        color: #999;
+        font-size: 12px;
+        cursor: pointer;
+      "
+    >
+      Fechar
+    </button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="/assets/js/pauta.js" defer></script>
 </body>
