@@ -275,33 +275,61 @@ function renderTabela() {
 }
 
 // Obter posição (do YAML global ou local se key_player)
+// SUBSTITUA A FUNÇÃO obterPosicao INTEIRA POR ESTA VERSÃO CORRIGIDA:
+
 function obterPosicao(parlamentarId) {
     // 1. Tentar ler das evidências globais (prioridade maior para plenário)
-    if (evidenciasPautas.pautas && evidenciasPautas.pautas[pautaSlug] && evidenciasPautas.pautas[pautaSlug][parlamentarId]) {
+    //    Certifique-se que evidenciasPautas foi carregado corretamente
+    if (evidenciasPautas && evidenciasPautas.pautas && evidenciasPautas.pautas[pautaSlug] && evidenciasPautas.pautas[pautaSlug][parlamentarId]) {
       return evidenciasPautas.pautas[pautaSlug][parlamentarId].posicao || 'nao-manifestado';
     }
 
     // 2. Tentar ler do 'key_players' da pauta (se não encontrado globalmente)
-    //    Isso requer acesso aos dados do front matter, que precisam estar disponíveis no JS
     const keyPlayersDataEl = document.getElementById('pauta-keyplayers-data');
     if (keyPlayersDataEl) {
         try {
-            const keyPlayers = JSON.parse(keyPlayersDataEl.dataset.keyPlayers || '[]');
-            const parlamentarAtual = parlamentaresBase.find(parl => parl.id === parlamentarId);
-            if (parlamentarAtual) {
-                const keyPlayer = keyPlayers.find(p => p.nome === parlamentarAtual.nome);
-                if (keyPlayer && keyPlayer.position) {
-                    return keyPlayer.position;
+            // Parse potencialmente null data attribute mais safely
+            const keyPlayersStr = keyPlayersDataEl.dataset.keyPlayers || '[]'; // Garante que seja pelo menos '[]'
+            let keyPlayers = null;
+            
+            // Tenta o parse, mas evita erro se a string for inválida ou "null"
+            try {
+                 keyPlayers = JSON.parse(keyPlayersStr);
+            } catch (parseError) {
+                 console.warn("data-key-players não é JSON válido:", keyPlayersStr, parseError);
+                 keyPlayers = []; // Trata como array vazio em caso de erro no parse
+            }
+
+
+            // Check if keyPlayers é realmente um array antes de chamar .find
+            if (Array.isArray(keyPlayers)) { // <-- CHECAGEM ESSENCIAL
+                // Encontra o parlamentar na lista base ANTES de tentar ler key_players
+                const parlamentarAtual = parlamentaresBase.find(parl => parl.id === parlamentarId);
+
+                // Verifica se encontrou o parlamentarAtual ANTES de tentar ler .nome
+                if (parlamentarAtual) { // <-- CHECAGEM ESSENCIAL
+                    const keyPlayer = keyPlayers.find(p => p.nome === parlamentarAtual.nome);
+                    if (keyPlayer && keyPlayer.position) {
+                        return keyPlayer.position; // Retorna a posição do key_player
+                    }
+                } else {
+                     // console.warn(`Parlamentar com ID ${parlamentarId} não encontrado em parlamentaresBase.`);
                 }
+            } else {
+                 // Isso pode acontecer se data-key-players for "null" ou algo inesperado
+                 console.warn("data-key-players não resultou em um array:", keyPlayers);
             }
         } catch (e) {
-            console.error("Erro ao ler key_players:", e);
+            // Captura outros erros inesperados durante a leitura
+            console.error("Erro inesperado ao ler key_players:", e);
         }
+    } else {
+         // console.warn("Elemento #pauta-keyplayers-data não encontrado no DOM.");
     }
 
-    return 'nao-manifestado'; // Padrão
+    // Se não encontrou posição global nem local, retorna o padrão
+    return 'nao-manifestado';
 }
-
 
 // Filtros
 document.getElementById('filtro-nome')?.addEventListener('input', renderTabela);
