@@ -381,8 +381,6 @@ async function excluirPauta(filename, title) {
   }
 }
 
-// ADICIONE ESTA FUNÇÃO em gerador.js
-
 function toggleCampaignChannel(channel) {
     const checkbox = document.getElementById(`enable-campaign-${channel}`);
     const section = document.getElementById(`campaign-channel-${channel}`); // Seção de configs específicas
@@ -413,9 +411,6 @@ function toggleCampaignChannel(channel) {
         }
     }
 }
-
-
-// SUBSTITUA A FUNÇÃO coletarDadosFormulario em gerador.js (VERSÃO FINAL COM CAMPANHAS)
 
 function coletarDadosFormulario() {
     const title = document.getElementById('title').value;
@@ -524,9 +519,6 @@ is_plenary_vote: ${isPlenaryVote}
     yaml += `---\n\n${body}`;
     return yaml;
 }
-
-
-// SUBSTITUA A FUNÇÃO alterarPauta em gerador.js (VERSÃO FINAL COM CAMPANHAS)
 
 async function alterarPauta(filename) {
     try {
@@ -815,32 +807,32 @@ async function alterarPauta(filename) {
 
 // Função para salvar alterações na pauta
 async function salvarAlteracoes(filename) {
-  try {
-    // Coletar dados do formulário (similar a gerarPauta)
-    const pautaContent = coletarDadosFormulario();
+    try {
+        // Coletar dados do formulário (similar a gerarPauta)
+        const pautaContent = coletarDadosFormulario();
 
-    const response = await fetch(`/api/edit-pauta`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionToken}`,
-      },
-      body: JSON.stringify({ filename, content: pautaContent }),
-    });
+        const response = await fetch(`/api/edit-pauta`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sessionToken}`
+            },
+            body: JSON.stringify({ filename, content: pautaContent })
+        });
 
-    const data = await response.json();
+        const data = await response.json();
 
-    if (data.success) {
-      alert("✅ Pauta atualizada com sucesso!");
-      location.reload();
-    } else {
-      alert("❌ Erro: " + data.error);
+        if (data.success) {
+            alert('✅ Pauta atualizada com sucesso!');
+            location.reload();
+        } else {
+            alert('❌ Erro: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Erro ao salvar alterações:', error);
+        alert('❌ Erro ao salvar: ' + error.message);
     }
-  } catch (error) {
-    console.error("Erro ao salvar alterações:", error);
-    alert("❌ Erro ao salvar: " + error.message);
-  }
-}
+} 
 
 // Carregar congressistas extras
 async function carregarCongressistas() {
@@ -853,10 +845,6 @@ async function carregarCongressistas() {
     console.error("Erro ao carregar congressistas:", error);
   }
 }
-
-// ==========================================
-// CARREGAR E RENDERIZAR CONTRIBUIÇÕES
-// ==========================================
 
 // Carregar contribuições (PRs com dados de contato)
 async function carregarContribuicoes() {
@@ -1578,8 +1566,6 @@ function handleFeaturedChange() {
     }
   }
 }
-
-// Abrir modal de autocomplete (Função antiga removida, pois agora é inline)
 
 // Selecionar parlamentar do autocomplete (NOVA VERSÃO COM INPUTS)
 function selecionarParlamentar(id, nome, partido, uf) {
