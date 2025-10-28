@@ -2018,47 +2018,64 @@ function abrirAutocomplete() {
     };
 }
         
-// Selecionar parlamentar do autocomplete
 function selecionarParlamentar(id, nome, partido, uf) {
-    // Fechar lista
-    document.getElementById('autocomplete-list').classList.remove('show');
     
-    // Pedir função/papel
-    const role = prompt(`Função/Papel de ${nome}:\n(Ex: Relator, Presidente da Comissão, etc.)`);
-    if (!role) {
-        $('#modalAddParlamentar').modal('hide');
-        return;
+    // 1. Fechar a lista de autocomplete (usando JavaScript puro)
+    const autocompleteList = document.getElementById('autocomplete-list');
+    if (autocompleteList) {
+        autocompleteList.classList.remove('show');
     }
     
-    // Adicionar à lista
+    // 2. Limpar o campo de busca
+    const autocompleteInput = document.getElementById('autocomplete-input');
+    if (autocompleteInput) {
+        autocompleteInput.value = '';
+    }
+    
+    // 3. (REMOVIDO) Não usamos mais o prompt() nem o jQuery ($)
+    // const role = prompt(...);
+    // $('#modalAddParlamentar').modal('hide'); // <-- Linha que causava o erro
+    
+    // 4. Adicionar o parlamentar à lista
     parlamentarCount++;
     const lista = document.getElementById('parlamentaresList');
     
+    // Limpar a mensagem "Nenhum parlamentar adicionado" se ela existir
     if (lista.querySelector('p')) {
         lista.innerHTML = '';
     }
     
+    // 5. Criar o novo item da lista com o textbox
     const item = document.createElement('div');
     item.className = 'parlamentar-item';
     item.id = `parl-${parlamentarCount}`;
+    
+    // Armazena os dados do deputado em formato JSON (seguro para HTML)
+    const deputadoData = JSON.stringify({id, nome, partido, uf}).replace(/'/g, "&apos;");
+    
     item.innerHTML = `
-        <div>
+        <div style="flex: 1; margin-right: 15px;">
             <strong>${nome}</strong> (${partido}-${uf})
-            <br><small>${role}</small>
-            <input type="hidden" class="parl-role" value="${role}" data-deputado='${JSON.stringify({id, nome, partido, uf})}'>
+            
+            <input 
+                type="text" 
+                class="parl-role" 
+                placeholder="Função/Papel (Opcional, Ex: Relator)" 
+                style="width: 100%; margin-top: 8px; padding: 6px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 13px;"
+                data-deputado='${deputadoData}'
+            >
         </div>
-        <button type="button" class="btn btn-small btn-danger" onclick="document.getElementById('parl-${parlamentarCount}').remove()">
+        <button 
+            type="button" 
+            class="btn btn-small btn-danger" 
+            onclick="document.getElementById('parl-${parlamentarCount}').remove()">
             🗑️ Remover
         </button>
     `;
     
     lista.appendChild(item);
-    
-    // Fechar modal e limpar
-    $('#modalAddParlamentar').modal('hide');
-    document.getElementById('autocomplete-input').value = '';
 }
-
+        
 // Fechar autocomplete ao clicar fora
 document.addEventListener('click', function(e) {
     const list = document.getElementById('autocomplete-list');
