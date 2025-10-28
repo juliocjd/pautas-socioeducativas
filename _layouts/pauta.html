@@ -40,41 +40,47 @@ layout: default
   </div>
 
   {% if page.campanha %}
-  <div class="campanhas-section mb-5">
-    <h3>📢 Mobilização</h3>
-    <p>Participe das campanhas de contato com os parlamentares. Basta clicar nos botões abaixo para enviar mensagens pedindo apoio aos parlamentares:</p>
+      <div class="campanhas-section mb-5">
+        <h3>📢 Mobilização</h3>
+        <p>Sua participação é fundamental! Contate os parlamentares diretamente para pressionar por apoio às nossas pautas.</p>
+        
+        <div class="alert alert-info" role="alert">
+          <h5 class="alert-heading">É fácil participar!</h5>
+          <p>Nós já preparamos as mensagens e reunimos os contatos disponíveis.</p>
+          <hr>
+          <p class="mb-0">👇 <strong>Basta clicar nos botões abaixo</strong> para abrir seu aplicativo (Email, WhatsApp) com tudo pronto para enviar ou copiar a mensagem para o Instagram.</p>
+        </div>
+        <div class="row">
+          {% if page.campanha.email %}
+          <div class="col-md-4 mb-3">
+            <button class="btn btn-primary btn-block" onclick="abrirCampanhaEmail()">
+              📧 Campanha de Email
+            </button>
+            <small id="contador-emails" class="text-muted">Carregando...</small>
+          </div>
+          {% endif %}
+          
+          {% if page.campanha.whatsapp %}
+          <div class="col-md-4 mb-3">
+            <button class="btn btn-success btn-block" onclick="abrirCampanhaWhatsApp()">
+              <span id="icon-whatsapp"></span> Campanha WhatsApp
+            </button>
+            <small id="contador-whatsapp" class="text-muted">Carregando...</small>
+          </div>
+          {% endif %}
+          
+          {% if page.campanha.instagram %}
+          <div class="col-md-4 mb-3">
+            <button class="btn btn-danger btn-block" onclick="abrirCampanhaInstagram()">
+              <span id="icon-instagram"></span> Campanha Instagram
+            </button>
+            <small id="contador-instagram" class="text-muted">Carregando...</small>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
     
-    <div class="row">
-      {% if page.campanha.email %}
-      <div class="col-md-4 mb-3">
-        <button class="btn btn-primary btn-block" onclick="abrirCampanhaEmail()">
-          📧 Campanha de Email
-        </button>
-        <small id="contador-emails" class="text-muted">Carregando...</small>
-      </div>
-      {% endif %}
-      
-      {% if page.campanha.whatsapp %}
-      <div class="col-md-4 mb-3">
-        <button class="btn btn-success btn-block" onclick="abrirCampanhaWhatsApp()">
-          <span id="icon-whatsapp"></span> Campanha WhatsApp
-        </button>
-        <small id="contador-whatsapp" class="text-muted">Carregando...</small>
-      </div>
-      {% endif %}
-      
-      {% if page.campanha.instagram %}
-      <div class="col-md-4 mb-3">
-        <button class="btn btn-danger btn-block" onclick="abrirCampanhaInstagram()">
-          <span id="icon-instagram"></span> Campanha Instagram
-        </button>
-        <small id="contador-instagram" class="text-muted">Carregando...</small>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %}
-
   <div class="card mb-4">
     <div class="card-body">
       <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
