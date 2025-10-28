@@ -77,7 +77,7 @@ layout: default
           <select class="form-control" id="filtro-posicao">
             <option value="">Todas as Posições</option>
             <option value="apoia">Apoia</option>
-            <option value="nao-apoia">Não Apoia</option>
+            <option value="nao-apoia">Contrário</option>
             <option value="nao-manifestado">Não se Manifestou</option>
           </select>
         </div>
@@ -209,6 +209,18 @@ layout: default
       </div>
       <div class="modal-body">
         <p><strong>Total:</strong> <span id="total-emails-campanha"></span></p>
+        <div class="form-group">
+          <label for="filtro-campanha-estado">
+            <strong>Filtrar por seu Estado (Opcional)</strong>
+          </label>
+          <select class="form-control" id="filtro-campanha-estado">
+            <option value="">Todos os Estados (Apenas quem não apoia)</option>
+          </select>
+          <small class="text-muted">
+            Isso filtrará a lista de e-mails apenas para os parlamentares do seu estado
+            e adicionará uma introdução ("Sou eleitor de...") ao e-mail.
+          </small>
+        </div>
         <div class="form-group">
           <label>Lista de Emails (CCO)</label>
           <textarea class="form-control" id="emails-lista" rows="3" readonly></textarea>
@@ -764,7 +776,7 @@ function renderTabela() {
     const badgeClass = posicao === 'apoia' ? 'badge-apoia' : 
                        posicao === 'nao-apoia' ? 'badge-nao-apoia' : 'badge-nao-manifestado';
     const statusTexto = posicao === 'apoia' ? 'Apoia' : 
-                        posicao === 'nao-apoia' ? 'Não Apoia' : 'Não se Manifestou';
+                        posicao === 'nao-apoia' ? 'Contrário' : 'Não se Manifestou';
     
     return `<tr>
       <td>${p.nome}</td>
@@ -1009,19 +1021,67 @@ function carregarContadores() {
 }
 
 // CAMPANHA EMAIL
+
 function abrirCampanhaEmail() {
   if (!campanhaEmail) return alert('Campanha de email não configurada para esta pauta.');
+
+  const selectEstado = document.getElementById('filtro-campanha-estado');
+  const textareaEmails = document.getElementById('emails-lista');
+  const inputAssunto = document.getElementById('email-assunto');
+  const textareaMensagem = document.getElementById('email-mensagem');
+  const totalEmailsEl = document.getElementById('total-emails-campanha');
+
+  // Variáveis para os templates de mensagem
+  // (mensagem_oposicao e mensagem_apoio vêm da nova estrutura do gerador.html)
+  const templateOposicao = campanhaEmail.mensagem_oposicao || "";
+  const templateApoio = campanhaEmail.mensagem_apoio || "";
+
+  // Função interna para atualizar a lista e a mensagem
+  function atualizarFiltroEmail() {
+    const estadoSelecionado = selectEstado.value;
+    let mensagemPrefixo = ""; // O texto automático (ex: "Sou eleitor...")
+    let templateFinal = "";
+    
+    // 1. Filtrar Parlamentares
+    const parlamentaresFiltrados = parlamentaresBase.filter(p => {
+      // Filtro 1: Estado
+      const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+      if (!estadoMatch) return false;
+
+      // Filtro 2: Posição (Sempre filtrar quem não apoia)
+      const posicao = obterPosicao(p.id);
+      return posicao === 'nao-apoia' || posicao === 'nao-manifestado';
+    });
+
+    // 2. Montar a lista de emails
+    const emails = parlamentaresFiltrados.filter(p => p.email).map(p => p.email);
+    textareaEmails.value = emails.join('; ');
+    totalEmailsEl.textContent = `${emails.length} emails selecionados`;
+
+    // 3. Montar a Mensagem
+    // Se o usuário selecionou um estado, adiciona o prefixo
+    if (estadoSelecionado) {
+      mensagemPrefixo = `Sou eleitor do Estado do ${estadoSelecionado}.\n\n`;
+    }
+    
+    // A campanha de email é focada em quem NÃO apoia, então usamos o template de oposição
+    templateFinal = templateOposicao; 
+
+    // Define o assunto e a mensagem final (com o prefixo, se houver)
+    inputAssunto.value = campanhaEmail.assunto || '';
+    textareaMensagem.value = mensagemPrefixo + templateFinal;
+  }
+
+  // 4. Adicionar o "ouvinte" de mudança (listener) ao dropdown
+  // Usamos .onchange (em vez de addEventListener) para garantir que só um exista
+  selectEstado.onchange = atualizarFiltroEmail;
+
+  // 5. Chamar a função uma vez para carregar o estado inicial (Todos os Estados)
+  atualizarFiltroEmail();
   
-  const emails = parlamentaresBase.filter(p => p.email).map(p => p.email);
-  
-  document.getElementById('emails-lista').value = emails.join('; ');
-  document.getElementById('email-assunto').value = campanhaEmail.assunto || '';
-  document.getElementById('email-mensagem').value = campanhaEmail.mensagem || '';
-  document.getElementById('total-emails-campanha').textContent = `${emails.length} emails (das APIs oficiais)`;
-  
+  // 6. Abrir o modal
   $('#modalCampanhaEmail').modal('show');
 }
-
 function abrirClienteEmail() {
   const emails = document.getElementById('emails-lista').value;
   const assunto = document.getElementById('email-assunto').value;
