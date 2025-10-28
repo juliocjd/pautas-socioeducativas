@@ -1863,7 +1863,7 @@ async function excluirDados(parlamentarId, nome) {
             alert('✅ Dados excluídos!');
             carregarCongressistas();
         } else {
-            alert('❌ Erro: 'D + data.message);
+            alert('❌ Erro: ' + data.message);
         }
     } catch (error) {
         alert('❌ Erro: ' + error.message);
