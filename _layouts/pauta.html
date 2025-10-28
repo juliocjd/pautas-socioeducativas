@@ -24,6 +24,7 @@ layout: default
   <div id="pauta-data" 
        data-pauta-slug="{{ page.slug | default: page.title | slugify }}"
        data-casa-legislativa="{{ page.casa }}">
+       data-is-plenary-vote="{{ page.is_plenary_vote | default: false }}">
   </div>
   <div id="pauta-keyplayers-data"
        data-key-players="{{ page.key_players | jsonify | escape }}">

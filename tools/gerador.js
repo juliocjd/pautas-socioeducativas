@@ -541,8 +541,6 @@ is_plenary_vote: ${isPlenaryVote}
   return yaml;
 }
 
-// SUBSTITUA A FUNÇÃO alterarPauta INTEIRA em gerador.js POR ESTA:
-
 async function alterarPauta(filename) {
   try {
     console.log("📝 Carregando pauta para edição:", filename);
@@ -559,13 +557,12 @@ async function alterarPauta(filename) {
     if (autocompleteList) autocompleteList.classList.remove("show");
     const oldAlert = document.getElementById("edit-mode");
     if (oldAlert) oldAlert.remove();
-    // Resetar checkboxes de campanha
-    document.getElementById("enable-campaign-email").checked = false;
-    document.getElementById("enable-campaign-whatsapp").checked = false;
-    document.getElementById("enable-campaign-instagram").checked = false;
-    toggleCampaignChannel("email"); // Garante que seções extras estejam ocultas
-    toggleCampaignChannel("whatsapp");
-    toggleCampaignChannel("instagram");
+    // Resetar checkboxes de campanha e ocultar seções
+    ["email", "whatsapp", "instagram"].forEach((channel) => {
+      const cb = document.getElementById(`enable-campaign-${channel}`);
+      if (cb) cb.checked = false;
+      toggleCampaignChannel(channel);
+    });
     // --- Fim do Reset ---
 
     // Buscar dados da pauta
@@ -580,11 +577,11 @@ async function alterarPauta(filename) {
 
     const frontMatter = frontMatterMatch[1];
     const body = frontMatterMatch[2].trim();
-    const pautaData = {}; // Objeto para guardar dados parseados
-    let keyPlayersData = []; // Array para guardar key_players
-    let campanhaData = {}; // Objeto para guardar dados da campanha parseados
+    const pautaData = {};
+    let keyPlayersData = [];
+    let campanhaData = {};
 
-    // Parse do Front Matter
+    // --- Parser Manual de YAML (Revisado) ---
     const lines = frontMatter.split("\n");
     let currentKey = "";
     let multilineValue = "";
@@ -592,166 +589,168 @@ async function alterarPauta(filename) {
     let inKeyPlayers = false;
     let inCampanha = false;
     let currentCampanhaChannel = null;
+    let currentDataObject = pautaData; // Onde salvar chaves simples/multiline
 
     for (const line of lines) {
-      // Tratamento de key_players (CORRIGIDO)
-      if (line.trim() === "key_players:") {
+      const trimmedLine = line.trim();
+      const indentLevel = line.length - line.trimStart().length;
+
+      // --- Gerenciamento de Seção ---
+      if (trimmedLine === "key_players:") {
         inKeyPlayers = true;
-        inCampanha = false; // Garante que saiu de campanha
-        inMultiline = false; // Garante que saiu de multiline
-        continue; // Próxima linha
-      }
-
-      if (inKeyPlayers) {
-        // Se encontrar outra chave de nível superior (sem indentação), sai do key_players
-        if (line.match(/^\w+:/)) {
-          inKeyPlayers = false;
-          // NÃO continue aqui, deixa o resto do loop processar essa linha
-        } else {
-          // Processa linhas dentro de key_players
-          const nomeMatch = line.match(/^\s*-\s*nome:\s*"?([^"]*)"?\s*$/);
-          const roleMatch = line.match(/^\s*role:\s*"?([^"]*)"?\s*$/);
-          const positionMatch = line.match(/^\s*position:\s*"?([^"]*)"?\s*$/);
-
-          if (nomeMatch) {
-            keyPlayersData.push({ nome: nomeMatch[1].trim() }); // Inicia novo player
-          } else if (roleMatch && keyPlayersData.length > 0) {
-            keyPlayersData[keyPlayersData.length - 1].role =
-              roleMatch[1].trim();
-          } else if (positionMatch && keyPlayersData.length > 0) {
-            keyPlayersData[keyPlayersData.length - 1].position =
-              positionMatch[1].trim();
-          }
-          // Se a linha está dentro de key_players, processamos e vamos para a próxima
-          continue; // Pula o resto do loop para esta linha
-        }
-        // Se saiu de inKeyPlayers (linha if(line.match...)), deixa o loop continuar
-      }
-      // --- FIM DA CORREÇÃO key_players ---
-
-      // --- LÓGICA: Tratamento de campanha ---
-      if (line.trim() === "campanha:") {
+        inCampanha = false;
+        inMultiline = false;
+        currentDataObject = null;
+        continue;
+      } else if (trimmedLine === "campanha:") {
         inCampanha = true;
         inKeyPlayers = false;
         inMultiline = false;
-        campanhaData = {};
+        currentDataObject = campanhaData;
         continue;
+      } else if (line.match(/^\w+:/) && indentLevel === 0) {
+        // Nova chave de nível 0 reseta tudo
+        inKeyPlayers = false;
+        inCampanha = false;
+        inMultiline = false;
+        currentDataObject = pautaData;
+        // Salva multiline anterior se houver
+        if (multilineValue && currentKey) {
+          /* (lógica de save multiline abaixo) */
+        }
       }
+
+      // --- Processamento Key Players ---
+      if (inKeyPlayers) {
+        const nomeMatch = line.match(/^\s*-\s*nome:\s*"?([^"]*)"?\s*$/);
+        const roleMatch = line.match(/^\s*role:\s*"?([^"]*)"?\s*$/);
+        const positionMatch = line.match(/^\s*position:\s*"?([^"]*)"?\s*$/);
+        if (nomeMatch) keyPlayersData.push({ nome: nomeMatch[1].trim() });
+        else if (roleMatch && keyPlayersData.length > 0)
+          keyPlayersData[keyPlayersData.length - 1].role = roleMatch[1].trim();
+        else if (positionMatch && keyPlayersData.length > 0)
+          keyPlayersData[keyPlayersData.length - 1].position =
+            positionMatch[1].trim();
+        continue; // Processou linha de key_player, vai para a próxima
+      }
+
+      // --- Processamento Campanha ---
       if (inCampanha) {
-        const channelMatch = line.match(/^ {2}(\w+):$/);
+        const channelMatch = line.match(/^ {2}(\w+):$/); // Canal (nível 1)
+        const subKeyMatchPipe = line.match(/^ {4}(\w+):\s*\|/); // Subchave multiline (nível 2)
+        const subKeyMatchSimple = line.match(/^ {4}(\w+):\s*(.+)$/); // Subchave simples (nível 2)
+
         if (channelMatch) {
+          // Salva multiline anterior se houver
+          if (inMultiline && currentCampanhaChannel && currentKey)
+            campanhaData[currentCampanhaChannel][currentKey] =
+              multilineValue.trimEnd();
           currentCampanhaChannel = channelMatch[1];
           campanhaData[currentCampanhaChannel] = {};
           inMultiline = false;
+          currentDataObject = campanhaData[currentCampanhaChannel]; // Objeto atual é o do canal
           continue;
         }
 
         if (currentCampanhaChannel) {
-          const subKeyMatchPipe = line.match(/^ {4}(\w+):\s*\|/);
-          const subKeyMatchSimple = line.match(/^ {4}(\w+):\s*(.+)$/);
-
           if (subKeyMatchPipe) {
+            // Salva multiline anterior se houver
+            if (inMultiline && currentKey)
+              currentDataObject[currentKey] = multilineValue.trimEnd();
             currentKey = subKeyMatchPipe[1];
             inMultiline = true;
             multilineValue = "";
             continue;
           } else if (inMultiline) {
+            // Linha pertence a um multiline de campanha
+            // Verifica se a indentação indica o fim do bloco (menos de 6 espaços ou nova chave no nível 2 ou 1)
             if (
+              indentLevel < 6 ||
               line.match(/^ {4}\w+:/) ||
-              line.match(/^ {2}\w+:/) ||
-              line.match(/^\w+:/)
+              line.match(/^ {2}\w+:/)
             ) {
-              campanhaData[currentCampanhaChannel][currentKey] =
-                multilineValue.trimEnd(); // Use trimEnd
+              currentDataObject[currentKey] = multilineValue.trimEnd();
               inMultiline = false;
-              // REPROCESSA a linha atual (não continue)
+              // REPROCESSA a linha atual
             } else {
-              multilineValue += line.replace(/^ {6}/, "") + "\n";
+              multilineValue += line.substring(6) + "\n"; // Remove 6 espaços
               continue;
             }
           }
 
           if (!inMultiline && subKeyMatchSimple) {
+            // Chave simples dentro do canal
             const subKey = subKeyMatchSimple[1];
             const subValue = subKeyMatchSimple[2]
               .replace(/^["']|["']$/g, "")
               .trim();
-            campanhaData[currentCampanhaChannel][subKey] = subValue;
+            currentDataObject[subKey] = subValue;
             continue;
           }
         }
-        if (line.match(/^\w+:/)) {
-          inCampanha = false;
-          if (inMultiline && currentCampanhaChannel && currentKey) {
-            campanhaData[currentCampanhaChannel][currentKey] =
-              multilineValue.trimEnd(); // Use trimEnd
-            inMultiline = false;
-          }
-          // REPROCESSA a linha atual fora da campanha
-        } else {
-          continue;
-        }
+        // Se a linha está em campanha mas não correspondeu a nada, pode ser o fim
+        // Deixa o processamento geral tratar (se for chave nível 0) ou ignora
       }
-      // --- FIM DA LÓGICA DE CAMPANHA ---
 
-      // Tratamento de Multiline Geral (fora de key_players e campanha)
-      if (
-        !inKeyPlayers &&
-        !inCampanha &&
-        line.includes("|") &&
-        !line.match(/^\s*-/)
-      ) {
-        const match = line.match(/^(\w+):\s*\|/);
-        if (match) {
-          currentKey = match[1];
+      // --- Processamento Geral (Chaves Simples e Multiline Nível 0) ---
+      if (!inKeyPlayers && !inCampanha) {
+        const simpleMatch = line.match(/^(\w+):\s*(.+)$/);
+        const pipeMatch = line.match(/^(\w+):\s*\|/);
+
+        if (pipeMatch) {
+          // Salva multiline anterior se houver
+          if (inMultiline && currentKey)
+            pautaData[currentKey] = multilineValue.trimEnd();
+          currentKey = pipeMatch[1];
           inMultiline = true;
           multilineValue = "";
+          currentDataObject = pautaData; // Garante que salva no objeto principal
           continue;
-        }
-      }
-      if (inMultiline) {
-        // Só entra aqui se for multiline GERAL
-        if (line.match(/^\w+:/) && !line.includes("  ")) {
-          pautaData[currentKey] = multilineValue.trimEnd(); // Use trimEnd
-          inMultiline = false;
-          // REPROCESSA a linha atual
-        } else {
-          multilineValue += line.replace(/^ {2}/, "") + "\n";
-          continue;
-        }
-      }
-
-      // Tratamento de Campo Simples Geral (se não for key_player nem campanha nem multiline)
-      const match = line.match(/^(\w+):\s*(.+)$/);
-      if (match) {
-        const key = match[1];
-        let value = match[2].replace(/^["']|["']$/g, "").trim();
-        pautaData[key] = value;
-
-        // Preencher input se existir
-        const input = document.getElementById(key);
-        if (input) {
-          if (input.type === "checkbox") {
-            input.checked = value === "true";
+        } else if (inMultiline) {
+          // Linha pertence a um multiline geral
+          // Verifica se a indentação indica o fim (menos de 2 espaços ou nova chave nível 0)
+          if (indentLevel < 2 || line.match(/^\w+:/)) {
+            pautaData[currentKey] = multilineValue.trimEnd();
+            inMultiline = false;
+            // REPROCESSA a linha atual
           } else {
-            input.value = value;
+            multilineValue += line.substring(2) + "\n"; // Remove 2 espaços
+            continue;
           }
         }
-      }
-    } // Fim do loop for (const line of lines)
 
-    // Salvar últimos multiline (geral ou campanha) que não foram fechados por uma nova chave
-    if (inMultiline && currentKey) {
-      if (inCampanha && currentCampanhaChannel) {
-        campanhaData[currentCampanhaChannel][currentKey] =
-          multilineValue.trimEnd(); // Use trimEnd
-      } else {
-        pautaData[currentKey] = multilineValue.trimEnd(); // Use trimEnd
+        if (!inMultiline && simpleMatch) {
+          // Chave simples nível 0
+          // Salva multiline anterior se houver
+          if (inMultiline && currentKey)
+            pautaData[currentKey] = multilineValue.trimEnd(); // Deveria ter sido salvo antes, mas por segurança
+          inMultiline = false; // Garante que saiu do multiline
+
+          const key = simpleMatch[1];
+          let value = simpleMatch[2].replace(/^["']|["']$/g, "").trim();
+          pautaData[key] = value;
+          currentDataObject = pautaData; // Garante que está no objeto principal
+
+          // Preencher input se existir
+          const input = document.getElementById(key);
+          if (input) {
+            if (input.type === "checkbox") input.checked = value === "true";
+            else input.value = value;
+          }
+          continue; // Processou linha simples, vai para a próxima
+        }
       }
+    } // Fim do loop for
+
+    // Salvar último multiline que pode ter ficado aberto
+    if (inMultiline && currentKey && currentDataObject) {
+      currentDataObject[currentKey] = multilineValue.trimEnd();
     }
 
-    // Preencher body
+    // --- Preencher campos que não são inputs diretos ---
     document.getElementById("body").value = body;
+    document.getElementById("description").value =
+      pautaData["description"] || ""; // Preenche a descrição explicitamente
 
     // --- Preencher Campos das Campanhas (Nova Lógica) ---
     document.getElementById("campaign-message-opposition").value =
@@ -766,6 +765,7 @@ async function alterarPauta(filename) {
       campanhaData.instagram?.mensagem_apoio ||
       "";
 
+    // Ativa checkboxes e preenche campos específicos
     if (campanhaData.email) {
       document.getElementById("enable-campaign-email").checked = true;
       document.getElementById("email-assunto").value =
@@ -785,11 +785,12 @@ async function alterarPauta(filename) {
     // --- FIM ---
 
     // --- Recarregar Membros-Chave na UI ---
-    if (keyPlayersData.length > 0 && !pautaData["is_plenary_vote"]) {
-      // Só carrega se não for plenário
+    if (keyPlayersData.length > 0 && pautaData["is_plenary_vote"] !== "true") {
+      // Verifica flag corretamente
+      if (deputados.length === 0) await loadDeputados(); // Garante que deputados estão carregados
+
       listaParl.innerHTML = ""; // Limpa a mensagem padrão
       keyPlayersData.forEach((player) => {
-        // Encontra o parlamentar correspondente na lista global 'deputados'
         const parlamentar = deputados.find((d) => d.nome === player.nome);
         if (parlamentar) {
           parlamentarCount++;
@@ -801,7 +802,7 @@ async function alterarPauta(filename) {
             nome: parlamentar.nome,
             partido: parlamentar.partido,
             uf: parlamentar.uf,
-          }).replace(/'/g, "&apos;"); // Escapa apóstrofos para HTML
+          }).replace(/'/g, "&apos;");
 
           item.innerHTML = `
                        <div class="parlamentar-item-info">
@@ -846,7 +847,7 @@ async function alterarPauta(filename) {
     }
     // --- FIM ---
 
-    // Atualizar UI com base no estado carregado (Plenário ou não)
+    // Atualizar UI com base no estado carregado
     handlePlenaryVoteChange();
 
     // Mudar para aba de criar e adicionar indicador
@@ -868,7 +869,6 @@ async function alterarPauta(filename) {
     if (submitBtn) {
       submitBtn.textContent = "💾 Salvar Alterações";
       submitBtn.setAttribute("data-editing", filename);
-      // Remove evento antigo e adiciona novo para evitar duplicidade
       const newBtn = submitBtn.cloneNode(true);
       submitBtn.parentNode.replaceChild(newBtn, submitBtn);
       newBtn.addEventListener("click", function (event) {
@@ -880,30 +880,22 @@ async function alterarPauta(filename) {
       });
     }
 
-    // Habilitar ou desabilitar a aba de Plenário (ADICIONE OU VERIFIQUE ESTE BLOCO NO FINAL)
+    // Habilitar/desabilitar aba Plenário
     const tabBtnPlenario = document.getElementById("tab-btn-plenario");
     const isPlenary = pautaData["is_plenary_vote"] === "true";
     if (tabBtnPlenario) {
-      // Adiciona verificação se o botão existe
-      if (isPlenary) {
-        tabBtnPlenario.disabled = false;
-        tabBtnPlenario.title =
-          "Editar posicionamento dos parlamentares para esta pauta";
-        // Armazena os dados da pauta atual para o editor de plenário usar
-        currentPlenarioPauta = {
-          filename: filename,
-          slug: slugify(pautaData["title"]),
-          title: pautaData["title"],
-          casa: pautaData["casa"],
-        };
-      } else {
-        tabBtnPlenario.disabled = true;
-        tabBtnPlenario.title =
-          "Disponível apenas ao editar pautas de Votação em Plenário";
-        currentPlenarioPauta = null; // Limpa a pauta selecionada
-      }
-    } else {
-      console.warn("Botão da aba Plenário (#tab-btn-plenario) não encontrado.");
+      tabBtnPlenario.disabled = !isPlenary;
+      tabBtnPlenario.title = isPlenary
+        ? "Editar posicionamento..."
+        : "Disponível apenas para Votação em Plenário";
+      currentPlenarioPauta = isPlenary
+        ? {
+            filename,
+            slug: slugify(pautaData["title"]),
+            title: pautaData["title"],
+            casa: pautaData["casa"],
+          }
+        : null;
     }
 
     // Scroll
