@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /api/evidencias_pautas.json
+---
+{{ site.data.evidencias_pautas | jsonify }}
