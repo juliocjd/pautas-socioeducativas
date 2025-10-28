@@ -1,0 +1,5 @@
+---
+layout: null # Não usa nenhum layout HTML
+permalink: /api/congressistas_extras.json # Define a URL final
+---
+{{ site.data.congressistas_extras | jsonify }}
