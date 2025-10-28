@@ -4,19 +4,19 @@ layout: default
 
 <div class="jumbotron text-center">
   <h1 class="display-4">Bem-vindo às Pautas Socioeducativas</h1>
-  <p class="lead">Acompanhe e mobilize a categoria em torno das propostas legislativas que mais importam para nós.</p>
+  <p class="lead">Acompanhe e mobilize a categoria em torno das propostas legislativas que mais importam para nós Agentes de Segurança Socioeducativos.</p>
   <hr class="my-4">
   
-  <!-- BLOCO CONDICIONAL DA PAUTA PRINCIPAL -->
   {% assign featured_pauta = site.pautas | where: "featured", true | first %}
   {% if featured_pauta %}
-    <p>Nossa luta principal é</p>
-    <a class="btn btn-primary btn-lg" href="{{ featured_pauta.url }}" role="button">{{ featured_pauta.title }}</a>
+    <p class="featured-pauta-label"> 
+      <span style="font-size: 1.2em; vertical-align: middle;">⭐</span> 
+      Nossa <strong>luta principal</strong> é:
+    </p>
+    <a class="btn btn-primary btn-lg mt-2" href="{{ featured_pauta.url }}" role="button">{{ featured_pauta.title }}</a>
   {% endif %}
-  <!-- SE NÃO HOUVER PAUTA PRINCIPAL, NADA AQUI SERÁ EXIBIDO -->
-</div>
+  </div>
 
-<!-- NOVA SEÇÃO DINÂMICA DE PAUTAS -->
 <div class="container">
   <h2 class="mb-4">Nossas Pautas em Andamento</h2>
   <div class="row">
@@ -34,16 +34,17 @@ layout: default
       </div>
     {% endfor %}
   </div>
-</div>
-
-<!-- SEÇÃO MANTIDA COMO ESTAVA -->
-<div class="container mt-5">
-  <h2>Como Funciona</h2>
-  <p>Este site é uma ferramenta de transparência e mobilização. Você pode:</p>
-  <ul>
-    <li>Ver o posicionamento de cada parlamentar sobre nossas pautas.</li>
-    <li>Encontrar informações de contato para entrar em contato direto.</li>
-    <li>Enviar informações atualizadas sobre declarações de apoio.</li>
-  </ul>
-  <p>Todas as contribuições são moderadas para garantir a precisão das informações.</p>
+</div> <div class="container mt-4 mb-5"> 
+  <div class="card bg-light"> 
+    <div class="card-body">
+      <h2 class="card-title">Sua Voz no Congresso</h2> 
+      <p>Entenda e participe! Este espaço centraliza informações e facilita sua mobilização pelas pautas dos Agentes de Segurança Socioeducativo:</p>
+      <ul>
+        <li><strong>Acompanhe:</strong> Veja rapidamente quem apoia, é contrário ou está indeciso sobre cada pauta.</li>
+        <li><strong>Pressione por Apoio:</strong> Participe das campanhas! Envie emails, mensagens de WhatsApp ou Instagram para os parlamentares, cobrando um posicionamento favorável ou agradecendo o apoio já declarado.</li>
+        <li><strong>Mantenha Atualizado:</strong> Contribua! Envie informações de contato que você tenha (WhatsApp, Instagram) ou novas evidências (links, vídeos) sobre o posicionamento dos políticos.</li>
+      </ul>
+      <p class="text-muted"><small><em>Para manter a relevância e qualidade dos dados, todas as contribuições são moderadas pela administração.</em></small></p>
+    </div>
+  </div>
 </div>
