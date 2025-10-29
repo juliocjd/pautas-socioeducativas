@@ -234,6 +234,32 @@ function finalizarCarregamento() {
     console.error("Erro ao parsear key_players em finalizarCarregamento", e);
   }
 
+  // <<< INÍCIO DA CORREÇÃO DO BUG 5 >>>
+  // Carregar dados da campanha que foram "queimados" no HTML
+  try {
+    const campanhaDataEl = document.getElementById("pauta-campanha-data");
+    if (campanhaDataEl) {
+      // Parseia o JSON que o Jekyll/Liquid gerou
+      campanhaEmail = JSON.parse(campanhaDataEl.dataset.campanhaEmail || "{}");
+      campanhaWhatsApp = JSON.parse(
+        campanhaDataEl.dataset.campanhaWhatsapp || "{}"
+      );
+      campanhaInstagram = JSON.parse(
+        campanhaDataEl.dataset.campanhaInstagram || "{}"
+      );
+      console.log("✅ Dados da campanha carregados do DOM.");
+    } else {
+      console.warn("Elemento #pauta-campanha-data não encontrado.");
+    }
+  } catch (e) {
+    console.error("Erro ao parsear JSON dos dados da campanha:", e);
+    // Garante que as variáveis permaneçam como objetos vazios em caso de erro
+    campanhaEmail = {};
+    campanhaWhatsApp = {};
+    campanhaInstagram = {};
+  }
+  // <<< FIM DA CORREÇÃO DO BUG 5 >>>
+
   let parlamentaresParaExibir = [];
 
   if (isPlenaryVote) {

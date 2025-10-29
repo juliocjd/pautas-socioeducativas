@@ -784,6 +784,16 @@ async function alterarPauta(filename) {
     }
     // --- FIM ---
 
+    // ==========================================================
+    // INÍCIO DA CORREÇÃO (BUG 1)
+    // ==========================================================
+    // Atualizar UI (ex: esconder lista) com base no estado carregado
+    // ANTES de tentar popular a lista
+    handlePlenaryVoteChange();
+    // ==========================================================
+    // FIM DA CORREÇÃO
+    // ==========================================================
+
     // --- Recarregar Membros-Chave na UI ---
     // Verifica se a flag 'is_plenary_vote' (lida do YAML) é 'false'
     if (keyPlayersData.length > 0 && pautaData["is_plenary_vote"] === "false") {
@@ -850,8 +860,7 @@ async function alterarPauta(filename) {
     }
     // --- FIM ---
 
-    // Atualizar UI com base no estado carregado
-    handlePlenaryVoteChange();
+    // (Linha 'handlePlenaryVoteChange();' removida daqui)
 
     // Mudar para aba de criar e adicionar indicador
     showTab("criar");
@@ -1540,14 +1549,20 @@ async function salvarEdicaoDados(id, nome) {
       if (!dados[key]) delete dados[key];
     });
 
-    const response = await fetch(`/api/congressistas`, {
-      method: "PUT",
+    // --- INÍCIO DA CORREÇÃO (BUG 3) ---
+
+    // 1. Mudar a URL da API de /api/congressistas para /api/edit-congressista
+    const response = await fetch(`/api/edit-congressista`, {
+      method: "PUT", // O método PUT está correto
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionToken}`,
       },
-      body: JSON.stringify({ parlamentarId: id, nome, dados }),
+      // 2. Corrigir o corpo para enviar { parlamentar_id, dados }
+      body: JSON.stringify({ parlamentar_id: id, dados: dados }),
     });
+
+    // --- FIM DA CORREÇÃO ---
 
     const result = await response.json();
 
@@ -1564,6 +1579,7 @@ async function salvarEdicaoDados(id, nome) {
     alert("❌ Erro ao salvar: " + error.message);
   }
 }
+
 async function excluirDados(parlamentarId, nome) {
   if (!confirm(`Tem certeza que deseja excluir todos os dados de ${nome}?`))
     return;
