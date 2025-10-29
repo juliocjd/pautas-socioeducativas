@@ -13,20 +13,34 @@
   margin-bottom: 1rem;
 }
 
-/* Garante que o container das abas não force altura mínima desnecessária */
+/* ========================================== */
+/* CORREÇÃO PARA ALINHAMENTO DAS ABAS NO MODAL 'ENVIAR INFO' (Tentativa 3) */
+/* ========================================== */
+
 #modalEnviarInfo .modal-body .tab-content {
-  min-height: auto; /* Remove altura mínima se houver */
+  position: relative; /* Ajuda a conter os painéis */
+  min-height: auto;
 }
 
-/* Garante que o painel da aba não tenha alinhamentos estranhos */
-#modalEnviarInfo .tab-pane {
-  height: auto; /* Permite que a altura se ajuste ao conteúdo */
-  display: block !important; /* Força a exibição normal (sobrescreve 'fade' se necessário durante a transição) */
-  /* Se estiver usando Flexbox no .modal-body, pode precisar disso: */
-  /* align-self: flex-start; */
+#modalEnviarInfo .modal-body .tab-content > .tab-pane {
+  display: none !important; /* FORÇA o display none por padrão */
+  opacity: 0; /* Garante invisibilidade */
+  position: absolute; /* Tira do fluxo normal se display falhar */
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: auto;
+  height: auto;
 }
 
-/* Remove margem superior extra se houver no primeiro elemento da aba */
-#modalEnviarInfo #evidencia > *:first-child {
+/* Mostra APENAS a aba ativa */
+#modalEnviarInfo .modal-body .tab-content > .tab-pane.active.show {
+  display: block !important; /* FORÇA o display block */
+  opacity: 1;
+  position: relative; /* Volta ao fluxo normal */
+}
+
+/* Remove margem superior extra do primeiro elemento DENTRO da aba ativa */
+#modalEnviarInfo .tab-pane.active.show > *:first-child {
   margin-top: 0;
 }
