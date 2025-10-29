@@ -13,18 +13,116 @@
   margin-bottom: 1rem;
 }
 
-/* Tentativa Suave para corrigir espaço em branco nas abas */
-#modalEnviarInfo .modal-body .tab-content > .tab-pane:not(.active) {
-  height: 0;
-  overflow: hidden;
-  opacity: 0; /* Mantém a transição fade do Bootstrap */
+/* ========================================== */
+/* CORREÇÃO PARA ESPAÇO EM BRANCO NAS ABAS (COM .fade) */
+/* ========================================== */
+
+/* Garante que o container das abas possa conter elementos posicionados */
+#modalEnviarInfo .modal-body .tab-content {
+  position: relative;
+  min-height: auto; /* Evita altura mínima pré-definida */
 }
+
+/* Tenta tirar as abas inativas do fluxo normal */
+#modalEnviarInfo .modal-body .tab-content > .tab-pane:not(.show) {
+  position: absolute; /* Tira do fluxo */
+  top: 0; /* Alinha no topo */
+  left: 0;
+  width: 100%; /* Garante largura total */
+  opacity: 0; /* Mantém invisível (Bootstrap já faz isso com .fade) */
+  pointer-events: none; /* Impede interação */
+  visibility: hidden; /* Garante que não ocupa espaço de acessibilidade */
+  height: 0; /* Tenta forçar altura zero */
+  overflow: hidden; /* Esconde conteúdo que possa vazar */
+}
+
+/* Garante que a aba ativa ocupe espaço normalmente */
 #modalEnviarInfo .modal-body .tab-content > .tab-pane.active.show {
-  height: auto; /* Garante que a aba ativa tenha altura */
+  position: relative; /* Volta ao fluxo normal ou ao posicionamento relativo */
+  width: 100%;
+  height: auto; /* Altura automática baseada no conteúdo */
   overflow: visible;
   opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
+
 /* Remove margem superior extra do primeiro elemento DENTRO da aba ativa */
 #modalEnviarInfo .tab-pane.active.show > *:first-child {
   margin-top: 0;
+}
+
+/* ========================================== */
+/* (Manter as outras regras que adicionamos antes para Jumbotron, etc.) */
+/* ========================================== */
+/* ... (regras para .jumbotron, .situacao-destaque, etc.) ... */
+.jumbotron {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+  margin-bottom: 1.5rem;
+}
+main.container {
+  margin-top: 1rem !important;
+}
+/* ... etc ... */
+.situacao-destaque {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-radius: 8px;
+}
+.situacao-destaque p,
+.situacao-destaque ul,
+.situacao-destaque li,
+.situacao-destaque div[style*="background-color"] {
+  font-size: 0.9em;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+.situacao-destaque p:first-of-type strong {
+  color: #343a40;
+}
+.situacao-destaque ul {
+  padding-left: 20px;
+}
+.hidden-textarea {
+  display: none;
+}
+/* ========================================== */
+/* --- CORREÇÃO DE RESPONSIVIDADE (index.html) --- */
+/* ========================================== */
+
+@media (max-width: 575.98px) {
+  /* 1. Ajuste do Jumbotron para não ultrapassar a tela */
+  .jumbotron {
+    /* Diminui o padding horizontal para dar mais espaço ao texto */
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    /* Reduz um pouco o padding vertical para manter a altura baixa */
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* 2. Redução da Fonte do Título Principal */
+  .jumbotron .display-4 {
+    font-size: 2rem !important; /* Reduz de 3.5rem (padrão display-4) para 2rem */
+  }
+
+  /* 3. Redução da Fonte do Subtítulo (o 'lead') */
+  .jumbotron .lead {
+    font-size: 1rem !important; /* Reduz de 1.25rem (padrão lead) para 1rem */
+  }
+
+  /* 4. Redução da Fonte da Seção de Destaque */
+  .jumbotron .featured-pauta-label {
+    font-size: 0.9em !important;
+  }
+
+  /* 5. Ajuste fino no tamanho do botão principal */
+  .jumbotron .btn-lg {
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+  }
 }
