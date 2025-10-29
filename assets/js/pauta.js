@@ -753,23 +753,6 @@ function abrirEnviarInfo(parlamentarId, nome) {
     };
   }
 
-  // --- INÍCIO DA SOLUÇÃO JS PARA O BUG DO ESPAÇO EM BRANCO ---
-  // Esta lógica garante que a aba 'Evidência' comece fechada corretamente no JS
-  const infoTabContent = document.getElementById("infoTabContent");
-  if (infoTabContent) {
-    // Esconde todos os painéis que não são o ativo
-    Array.from(infoTabContent.children).forEach((tabPane) => {
-      if (!tabPane.classList.contains("active")) {
-        tabPane.style.display = "none";
-        tabPane.classList.remove("show");
-      }
-    });
-    // Garante que o conteúdo da aba ativa fique no topo (ajustando a rolagem do modal)
-    const modalBody = document.querySelector("#modalEnviarInfo .modal-body");
-    if (modalBody) modalBody.scrollTop = 0;
-  }
-  // --- FIM DA SOLUÇÃO JS ---
-
   // Abrir o modal
   $("#modalEnviarInfo").modal("show");
 }

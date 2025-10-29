@@ -2,7 +2,7 @@
 /* ESTILOS PERSONALIZADOS (style.css) */
 /* ========================================== */
 
-/* --- Estilos Base (do seu style.css original) --- */
+/* --- Estilos Base --- */
 .jumbotron {
   background-color: #e9ecef;
   padding: 2rem;
@@ -219,7 +219,7 @@ main.container {
   padding-left: 20px;
 }
 
-/* --- CORREÇÃO DE BUGS (ABAS EMPILHADAS/ESPAÇO BRANCO) --- */
+/* --- CORREÇÃO DE ABAS (SOLUÇÃO FINAL PARA EMPILHAMENTO E ESPAÇO) --- */
 
 /* 1. Garante que o container das abas funcione com display: block */
 #modalEnviarInfo .modal-body .tab-content {
@@ -227,8 +227,7 @@ main.container {
   overflow: visible !important;
 }
 
-/* 2. Força o ESCONDIMENTO da aba inativa (Solução para o problema de empilhamento) */
-/* Usa !important para sobrescrever qualquer estilo flex ou grid */
+/* 2. Força o ESCONDIMENTO da aba inativa (sobrescreve flex/grid) */
 #modalEnviarInfo .modal-body .tab-content > .tab-pane:not(.active) {
   display: none !important;
   visibility: hidden !important;
@@ -246,14 +245,9 @@ main.container {
   padding: 0; /* Remove padding superior/inferior que pode causar o espaço branco indesejado */
 }
 
-/* Remove margem superior do primeiro elemento DENTRO da aba ativa para subir o conteúdo */
+/* 4. Remove margem superior do primeiro elemento DENTRO da aba ativa para subir o conteúdo */
 #modalEnviarInfo .tab-pane.active.show > *:first-child {
   margin-top: 0 !important;
-}
-
-/* --- Espaçamento antes da Mobilização --- */
-.campanhas-section {
-  margin-top: 2.5rem;
 }
 
 /* ========================================== */
