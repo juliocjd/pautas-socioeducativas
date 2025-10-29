@@ -13,33 +13,17 @@
   margin-bottom: 1rem;
 }
 
-/* ========================================== */
-/* CORREÇÃO PARA ALINHAMENTO DAS ABAS NO MODAL 'ENVIAR INFO' (Tentativa 3) */
-/* ========================================== */
-
-#modalEnviarInfo .modal-body .tab-content {
-  position: relative; /* Ajuda a conter os painéis */
-  min-height: auto;
+/* Tentativa Suave para corrigir espaço em branco nas abas */
+#modalEnviarInfo .modal-body .tab-content > .tab-pane:not(.active) {
+  height: 0;
+  overflow: hidden;
+  opacity: 0; /* Mantém a transição fade do Bootstrap */
 }
-
-#modalEnviarInfo .modal-body .tab-content > .tab-pane {
-  display: none !important; /* FORÇA o display none por padrão */
-  opacity: 0; /* Garante invisibilidade */
-  position: absolute; /* Tira do fluxo normal se display falhar */
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: auto;
-  height: auto;
-}
-
-/* Mostra APENAS a aba ativa */
 #modalEnviarInfo .modal-body .tab-content > .tab-pane.active.show {
-  display: block !important; /* FORÇA o display block */
+  height: auto; /* Garante que a aba ativa tenha altura */
+  overflow: visible;
   opacity: 1;
-  position: relative; /* Volta ao fluxo normal */
 }
-
 /* Remove margem superior extra do primeiro elemento DENTRO da aba ativa */
 #modalEnviarInfo .tab-pane.active.show > *:first-child {
   margin-top: 0;
