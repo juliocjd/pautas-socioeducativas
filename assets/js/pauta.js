@@ -833,72 +833,100 @@ async function copiarParaClipboard(targetId, buttonEl) {
 }
 
 function abrirCampanhaEmail() {
-  // Verifica se o objeto campanhaEmail existe e tem dados necessários
+  // Verifica se o objeto campanhaEmail existe e tem dados necessários (agora checa ambas mensagens)
   if (
     !campanhaEmail ||
     !campanhaEmail.assunto ||
-    !campanhaEmail.mensagem_oposicao
+    !campanhaEmail.mensagem_oposicao ||
+    !campanhaEmail.mensagem_apoio
   ) {
     return alert(
-      "Campanha de email não configurada corretamente para esta pauta (faltando assunto ou mensagem)."
+      "Campanha de email não configurada corretamente (faltando assunto ou mensagens de oposição/apoio)."
     );
   }
 
+  // Elementos do DOM
   const selectEstado = document.getElementById("filtro-campanha-estado-email");
   const inputNome = document.getElementById("campo-nome-email");
   const textareaEmails = document.getElementById("emails-lista");
   const inputAssunto = document.getElementById("email-assunto");
   const textareaMensagem = document.getElementById("email-mensagem");
   const totalEmailsEl = document.getElementById("total-emails-campanha");
+  const radiosObjetivo = document.querySelectorAll(
+    'input[name="objetivoEmail"]'
+  ); // Seletores de objetivo
 
-  // Templates de mensagem (da nova estrutura)
+  // Templates de mensagem
   const templateOposicao = campanhaEmail.mensagem_oposicao || "";
-  // templateApoio não é usado aqui, pois a campanha de email foca em quem não apoia
-  const templateExtra = campanhaEmail.mensagem_extra || ""; // Pega o complemento
+  const templateApoio = campanhaEmail.mensagem_apoio || ""; // Pega o template de apoio
+  const templateExtra = campanhaEmail.mensagem_extra || "";
 
   // Função interna para atualizar a lista e a mensagem
   function atualizarFiltroEmail() {
     const estadoSelecionado = selectEstado.value;
+    const objetivoSelecionado =
+      document.querySelector('input[name="objetivoEmail"]:checked')?.value ||
+      "pedir"; // Pega 'pedir' ou 'agradecer'
 
-    // 1. Filtrar Parlamentares (foco em quem NÃO apoia)
-    // --- CORREÇÃO DO BUG B (contadores) ---
-    // Usa a lista filtrada da pauta, não a base inteira
-    const parlamentaresFiltrados = parlamentaresAtuaisParaTabela.filter((p) => {
-      // --- FIM DA CORREÇÃO ---
-      const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
-      if (!estadoMatch) return false;
+    let parlamentaresFiltrados = [];
+    let mensagemBase = templateOposicao; // Padrão
+    let tipoContagem = "(Oposição/Neutros)"; // Padrão
 
-      const posicao = obterPosicao(p.id);
-      // Inclui contrário E não manifestado
-      return posicao === "contrario" || posicao === "nao-manifestado";
-    });
+    // 1. Filtrar Parlamentares E Escolher Mensagem
+    if (objetivoSelecionado === "agradecer") {
+      parlamentaresFiltrados = parlamentaresAtuaisParaTabela.filter((p) => {
+        const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+        const posicao = obterPosicao(p.id);
+        return estadoMatch && posicao === "apoia"; // Filtra apenas apoiadores
+      });
+      mensagemBase = templateApoio; // Usa mensagem de apoio
+      tipoContagem = "(Apoiadores)";
+      console.log("Filtrando email para AGRADECER");
+    } else {
+      // 'pedir' (padrão)
+      parlamentaresFiltrados = parlamentaresAtuaisParaTabela.filter((p) => {
+        const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+        const posicao = obterPosicao(p.id);
+        // Inclui contrário E não manifestado
+        return (
+          estadoMatch &&
+          (posicao === "contrario" || posicao === "nao-manifestado")
+        );
+      });
+      mensagemBase = templateOposicao; // Usa mensagem de oposição/neutro
+      tipoContagem = "(Oposição/Neutros)";
+      console.log("Filtrando email para PEDIR APOIO");
+    }
 
     // 2. Montar a lista de emails
     const emails = parlamentaresFiltrados
       .filter((p) => p.email)
       .map((p) => p.email);
     textareaEmails.value = emails.join("; ");
-    totalEmailsEl.innerHTML = `Total: <strong>${emails.length}</strong> email(s) selecionado(s) (quem não apoia)`; // Atualizado
+    totalEmailsEl.innerHTML = `<strong>${emails.length}</strong> email(s) selecionado(s) ${tipoContagem}`;
 
-    // 3. Montar a Mensagem
+    // 3. Montar a Mensagem Final
     const prefixo = gerarPrefixoMensagem(
       "filtro-campanha-estado-email",
       "campo-nome-email"
     );
-    let mensagemFinal = prefixo + templateOposicao; // Começa com prefixo + oposição
+    let mensagemFinal = prefixo + mensagemBase;
 
-    // Adiciona o complemento, se existir
+    // Adiciona o complemento, se existir (independente do objetivo)
     if (templateExtra) {
-      mensagemFinal += "\n\n---\n" + templateExtra; // Adiciona com separador
+      mensagemFinal += "\n\n---\n" + templateExtra;
     }
 
-    inputAssunto.value = campanhaEmail.assunto || "";
+    inputAssunto.value = campanhaEmail.assunto || ""; // Assunto é o mesmo
     textareaMensagem.value = mensagemFinal;
   }
 
   // 4. Adicionar "ouvintes" de mudança
   selectEstado.onchange = atualizarFiltroEmail;
   inputNome.oninput = atualizarFiltroEmail;
+  radiosObjetivo.forEach((radio) => {
+    radio.onchange = atualizarFiltroEmail; // Atualiza quando muda o objetivo
+  });
 
   // 5. Chamar a função uma vez para carregar o estado inicial
   atualizarFiltroEmail();
@@ -1312,7 +1340,6 @@ function mostrarTracking() {
     </div>`;
   }
 
-  // --- INÍCIO DA CORREÇÃO ---
   // Calcular totais com base nos parlamentares DESTA pauta
   const totalWhatsApp = parlamentaresAtuaisParaTabela.filter(
     (p) => congressistasExtras.congressistas?.[p.id]?.whatsapp
@@ -1320,28 +1347,35 @@ function mostrarTracking() {
   const totalInstagram = parlamentaresAtuaisParaTabela.filter(
     (p) => congressistasExtras.congressistas?.[p.id]?.instagram
   ).length;
+
+  // --- INÍCIO DA CORREÇÃO ---
+  // Calcular enviados únicos usando Set para remover duplicatas do array
+  const enviadosWhatsAppUnicos = new Set(dados.whatsapp || []);
+  const enviadosInstagramUnicos = new Set(dados.instagram || []);
   // --- FIM DA CORREÇÃO ---
 
   // WhatsApp
-  const enviadosWhatsApp = (dados.whatsapp || []).length;
-  if (enviadosWhatsApp > 0 || totalWhatsApp > 0) {
+  if (enviadosWhatsAppUnicos.size > 0 || totalWhatsApp > 0) {
     // Mostra mesmo se for 0/X
     temProgresso = true;
+    // --- USA .size do Set ---
     html += `<div class="tracking-item">
         <span>${whatsappIcon} WhatsApp</span>
-        <span>${enviadosWhatsApp}/${totalWhatsApp}</span>
+        <span>${enviadosWhatsAppUnicos.size}/${totalWhatsApp}</span>
       </div>`;
+    // --- FIM DA ALTERAÇÃO ---
   }
 
   // Instagram
-  const enviadosInstagram = (dados.instagram || []).length;
-  if (enviadosInstagram > 0 || totalInstagram > 0) {
+  if (enviadosInstagramUnicos.size > 0 || totalInstagram > 0) {
     // Mostra mesmo se for 0/X
     temProgresso = true;
+    // --- USA .size do Set ---
     html += `<div class="tracking-item">
         <span>${instagramIcon} Instagram</span>
-        <span>${enviadosInstagram}/${totalInstagram}</span>
+        <span>${enviadosInstagramUnicos.size}/${totalInstagram}</span>
       </div>`;
+    // --- FIM DA ALTERAÇÃO ---
   }
 
   if (temProgresso) {

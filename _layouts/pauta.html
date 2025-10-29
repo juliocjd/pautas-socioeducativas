@@ -171,7 +171,7 @@ layout: default
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            Enviar Informações: <span id="enviar-info-nome"></span>
+            Contribuir com Informações: <span id="enviar-info-nome"></span>
           </h5>
           <button type="button" class="close" data-dismiss="modal">
             &times;
@@ -182,95 +182,184 @@ layout: default
             <input type="hidden" id="parlamentar-id-hidden" />
             <input type="hidden" id="parlamentar-nome-hidden" />
 
-            <div class="alert alert-info">
-              <strong>ℹ️ Informação:</strong> Email e telefone do gabinete já
-              vêm das APIs oficiais. Use este formulário para adicionar dados
-              pessoais (WhatsApp, Instagram, assessores).
+            <ul class="nav nav-tabs mb-3" id="infoTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="contatos-tab"
+                  data-toggle="tab"
+                  href="#contatos"
+                  role="tab"
+                  aria-controls="contatos"
+                  aria-selected="true"
+                  >📱 Contatos</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="evidencia-tab"
+                  data-toggle="tab"
+                  href="#evidencia"
+                  role="tab"
+                  aria-controls="evidencia"
+                  aria-selected="false"
+                  >📄 Evidência</a
+                >
+              </li>
+            </ul>
+
+            <div class="tab-content" id="infoTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="contatos"
+                role="tabpanel"
+                aria-labelledby="contatos-tab"
+              >
+                <div class="alert alert-info py-2" style="font-size: 0.85em">
+                  <small
+                    ><strong>ℹ️ Adicione dados de contato direto</strong>
+                    (WhatsApp, Instagram pessoal) ou informações de assessores.
+                    Email e telefone de gabinete já vêm das APIs
+                    oficiais.</small
+                  >
+                </div>
+                <h6>
+                  <span class="text-primary font-weight-bold"
+                    >Dados do Parlamentar</span
+                  >
+                </h6>
+                <div class="form-group">
+                  <label class="small mb-1">WhatsApp Pessoal</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    id="campo-whatsapp"
+                    placeholder="(XX) XXXXX-XXXX"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="small mb-1">Instagram Pessoal</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    id="campo-instagram"
+                    placeholder="@usuario"
+                  />
+                </div>
+
+                <hr class="my-3" />
+                <h6>
+                  <span class="text-primary font-weight-bold">Assessores</span>
+                </h6>
+                <div id="assessores-lista"></div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary mt-2"
+                  onclick="adicionarAssessor()"
+                >
+                  + Adicionar Assessor
+                </button>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="evidencia"
+                role="tabpanel"
+                aria-labelledby="evidencia-tab"
+              >
+                <div class="alert alert-info py-2" style="font-size: 0.85em">
+                  <small
+                    ><strong>ℹ️ Envie um link</strong> (notícia, vídeo,
+                    documento) que comprove o posicionamento do parlamentar
+                    sobre <strong>esta pauta específica</strong>.</small
+                  >
+                </div>
+                <h6>
+                  <span class="text-primary font-weight-bold"
+                    >Evidência de Posicionamento (Sobre esta Pauta)</span
+                  >
+                </h6>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <label class="small mb-1" for="campo-evidencia-tipo"
+                      >Tipo</label
+                    >
+                    <select
+                      class="form-control form-control-sm"
+                      id="campo-evidencia-tipo"
+                    >
+                      <option value="link">Link/Notícia</option>
+                      <option value="video">Vídeo</option>
+                      <option value="audio">Áudio</option>
+                      <option value="documento">Documento</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label class="small mb-1" for="campo-evidencia-url"
+                      >URL da Evidência</label
+                    >
+                    <input
+                      type="url"
+                      class="form-control form-control-sm"
+                      id="campo-evidencia-url"
+                      placeholder="https://..."
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="small mb-1" for="campo-evidencia-desc"
+                    >Breve Descrição (Opcional)</label
+                  >
+                  <textarea
+                    class="form-control form-control-sm"
+                    id="campo-evidencia-desc"
+                    rows="2"
+                    placeholder="Ex: Votou a favor na comissão X em DD/MM/AAAA"
+                  ></textarea>
+                </div>
+              </div>
             </div>
 
-            <h6>📱 Dados do Parlamentar que você tenha</h6>
-            <div class="form-group">
-              <label>WhatsApp</label>
-              <input
-                type="text"
-                class="form-control"
-                id="campo-whatsapp"
-                placeholder="(XX) XXXXX-XXXX"
-              />
-            </div>
-            <div class="form-group">
-              <label>Instagram</label>
-              <input
-                type="text"
-                class="form-control"
-                id="campo-instagram"
-                placeholder="@usuario"
-              />
-            </div>
+            <hr class="my-4" />
 
-            <h6>👥 Assessores</h6>
-            <div id="assessores-lista"></div>
-            <button
-              type="button"
-              class="btn btn-sm btn-secondary"
-              onclick="adicionarAssessor()"
+            <h6>
+              <span class="text-secondary font-weight-bold"
+                >Seus Dados (Opcional)</span
+              >
+            </h6>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="small mb-1" for="campo-usuario-nome"
+                  >Seu Nome</label
+                >
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="campo-usuario-nome"
+                  placeholder="Opcional"
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label class="small mb-1" for="campo-usuario-email"
+                  >Seu Email</label
+                >
+                <input
+                  type="email"
+                  class="form-control form-control-sm"
+                  id="campo-usuario-email"
+                  placeholder="Opcional (para contato)"
+                />
+              </div>
+            </div>
+            <small class="text-muted d-block mb-3"
+              >Seu nome e email são opcionais, mas podem ser úteis caso
+              precisemos de esclarecimentos sobre a informação enviada.</small
             >
-              + Add Assessor
+
+            <button type="submit" class="btn btn-primary">
+              ✅ Enviar Contribuição
             </button>
-
-            <hr />
-
-            <h6>📄 Evidência de Posicionamento (Específica desta Pauta)</h6>
-            <div class="form-group">
-              <label>Tipo</label>
-              <select class="form-control" id="campo-evidencia-tipo">
-                <option value="link">Link/Notícia</option>
-                <option value="video">Vídeo</option>
-                <option value="audio">Áudio</option>
-                <option value="documento">Documento</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>URL</label>
-              <input
-                type="url"
-                class="form-control"
-                id="campo-evidencia-url"
-                placeholder="https://..."
-              />
-            </div>
-            <div class="form-group">
-              <label>Descrição</label>
-              <textarea
-                class="form-control"
-                id="campo-evidencia-desc"
-                rows="2"
-              ></textarea>
-            </div>
-
-            <hr />
-
-            <h6>👤 Seus Dados (Para Contato)</h6>
-            <div class="form-group">
-              <label>Nome *</label>
-              <input
-                type="text"
-                class="form-control"
-                id="campo-usuario-nome"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label>Email *</label>
-              <input
-                type="email"
-                class="form-control"
-                id="campo-usuario-email"
-                required
-              />
-            </div>
-
-            <button type="submit" class="btn btn-primary">✅ Enviar</button>
           </form>
         </div>
       </div>
@@ -288,30 +377,65 @@ layout: default
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="filtro-campanha-estado-email">
-              <strong>Filtrar por seu Estado (Opcional)</strong>
-            </label>
-            <select class="form-control" id="filtro-campanha-estado-email">
-              <option value="">Todos os Estados (Apenas quem não apoia)</option>
-            </select>
+            <label><strong>Objetivo da Campanha:</strong></label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="objetivoEmail"
+                  id="objetivoEmailPedir"
+                  value="pedir"
+                  checked
+                />
+                <label class="form-check-label" for="objetivoEmailPedir"
+                  >Pedir Apoio (Oposição/Neutros)</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="objetivoEmail"
+                  id="objetivoEmailAgradecer"
+                  value="agradecer"
+                />
+                <label class="form-check-label" for="objetivoEmailAgradecer"
+                  >Agradecer (Apoiadores)</label
+                >
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="filtro-campanha-estado-email"
+                >Filtrar por Estado:</label
+              >
+              <select
+                class="form-control form-control-sm"
+                id="filtro-campanha-estado-email"
+              >
+                <option value="">Todos os Estados</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="campo-nome-email">Seu Nome (Opcional):</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="campo-nome-email"
+                placeholder="Para prefixo da mensagem"
+              />
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="campo-nome-email">Seu Nome (Opcional)</label>
-            <input
-              type="text"
-              class="form-control"
-              id="campo-nome-email"
-              placeholder="Digite seu nome..."
-            />
-          </div>
-
-          <p id="total-emails-campanha">
-            <strong>Total:</strong> Calculando...
+          <p>
+            <strong>Total Selecionado:</strong>
+            <span id="total-emails-campanha"></span>
           </p>
-
           <div class="form-group position-relative">
-            <label for="emails-lista">Lista de Emails (CCO)</label>
+            <label>Lista de Emails (CCO)</label>
             <textarea
               class="form-control"
               id="emails-lista"
@@ -320,23 +444,21 @@ layout: default
             ></textarea>
             <span
               class="copy-icon"
-              onclick="copiarParaClipboard('emails-lista', this)"
               title="Copiar lista de emails"
+              onclick="copiarParaClipboard('emails-lista', this)"
             ></span>
           </div>
-
           <div class="form-group position-relative">
-            <label for="email-assunto">Assunto</label>
+            <label>Assunto</label>
             <input type="text" class="form-control" id="email-assunto" />
             <span
               class="copy-icon"
-              onclick="copiarParaClipboard('email-assunto', this)"
               title="Copiar assunto"
+              onclick="copiarParaClipboard('email-assunto', this)"
             ></span>
           </div>
-
           <div class="form-group position-relative">
-            <label for="email-mensagem">Mensagem</label>
+            <label>Mensagem</label>
             <textarea
               class="form-control"
               id="email-mensagem"
@@ -344,11 +466,10 @@ layout: default
             ></textarea>
             <span
               class="copy-icon"
-              onclick="copiarParaClipboard('email-mensagem', this)"
               title="Copiar mensagem"
+              onclick="copiarParaClipboard('email-mensagem', this)"
             ></span>
           </div>
-
           <button class="btn btn-primary" onclick="abrirClienteEmail()">
             📧 Abrir no Cliente de Email
           </button>
