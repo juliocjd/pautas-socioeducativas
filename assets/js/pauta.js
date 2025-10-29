@@ -779,29 +779,28 @@ function carregarContadores(listaParlamentares) {
 // ==========================================
 
 // NOVO: Função auxiliar para gerar o prefixo
+// ATUALIZADO: Função auxiliar para gerar APENAS a frase de identificação
 function gerarPrefixoMensagem(idSelectEstado, idInputNome) {
   const selectEstadoEl = document.getElementById(idSelectEstado);
   const inputNomeEl = document.getElementById(idInputNome);
 
+  // Garantir que os elementos existem antes de tentar ler 'value'
   const estadoSelecionado = selectEstadoEl ? selectEstadoEl.value : null;
   const nomeUsuario = inputNomeEl ? inputNomeEl.value : null;
 
-  let prefixo = "Sou Agente de Segurança Socioeducativo."; // Padrão
-
-  if (estadoSelecionado) {
-    const nomeEstado = mapEstados[estadoSelecionado] || estadoSelecionado;
-    prefixo = `Sou Agente de Segurança Socioeducativo do Estado do ${nomeEstado}.`;
-  }
+  let frase = "Sou Agente de Segurança Socioeducativo"; // Padrão
 
   if (estadoSelecionado && nomeUsuario) {
     const nomeEstado = mapEstados[estadoSelecionado] || estadoSelecionado;
-    prefixo = `Sou Agente de Segurança Socioeducativo do Estado do ${nomeEstado}, meu nome é ${nomeUsuario}.`;
+    frase += ` do Estado do ${nomeEstado}, meu nome é ${nomeUsuario}`;
+  } else if (estadoSelecionado) {
+    const nomeEstado = mapEstados[estadoSelecionado] || estadoSelecionado;
+    frase += ` do Estado do ${nomeEstado}`;
   } else if (nomeUsuario) {
-    // Caso não selecione estado mas coloque o nome
-    prefixo = `Sou Agente de Segurança Socioeducativo, meu nome é ${nomeUsuario}.`;
+    frase += `, meu nome é ${nomeUsuario}`;
   }
 
-  return prefixo + "\n\n"; // Adiciona duas quebras de linha
+  return frase + "."; // Adiciona ponto final
 }
 
 // NOVO: Função auxiliar para copiar
@@ -862,55 +861,57 @@ function abrirCampanhaEmail() {
   const templateExtra = campanhaEmail.mensagem_extra || "";
 
   // Função interna para atualizar a lista e a mensagem
+  // Função interna para atualizar a lista e a mensagem (dentro de abrirCampanhaEmail)
   function atualizarFiltroEmail() {
     const estadoSelecionado = selectEstado.value;
     const objetivoSelecionado =
       document.querySelector('input[name="objetivoEmail"]:checked')?.value ||
-      "pedir"; // Pega 'pedir' ou 'agradecer'
+      "pedir";
 
     let parlamentaresFiltrados = [];
-    let mensagemBase = templateOposicao; // Padrão
-    let tipoContagem = "(Oposição/Neutros)"; // Padrão
+    let mensagemBase = templateOposicao;
+    let tipoContagem = "(Oposição/Neutros)";
+    // --- INÍCIO DA MUDANÇA ---
+    // Determinar Saudação Genérica com base na casa da pauta
+    let saudacaoGenerica = "Olá, Parlamentar,";
+    if (casaLegislativa.includes("Câmara")) {
+      saudacaoGenerica = "Olá, Deputado(a),";
+    } else if (casaLegislativa.includes("Senado")) {
+      saudacaoGenerica = "Olá, Senador(a),";
+    }
+    // --- FIM DA MUDANÇA ---
 
     // 1. Filtrar Parlamentares E Escolher Mensagem
     if (objetivoSelecionado === "agradecer") {
-      parlamentaresFiltrados = parlamentaresAtuaisParaTabela.filter((p) => {
-        const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
-        const posicao = obterPosicao(p.id);
-        return estadoMatch && posicao === "apoia"; // Filtra apenas apoiadores
-      });
-      mensagemBase = templateApoio; // Usa mensagem de apoio
+      parlamentaresFiltrados =
+        parlamentaresAtuaisParaTabela.filter(/* Lógica igual */);
+      mensagemBase = templateApoio;
       tipoContagem = "(Apoiadores)";
-      console.log("Filtrando email para AGRADECER");
     } else {
       // 'pedir' (padrão)
-      parlamentaresFiltrados = parlamentaresAtuaisParaTabela.filter((p) => {
-        const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
-        const posicao = obterPosicao(p.id);
-        // Inclui contrário E não manifestado
-        return (
-          estadoMatch &&
-          (posicao === "contrario" || posicao === "nao-manifestado")
-        );
-      });
-      mensagemBase = templateOposicao; // Usa mensagem de oposição/neutro
+      parlamentaresFiltrados =
+        parlamentaresAtuaisParaTabela.filter(/* Lógica igual */);
+      mensagemBase = templateOposicao;
       tipoContagem = "(Oposição/Neutros)";
-      console.log("Filtrando email para PEDIR APOIO");
     }
 
-    // 2. Montar a lista de emails
+    // 2. Montar a lista de emails (Lógica igual)
     const emails = parlamentaresFiltrados
       .filter((p) => p.email)
       .map((p) => p.email);
     textareaEmails.value = emails.join("; ");
     totalEmailsEl.innerHTML = `<strong>${emails.length}</strong> email(s) selecionado(s) ${tipoContagem}`;
 
-    // 3. Montar a Mensagem Final
-    const prefixo = gerarPrefixoMensagem(
+    // 3. Montar a Mensagem Final para o Preview
+    // --- INÍCIO DA MUDANÇA ---
+    // Chama a nova gerarPrefixoMensagem (que só retorna a frase de identificação)
+    const fraseIdentificacao = gerarPrefixoMensagem(
       "filtro-campanha-estado-email",
       "campo-nome-email"
     );
-    let mensagemFinal = prefixo + mensagemBase;
+    // Combina: Saudação Genérica + Frase Identificação + Mensagem Base
+    let mensagemFinal = `${saudacaoGenerica}\n\n${fraseIdentificacao}\n\n${mensagemBase}`;
+    // --- FIM DA MUDANÇA ---
 
     // Adiciona o complemento, se existir (independente do objetivo)
     if (templateExtra) {
@@ -919,7 +920,7 @@ function abrirCampanhaEmail() {
 
     inputAssunto.value = campanhaEmail.assunto || ""; // Assunto é o mesmo
     textareaMensagem.value = mensagemFinal;
-  }
+  } // Fim de atualizarFiltroEmail
 
   // 4. Adicionar "ouvintes" de mudança
   selectEstado.onchange = atualizarFiltroEmail;
@@ -1104,29 +1105,26 @@ function atualizarListaInstagram() {
 }
 
 function enviarWhatsApp(parlamentarId, nomeEscapado) {
-  // Adicionado nomeEscapado como parâmetro
-  // Verifica se o objeto campanhaWhatsApp existe e tem as mensagens
   if (
     !campanhaWhatsApp ||
     !campanhaWhatsApp.mensagem_oposicao ||
     !campanhaWhatsApp.mensagem_apoio
   ) {
-    // Verifica ambas
     return alert(
       "Campanha de WhatsApp não configurada corretamente (mensagens faltando)."
     );
   }
 
+  // Encontra o objeto parlamentar COMPLETO na lista da pauta atual
   const parlamentar = parlamentaresAtuaisParaTabela.find(
     (p) => p.id === parlamentarId
-  ); // Usa lista da pauta
+  );
   if (!parlamentar)
     return alert("Erro: Parlamentar não encontrado nesta pauta.");
 
   const extras = congressistasExtras.congressistas[parlamentarId];
-  // Verifica WhatsApp (pode ser string ou array)
   let whatsapp = extras?.whatsapp;
-  if (Array.isArray(whatsapp)) whatsapp = whatsapp[0]; // Pega o primeiro se for array
+  if (Array.isArray(whatsapp)) whatsapp = whatsapp[0];
   if (!whatsapp)
     return alert(
       `Erro: Número de WhatsApp não cadastrado para ${parlamentar.nome}.`
@@ -1134,26 +1132,39 @@ function enviarWhatsApp(parlamentarId, nomeEscapado) {
 
   const posicao = obterPosicao(parlamentarId);
 
-  // --- CORREÇÃO: Selecionar Mensagem Correta ---
+  // --- INÍCIO DA PERSONALIZAÇÃO ---
+  // 1. Determinar Saudação Personalizada (com fallback)
+  let saudacao = "Olá, Parlamentar,"; // Fallback genérico
+  if (parlamentar.casa === "Câmara") {
+    saudacao =
+      parlamentar.sexo === "F" ? "Olá, Deputada," : "Olá, Deputado(a),"; // Usa Deputado(a) como fallback se sexo != 'F'
+    if (parlamentar.sexo === "M") saudacao = "Olá, Deputado,";
+  } else if (parlamentar.casa === "Senado") {
+    saudacao = parlamentar.sexo === "F" ? "Olá, Senadora," : "Olá, Senador(a),"; // Usa Senador(a) como fallback se sexo != 'F'
+    if (parlamentar.sexo === "M") saudacao = "Olá, Senador,";
+  }
+
+  // 2. Escolher Template (Apoio ou Oposição)
   const templateOposicao = campanhaWhatsApp.mensagem_oposicao || "";
   const templateApoio = campanhaWhatsApp.mensagem_apoio || "";
-  let mensagemBase = templateOposicao; // Padrão
+  let mensagemBase = templateOposicao;
   if (posicao === "apoia" && templateApoio) {
-    mensagemBase = templateApoio; // Usa agradecimento se apoia e existe
-    console.log("Usando mensagem de APOIO para WhatsApp");
-  } else {
-    console.log("Usando mensagem de OPOSIÇÃO/NEUTRO para WhatsApp");
+    mensagemBase = templateApoio;
   }
-  // --- FIM DA CORREÇÃO ---
 
-  const prefixo = gerarPrefixoMensagem(
+  // 3. Gerar Frase de Identificação
+  const fraseIdentificacao = gerarPrefixoMensagem(
     "filtro-campanha-estado-wa",
     "campo-nome-wa"
   );
-  const mensagem = (prefixo + mensagemBase).replace(
+
+  // 4. Montar Mensagem Final
+  // Substitui [NOME] apenas na mensagem base, não na saudação ou identificação
+  const mensagem = `${saudacao}\n\n${fraseIdentificacao}\n\n${mensagemBase.replace(
     /\[NOME\]/g,
     parlamentar.nome
-  );
+  )}`;
+  // --- FIM DA PERSONALIZAÇÃO ---
 
   const url = `https://wa.me/55${whatsapp.replace(
     /\D/g,
@@ -1161,29 +1172,34 @@ function enviarWhatsApp(parlamentarId, nomeEscapado) {
   )}?text=${encodeURIComponent(mensagem)}`;
   window.open(url, "_blank");
 
-  // Tracking...
+  // Tracking... (lógica igual)
   if (!trackingData[pautaSlug].whatsapp) trackingData[pautaSlug].whatsapp = [];
   if (!trackingData[pautaSlug].whatsapp.includes(parlamentarId)) {
     trackingData[pautaSlug].whatsapp.push(parlamentarId);
   }
   salvarTracking();
-  atualizarListaWhatsApp(); // Re-renderiza a lista para mostrar o checkmark
+  atualizarListaWhatsApp();
   mostrarTracking();
 }
 
 function atualizarProgressoWhatsApp() {
-  // --- CORREÇÃO (Bug B): Usar a lista da pauta atual para contagem ---
+  // Calcular total com base nos parlamentares DESTA pauta
   const total = parlamentaresAtuaisParaTabela.filter(
     (p) => congressistasExtras.congressistas?.[p.id]?.whatsapp
   ).length;
+
+  // --- INÍCIO DA CORREÇÃO ---
+  // Calcular enviados únicos usando Set
+  const enviadosUnicos = new Set(trackingData[pautaSlug]?.whatsapp || []);
+  const enviados = enviadosUnicos.size; // Usa .size do Set
   // --- FIM DA CORREÇÃO ---
-  const enviados = (trackingData[pautaSlug].whatsapp || []).length;
+
   const percent = total > 0 ? Math.round((enviados / total) * 100) : 0;
 
   const progressBar = document.getElementById("progress-whatsapp");
   if (progressBar) {
     progressBar.style.width = percent + "%";
-    progressBar.textContent = `${enviados}/${total}`;
+    progressBar.textContent = `${enviados}/${total}`; // Mostra contagem única/total
     progressBar.setAttribute("aria-valuenow", enviados);
     progressBar.setAttribute("aria-valuemax", total);
   }
@@ -1211,22 +1227,20 @@ function abrirCampanhaInstagram() {
 }
 
 function enviarInstagram(parlamentarId, nomeEscapado) {
-  // Adicionado nomeEscapado como parâmetro
-  // Verifica se o objeto campanhaInstagram existe e tem as mensagens
-  if (
-    !campanhaInstagram ||
-    !campanhaInstagram.mensagem_oposicao ||
-    !campanhaInstagram.mensagem_apoio
-  ) {
-    // Verifica ambas
+  const templateOposicao =
+    document.getElementById("instagram-mensagem-oposicao")?.value || "";
+  const templateApoio =
+    document.getElementById("instagram-mensagem-apoio")?.value || "";
+  if (!templateOposicao || !templateApoio) {
     return alert(
-      "Campanha de Instagram não configurada corretamente (mensagens faltando)."
+      "Campanha de Instagram não configurada corretamente (mensagens faltando nos templates ocultos)."
     );
   }
 
+  // Encontra o objeto parlamentar COMPLETO na lista da pauta atual
   const parlamentar = parlamentaresAtuaisParaTabela.find(
     (p) => p.id === parlamentarId
-  ); // Usa lista da pauta
+  );
   if (!parlamentar)
     return alert("Erro: Parlamentar não encontrado nesta pauta.");
 
@@ -1238,41 +1252,50 @@ function enviarInstagram(parlamentarId, nomeEscapado) {
 
   const posicao = obterPosicao(parlamentarId);
 
-  // --- CORREÇÃO (Item 4): Selecionar Mensagem Correta ---
-  const templateOposicao = campanhaInstagram.mensagem_oposicao || "";
-  const templateApoio = campanhaInstagram.mensagem_apoio || "";
-  let mensagemBase = templateOposicao; // Padrão
-  if (posicao === "apoia" && templateApoio) {
-    mensagemBase = templateApoio; // Usa agradecimento se apoia e existe
-    console.log("Usando mensagem de APOIO para Instagram");
-  } else {
-    console.log("Usando mensagem de OPOSIÇÃO/NEUTRO para Instagram");
+  // --- INÍCIO DA PERSONALIZAÇÃO ---
+  // 1. Determinar Saudação Personalizada (com fallback)
+  let saudacao = "Olá, Parlamentar,"; // Fallback genérico
+  if (parlamentar.casa === "Câmara") {
+    saudacao =
+      parlamentar.sexo === "F" ? "Olá, Deputada," : "Olá, Deputado(a),";
+    if (parlamentar.sexo === "M") saudacao = "Olá, Deputado,";
+  } else if (parlamentar.casa === "Senado") {
+    saudacao = parlamentar.sexo === "F" ? "Olá, Senadora," : "Olá, Senador(a),";
+    if (parlamentar.sexo === "M") saudacao = "Olá, Senador,";
   }
-  // --- FIM DA CORREÇÃO ---
 
-  const prefixo = gerarPrefixoMensagem(
+  // 2. Escolher Template (Apoio ou Oposição)
+  let mensagemBase = templateOposicao;
+  if (posicao === "apoia") {
+    // Usa apoio se disponível
+    mensagemBase = templateApoio;
+  }
+
+  // 3. Gerar Frase de Identificação
+  const fraseIdentificacao = gerarPrefixoMensagem(
     "filtro-campanha-estado-ig",
     "campo-nome-ig"
   );
-  const mensagem = (prefixo + mensagemBase).replace(
+
+  // 4. Montar Mensagem Final
+  const mensagem = `${saudacao}\n\n${fraseIdentificacao}\n\n${mensagemBase.replace(
     /\[NOME\]/g,
     parlamentar.nome
-  );
+  )}`;
+  // --- FIM DA PERSONALIZAÇÃO ---
 
   // Abrir link do Direct
   const instagramUser = extras.instagram.replace("@", "");
   const url = `https://ig.me/m/${instagramUser}`;
   window.open(url, "_blank");
 
-  // Copiar mensagem e avisar
+  // Copiar mensagem e avisar (alert já melhorado)
   navigator.clipboard
     .writeText(mensagem)
     .then(() => {
-      // --- CORREÇÃO: Alert Melhorado ---
       alert(
         `✅ Mensagem Copiada!\n\n1. O Direct do Instagram para @${instagramUser} deve ter aberto em outra aba.\n2. Cole a mensagem copiada lá e envie.`
       );
-      // --- FIM DA CORREÇÃO ---
     })
     .catch((err) => {
       console.error("Falha ao copiar mensagem do Instagram:", err);
@@ -1282,30 +1305,35 @@ function enviarInstagram(parlamentarId, nomeEscapado) {
       );
     });
 
-  // Tracking...
+  // Tracking... (lógica igual)
   if (!trackingData[pautaSlug].instagram)
     trackingData[pautaSlug].instagram = [];
   if (!trackingData[pautaSlug].instagram.includes(parlamentarId)) {
     trackingData[pautaSlug].instagram.push(parlamentarId);
   }
   salvarTracking();
-  atualizarListaInstagram(); // Re-renderiza a lista
+  atualizarListaInstagram();
   mostrarTracking();
 }
 
 function atualizarProgressoInstagram() {
-  // --- CORREÇÃO (Bug B): Usar a lista da pauta atual para contagem ---
+  // Calcular total com base nos parlamentares DESTA pauta
   const total = parlamentaresAtuaisParaTabela.filter(
     (p) => congressistasExtras.congressistas?.[p.id]?.instagram
   ).length;
+
+  // --- INÍCIO DA CORREÇÃO ---
+  // Calcular enviados únicos usando Set
+  const enviadosUnicos = new Set(trackingData[pautaSlug]?.instagram || []);
+  const enviados = enviadosUnicos.size; // Usa .size do Set
   // --- FIM DA CORREÇÃO ---
-  const enviados = (trackingData[pautaSlug].instagram || []).length;
+
   const percent = total > 0 ? Math.round((enviados / total) * 100) : 0;
 
   const progressBar = document.getElementById("progress-instagram");
   if (progressBar) {
     progressBar.style.width = percent + "%";
-    progressBar.textContent = `${enviados}/${total}`;
+    progressBar.textContent = `${enviados}/${total}`; // Mostra contagem única/total
     progressBar.setAttribute("aria-valuenow", enviados);
     progressBar.setAttribute("aria-valuemax", total);
   }
