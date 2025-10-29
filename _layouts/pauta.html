@@ -209,58 +209,64 @@ layout: default
               </li>
             </ul>
 
-            <div class="tab-content" id="infoTabContent">
-              <div
-                class="tab-pane fade show active"
-                id="contatos"
-                role="tabpanel"
-                aria-labelledby="contatos-tab"
-              >
-                <div class="alert alert-info py-2" style="font-size: 0.85em">
-                  <small
-                    ><strong>ℹ️ Adicione dados de contato direto</strong>
-                    (WhatsApp, Instagram pessoal) ou informações de assessores.
-                    Email e telefone de gabinete já vêm das APIs
-                    oficiais.</small
-                  >
-                </div>
-                <h6>
-                  <span class="text-primary font-weight-bold"
-                    >Dados do Parlamentar</span
-                  >
-                </h6>
-                <div class="form-group">
-                  <label class="small mb-1">WhatsApp Pessoal</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    id="campo-whatsapp"
-                    placeholder="(XX) XXXXX-XXXX"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="small mb-1">Instagram Pessoal</label>
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    id="campo-instagram"
-                    placeholder="@usuario"
-                  />
-                </div>
-
-                <hr class="my-3" />
-                <h6>
-                  <span class="text-primary font-weight-bold">Assessores</span>
-                </h6>
-                <div id="assessores-lista"></div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-outline-secondary mt-2"
-                  onclick="adicionarAssessor()"
-                >
-                  + Adicionar Assessor
-                </button>
+            <div class="tab-pane fade show active" id="contatos" role="tabpanel" aria-labelledby="contatos-tab">
+              <div class="alert alert-info py-2" style="font-size: 0.85em;">
+                <small><strong>ℹ️ Adicione novos contatos</strong> ou <strong>sinalize informações incorretas</strong>. Dados de Email e Telefone de Gabinete vêm das APIs oficiais.</small>
               </div>
+
+              <h6><span class="text-primary font-weight-bold">Instagram Pessoal</span></h6>
+              <div class="form-group">
+                <label class="small mb-1" for="campo-instagram">Adicionar/Sugerir Instagram</label>
+                <span id="instagram_atual" class="form-control form-control-sm bg-light" style="display: none;"></span>
+                <input type="text" class="form-control form-control-sm" id="campo-instagram" placeholder="@usuario">
+                
+                <div class="form-check mt-1" id="instagram_correcao_div" style="display: none;">
+                  <input class="form-check-input" type="checkbox" value="" id="corrigir_instagram_check">
+                  <label class="form-check-label small text-danger" for="corrigir_instagram_check">
+                    O Instagram acima está incorreto?
+                  </label>
+                  <input type="text" class="form-control form-control-sm mt-1" id="corrigir_instagram_valor" placeholder="Digite o @ correto aqui..." style="display: none;">
+                </div>
+              </div>
+
+              <hr class="my-3">
+
+              <h6><span class="text-primary font-weight-bold">WhatsApp Pessoal</span></h6>
+              <div class="form-group">
+                 <label class="small mb-1">Números Atuais (Comunidade):</label>
+                 <div id="whatsapp_atual_lista" class="mb-2 small text-muted" style="padding-left: 10px;">Nenhum cadastrado.</div>
+                 
+                 <label class="small mb-1" for="campo-whatsapp">Adicionar Novo Número</label>
+                 <input type="text" class="form-control form-control-sm" id="campo-whatsapp" placeholder="(XX) XXXXX-XXXX (somente números)">
+                 
+                 <div class="form-check mt-1" id="whatsapp_correcao_div" style="display: none;">
+                   <input class="form-check-input" type="checkbox" value="" id="corrigir_whatsapp_check">
+                   <label class="form-check-label small text-danger" for="corrigir_whatsapp_check">
+                     Algum número acima está incorreto ou desatualizado?
+                   </label>
+                   <textarea class="form-control form-control-sm mt-1" id="corrigir_whatsapp_obs" rows="2" placeholder="Explique qual número está errado ou dê mais detalhes..." style="display: none;"></textarea>
+                 </div>
+              </div>
+              
+              <hr class="my-3">
+
+              <h6><span class="text-primary font-weight-bold">Assessores</span></h6>
+               <label class="small mb-1">Assessores Atuais (Comunidade):</label>
+               <div id="assessores_atual_lista" class="mb-2" style="font-size: 0.85em;">Nenhum cadastrado.</div>
+               
+               <div class="form-check mb-2" id="assessores_correcao_div" style="display: none;">
+                 <input class="form-check-input" type="checkbox" value="" id="corrigir_assessores_check">
+                 <label class="form-check-label small text-danger" for="corrigir_assessores_check">
+                   As informações dos assessores acima estão incorretas/desatualizadas?
+                 </label>
+                 <textarea class="form-control form-control-sm mt-1" id="corrigir_assessores_obs" rows="2" placeholder="Explique o que está errado (Ex: Nome, WhatsApp, saiu, etc)..." style="display: none;"></textarea>
+               </div>
+               
+               <label class="small mb-1">Adicionar Novos Assessores:</label>
+               <div id="assessores-lista" class="mb-2">
+                  </div>
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="adicionarAssessor()">+ Adicionar Assessor</button>
+            </div>
 
               <div
                 class="tab-pane fade"

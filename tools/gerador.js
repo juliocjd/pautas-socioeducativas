@@ -1026,32 +1026,40 @@ function renderContribuicoes() {
 function renderContribuicaoDados(contrib, index) {
   let dadosHtml = "";
 
-  if (contrib.dados_contato) {
+  // --- Bloco 1: NOVOS DADOS ---
+  if (contrib.dados_contato && Object.keys(contrib.dados_contato).length > 0) {
     dadosHtml +=
-      '<div style="margin-bottom: 15px;"><strong>📞 Dados de Contato:</strong><br>';
+      '<div style="margin-bottom: 15px;"><strong>📞 Novos Dados Sugeridos:</strong><br>';
 
     if (contrib.dados_contato.whatsapp) {
-      dadosHtml += `
-                <div class="checkbox-item" id="check-whatsapp-${index}">
-                    <input type="checkbox" onchange="toggleCheck('check-whatsapp-${index}')">
-                    <span>WhatsApp: ${contrib.dados_contato.whatsapp}</span>
-                </div>`;
+      // Garantir que é um array para iterar
+      const whatsappList = Array.isArray(contrib.dados_contato.whatsapp)
+        ? contrib.dados_contato.whatsapp
+        : [contrib.dados_contato.whatsapp];
+      whatsappList.forEach((numero, i) => {
+        if (!numero) return; // Pular se for nulo ou vazio
+        dadosHtml += `
+              <div class="checkbox-item" id="check-whatsapp-${index}-${i}">
+                  <input type="checkbox" onchange="toggleCheck('check-whatsapp-${index}-${i}')" data-valor-whatsapp="${numero}">
+                  <span>Adicionar WhatsApp: ${numero}</span>
+              </div>`;
+      });
     }
 
     if (contrib.dados_contato.instagram) {
       dadosHtml += `
-                <div class="checkbox-item" id="check-instagram-${index}">
-                    <input type="checkbox" onchange="toggleCheck('check-instagram-${index}')">
-                    <span>Instagram: ${contrib.dados_contato.instagram}</span>
-                </div>`;
+          <div class="checkbox-item" id="check-instagram-${index}">
+              <input type="checkbox" onchange="toggleCheck('check-instagram-${index}')" data-valor-instagram="${contrib.dados_contato.instagram}">
+              <span>Adicionar/Substituir Instagram por: @${contrib.dados_contato.instagram}</span>
+          </div>`;
     }
 
     if (contrib.dados_contato.telefone_gabinete) {
       dadosHtml += `
-                <div class="checkbox-item" id="check-telefone-${index}">
-                    <input type="checkbox" onchange="toggleCheck('check-telefone-${index}')">
-                    <span>Tel. Gabinete: ${contrib.dados_contato.telefone_gabinete}</span>
-                </div>`;
+          <div class="checkbox-item" id="check-telefone-${index}">
+              <input type="checkbox" onchange="toggleCheck('check-telefone-${index}')" data-valor-telefone="${contrib.dados_contato.telefone_gabinete}">
+              <span>Adicionar/Substituir Tel. Gabinete: ${contrib.dados_contato.telefone_gabinete}</span>
+          </div>`;
     }
 
     if (
@@ -1059,60 +1067,102 @@ function renderContribuicaoDados(contrib, index) {
       contrib.dados_contato.assessores.length > 0
     ) {
       contrib.dados_contato.assessores.forEach((ass, i) => {
+        // Serializa o assessor para o data attribute
+        const assessorData = JSON.stringify(ass).replace(/'/g, "&apos;");
         dadosHtml += `
-                    <div class="checkbox-item" id="check-assessor-${index}-${i}">
-                        <input type="checkbox" onchange="toggleCheck('check-assessor-${index}-${i}')">
-                        <span>Assessor: ${ass.nome} (${ass.whatsapp})</span>
-                    </div>`;
+            <div class="checkbox-item" id="check-assessor-${index}-${i}">
+                <input type="checkbox" onchange="toggleCheck('check-assessor-${index}-${i}')" data-valor-assessor='${assessorData}'>
+                <span>Adicionar Assessor: ${ass.nome} (${ass.whatsapp})</span>
+            </div>`;
       });
     }
-
     dadosHtml += "</div>";
   }
 
+  // --- Bloco 2: NOVA EVIDÊNCIA (se houver) ---
   if (contrib.evidencia) {
+    // Serializa a evidência para o data attribute
+    const evidenciaData = JSON.stringify(contrib.evidencia).replace(
+      /'/g,
+      "&apos;"
+    );
     dadosHtml += `
-            <div style="margin-bottom: 15px;"><strong>📄 Evidência:</strong><br>
-                <div class="checkbox-item" id="check-evidencia-${index}">
-                    <input type="checkbox" onchange="toggleCheck('check-evidencia-${index}')">
-                    <span>${contrib.evidencia.tipo}: <a href="${contrib.evidencia.url}" target="_blank">${contrib.evidencia.url}</a></span>
-                </div>
-            </div>`;
-  }
-
-  return `
-        <div class="contribuicao-card">
-            <div class="contribuicao-header">
-                <div>
-                    <h4>${contrib.parlamentar_nome || "Parlamentar"}</h4>
-                    <small style="color: #666;">ID: ${
-                      contrib.parlamentar_id || "N/A"
-                    } | Pauta: ${contrib.pauta_slug || "N/A"}</small><br>
-                    <small style="color: #666;">Enviado por: ${
-                      contrib.usuario_nome || "Anônimo"
-                    } em ${new Date(contrib.criado_em).toLocaleDateString(
-    "pt-BR"
-  )}</small>
-                </div>
-                ${
-                  contrib.pr_url
-                    ? `<a href="${contrib.pr_url}" target="_blank" class="btn btn-small">Ver PR</a>`
-                    : ""
-                }
-            </div>
-            
-            ${dadosHtml}
-            
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button class="btn" onclick="aprovarSelecionados(${
-                  contrib.pr_number || 0
-                }, ${index})">✅ Aprovar Selecionados</button>
-                <button class="btn btn-secondary" onclick="selecionarTodos(${index})">☑️ Selecionar Todos</button>
-                <button class="btn btn-danger" onclick="rejeitarContribuicao(${
-                  contrib.pr_number || 0
-                })">❌ Rejeitar Tudo</button>
+        <div style="margin-bottom: 15px;"><strong>📄 Nova Evidência Sugerida:</strong><br>
+            <div class="checkbox-item" id="check-evidencia-${index}">
+                <input type="checkbox" onchange="toggleCheck('check-evidencia-${index}')" data-valor-evidencia='${evidenciaData}'>
+                <span>${contrib.evidencia.tipo}: <a href="${contrib.evidencia.url}" target="_blank">${contrib.evidencia.url}</a></span>
             </div>
         </div>`;
+  }
+
+  // --- INÍCIO DA ADIÇÃO (Exibir Correções) ---
+  if (contrib.correcoes && Object.keys(contrib.correcoes).length > 0) {
+    dadosHtml += `<div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px;"><strong>⚠️ Correções Sugeridas (Observações):</strong><br>`;
+
+    // Correção de Instagram (Aprovável)
+    if (contrib.correcoes.instagram) {
+      dadosHtml += `<div class="checkbox-item" id="check-correcao-instagram-${index}">
+          <input type="checkbox" onchange="toggleCheck('check-correcao-instagram-${index}')" data-valor-corrigido="${contrib.correcoes.instagram}">
+          <span style="color: #c82333;"><strong>Substituir Instagram por: @${contrib.correcoes.instagram}</strong></span>
+      </div>`;
+    }
+
+    // Observação de WhatsApp (Apenas Leitura)
+    if (contrib.correcoes.whatsapp_obs) {
+      dadosHtml += `<div class="alerta-observacao">
+          <strong>Obs. WhatsApp:</strong> "${contrib.correcoes.whatsapp_obs}"
+          <br><small>(Requer ação manual na aba 'Dados Cadastrados' ou 'Editar Contatos')</small>
+      </div>`;
+    }
+
+    // Observação de Assessores (Apenas Leitura)
+    if (contrib.correcoes.assessores_obs) {
+      dadosHtml += `<div class="alerta-observacao">
+          <strong>Obs. Assessores:</strong> "${contrib.correcoes.assessores_obs}"
+          <br><small>(Requer ação manual na aba 'Dados Cadastrados' ou 'Editar Contatos')</small>
+      </div>`;
+    }
+    dadosHtml += "</div>";
+  }
+  // --- FIM DA ADIÇÃO ---
+
+  // --- Bloco 3: Geração do Card (HTML principal) ---
+  return `
+      <div class="contribuicao-card">
+          <div class="contribuicao-header">
+              <div>
+                  <h4>${contrib.parlamentar_nome || "Parlamentar"}</h4>
+                  <small style="color: #666;">ID: ${
+                    contrib.parlamentar_id || "N/A"
+                  } | Pauta: ${contrib.pauta_slug || "N/A"}</small><br>
+                  <small style="color: #666;">Enviado por: ${
+                    contrib.usuario_nome || "Anônimo"
+                  } em ${new Date(contrib.criado_em).toLocaleDateString(
+    "pt-BR"
+  )}</small>
+              </div>
+              ${
+                contrib.pr_url
+                  ? `<a href="${contrib.pr_url}" target="_blank" class="btn btn-small">Ver PR</a>`
+                  : ""
+              }
+          </div>
+          
+          ${
+            dadosHtml ||
+            '<p style="color: #999; text-align: center;">Nenhum dado novo ou correção extraído deste PR.</p>'
+          }
+          
+          <div style="margin-top: 20px; display: flex; gap: 10px;">
+              <button class="btn" onclick="aprovarSelecionados(${
+                contrib.pr_number || 0
+              }, ${index})">✅ Aprovar Selecionados</button>
+              <button class="btn btn-secondary" onclick="selecionarTodos(${index})">☑️ Selecionar Todos</button>
+              <button class="btn btn-danger" onclick="rejeitarContribuicao(${
+                contrib.pr_number || 0
+              })">❌ Rejeitar Tudo</button>
+          </div>
+      </div>`;
 }
 
 // Renderizar contribuição de CONTEÚDO (sugestão, correção)
@@ -1213,68 +1263,99 @@ function selecionarTodos(index) {
 async function aprovarSelecionados(prNumber, index) {
   const contrib = contribuicoesPendentes[index];
 
-  if (!contrib || !contrib.dados_contato) {
+  // (Nota: A lógica 'contrib.dados_contato' pode não existir se for SÓ uma correção)
+  if (!contrib) {
     alert("❌ Contribuição inválida");
     return;
   }
 
   // Coletar itens selecionados
   const itensSelecionados = {
-    whatsapp: null,
+    whatsapp: [], // <-- Alterado para array
     instagram: null,
     telefone_gabinete: null,
     assessores: [],
     evidencias: [],
+    correcao_instagram: null, // <-- ADICIONADO
   };
 
-  // WhatsApp
-  const checkWhatsApp = document.getElementById(`check-whatsapp-${index}`);
-  if (checkWhatsApp && checkWhatsApp.querySelector("input").checked) {
-    itensSelecionados.whatsapp = contrib.dados_contato.whatsapp;
-  }
+  // WhatsApp (Agora suporta múltiplos checkboxes)
+  const checksWhatsApp = document.querySelectorAll(
+    `[id^="check-whatsapp-${index}-"] input[type="checkbox"]`
+  );
+  checksWhatsApp.forEach((check) => {
+    if (check.checked) {
+      itensSelecionados.whatsapp.push(check.dataset.valorWhatsapp);
+    }
+  });
 
-  // Instagram
+  // Instagram (Novo)
   const checkInstagram = document.getElementById(`check-instagram-${index}`);
   if (checkInstagram && checkInstagram.querySelector("input").checked) {
-    itensSelecionados.instagram = contrib.dados_contato.instagram;
+    itensSelecionados.instagram =
+      checkInstagram.querySelector("input").dataset.valorInstagram;
   }
 
-  // Telefone
+  // Telefone (Novo)
   const checkTelefone = document.getElementById(`check-telefone-${index}`);
   if (checkTelefone && checkTelefone.querySelector("input").checked) {
     itensSelecionados.telefone_gabinete =
-      contrib.dados_contato.telefone_gabinete;
+      checkTelefone.querySelector("input").dataset.valorTelefone;
   }
 
-  // Assessores
-  if (contrib.dados_contato.assessores) {
-    contrib.dados_contato.assessores.forEach((ass, i) => {
-      const checkAssessor = document.getElementById(
-        `check-assessor-${index}-${i}`
-      );
-      if (checkAssessor && checkAssessor.querySelector("input").checked) {
-        itensSelecionados.assessores.push(ass);
+  // Assessores (Agora suporta múltiplos checkboxes)
+  const checksAssessores = document.querySelectorAll(
+    `[id^="check-assessor-${index}-"] input[type="checkbox"]`
+  );
+  checksAssessores.forEach((check) => {
+    if (check.checked) {
+      try {
+        itensSelecionados.assessores.push(
+          JSON.parse(check.dataset.valorAssessor.replace(/&apos;/g, "'"))
+        );
+      } catch (e) {
+        console.error("Erro ao parsear data-valor-assessor:", e);
       }
-    });
+    }
+  });
+
+  // Evidência (Agora suporta 1)
+  const checkEvidencia = document.getElementById(`check-evidencia-${index}`);
+  if (checkEvidencia && checkEvidencia.querySelector("input").checked) {
+    try {
+      itensSelecionados.evidencias.push(
+        JSON.parse(
+          checkEvidencia
+            .querySelector("input")
+            .dataset.valorEvidencia.replace(/&apos;/g, "'")
+        )
+      );
+    } catch (e) {
+      console.error("Erro ao parsear data-valor-evidencia:", e);
+    }
   }
 
-  // Evidência
-  const checkEvidencia = document.getElementById(`check-evidencia-${index}`);
+  // --- INÍCIO DA ADIÇÃO (Ler Checkbox de Correção) ---
+  const checkCorrecaoInstagram = document.getElementById(
+    `check-correcao-instagram-${index}`
+  );
   if (
-    checkEvidencia &&
-    checkEvidencia.querySelector("input").checked &&
-    contrib.evidencia
+    checkCorrecaoInstagram &&
+    checkCorrecaoInstagram.querySelector("input").checked
   ) {
-    itensSelecionados.evidencias.push(contrib.evidencia);
+    itensSelecionados.correcao_instagram =
+      checkCorrecaoInstagram.querySelector("input").dataset.valorCorrigido;
   }
+  // --- FIM DA ADIÇÃO ---
 
   // Verificar se pelo menos um item foi selecionado
   const temSelecionados =
-    itensSelecionados.whatsapp ||
+    itensSelecionados.whatsapp.length > 0 ||
     itensSelecionados.instagram ||
     itensSelecionados.telefone_gabinete ||
     itensSelecionados.assessores.length > 0 ||
-    itensSelecionados.evidencias.length > 0;
+    itensSelecionados.evidencias.length > 0 ||
+    itensSelecionados.correcao_instagram; // <-- ADICIONADO
 
   if (!temSelecionados) {
     alert("⚠️ Selecione pelo menos um item para aprovar!");
@@ -1283,19 +1364,24 @@ async function aprovarSelecionados(prNumber, index) {
 
   // Confirmar
   let mensagem = "✅ Deseja aprovar os seguintes itens?\n\n";
-  if (itensSelecionados.whatsapp)
-    mensagem += `• WhatsApp: ${itensSelecionados.whatsapp}\n`;
+  if (itensSelecionados.whatsapp.length > 0)
+    mensagem += `• ${itensSelecionados.whatsapp.length} Novo(s) WhatsApp(s)\n`;
   if (itensSelecionados.instagram)
-    mensagem += `• Instagram: ${itensSelecionados.instagram}\n`;
+    mensagem += `• Novo Instagram: @${itensSelecionados.instagram}\n`;
   if (itensSelecionados.telefone_gabinete)
-    mensagem += `• Telefone: ${itensSelecionados.telefone_gabinete}\n`;
-  if (itensSelecionados.assessores.length > 0) {
-    mensagem += `• ${itensSelecionados.assessores.length} assessor(es)\n`;
-  }
-  if (itensSelecionados.evidencias.length > 0) {
-    mensagem += `• ${itensSelecionados.evidencias.length} evidência(s)\n`;
-  }
-  mensagem += "\n⚠️ Se o dado já existir, será substituído ou adicionado.";
+    mensagem += `• Novo Telefone: ${itensSelecionados.telefone_gabinete}\n`;
+  if (itensSelecionados.assessores.length > 0)
+    mensagem += `• ${itensSelecionados.assessores.length} Novo(s) Assessor(es)\n`;
+  if (itensSelecionados.evidencias.length > 0)
+    mensagem += `• ${itensSelecionados.evidencias.length} Nova(s) Evidência(s)\n`;
+
+  // --- INÍCIO DA ADIÇÃO (Mensagem de Confirmação) ---
+  if (itensSelecionados.correcao_instagram)
+    mensagem += `• ⚠️ SUBSTITUIR Instagram por: @${itensSelecionados.correcao_instagram}\n`;
+  // --- FIM DA ADIÇÃO ---
+
+  mensagem +=
+    "\n⚠️ Itens aprovados serão adicionados ou substituirão dados existentes.";
 
   if (!confirm(mensagem)) {
     return;
@@ -1315,7 +1401,7 @@ async function aprovarSelecionados(prNumber, index) {
         action: "approve_partial",
         pr_number: prNumber,
         parlamentar_id: contrib.parlamentar_id,
-        itens: itensSelecionados,
+        itens: itensSelecionados, // Envia o objeto completo
       }),
     });
 

@@ -614,19 +614,146 @@ function verContato(parlamentar) {
   $("#modalVerContato").modal("show");
 }
 
-// ENVIAR INFO - VERSÃO COMPLETA
+// ENVIAR INFO - VERSÃO COMPLETA E ATUALIZADA PARA CORREÇÕES
 function abrirEnviarInfo(parlamentarId, nome) {
+  // Limpar formulário e campos ocultos
+  document.getElementById("formEnviarInfo").reset();
   document.getElementById("parlamentar-id-hidden").value = parlamentarId;
   document.getElementById("parlamentar-nome-hidden").value = nome;
   document.getElementById("enviar-info-nome").textContent = nome;
-  document.getElementById("formEnviarInfo").reset();
-
   const assessoresLista = document.getElementById("assessores-lista");
   if (assessoresLista) assessoresLista.innerHTML = "";
-
   assessorCount = 0;
 
-  // A LINHA FALTANTE:
+  // Elementos dos campos de exibição/correção
+  const instagramAtualEl = document.getElementById("instagram_atual");
+  const instagramInputEl = document.getElementById("campo-instagram");
+  const instagramCorrecaoDiv = document.getElementById(
+    "instagram_correcao_div"
+  );
+  const instagramCorrecaoCheck = document.getElementById(
+    "corrigir_instagram_check"
+  );
+  const instagramCorrecaoValor = document.getElementById(
+    "corrigir_instagram_valor"
+  );
+
+  const whatsappAtualListaEl = document.getElementById("whatsapp_atual_lista");
+  const whatsappCorrecaoDiv = document.getElementById("whatsapp_correcao_div");
+  const whatsappCorrecaoCheck = document.getElementById(
+    "corrigir_whatsapp_check"
+  );
+  const whatsappCorrecaoObs = document.getElementById("corrigir_whatsapp_obs");
+
+  const assessoresAtualListaEl = document.getElementById(
+    "assessores_atual_lista"
+  );
+  const assessoresCorrecaoDiv = document.getElementById(
+    "assessores_correcao_div"
+  );
+  const assessoresCorrecaoCheck = document.getElementById(
+    "corrigir_assessores_check"
+  );
+  const assessoresCorrecaoObs = document.getElementById(
+    "corrigir_assessores_obs"
+  );
+
+  // Resetar campos de correção
+  if (instagramCorrecaoCheck) instagramCorrecaoCheck.checked = false;
+  if (instagramCorrecaoValor) instagramCorrecaoValor.style.display = "none";
+  if (whatsappCorrecaoCheck) whatsappCorrecaoCheck.checked = false;
+  if (whatsappCorrecaoObs) whatsappCorrecaoObs.style.display = "none";
+  if (assessoresCorrecaoCheck) assessoresCorrecaoCheck.checked = false;
+  if (assessoresCorrecaoObs) assessoresCorrecaoObs.style.display = "none";
+
+  // Buscar dados extras existentes
+  const extras = congressistasExtras.congressistas?.[parlamentarId] || {};
+
+  // Lógica do Instagram
+  if (extras.instagram) {
+    if (instagramAtualEl) {
+      instagramAtualEl.textContent = `@${extras.instagram}`;
+      instagramAtualEl.style.display = "block";
+    }
+    if (instagramInputEl) instagramInputEl.style.display = "none"; // Esconde input de adicionar
+    if (instagramCorrecaoDiv) instagramCorrecaoDiv.style.display = "block"; // Mostra opção de corrigir
+  } else {
+    if (instagramAtualEl) instagramAtualEl.style.display = "none";
+    if (instagramInputEl) instagramInputEl.style.display = "block"; // Mostra input de adicionar
+    if (instagramCorrecaoDiv) instagramCorrecaoDiv.style.display = "none";
+  }
+
+  // Lógica do WhatsApp
+  const whatsappExistente = Array.isArray(extras.whatsapp)
+    ? extras.whatsapp
+    : extras.whatsapp
+    ? [extras.whatsapp]
+    : [];
+  if (whatsappExistente.length > 0) {
+    if (whatsappAtualListaEl) {
+      whatsappAtualListaEl.innerHTML = whatsappExistente
+        .map((num) => `<div>- ${num}</div>`)
+        .join("");
+      whatsappAtualListaEl.classList.remove("text-muted"); // Remove 'Nenhum cadastrado'
+    }
+    if (whatsappCorrecaoDiv) whatsappCorrecaoDiv.style.display = "block"; // Mostra opção de corrigir
+  } else {
+    if (whatsappAtualListaEl) {
+      whatsappAtualListaEl.innerHTML = "Nenhum cadastrado.";
+      whatsappAtualListaEl.classList.add("text-muted");
+    }
+    if (whatsappCorrecaoDiv) whatsappCorrecaoDiv.style.display = "none";
+  }
+  // Input para adicionar novo WhatsApp fica sempre visível
+
+  // Lógica dos Assessores
+  const assessoresExistente = extras.assessores || [];
+  if (assessoresExistente.length > 0) {
+    if (assessoresAtualListaEl) {
+      assessoresAtualListaEl.innerHTML = assessoresExistente
+        .map(
+          (ass) =>
+            `<div class="mb-1 p-1 border rounded bg-light small">
+                 <strong>${ass.nome}</strong> (${
+              ass.cargo || "Assessor(a)"
+            })<br>
+                 <small>WhatsApp: ${ass.whatsapp}</small>
+               </div>`
+        )
+        .join("");
+    }
+    if (assessoresCorrecaoDiv) assessoresCorrecaoDiv.style.display = "block"; // Mostra opção de corrigir
+  } else {
+    if (assessoresAtualListaEl)
+      assessoresAtualListaEl.innerHTML = "Nenhum cadastrado.";
+    if (assessoresCorrecaoDiv) assessoresCorrecaoDiv.style.display = "none";
+  }
+  // Botão para adicionar novo assessor fica sempre visível
+
+  // Adicionar listeners aos checkboxes de correção
+  if (instagramCorrecaoCheck && instagramCorrecaoValor) {
+    instagramCorrecaoCheck.onchange = () => {
+      instagramCorrecaoValor.style.display = instagramCorrecaoCheck.checked
+        ? "block"
+        : "none";
+    };
+  }
+  if (whatsappCorrecaoCheck && whatsappCorrecaoObs) {
+    whatsappCorrecaoCheck.onchange = () => {
+      whatsappCorrecaoObs.style.display = whatsappCorrecaoCheck.checked
+        ? "block"
+        : "none";
+    };
+  }
+  if (assessoresCorrecaoCheck && assessoresCorrecaoObs) {
+    assessoresCorrecaoCheck.onchange = () => {
+      assessoresCorrecaoObs.style.display = assessoresCorrecaoCheck.checked
+        ? "block"
+        : "none";
+    };
+  }
+
+  // Abrir o modal
   $("#modalEnviarInfo").modal("show");
 }
 
@@ -654,6 +781,7 @@ function adicionarAssessor() {
 }
 
 // Submit formulário
+// Submit formulário Enviar Info - ATUALIZADO PARA CORREÇÕES
 document
   .getElementById("formEnviarInfo")
   ?.addEventListener("submit", async function (e) {
@@ -672,14 +800,22 @@ document
       "parlamentar-nome-hidden"
     ).value;
 
+    // --- Coletar NOVOS dados ---
     const dados_contato = {};
     const whatsappInput = document.getElementById("campo-whatsapp");
-    const instagramInput = document.getElementById("campo-instagram");
+    const instagramInput = document.getElementById("campo-instagram"); // Pode estar escondido
+    const instagramAtualEl = document.getElementById("instagram_atual"); // Pega o span
 
+    // Só adiciona whatsapp se o campo for preenchido
     if (whatsappInput && whatsappInput.value) {
       dados_contato.whatsapp = whatsappInput.value.replace(/\D/g, ""); // Limpa
     }
-    if (instagramInput && instagramInput.value) {
+    // Só adiciona instagram se o input estiver visível e preenchido
+    if (
+      instagramInput &&
+      instagramInput.style.display !== "none" &&
+      instagramInput.value
+    ) {
       dados_contato.instagram = instagramInput.value.replace("@", ""); // Limpa
     }
 
@@ -704,6 +840,7 @@ document
       dados_contato.assessores = assessores;
     }
 
+    // --- Coletar Evidência (igual) ---
     let evidencia = null;
     const evidenciaUrl = document.getElementById("campo-evidencia-url").value;
     if (evidenciaUrl) {
@@ -714,18 +851,81 @@ document
       };
     }
 
+    // --- INÍCIO DA ADIÇÃO: Coletar CORREÇÕES ---
+    const correcoes = {};
+    const instagramCorrecaoCheck = document.getElementById(
+      "corrigir_instagram_check"
+    );
+    const instagramCorrecaoValor = document.getElementById(
+      "corrigir_instagram_valor"
+    );
+    const whatsappCorrecaoCheck = document.getElementById(
+      "corrigir_whatsapp_check"
+    );
+    const whatsappCorrecaoObs = document.getElementById(
+      "corrigir_whatsapp_obs"
+    );
+    const assessoresCorrecaoCheck = document.getElementById(
+      "corrigir_assessores_check"
+    );
+    const assessoresCorrecaoObs = document.getElementById(
+      "corrigir_assessores_obs"
+    );
+
+    if (
+      instagramCorrecaoCheck &&
+      instagramCorrecaoCheck.checked &&
+      instagramCorrecaoValor &&
+      instagramCorrecaoValor.value
+    ) {
+      correcoes.instagram = instagramCorrecaoValor.value.replace("@", ""); // Guarda o valor corrigido
+    }
+    if (
+      whatsappCorrecaoCheck &&
+      whatsappCorrecaoCheck.checked &&
+      whatsappCorrecaoObs &&
+      whatsappCorrecaoObs.value
+    ) {
+      correcoes.whatsapp_obs = whatsappCorrecaoObs.value; // Guarda a observação
+    }
+    if (
+      assessoresCorrecaoCheck &&
+      assessoresCorrecaoCheck.checked &&
+      assessoresCorrecaoObs &&
+      assessoresCorrecaoObs.value
+    ) {
+      correcoes.assessores_obs = assessoresCorrecaoObs.value; // Guarda a observação
+    }
+    // --- FIM DA ADIÇÃO ---
+
     const payload = {
       parlamentar_id: parlamentarId,
       parlamentar_nome: parlamentarNome,
-      pauta_slug: pautaSlug, // pautaSlug é uma variável global
+      pauta_slug: pautaSlug,
+      // Envia apenas se houver algo a adicionar
       dados_contato:
         Object.keys(dados_contato).length > 0 ? dados_contato : null,
       evidencia: evidencia,
-      usuario_nome: document.getElementById("campo-usuario-nome").value,
-      usuario_email: document.getElementById("campo-usuario-email").value,
+      // Envia apenas se houver alguma correção
+      correcoes: Object.keys(correcoes).length > 0 ? correcoes : null,
+      // Usuário (opcional)
+      usuario_nome: document.getElementById("campo-usuario-nome").value || null,
+      usuario_email:
+        document.getElementById("campo-usuario-email").value || null,
     };
 
+    // Verifica se há *algo* a ser enviado (novo dado, evidência ou correção)
+    if (!payload.dados_contato && !payload.evidencia && !payload.correcoes) {
+      alert(
+        "⚠️ Nenhuma informação nova ou correção foi preenchida para enviar."
+      );
+      submitButton.disabled = false;
+      submitButton.innerHTML = originalButtonText;
+      return; // Interrompe o envio se não há nada
+    }
+
     try {
+      console.log("Enviando payload:", JSON.stringify(payload, null, 2)); // Log para debug
       const response = await fetch("/api/contribuir-dados", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -736,14 +936,18 @@ document
 
       if (data.success) {
         alert(
-          "✅ Contribuição enviada com sucesso! Ela será revisada pelo administrador antes de aparecer no site."
+          "✅ Contribuição enviada com sucesso! Será revisada pelo administrador."
         );
         $("#modalEnviarInfo").modal("hide");
       } else {
-        alert("❌ Erro: " + (data.error || "Tente novamente"));
+        console.error("Erro da API:", data.error);
+        alert("❌ Erro ao enviar: " + (data.error || "Tente novamente"));
       }
     } catch (error) {
-      alert("❌ Erro ao enviar. Verifique sua conexão e tente novamente.");
+      console.error("Erro de rede/fetch:", error);
+      alert(
+        "❌ Erro de conexão ao enviar. Verifique sua rede e tente novamente."
+      );
     } finally {
       submitButton.disabled = false;
       submitButton.innerHTML = originalButtonText;
