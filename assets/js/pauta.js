@@ -487,24 +487,149 @@ document
   .getElementById("filtro-posicao")
   ?.addEventListener("change", renderTabela);
 
-// VER CONTATO (sem mudanças significativas)
+// VER CONTATO - VERSÃO COMPLETA E CORRIGIDA
 function verContato(parlamentar) {
   const extras = congressistasExtras.congressistas?.[parlamentar.id] || {};
+
   let html = "";
-  // ... (resto do código igual) ...
-  // Necessário carregar jQuery para $('#modalVerContato').modal('show');
+
+  // DADOS OFICIAIS (das APIs)
+  html +=
+    '<div class="alert alert-info" style="font-size: 0.9em; padding: 0.75rem 1.25rem;"><strong>📋 Dados Oficiais (API ' +
+    parlamentar.casa +
+    ")</strong></div>";
+
+  if (parlamentar.email) {
+    html += `<div class="contato-info">
+      <div class="contato-info-titulo">📧 Email Oficial</div>
+      <div class="contato-info-valor">${parlamentar.email}</div>
+      <div class="contato-fonte">Fonte: API da ${parlamentar.casa}</div>
+    </div>`;
+  }
+
+  // O telefone do gabinete vem do cache (atualizar-parlamentares.py)
+  if (parlamentar.telefone_gabinete) {
+    html += `<div class="contato-info">
+      <div class="contato-info-titulo">📞 Telefone do Gabinete</div>
+      <div class="contato-info-valor">${parlamentar.telefone_gabinete}</div>
+      <div class="contato-fonte">Fonte: API da ${parlamentar.casa}</div>
+    </div>`;
+  }
+
+  // DADOS DA COMUNIDADE (contribuições aprovadas)
+  if (
+    extras.whatsapp ||
+    extras.instagram ||
+    (extras.assessores && extras.assessores.length > 0) ||
+    extras.telefone_gabinete
+  ) {
+    html +=
+      '<div class="alert alert-success mt-3" style="font-size: 0.9em; padding: 0.75rem 1.25rem;"><strong>📱 Dados da Comunidade (Contribuições Aprovadas)</strong></div>';
+
+    // CORREÇÃO: WhatsApp pode ser string ou array
+    if (extras.whatsapp) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">${whatsappIcon} WhatsApp Pessoal</div>`;
+
+      const whatsappList = Array.isArray(extras.whatsapp)
+        ? extras.whatsapp
+        : [extras.whatsapp];
+
+      whatsappList.forEach((numero, index) => {
+        html += `<a href="https://wa.me/55${numero.replace(
+          /\D/g,
+          ""
+        )}" target="_blank" class="btn-acao-contato btn-whatsapp" style="margin: 5px 5px 5px 0;">
+          ${whatsappIcon} ${
+          whatsappList.length > 1 ? `WhatsApp ${index + 1}` : "Enviar WhatsApp"
+        }
+        </a>`;
+      });
+
+      html += `<div class="contato-fonte">Contribuído pela comunidade</div>
+      </div>`;
+    }
+
+    if (extras.instagram) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">${instagramIcon} Instagram</div>
+        <a href="https://instagram.com/${extras.instagram.replace(
+          "@",
+          ""
+        )}" target="_blank" class="btn-acao-contato btn-instagram">
+          ${instagramIcon} @${extras.instagram.replace("@", "")}
+        </a>
+        <div class="contato-fonte">Contribuído pela comunidade</div>
+      </div>`;
+    }
+
+    // Telefone de gabinete vindo da comunidade (se houver)
+    if (extras.telefone_gabinete && !parlamentar.telefone_gabinete) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">📞 Telefone do Gabinete (Comunidade)</div>
+        <div class="contato-info-valor">${extras.telefone_gabinete}</div>
+        <div class="contato-fonte">Contribuído pela comunidade</div>
+      </div>`;
+    }
+
+    if (extras.assessores && extras.assessores.length > 0) {
+      html += `<div class="contato-info">
+        <div class="contato-info-titulo">👥 Assessores</div>
+        <div class="assessores-lista">`;
+
+      extras.assessores.forEach((ass) => {
+        html += `<div class="assessor-item">
+          <strong>${ass.nome}</strong> - ${ass.cargo || "Assessor(a)"}<br>
+          <a href="https://wa.me/55${ass.whatsapp.replace(
+            /\D/g,
+            ""
+          )}" target="_blank" class="btn-acao-contato btn-whatsapp btn-sm mt-2">
+            ${whatsappIcon} Contatar
+          </a>
+        </div>`;
+      });
+
+      html += `</div>
+        <div class="contato-fonte">Contribuído pela comunidade</div>
+      </div>`;
+    }
+
+    if (extras.ultima_atualizacao) {
+      html += `<small class="text-muted">ℹ️ Última atualização: ${extras.ultima_atualizacao}</small>`;
+    }
+  } else {
+    html += `<div class="alert alert-warning mt-3">
+      ⚠️ Nenhum dado adicional da comunidade disponível.
+      <br><button class="btn btn-sm btn-primary mt-2" onclick="$('#modalVerContato').modal('hide'); abrirEnviarInfo('${
+        parlamentar.id
+      }', '${parlamentar.nome.replace(/'/g, "\\'")}')">
+        Contribuir com Informações
+      </button>
+    </div>`;
+  }
+
+  document.getElementById("contato-nome").textContent = parlamentar.nome;
+  document.getElementById("contato-conteudo").innerHTML = html;
+  // A LINHA FALTANTE:
+  $("#modalVerContato").modal("show");
 }
 
-// ENVIAR INFO (sem mudanças significativas)
+// ENVIAR INFO - VERSÃO COMPLETA
 function abrirEnviarInfo(parlamentarId, nome) {
   document.getElementById("parlamentar-id-hidden").value = parlamentarId;
   document.getElementById("parlamentar-nome-hidden").value = nome;
   document.getElementById("enviar-info-nome").textContent = nome;
   document.getElementById("formEnviarInfo").reset();
-  document.getElementById("assessores-lista").innerHTML = "";
+
+  const assessoresLista = document.getElementById("assessores-lista");
+  if (assessoresLista) assessoresLista.innerHTML = "";
+
   assessorCount = 0;
-  // Necessário carregar jQuery para $('#modalEnviarInfo').modal('show');
+
+  // A LINHA FALTANTE:
+  $("#modalEnviarInfo").modal("show");
 }
+
 function adicionarAssessor() {
   /* ... */
 }
@@ -627,7 +752,10 @@ function abrirCampanhaEmail() {
     const estadoSelecionado = selectEstado.value;
 
     // 1. Filtrar Parlamentares (foco em quem NÃO apoia)
-    const parlamentaresFiltrados = parlamentaresBase.filter((p) => {
+    // --- CORREÇÃO DO BUG B (contadores) ---
+    // Usa a lista filtrada da pauta, não a base inteira
+    const parlamentaresFiltrados = parlamentaresAtuaisParaTabela.filter((p) => {
+      // --- FIM DA CORREÇÃO ---
       const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
       if (!estadoMatch) return false;
 
@@ -733,8 +861,10 @@ function atualizarListaWhatsApp() {
     }`;
   // --- Fim ---
 
-  // Filtra parlamentares
-  const parlamentares = parlamentaresBase.filter((p) => {
+  // --- INÍCIO DA CORREÇÃO (BUG B) ---
+  // Filtra parlamentares da pauta atual, não a base inteira
+  const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
+    // --- FIM DA CORREÇÃO ---
     const temWhatsApp = congressistasExtras.congressistas?.[p.id]?.whatsapp;
     const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
     return temWhatsApp && estadoMatch;
@@ -746,17 +876,40 @@ function atualizarListaWhatsApp() {
     totalEl.innerHTML = `Total: <strong>${count}</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
     const enviados = trackingData[pautaSlug].whatsapp || [];
 
+    // --- INÍCIO DA CORREÇÃO (BUG A) ---
+    // Pega a lógica de renderização do arquivo pauta.html antigo
     listaEl.innerHTML = parlamentares
       .map((p) => {
-        /* ... (código igual) ... */
+        const jaEnviado = enviados.includes(p.id);
+        const nomeEscapado = p.nome
+          .replace(/'/g, "\\'")
+          .replace(/"/g, "&quot;");
+        return `<div class="parlamentar-envio-item ${
+          jaEnviado ? "enviado" : ""
+        }" data-id="${p.id}">
+          <div>
+            <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+            ${
+              jaEnviado
+                ? '<span style="color: #28a745; font-weight: bold; margin-left: 8px;">✅</span>'
+                : ""
+            }
+          </div>
+          <button class="btn btn-sm btn-success" onclick="enviarWhatsApp('${
+            p.id
+          }', '${nomeEscapado}')" ${jaEnviado ? "disabled" : ""}>
+            ${whatsappIcon} Enviar
+          </button>
+        </div>`;
       })
       .join("");
-    parlamentares.forEach((p) => {
-      /* ... (código igual para ícones) ... */
-    });
+    // --- FIM DA CORREÇÃO ---
   } else {
     totalEl.innerHTML = `Total: <strong>0</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado}.`;
-    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">...</div>`; // (código igual)
+    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">
+      Nenhum número de WhatsApp contribuído pela comunidade para esta seleção.
+      <br>Você pode adicionar números clicando em "Enviar Info" na tabela principal.
+    </div>`;
   }
 
   atualizarProgressoWhatsApp();
@@ -887,8 +1040,10 @@ function atualizarListaInstagram() {
     }`;
   // --- Fim ---
 
-  // Filtra parlamentares
-  const parlamentares = parlamentaresBase.filter((p) => {
+  // --- INÍCIO DA CORREÇÃO (BUG B) ---
+  // Filtra parlamentares da pauta atual, não a base inteira
+  const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
+    // --- FIM DA CORREÇÃO ---
     const temIg = congressistasExtras.congressistas?.[p.id]?.instagram;
     const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
     return temIg && estadoMatch;
@@ -900,23 +1055,44 @@ function atualizarListaInstagram() {
     totalEl.innerHTML = `Total: <strong>${count}</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
     const enviados = trackingData[pautaSlug].instagram || [];
 
+    // --- INÍCIO DA CORREÇÃO (BUG A) ---
+    // Pega a lógica de renderização do arquivo pauta.html antigo
     listaEl.innerHTML = parlamentares
       .map((p) => {
-        /* ... (código igual) ... */
+        const jaEnviado = enviados.includes(p.id);
+        const nomeEscapado = p.nome
+          .replace(/'/g, "\\'")
+          .replace(/"/g, "&quot;");
+        return `<div class="parlamentar-envio-item ${
+          jaEnviado ? "enviado" : ""
+        }" data-id="${p.id}">
+          <div>
+            <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+            ${
+              jaEnviado
+                ? '<span style="color: #28a745; font-weight: bold; margin-left: 8px;">✅</span>'
+                : ""
+            }
+          </div>
+          <button class="btn btn-sm btn-danger" style="background-color: #E4405F; border: none;" onclick="enviarInstagram('${
+            p.id
+          }', '${nomeEscapado}')" ${jaEnviado ? "disabled" : ""}>
+            ${instagramIcon} Abrir Direct
+          </button>
+        </div>`;
       })
       .join("");
-    parlamentares.forEach((p) => {
-      /* ... (código igual para ícones) ... */
-    });
+    // --- FIM DA CORREÇÃO ---
   } else {
     totalEl.innerHTML = `Total: <strong>0</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado}.`;
-    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">...</div>`; // (código igual)
+    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">
+      Nenhum perfil de Instagram contribuído pela comunidade para esta seleção.
+      <br>Você pode adicionar perfis clicando em "Enviar Info" na tabela principal.
+    </div>`;
   }
 
   atualizarProgressoInstagram();
 }
-
-// SUBSTITUA A FUNÇÃO enviarInstagram em pauta.js
 
 function enviarInstagram(parlamentarId) {
   // Verifica se o objeto campanhaInstagram existe e tem as mensagens
