@@ -1,4 +1,3 @@
-
 /* Adicione seus estilos personalizados aqui */
 .jumbotron {
   background-color: #e9ecef;
@@ -11,5 +10,23 @@
 
 /* Estilo para o modal */
 .modal-body .form-group {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Garante que o container das abas não force altura mínima desnecessária */
+#modalEnviarInfo .modal-body .tab-content {
+  min-height: auto; /* Remove altura mínima se houver */
+}
+
+/* Garante que o painel da aba não tenha alinhamentos estranhos */
+#modalEnviarInfo .tab-pane {
+  height: auto; /* Permite que a altura se ajuste ao conteúdo */
+  display: block !important; /* Força a exibição normal (sobrescreve 'fade' se necessário durante a transição) */
+  /* Se estiver usando Flexbox no .modal-body, pode precisar disso: */
+  /* align-self: flex-start; */
+}
+
+/* Remove margem superior extra se houver no primeiro elemento da aba */
+#modalEnviarInfo #evidencia > *:first-child {
+  margin-top: 0;
 }
