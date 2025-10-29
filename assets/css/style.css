@@ -1,61 +1,189 @@
-/* Adicione seus estilos personalizados aqui */
+/* ========================================== */
+/* ESTILOS PERSONALIZADOS (style.css) */
+/* ========================================== */
+
+/* --- Estilos Base (do seu style.css original) --- */
 .jumbotron {
   background-color: #e9ecef;
   padding: 2rem;
 }
-
 .table th {
   white-space: nowrap;
 }
-
-/* Estilo para o modal */
 .modal-body .form-group {
   margin-bottom: 1rem;
 }
 
-/* ========================================== */
-/* CORREÇÃO PARA ESPAÇO EM BRANCO NAS ABAS (COM .fade) */
-/* ========================================== */
+/* --- Badges de Posição --- */
+.badge-status {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-apoia {
+  background: #d4edda;
+  color: #155724;
+}
+.badge-contrario {
+  background: #f8d7da;
+  color: #721c24;
+}
+.badge-nao-manifestado {
+  background: #e2e3e5;
+  color: #383d41;
+}
 
-/* Garante que o container das abas possa conter elementos posicionados */
-#modalEnviarInfo .modal-body .tab-content {
+/* --- Informações de Contato (Modal Ver Contato) --- */
+.contato-info {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.contato-info-titulo {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+.contato-info-valor {
+  color: #666;
+  font-size: 14px;
+}
+.contato-fonte {
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
+}
+
+/* --- Botões de Ação (WhatsApp, Instagram) --- */
+.btn-acao-contato {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+  vertical-align: middle;
+}
+.btn-whatsapp {
+  background: #25d366;
+  color: white !important;
+}
+.btn-whatsapp:hover {
+  background: #20ba5a;
+  color: white !important;
+}
+.btn-instagram {
+  background: #e4405f;
+  color: white !important;
+}
+.btn-instagram:hover {
+  background: #d32f4f;
+  color: white !important;
+}
+.btn-acao-contato svg {
+  vertical-align: middle;
+  margin-right: 4px;
+  margin-top: -2px;
+}
+
+/* --- Lista de Assessores (Modal Ver Contato) --- */
+.assessores-lista {
+  margin-top: 10px;
+}
+.assessor-item {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 3px solid #667eea;
+}
+
+/* --- Itens da Lista de Envio (Modais de Campanha) --- */
+.parlamentar-envio-item {
+  background: #f8f9fa;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  font-size: 0.9em;
+}
+.parlamentar-envio-item.enviado {
+  background: #e9f5ec;
+  border-color: #a3d9b1;
+  opacity: 0.8;
+}
+.parlamentar-envio-item strong {
+  font-weight: 600;
+}
+.parlamentar-envio-item span[style*="color: #28a745"] {
+  margin-left: 5px;
+}
+
+/* --- Widget de Progresso (Tracking) --- */
+.tracking-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 13px;
+}
+.tracking-item:last-child {
+  border-bottom: none;
+}
+.tracking-item svg {
+  vertical-align: middle;
+  margin-right: 5px;
+  margin-top: -2px;
+  width: 14px;
+  height: 14px;
+}
+
+/* --- Ícone de Copiar --- */
+.position-relative {
   position: relative;
-  min-height: auto; /* Evita altura mínima pré-definida */
 }
-
-/* Tenta tirar as abas inativas do fluxo normal */
-#modalEnviarInfo .modal-body .tab-content > .tab-pane:not(.show) {
-  position: absolute; /* Tira do fluxo */
-  top: 0; /* Alinha no topo */
-  left: 0;
-  width: 100%; /* Garante largura total */
-  opacity: 0; /* Mantém invisível (Bootstrap já faz isso com .fade) */
-  pointer-events: none; /* Impede interação */
-  visibility: hidden; /* Garante que não ocupa espaço de acessibilidade */
-  height: 0; /* Tenta forçar altura zero */
-  overflow: hidden; /* Esconde conteúdo que possa vazar */
+.copy-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6c757d;
+  opacity: 0.4;
+  transition: opacity 0.2s, color 0.2s;
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
 }
-
-/* Garante que a aba ativa ocupe espaço normalmente */
-#modalEnviarInfo .modal-body .tab-content > .tab-pane.active.show {
-  position: relative; /* Volta ao fluxo normal ou ao posicionamento relativo */
-  width: 100%;
-  height: auto; /* Altura automática baseada no conteúdo */
-  overflow: visible;
+.copy-icon:hover {
   opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
+  color: #007bff;
+}
+input + .copy-icon {
+  top: calc(50% + 10px);
+}
+textarea + .copy-icon {
+  top: 15px;
+  transform: none;
+  right: 15px;
 }
 
-/* Remove margem superior extra do primeiro elemento DENTRO da aba ativa */
-#modalEnviarInfo .tab-pane.active.show > *:first-child {
-  margin-top: 0;
+/* --- Textareas Ocultos (para templates de campanha) --- */
+.hidden-textarea {
+  display: none;
 }
 
 /* ========================================== */
-/* (Manter as outras regras que adicionamos antes para Jumbotron, etc.) */
+/* --- AJUSTE ESPAÇAMENTO, SITUAÇÃO E ABAS --- */
 /* ========================================== */
-/* ... (regras para .jumbotron, .situacao-destaque, etc.) ... */
+
+/* --- Jumbotron (reduzido) --- */
 .jumbotron {
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
@@ -64,7 +192,8 @@
 main.container {
   margin-top: 1rem !important;
 }
-/* ... etc ... */
+
+/* --- Estilo para o Bloco .situacao-destaque --- */
 .situacao-destaque {
   background-color: #f8f9fa;
   border: 1px solid #e9ecef;
@@ -73,6 +202,8 @@ main.container {
   margin-bottom: 2.5rem;
   border-radius: 8px;
 }
+
+/* Reduzir tamanho da fonte e margens dentro da seção */
 .situacao-destaque p,
 .situacao-destaque ul,
 .situacao-destaque li,
@@ -87,42 +218,110 @@ main.container {
 .situacao-destaque ul {
   padding-left: 20px;
 }
-.hidden-textarea {
-  display: none;
+
+/* --- CORREÇÃO DE BUGS (ABAS EMPILHADAS/ESPAÇO BRANCO) --- */
+
+/* 1. Garante que o container das abas funcione com display: block */
+#modalEnviarInfo .modal-body .tab-content {
+  display: block !important;
+  overflow: visible !important;
 }
+
+/* 2. Força o ESCONDIMENTO da aba inativa (Solução para o problema de empilhamento) */
+/* Usa !important para sobrescrever qualquer estilo flex ou grid */
+#modalEnviarInfo .modal-body .tab-content > .tab-pane:not(.active) {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 3. Garante que a aba ativa ocupe espaço normalmente e que não tenha padding extra */
+#modalEnviarInfo .modal-body .tab-content > .tab-pane.active.show {
+  display: block !important;
+  visibility: visible !important;
+  height: auto !important;
+  overflow: visible !important;
+  padding: 0; /* Remove padding superior/inferior que pode causar o espaço branco indesejado */
+}
+
+/* Remove margem superior do primeiro elemento DENTRO da aba ativa para subir o conteúdo */
+#modalEnviarInfo .tab-pane.active.show > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* --- Espaçamento antes da Mobilização --- */
+.campanhas-section {
+  margin-top: 2.5rem;
+}
+
 /* ========================================== */
-/* --- CORREÇÃO DE RESPONSIVIDADE (index.html) --- */
+/* --- CORREÇÃO DE RESPONSIVIDADE (MOBILE) --- */
 /* ========================================== */
 
 @media (max-width: 575.98px) {
-  /* 1. Ajuste do Jumbotron para não ultrapassar a tela */
   .jumbotron {
-    /* Diminui o padding horizontal para dar mais espaço ao texto */
     padding-left: 1rem !important;
     padding-right: 1rem !important;
-    /* Reduz um pouco o padding vertical para manter a altura baixa */
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
-
-  /* 2. Redução da Fonte do Título Principal */
   .jumbotron .display-4 {
-    font-size: 2rem !important; /* Reduz de 3.5rem (padrão display-4) para 2rem */
+    font-size: 2rem !important;
   }
-
-  /* 3. Redução da Fonte do Subtítulo (o 'lead') */
   .jumbotron .lead {
-    font-size: 1rem !important; /* Reduz de 1.25rem (padrão lead) para 1rem */
+    font-size: 1rem !important;
   }
-
-  /* 4. Redução da Fonte da Seção de Destaque */
   .jumbotron .featured-pauta-label {
     font-size: 0.9em !important;
   }
-
-  /* 5. Ajuste fino no tamanho do botão principal */
   .jumbotron .btn-lg {
     padding: 0.4rem 0.8rem;
     font-size: 1rem;
+  }
+}
+
+/* ========================================== */
+/* ESTILOS BASE (MANTIDOS) */
+/* ========================================== */
+.container {
+  max-width: 1140px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+.lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.col-md-6 {
+  position: relative;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+@media (min-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
