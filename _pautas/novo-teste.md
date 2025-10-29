@@ -13,23 +13,25 @@ key_players:
     position: "apoia"
 campanha:
   email:
-    assunto: "Apoio a inclusão do agente de segurança socioeducativo na PEC 18/2025"
+    assunto: "Apoio na inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025"
     mensagem_oposicao: |
-      Olá, Deputado(a). Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria.
+      Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria.
     mensagem_apoio: |
-      Deputado(a), agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
+      Agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
     mensagem_extra: |
-      A valorização dos Agentes de Segurança Socioeducativos na PEC 18/2025 representa o reconhecimento de uma atividade essencial e de risco. Contamos com seu compromisso com a justiça e a segurança pública. Seu apoio pode fazer a diferença para milhares de profissionais que atuam na base do sistema socioeducativo.
+      A inserção dos Agentes de Segurança Socioeducativos na PEC 18/2025 representa o reconhecimento de uma atividade essencial e de risco. Contamos com seu compromisso com a justiça e a segurança pública. Seu apoio pode fazer a diferença para milhares de profissionais que atuam na base do sistema socioeducativo.
+      
+      Nos apoie nas Emendas 9 e 13 da PEC 18/2025.
   whatsapp:
     mensagem_oposicao: |
-      Olá, Deputado(a). Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria.
+      Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria.
     mensagem_apoio: |
-      Deputado(a), agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
+      Agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
   instagram:
     mensagem_oposicao: |
-      Olá, Deputado(a). Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria.
+      Venho pedir seu apoio à inclusão dos Agentes de Segurança Socioeducativos no art. 144 da Constituição, por meio das emendas à PEC 18/2025 (Emendas 9, 11 e 13). Nossa atividade é de risco e essencial à sociedade. Contamos com seu voto e compromisso com a valorização da categoria.
     mensagem_apoio: |
-      Deputado(a), agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
+      Agradecemos pelo seu apoio à inclusão dos Agentes de Segurança Socioeducativos na PEC 18/2025. Sua posição fortalece uma categoria que atua diariamente em condições de risco e com grande responsabilidade social.
 ---
 
 <section id="pec18" style="font-size: 15px; line-height: 1.5;">
