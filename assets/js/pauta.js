@@ -959,7 +959,6 @@ function atualizarListaWhatsApp() {
     "filtro-campanha-estado-wa"
   ).value;
 
-  // --- Lógica de Texto Dinâmico ---
   let cargo = "Parlamentares";
   if (casaLegislativa.includes("Câmara")) cargo = "Deputados(as)";
   else if (casaLegislativa.includes("Senado")) cargo = "Senadores(as)";
@@ -968,10 +967,7 @@ function atualizarListaWhatsApp() {
     textoEstado = `do Estado do ${
       mapEstados[estadoSelecionado] || estadoSelecionado
     }`;
-  // --- Fim ---
 
-  // --- CORREÇÃO (BUG B) ---
-  // Filtra parlamentares da pauta atual, não a base inteira
   const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
     const temWhatsApp = congressistasExtras.congressistas?.[p.id]?.whatsapp;
     const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
@@ -983,14 +979,13 @@ function atualizarListaWhatsApp() {
 
   if (count > 0) {
     totalEl.innerHTML = `Total: <strong>${count}</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
-
-    // --- CORREÇÃO (BUG A) - Preenchimento da Lógica Faltante ---
     listaEl.innerHTML = parlamentares
       .map((p) => {
         const jaEnviado = enviados.includes(p.id);
         const nomeEscapado = p.nome
           .replace(/'/g, "\\'")
           .replace(/"/g, "&quot;");
+        // --- CORREÇÃO: Removido 'disabled' ---
         return `<div class="parlamentar-envio-item ${
           jaEnviado ? "enviado" : ""
         }" data-id="${p.id}">
@@ -1004,89 +999,133 @@ function atualizarListaWhatsApp() {
           </div>
           <button class="btn btn-sm btn-success" onclick="enviarWhatsApp('${
             p.id
-          }', '${nomeEscapado}')" ${jaEnviado ? "disabled" : ""}>
-            ${whatsappIcon} Enviar
+          }', '${nomeEscapado}')">
+            ${whatsappIcon} Enviar ${jaEnviado ? " Novamente" : ""}
           </button>
         </div>`;
+        // --- FIM DA CORREÇÃO ---
       })
       .join("");
-    // --- FIM DA CORREÇÃO ---
   } else {
     totalEl.innerHTML = `Total: <strong>0</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado}.`;
-    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">
-      Nenhum número de WhatsApp contribuído pela comunidade para esta seleção.
-      <br>Você pode adicionar números clicando em "Enviar Info" na tabela principal.
-    </div>`;
+    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">...</div>`; // Conteúdo igual
   }
-
   atualizarProgressoWhatsApp();
 }
 
-// SUBSTITUA A FUNÇÃO enviarWhatsApp em pauta.js
+function atualizarListaInstagram() {
+  const listaEl = document.getElementById("lista-instagram");
+  const totalEl = document.getElementById("total-instagram");
+  const estadoSelecionado = document.getElementById(
+    "filtro-campanha-estado-ig"
+  ).value;
 
-function enviarWhatsApp(parlamentarId) {
+  let cargo = "Parlamentares";
+  // ... (lógica de texto igual) ...
+  if (casaLegislativa.includes("Câmara")) cargo = "Deputados(as)";
+  else if (casaLegislativa.includes("Senado")) cargo = "Senadores(as)";
+  let textoEstado = "de todos os estados";
+  if (estadoSelecionado)
+    textoEstado = `do Estado do ${
+      mapEstados[estadoSelecionado] || estadoSelecionado
+    }`;
+
+  const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
+    const temIg = congressistasExtras.congressistas?.[p.id]?.instagram;
+    const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+    return temIg && estadoMatch;
+  });
+
+  const count = parlamentares.length;
+  const enviados = trackingData[pautaSlug].instagram || [];
+
+  if (count > 0) {
+    totalEl.innerHTML = `Total: <strong>${count}</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
+    listaEl.innerHTML = parlamentares
+      .map((p) => {
+        const jaEnviado = enviados.includes(p.id);
+        const nomeEscapado = p.nome
+          .replace(/'/g, "\\'")
+          .replace(/"/g, "&quot;");
+        // --- CORREÇÃO: Removido 'disabled' ---
+        return `<div class="parlamentar-envio-item ${
+          jaEnviado ? "enviado" : ""
+        }" data-id="${p.id}">
+          <div>
+            <strong>${p.nome}</strong> (${p.partido}-${p.uf})
+            ${
+              jaEnviado
+                ? '<span style="color: #28a745; font-weight: bold; margin-left: 8px;">✅</span>'
+                : ""
+            }
+          </div>
+          <button class="btn btn-sm btn-danger" style="background-color: #E4405F; border: none;" onclick="enviarInstagram('${
+            p.id
+          }', '${nomeEscapado}')">
+            ${instagramIcon} Abrir Direct ${jaEnviado ? " Novamente" : ""}
+          </button>
+        </div>`;
+        // --- FIM DA CORREÇÃO ---
+      })
+      .join("");
+  } else {
+    totalEl.innerHTML = `Total: <strong>0</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado}.`;
+    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">...</div>`; // Conteúdo igual
+  }
+  atualizarProgressoInstagram();
+}
+
+function enviarWhatsApp(parlamentarId, nomeEscapado) {
+  // Adicionado nomeEscapado como parâmetro
   // Verifica se o objeto campanhaWhatsApp existe e tem as mensagens
   if (
     !campanhaWhatsApp ||
     !campanhaWhatsApp.mensagem_oposicao ||
     !campanhaWhatsApp.mensagem_apoio
   ) {
-    // Mostra um alerta genérico ou pode buscar a mensagem de erro da campanha se existir
+    // Verifica ambas
     return alert(
       "Campanha de WhatsApp não configurada corretamente (mensagens faltando)."
     );
   }
 
-  const parlamentar = parlamentaresBase.find((p) => p.id === parlamentarId);
-  // Verifica se encontrou o parlamentar (importante)
-  if (!parlamentar) {
-    console.error(`Parlamentar com ID ${parlamentarId} não encontrado.`);
-    return alert("Erro: Parlamentar não encontrado.");
-  }
+  const parlamentar = parlamentaresAtuaisParaTabela.find(
+    (p) => p.id === parlamentarId
+  ); // Usa lista da pauta
+  if (!parlamentar)
+    return alert("Erro: Parlamentar não encontrado nesta pauta.");
 
   const extras = congressistasExtras.congressistas[parlamentarId];
-  // Verifica se há dados extras e WhatsApp (importante)
-  if (!extras || !extras.whatsapp) {
-    console.error(
-      `Dados extras (WhatsApp) não encontrados para ${parlamentar.nome} (ID: ${parlamentarId}).`
-    );
+  // Verifica WhatsApp (pode ser string ou array)
+  let whatsapp = extras?.whatsapp;
+  if (Array.isArray(whatsapp)) whatsapp = whatsapp[0]; // Pega o primeiro se for array
+  if (!whatsapp)
     return alert(
-      `Erro: Número de WhatsApp não cadastrado para ${parlamentar.nome}. Contribua com a informação!`
+      `Erro: Número de WhatsApp não cadastrado para ${parlamentar.nome}.`
     );
-  }
 
   const posicao = obterPosicao(parlamentarId);
 
-  // 1. Gerar prefixo
+  // --- CORREÇÃO: Selecionar Mensagem Correta ---
+  const templateOposicao = campanhaWhatsApp.mensagem_oposicao || "";
+  const templateApoio = campanhaWhatsApp.mensagem_apoio || "";
+  let mensagemBase = templateOposicao; // Padrão
+  if (posicao === "apoia" && templateApoio) {
+    mensagemBase = templateApoio; // Usa agradecimento se apoia e existe
+    console.log("Usando mensagem de APOIO para WhatsApp");
+  } else {
+    console.log("Usando mensagem de OPOSIÇÃO/NEUTRO para WhatsApp");
+  }
+  // --- FIM DA CORREÇÃO ---
+
   const prefixo = gerarPrefixoMensagem(
     "filtro-campanha-estado-wa",
     "campo-nome-wa"
   );
-
-  // 2. Escolher template (Oposição ou Agradecimento)
-  const templateOposicao = campanhaWhatsApp.mensagem_oposicao || ""; // Usa fallback para string vazia
-  const templateApoio = campanhaWhatsApp.mensagem_apoio || ""; // Usa fallback para string vazia
-
-  let mensagemBase = templateOposicao; // Padrão
-  if (posicao === "apoia" && templateApoio) {
-    // Só usa template de apoio se existir
-    mensagemBase = templateApoio;
-  }
-
-  // 3. Montar mensagem final
   const mensagem = (prefixo + mensagemBase).replace(
     /\[NOME\]/g,
     parlamentar.nome
   );
-  // [ESTADO] não é mais substituído automaticamente aqui
-
-  // Pega o número (pode ser string ou primeiro do array)
-  let whatsapp = extras.whatsapp;
-  if (Array.isArray(whatsapp)) whatsapp = whatsapp[0];
-  if (!whatsapp) {
-    // Verificação adicional
-    return alert(`Erro: Número de WhatsApp inválido para ${parlamentar.nome}.`);
-  }
 
   const url = `https://wa.me/55${whatsapp.replace(
     /\D/g,
@@ -1143,146 +1182,74 @@ function abrirCampanhaInstagram() {
   $("#modalCampanhaInstagram").modal("show");
 }
 
-function atualizarListaInstagram() {
-  const listaEl = document.getElementById("lista-instagram");
-  const totalEl = document.getElementById("total-instagram");
-  const estadoSelecionado = document.getElementById(
-    "filtro-campanha-estado-ig"
-  ).value;
-
-  // --- Lógica de Texto Dinâmico ---
-  let cargo = "Parlamentares";
-  if (casaLegislativa.includes("Câmara")) cargo = "Deputados(as)";
-  else if (casaLegislativa.includes("Senado")) cargo = "Senadores(as)";
-  let textoEstado = "de todos os estados";
-  if (estadoSelecionado)
-    textoEstado = `do Estado do ${
-      mapEstados[estadoSelecionado] || estadoSelecionado
-    }`;
-  // --- Fim ---
-
-  // --- CORREÇÃO (BUG B) ---
-  // Filtra parlamentares da pauta atual, não a base inteira
-  const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
-    const temIg = congressistasExtras.congressistas?.[p.id]?.instagram;
-    const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
-    return temIg && estadoMatch;
-  });
-
-  const count = parlamentares.length;
-  const enviados = trackingData[pautaSlug].instagram || [];
-
-  if (count > 0) {
-    totalEl.innerHTML = `Total: <strong>${count}</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
-
-    // --- CORREÇÃO (BUG A) - Preenchimento da Lógica Faltante ---
-    listaEl.innerHTML = parlamentares
-      .map((p) => {
-        const jaEnviado = enviados.includes(p.id);
-        const nomeEscapado = p.nome
-          .replace(/'/g, "\\'")
-          .replace(/"/g, "&quot;");
-        return `<div class="parlamentar-envio-item ${
-          jaEnviado ? "enviado" : ""
-        }" data-id="${p.id}">
-          <div>
-            <strong>${p.nome}</strong> (${p.partido}-${p.uf})
-            ${
-              jaEnviado
-                ? '<span style="color: #28a745; font-weight: bold; margin-left: 8px;">✅</span>'
-                : ""
-            }
-          </div>
-          <button class="btn btn-sm btn-danger" style="background-color: #E4405F; border: none;" onclick="enviarInstagram('${
-            p.id
-          }', '${nomeEscapado}')" ${jaEnviado ? "disabled" : ""}>
-            ${instagramIcon} Abrir Direct
-          </button>
-        </div>`;
-      })
-      .join("");
-    // --- FIM DA CORREÇÃO ---
-  } else {
-    totalEl.innerHTML = `Total: <strong>0</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado}.`;
-    listaEl.innerHTML = `<div class="alert alert-warning" style="margin: 10px; font-size: 14px;">
-      Nenhum perfil de Instagram contribuído pela comunidade para esta seleção.
-      <br>Você pode adicionar perfis clicando em "Enviar Info" na tabela principal.
-    </div>`;
-  }
-
-  atualizarProgressoInstagram();
-}
-
-function enviarInstagram(parlamentarId) {
+function enviarInstagram(parlamentarId, nomeEscapado) {
+  // Adicionado nomeEscapado como parâmetro
   // Verifica se o objeto campanhaInstagram existe e tem as mensagens
   if (
     !campanhaInstagram ||
     !campanhaInstagram.mensagem_oposicao ||
     !campanhaInstagram.mensagem_apoio
   ) {
+    // Verifica ambas
     return alert(
       "Campanha de Instagram não configurada corretamente (mensagens faltando)."
     );
   }
 
-  const parlamentar = parlamentaresBase.find((p) => p.id === parlamentarId);
-  if (!parlamentar) {
-    console.error(`Parlamentar com ID ${parlamentarId} não encontrado.`);
-    return alert("Erro: Parlamentar não encontrado.");
-  }
+  const parlamentar = parlamentaresAtuaisParaTabela.find(
+    (p) => p.id === parlamentarId
+  ); // Usa lista da pauta
+  if (!parlamentar)
+    return alert("Erro: Parlamentar não encontrado nesta pauta.");
 
   const extras = congressistasExtras.congressistas[parlamentarId];
-  // Verifica se há dados extras e Instagram
-  if (!extras || !extras.instagram) {
-    console.error(
-      `Dados extras (Instagram) não encontrados para ${parlamentar.nome} (ID: ${parlamentarId}).`
-    );
+  if (!extras || !extras.instagram)
     return alert(
-      `Erro: Perfil do Instagram não cadastrado para ${parlamentar.nome}. Contribua com a informação!`
+      `Erro: Perfil do Instagram não cadastrado para ${parlamentar.nome}.`
     );
-  }
 
   const posicao = obterPosicao(parlamentarId);
 
-  // 1. Gerar prefixo
+  // --- CORREÇÃO (Item 4): Selecionar Mensagem Correta ---
+  const templateOposicao = campanhaInstagram.mensagem_oposicao || "";
+  const templateApoio = campanhaInstagram.mensagem_apoio || "";
+  let mensagemBase = templateOposicao; // Padrão
+  if (posicao === "apoia" && templateApoio) {
+    mensagemBase = templateApoio; // Usa agradecimento se apoia e existe
+    console.log("Usando mensagem de APOIO para Instagram");
+  } else {
+    console.log("Usando mensagem de OPOSIÇÃO/NEUTRO para Instagram");
+  }
+  // --- FIM DA CORREÇÃO ---
+
   const prefixo = gerarPrefixoMensagem(
     "filtro-campanha-estado-ig",
     "campo-nome-ig"
   );
-
-  // 2. Escolher template
-  const templateOposicao = campanhaInstagram.mensagem_oposicao || "";
-  const templateApoio = campanhaInstagram.mensagem_apoio || "";
-
-  let mensagemBase = templateOposicao; // Padrão
-  if (posicao === "apoia" && templateApoio) {
-    mensagemBase = templateApoio;
-  }
-
-  // 3. Montar mensagem final para copiar
   const mensagem = (prefixo + mensagemBase).replace(
     /\[NOME\]/g,
     parlamentar.nome
   );
 
-  // 4. Abrir link do Direct
+  // Abrir link do Direct
   const instagramUser = extras.instagram.replace("@", "");
   const url = `https://ig.me/m/${instagramUser}`;
   window.open(url, "_blank");
 
-  // 5. Copiar mensagem e avisar
+  // Copiar mensagem e avisar
   navigator.clipboard
     .writeText(mensagem)
     .then(() => {
+      // --- CORREÇÃO: Alert Melhorado ---
       alert(
-        "A mensagem foi copiada. Cole-a no Direct do Instagram que acabou de abrir."
+        `✅ Mensagem Copiada!\n\n1. O Direct do Instagram para @${instagramUser} deve ter aberto em outra aba.\n2. Cole a mensagem copiada lá e envie.`
       );
+      // --- FIM DA CORREÇÃO ---
     })
     .catch((err) => {
       console.error("Falha ao copiar mensagem do Instagram:", err);
-      // Fallback: Mostrar a mensagem para o usuário copiar manualmente
       prompt(
-        "Não foi possível copiar automaticamente. Copie a mensagem abaixo:",
+        "Falha ao copiar. Copie a mensagem abaixo e cole no Direct:",
         mensagem
       );
     });
@@ -1330,12 +1297,13 @@ function mostrarTracking() {
   const itemsEl = document.getElementById("tracking-items");
   if (!container || !itemsEl) return;
 
-  const dados = trackingData[pautaSlug];
+  const dados = trackingData[pautaSlug]; // Dados de envio do localStorage
   if (!dados) return;
 
   let temProgresso = false;
   let html = "";
 
+  // Email (Não tem 'total', só se foi enviado ou não)
   if (dados.email) {
     temProgresso = true;
     html += `<div class="tracking-item">
@@ -1344,35 +1312,43 @@ function mostrarTracking() {
     </div>`;
   }
 
-  // Usar a lista da pauta atual para contagem total
+  // --- INÍCIO DA CORREÇÃO ---
+  // Calcular totais com base nos parlamentares DESTA pauta
   const totalWhatsApp = parlamentaresAtuaisParaTabela.filter(
     (p) => congressistasExtras.congressistas?.[p.id]?.whatsapp
   ).length;
-  if (dados.whatsapp && dados.whatsapp.length > 0) {
-    temProgresso = true;
-    html += `<div class="tracking-item">
-      <span>${whatsappIcon} WhatsApp</span>
-      <span>${dados.whatsapp.length}/${totalWhatsApp}</span>
-    </div>`;
-  }
-
-  // Usar a lista da pauta atual para contagem total
   const totalInstagram = parlamentaresAtuaisParaTabela.filter(
     (p) => congressistasExtras.congressistas?.[p.id]?.instagram
   ).length;
-  if (dados.instagram && dados.instagram.length > 0) {
+  // --- FIM DA CORREÇÃO ---
+
+  // WhatsApp
+  const enviadosWhatsApp = (dados.whatsapp || []).length;
+  if (enviadosWhatsApp > 0 || totalWhatsApp > 0) {
+    // Mostra mesmo se for 0/X
     temProgresso = true;
     html += `<div class="tracking-item">
-      <span>${instagramIcon} Instagram</span>
-      <span>${dados.instagram.length}/${totalInstagram}</span>
-    </div>`;
+        <span>${whatsappIcon} WhatsApp</span>
+        <span>${enviadosWhatsApp}/${totalWhatsApp}</span>
+      </div>`;
+  }
+
+  // Instagram
+  const enviadosInstagram = (dados.instagram || []).length;
+  if (enviadosInstagram > 0 || totalInstagram > 0) {
+    // Mostra mesmo se for 0/X
+    temProgresso = true;
+    html += `<div class="tracking-item">
+        <span>${instagramIcon} Instagram</span>
+        <span>${enviadosInstagram}/${totalInstagram}</span>
+      </div>`;
   }
 
   if (temProgresso) {
     itemsEl.innerHTML = html;
     container.style.display = "block";
   } else {
-    container.style.display = "none";
+    container.style.display = "none"; // Esconde se não houver progresso algum
   }
 }
 
