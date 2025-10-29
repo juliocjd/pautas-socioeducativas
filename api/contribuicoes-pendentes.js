@@ -1,7 +1,7 @@
 // API para gerenciar contribuições pendentes
 // Suporta: listagem, aprovação parcial, aprovação total, rejeição
 import { Octokit } from "@octokit/rest";
-import yaml from "js-yaml";
+import yaml from "js-yaml"; // <-- Verifique se esta linha está presente
 
 export default async function handler(req, res) {
   // CORS
@@ -37,20 +37,20 @@ export default async function handler(req, res) {
     try {
       console.log("📥 Buscando contribuições pendentes...");
 
-      // 1. Buscar contribuições de CONTEÚDO (arquivo JSON)
+      // 1. Buscar contribuições de CONTEÚDO (arquivo YAML)
       let contribuicoesConteudo = [];
       try {
         const { data: fileData } = await octokit.rest.repos.getContent({
           owner,
           repo,
-          path: "_data/contribuicoes_pendentes.yml",
+          path: "_data/contribuicoes_pendentes.yml", // <-- Lendo o YML
           ref: branch,
         });
 
         const content = Buffer.from(fileData.content, "base64").toString(
           "utf-8"
         );
-        const dados = JSON.parse(content) || [];
+        const dados = yaml.load(content) || []; // <-- Usando yaml.load
         contribuicoesConteudo = dados.filter((c) => c.status === "pendente");
 
         console.log(
@@ -61,6 +61,10 @@ export default async function handler(req, res) {
           console.error(
             "⚠️ Erro ao buscar contribuições de conteúdo:",
             error.message
+          );
+        } else {
+          console.log(
+            "ℹ️ Arquivo _data/contribuicoes_pendentes.yml não encontrado."
           );
         }
       }
@@ -82,6 +86,7 @@ export default async function handler(req, res) {
             pr.labels.some((l) => l.name === "contribuição")
         );
 
+        // --- INÍCIO DO BLOCO SUBSTITUÍDO ---
         for (const pr of prsContribuicao) {
           try {
             console.log(`📋 Processando PR #${pr.number}: ${pr.title}`);
@@ -93,27 +98,30 @@ export default async function handler(req, res) {
               pull_number: pr.number,
             });
 
-            // Verificar se modifica congressistas.json
+            // Verificar se modifica congressistas_extras.json
             const congressistasFile = files.find(
               (f) => f.filename === "_data/congressistas_extras.json"
             );
 
             if (!congressistasFile) {
               console.log(
-                `⚠️ PR #${pr.number} não modifica congressistas.json`
+                `⚠️ PR #${pr.number} não modifica _data/congressistas_extras.json`
               );
-              continue;
+              continue; // Pula para o próximo PR se o arquivo correto não foi modificado
             }
 
-            console.log(`✅ PR #${pr.number} modifica congressistas.json`);
+            console.log(
+              `✅ PR #${pr.number} modifica _data/congressistas_extras.json`
+            );
 
-            // BUSCAR ARQUIVO COMPLETO DA BRANCH DO PR (não parsear patch!)
+            // Inicializa dados extraídos
             let dadosExtraidos = {
               id: null,
-              nome: null,
+              nome: extrairNomeDoPR(pr), // Tenta extrair nome do título/corpo do PR
               dados_contato: {},
               evidencia: null,
             };
+            let parlamentarId = null; // Para guardar o ID encontrado
 
             try {
               // Buscar conteúdo do arquivo da branch do PR
@@ -130,75 +138,103 @@ export default async function handler(req, res) {
                 fileContent.content,
                 "base64"
               ).toString("utf-8");
-              const congressistas = JSON.parse(content);
+              const congressistasJson = JSON.parse(content); // JSON completo { congressistas: { ... } }
 
-              console.log(
-                `📊 Congressistas no PR:`,
-                Object.keys(congressistas)
-              );
+              console.log(`📊 Conteúdo JSON do PR #${pr.number} carregado.`);
 
-              // Encontrar qual parlamentar foi modificado
-              // (comparar com main ou pegar o primeiro/último)
-              const parlamentarIds = Object.keys(congressistas);
+              // --- INÍCIO DA CORREÇÃO ---
+              // 1. Acessar o objeto aninhado 'congressistas'
+              const congressistasAninhado = congressistasJson.congressistas;
 
-              if (parlamentarIds.length > 0) {
-                // Assumir que é o último adicionado/modificado
-                // (pode melhorar comparando com main)
-                const parlamentarId = parlamentarIds[parlamentarIds.length - 1];
-                const parlamentar = congressistas[parlamentarId];
+              if (
+                congressistasAninhado &&
+                typeof congressistasAninhado === "object"
+              ) {
+                // 2. Encontrar qual parlamentar foi modificado/adicionado
+                const parlamentarIds = Object.keys(congressistasAninhado);
 
-                dadosExtraidos = {
-                  id: parlamentarId,
-                  nome: extrairNomeDoPR(pr),
-                  dados_contato: {
-                    whatsapp: parlamentar.whatsapp,
-                    instagram: parlamentar.instagram,
-                    telefone_gabinete: parlamentar.telefone_gabinete,
-                    assessores: parlamentar.assessores,
-                  },
-                  evidencia: parlamentar.evidencias
-                    ? parlamentar.evidencias[parlamentar.evidencias.length - 1]
-                    : null,
-                };
+                if (parlamentarIds.length > 0) {
+                  // Tenta pegar o ID do corpo do PR se disponível, senão usa o último
+                  const idDoCorpo = extrairIdDoPR(pr);
+                  parlamentarId =
+                    idDoCorpo && congressistasAninhado[idDoCorpo]
+                      ? idDoCorpo
+                      : parlamentarIds[parlamentarIds.length - 1];
 
-                console.log(`✅ Dados extraídos do arquivo:`, dadosExtraidos);
+                  // 3. Acessar os dados DENTRO do objeto aninhado
+                  const parlamentarDados = congressistasAninhado[parlamentarId];
+
+                  if (parlamentarDados) {
+                    dadosExtraidos.id = parlamentarId; // Guarda o ID encontrado
+                    // 4. Mapear os dados corretamente para a estrutura esperada pelo frontend
+                    dadosExtraidos.dados_contato = {
+                      whatsapp: parlamentarDados.whatsapp,
+                      instagram: parlamentarDados.instagram,
+                      telefone_gabinete: parlamentarDados.telefone_gabinete, // Pode não existir neste JSON
+                      assessores: parlamentarDados.assessores,
+                    };
+                    // Pega a última evidência adicionada, se houver
+                    dadosExtraidos.evidencia = parlamentarDados.evidencias
+                      ? parlamentarDados.evidencias[
+                          parlamentarDados.evidencias.length - 1
+                        ]
+                      : null;
+
+                    console.log(
+                      `✅ Dados extraídos do JSON (ID ${parlamentarId}):`,
+                      dadosExtraidos
+                    );
+                  } else {
+                    console.warn(
+                      `⚠️ ID ${parlamentarId} encontrado nas chaves, mas dados não encontrados no objeto aninhado.`
+                    );
+                  }
+                } else {
+                  console.warn(
+                    `⚠️ Objeto 'congressistas' está vazio no JSON do PR.`
+                  );
+                }
+              } else {
+                console.warn(
+                  `⚠️ Estrutura JSON inesperada: chave 'congressistas' não encontrada ou não é um objeto.`
+                );
               }
+              // --- FIM DA CORREÇÃO ---
             } catch (error) {
               console.error(
-                `❌ Erro ao buscar arquivo do PR #${pr.number}:`,
+                `❌ Erro ao buscar/processar arquivo JSON do PR #${pr.number}:`,
                 error.message
               );
-
-              // Fallback: tentar extrair do patch
+              // Fallback para patch (mantido, mas menos confiável)
               console.log("⚠️ Usando fallback: extrair do patch");
               dadosExtraidos = extrairDadosDoPatch(congressistasFile.patch);
+              parlamentarId = dadosExtraidos.id; // Tenta pegar ID do patch
             }
 
             // Adicionar à lista de contribuições
             contribuicoesDados.push({
               pr_number: pr.number,
               pr_url: pr.html_url,
-              parlamentar_id: dadosExtraidos.id,
-              parlamentar_nome: dadosExtraidos.nome,
+              parlamentar_id: parlamentarId, // Usa o ID encontrado
+              parlamentar_nome:
+                dadosExtraidos.nome || `ID: ${parlamentarId || "N/A"}`, // Usa nome extraído ou ID
               pauta_slug: extrairPautaDoPR(pr),
               usuario_nome: pr.user.login,
               criado_em: pr.created_at,
+              // Passa os objetos extraídos para o frontend
               dados_contato: dadosExtraidos.dados_contato,
               evidencia: dadosExtraidos.evidencia,
             });
 
-            console.log(
-              `✅ Contribuição adicionada: ${
-                dadosExtraidos.nome || dadosExtraidos.id
-              }`
-            );
+            console.log(`✅ Contribuição PR #${pr.number} adicionada à lista.`);
           } catch (error) {
             console.error(
-              `❌ Erro ao processar PR #${pr.number}:`,
+              `❌ Erro geral ao processar PR #${pr.number}:`,
               error.message
             );
           }
-        }
+        } // Fim do loop for
+        // --- FIM DO BLOCO SUBSTITUÍDO ---
 
         console.log(
           `✅ ${contribuicoesDados.length} contribuições de dados encontradas`
@@ -251,12 +287,9 @@ export default async function handler(req, res) {
       }
 
       console.log(
-        `📝 Ação: ${action} | PR: ${pr_number} | Parlamentar: ${parlamentar_id}`
+        `📝 Ação: ${action} | PR: ${pr_number} | Parlamentar: ${parlamentar_id} | ID Conteúdo: ${id}`
       );
 
-      // ==========================================
-      // APROVAR ITENS SELECIONADOS (PARCIAL)
-      // ==========================================
       // ==========================================
       // APROVAR ITENS SELECIONADOS (PARCIAL)
       // ==========================================
@@ -268,7 +301,7 @@ export default async function handler(req, res) {
       ) {
         console.log("✅ Aprovando itens selecionados... (Corrigido para YAML)");
 
-        // --- INÍCIO DA CORREÇÃO ---
+        // --- INÍCIO DA CORREÇÃO (Bug 2) ---
         const FILE_PATH = "_data/congressistas_extras.yml"; // <-- CORREÇÃO: Caminho do YML
 
         // 1. Buscar arquivo atual de congressistas (YML)
@@ -324,10 +357,14 @@ export default async function handler(req, res) {
             numeroWhatsApp = numeroWhatsApp[0]; // Pegar primeiro elemento
           }
 
-          if (!parlamentar.whatsapp.includes(numeroWhatsApp)) {
+          if (
+            numeroWhatsApp &&
+            !parlamentar.whatsapp.includes(numeroWhatsApp)
+          ) {
+            // Adicionado check !numeroWhatsApp
             parlamentar.whatsapp.push(numeroWhatsApp);
             console.log(`✅ WhatsApp adicionado: ${numeroWhatsApp}`);
-          } else {
+          } else if (numeroWhatsApp) {
             console.log(`ℹ️ WhatsApp já existe: ${numeroWhatsApp}`);
           }
         }
@@ -358,8 +395,10 @@ export default async function handler(req, res) {
         }
 
         // Evidências (adiciona à lista)
+        // OBS: Evidências neste fluxo vêm do PR, não do YAML geral de evidências
         if (itens.evidencias && itens.evidencias.length > 0) {
           if (!parlamentar.evidencias) {
+            // <-- CORREÇÃO: Adiciona em 'congressistas_extras.yml'
             parlamentar.evidencias = [];
           }
           itens.evidencias.forEach((novaEv) => {
@@ -367,6 +406,10 @@ export default async function handler(req, res) {
               (e) => e.url === novaEv.url
             );
             if (!existe) {
+              // Adiciona dados extras à evidência salva aqui
+              novaEv.pauta_slug = extrairPautaDoPR(pr) || "geral"; // Adiciona slug da pauta do PR
+              novaEv.contribuido_por = extrairUsuarioDoPR(pr) || "Comunidade"; // Adiciona usuário do PR
+              novaEv.data_contribuicao = new Date().toISOString(); // Adiciona data de aprovação
               parlamentar.evidencias.push(novaEv);
             }
           });
@@ -376,8 +419,6 @@ export default async function handler(req, res) {
         parlamentar.ultima_atualizacao = new Date().toISOString().split("T")[0];
 
         // 3. Salvar arquivo atualizado (YML)
-
-        // Converter de volta para YAML
         const newContent = yaml.dump(congressistasData, {
           // <-- CORREÇÃO: yaml.dump
           indent: 2,
@@ -416,7 +457,7 @@ export default async function handler(req, res) {
           owner,
           repo,
           issue_number: pr_number,
-          labels: ["parcialmente-aprovado"],
+          labels: ["aprovado-parcialmente"], // Corrigido nome da label
         });
 
         await octokit.rest.pulls.update({
@@ -427,7 +468,7 @@ export default async function handler(req, res) {
         });
 
         console.log("✅ PR fechado e comentado com sucesso!");
-        // --- FIM DA CORREÇÃO ---
+        // --- FIM DA CORREÇÃO (Bug 2) ---
 
         return res.status(200).json({
           success: true,
@@ -458,7 +499,15 @@ export default async function handler(req, res) {
           state: "closed",
         });
 
-        console.log("✅ PR fechado com sucesso");
+        // Adicionar label 'rejeitado'
+        await octokit.rest.issues.addLabels({
+          owner,
+          repo,
+          issue_number: pr_number,
+          labels: ["rejeitado"],
+        });
+
+        console.log("✅ PR fechado, comentado e label adicionada.");
 
         return res.status(200).json({
           success: true,
@@ -466,35 +515,67 @@ export default async function handler(req, res) {
         });
       }
 
+      // ==========================================
+      // REJEITAR CONTRIBUIÇÃO DE CONTEÚDO (YML)
+      // ==========================================
       if (action === "reject_content" && id) {
         console.log(`❌ Rejeitando contribuição de conteúdo ID: ${id}...`);
+        const CONTENT_FILE_PATH = "_data/contribuicoes_pendentes.yml";
 
         // Buscar arquivo atual
-        const { data: fileData } = await octokit.rest.repos.getContent({
-          owner,
-          repo,
-          path: "_data/contribuicoes_pendentes.yml",
-          ref: branch,
-        });
-
-        const content = Buffer.from(fileData.content, "base64").toString(
-          "utf-8"
-        );
-        let contribuicoes = JSON.parse(content) || [];
+        let contentFileData = {};
+        let contentFileSha = null;
+        try {
+          const { data: fileData } = await octokit.rest.repos.getContent({
+            owner,
+            repo,
+            path: CONTENT_FILE_PATH,
+            ref: branch,
+          });
+          contentFileSha = fileData.sha;
+          const currentContent = Buffer.from(
+            fileData.content,
+            "base64"
+          ).toString("utf-8");
+          contentFileData = yaml.load(currentContent) || [];
+          console.log(`✅ Arquivo ${CONTENT_FILE_PATH} carregado.`);
+        } catch (error) {
+          if (error.status === 404) {
+            console.log(`ℹ️ Arquivo ${CONTENT_FILE_PATH} não existe.`);
+            return res
+              .status(404)
+              .json({
+                error: "Arquivo de contribuições pendentes não encontrado.",
+              });
+          }
+          throw error;
+        }
 
         // Marcar como rejeitada
-        contribuicoes = contribuicoes.map((c) =>
-          c.id === id
-            ? {
-                ...c,
-                status: "rejeitada",
-                rejeitada_em: new Date().toISOString(),
-              }
-            : c
-        );
+        let found = false;
+        const updatedContribuicoes = contentFileData.map((c) => {
+          if (c.id === id) {
+            found = true;
+            return {
+              ...c,
+              status: "rejeitada",
+              rejeitada_em: new Date().toISOString(),
+            };
+          }
+          return c;
+        });
+
+        if (!found) {
+          console.warn(
+            `⚠️ Contribuição com ID ${id} não encontrada para rejeitar.`
+          );
+          return res
+            .status(404)
+            .json({ error: `Contribuição ID ${id} não encontrada.` });
+        }
 
         // Salvar
-        const newContent = JSON.stringify(contribuicoes, {
+        const newYamlContent = yaml.dump(updatedContribuicoes, {
           indent: 2,
           lineWidth: -1,
           noRefs: true,
@@ -503,12 +584,16 @@ export default async function handler(req, res) {
         await octokit.rest.repos.createOrUpdateFileContents({
           owner,
           repo,
-          path: "_data/contribuicoes_pendentes.yml",
-          message: `Rejeitar contribuição ${id}`,
-          content: Buffer.from(newContent).toString("base64"),
+          path: CONTENT_FILE_PATH,
+          message: `Rejeitar contribuição de conteúdo ${id}`,
+          content: Buffer.from(newYamlContent).toString("base64"),
           branch,
-          sha: fileData.sha,
+          sha: contentFileSha, // SHA é obrigatório para atualizar
         });
+
+        console.log(
+          `✅ Contribuição de conteúdo ID ${id} marcada como rejeitada.`
+        );
 
         return res.status(200).json({
           success: true,
@@ -516,7 +601,10 @@ export default async function handler(req, res) {
         });
       }
 
-      return res.status(400).json({ error: "Ação inválida" });
+      // Se nenhuma ação válida foi identificada
+      return res
+        .status(400)
+        .json({ error: "Ação inválida ou parâmetros insuficientes" });
     } catch (error) {
       console.error("❌ Erro ao processar ação:", error);
       return res.status(500).json({
@@ -527,6 +615,7 @@ export default async function handler(req, res) {
     }
   }
 
+  // Se o método HTTP não for GET ou POST
   return res.status(405).json({ error: "Método não permitido" });
 }
 
@@ -535,140 +624,132 @@ export default async function handler(req, res) {
 // ==========================================
 
 function extrairDadosDoPatch(patch) {
+  // ATENÇÃO: Esta função é um fallback e MENOS confiável que ler o JSON completo.
+  // Ela também precisa ser ajustada para a estrutura { congressistas: { ... } }
   const dados = {
     id: null,
-    nome: null,
+    nome: null, // Nome não está no patch, precisa vir do PR
     dados_contato: {},
     evidencia: null,
   };
 
   try {
-    console.log("🔍 Extraindo dados do patch...");
-    console.log("📄 Patch completo:", patch);
+    console.log("🔍 (Fallback) Extraindo dados do patch...");
+    if (!patch) return dados; // Retorna vazio se patch for nulo/undefined
 
-    // Extrair linhas adicionadas (+) e removidas (-)
     const linhas = patch.split("\n");
-    const linhasAdicionadas = linhas.filter(
-      (l) => l.startsWith("+") && !l.startsWith("+++")
-    );
+    let dentroDoObjetoParlamentar = false;
+    let dentroDeArray = null; // 'whatsapp', 'assessores', 'evidencias'
 
-    console.log(`📋 ${linhasAdicionadas.length} linhas adicionadas`);
+    for (const linha of linhas) {
+      // Procurar linhas adicionadas (+) que não sejam a linha de diff (+++)
+      if (linha.startsWith("+") && !linha.startsWith("+++")) {
+        const linhaLimpa = linha.substring(1).trim().replace(/,$/, ""); // Remove '+' e vírgula no final
 
-    for (const linha of linhasAdicionadas) {
-      // Limpar linha (remover + e espaços)
-      const linhaLimpa = linha.substring(1).trim();
-
-      // ID do parlamentar (chave do objeto)
-      if (linhaLimpa.match(/^"[^"]+"\s*:\s*{/)) {
-        const match = linhaLimpa.match(/^"([^"]+)"\s*:\s*{/);
-        if (match) {
-          dados.id = match[1];
-          console.log("✅ ID encontrado:", dados.id);
-        }
-      }
-
-      // WhatsApp (pode ser string ou array)
-      if (linhaLimpa.includes("whatsapp")) {
-        // Formato: "whatsapp": "valor"
-        let match = linhaLimpa.match(/"whatsapp"\s*:\s*"([^"]+)"/);
-        if (match) {
-          dados.dados_contato.whatsapp = match[1];
-          console.log("✅ WhatsApp encontrado:", match[1]);
-        } else {
-          // Formato: "whatsapp": ["valor"]
-          match = linhaLimpa.match(/"whatsapp"\s*:\s*\[\s*"([^"]+)"/);
-          if (match) {
-            dados.dados_contato.whatsapp = match[1];
-            console.log("✅ WhatsApp (array) encontrado:", match[1]);
-          } else {
-            // Formato: linha dentro do array
-            match = linhaLimpa.match(/^\s*"([^"]+)"\s*[,\]]?\s*$/);
-            if (match && linha.includes("whatsapp")) {
-              dados.dados_contato.whatsapp = match[1];
-              console.log("✅ WhatsApp (item array) encontrado:", match[1]);
-            }
+        // Tentar extrair ID da chave principal (pode falhar se mudança for interna)
+        if (linhaLimpa.match(/^"[^"]+"\s*:\s*{/)) {
+          const matchId = linhaLimpa.match(/^"([^"]+)"/);
+          if (matchId) {
+            dados.id = matchId[1];
+            dentroDoObjetoParlamentar = true; // Assume que estamos dentro do objeto deste ID
+            console.log("  (Patch) ID encontrado:", dados.id);
           }
         }
-      }
 
-      // Instagram
-      if (linhaLimpa.includes("instagram")) {
-        const match = linhaLimpa.match(/"instagram"\s*:\s*"([^"]+)"/);
-        if (match) {
-          dados.dados_contato.instagram = match[1];
-          console.log("✅ Instagram encontrado:", match[1]);
-        }
-      }
+        if (dentroDoObjetoParlamentar) {
+          // Detectar início de arrays
+          if (linhaLimpa.includes('"whatsapp": [')) dentroDeArray = "whatsapp";
+          else if (linhaLimpa.includes('"assessores": ['))
+            dentroDeArray = "assessores";
+          else if (linhaLimpa.includes('"evidencias": ['))
+            dentroDeArray = "evidencias";
 
-      // Telefone gabinete
-      if (linhaLimpa.includes("telefone_gabinete")) {
-        const match = linhaLimpa.match(/"telefone_gabinete"\s*:\s*"([^"]+)"/);
-        if (match) {
-          dados.dados_contato.telefone_gabinete = match[1];
-          console.log("✅ Telefone encontrado:", match[1]);
-        }
-      }
+          // Detectar fim de arrays
+          if (linhaLimpa.includes("]")) dentroDeArray = null;
 
-      // Assessores (detectar início do array)
-      if (linhaLimpa.includes("assessores")) {
-        if (linhaLimpa.includes("[")) {
-          dados.dados_contato.assessores = [];
-          console.log("✅ Assessores array iniciado");
-        }
-      }
-
-      // Evidências (detectar início do array)
-      if (linhaLimpa.includes("evidencias")) {
-        if (linhaLimpa.includes("[")) {
-          dados.evidencias = [];
-          console.log("✅ Evidências array iniciado");
+          // Extrair valores simples ou itens de array
+          const matchSimples = linhaLimpa.match(/"([^"]+)"\s*:\s*"([^"]+)"/);
+          if (matchSimples) {
+            const key = matchSimples[1];
+            const value = matchSimples[2];
+            if (key === "instagram") dados.dados_contato.instagram = value;
+            if (key === "telefone_gabinete")
+              dados.dados_contato.telefone_gabinete = value;
+            console.log(`  (Patch) Chave simples: ${key}=${value}`);
+          } else if (dentroDeArray === "whatsapp") {
+            // Extrair valor do array de whatsapp
+            const matchWa = linhaLimpa.match(/"([^"]+)"/);
+            if (matchWa) {
+              if (!dados.dados_contato.whatsapp)
+                dados.dados_contato.whatsapp = [];
+              if (!dados.dados_contato.whatsapp.includes(matchWa[1])) {
+                dados.dados_contato.whatsapp.push(matchWa[1]);
+                console.log(`  (Patch) Item WhatsApp: ${matchWa[1]}`);
+              }
+            }
+          }
+          // Adicionar lógica similar para 'assessores' e 'evidencias' se necessário
         }
       }
     }
-
-    console.log("📊 Dados extraídos:", dados);
+    console.log("📊 (Fallback) Dados extraídos do patch:", dados);
   } catch (error) {
-    console.error("❌ Erro ao extrair dados do patch:", error);
+    console.error("❌ Erro ao extrair dados do patch (fallback):", error);
   }
-
   return dados;
 }
 
 function extrairPautaDoPR(pr) {
-  const match = pr.body?.match(/Pauta:\s*`([^`]+)`/i);
-  return match ? match[1] : null;
+  // Tenta extrair do corpo: **Pauta:** `SLUG`
+  const bodyMatch = pr.body?.match(/\*\*Pauta:\*\*\s*`([^`]+)`/i);
+  if (bodyMatch) return bodyMatch[1];
+  return null; // Retorna null se não encontrar
 }
 
 function gerarListaItensAprovados(itens) {
   const lista = [];
-
   if (itens.whatsapp) lista.push(`- ✅ WhatsApp: \`${itens.whatsapp}\``);
   if (itens.instagram) lista.push(`- ✅ Instagram: \`${itens.instagram}\``);
   if (itens.telefone_gabinete)
     lista.push(`- ✅ Telefone: \`${itens.telefone_gabinete}\``);
-  if (itens.assessores?.length > 0) {
+  if (itens.assessores?.length > 0)
     lista.push(`- ✅ ${itens.assessores.length} assessor(es)`);
-  }
-  if (itens.evidencias?.length > 0) {
+  if (itens.evidencias?.length > 0)
     lista.push(`- ✅ ${itens.evidencias.length} evidência(s)`);
-  }
-
-  return lista.join("\n");
+  return lista.join("\n") || "- Nenhum item específico listado."; // Garante que não retorne string vazia
 }
 
 function extrairNomeDoPR(pr) {
-  // Extrair nome do parlamentar do título do PR
-  // Formato: "[CONTRIBUIÇÃO] Dados de NOME"
-  const match = pr.title.match(/Dados de (.+)/i);
-  if (match) {
-    return match[1].trim();
-  }
+  // Tenta extrair do título: [CONTRIBUIÇÃO] Dados de NOME
+  const titleMatch = pr.title?.match(/Dados de (.+)/i);
+  if (titleMatch) return titleMatch[1].trim();
 
-  // Ou do body
+  // Tenta extrair do corpo: **Parlamentar:** NOME (ID: ...)
   const bodyMatch = pr.body?.match(/\*\*Parlamentar:\*\*\s*(.+?)\s*\(/);
+  if (bodyMatch) return bodyMatch[1].trim();
+
+  return null; // Retorna null se não encontrar
+}
+
+// Adicionada para extrair usuário do PR, usado ao salvar evidência
+function extrairUsuarioDoPR(pr) {
+  if (pr && pr.user && pr.user.login) {
+    return pr.user.login;
+  }
+  // Tenta extrair do corpo: **Contribuído por:** NOME (...)
+  const bodyMatch = pr.body?.match(/\*\*Contribuído por:\*\*\s*(.+?)\s*\(/);
+  if (bodyMatch) return bodyMatch[1].trim();
+
+  return null;
+}
+
+// Adicionada para extrair ID do PR (usado na correção)
+function extrairIdDoPR(pr) {
+  // Extrair ID do parlamentar do corpo do PR
+  // Formato: **Parlamentar:** NOME (ID: 123456)
+  const bodyMatch = pr.body?.match(/\(ID:\s*([^\)]+)\)/i);
   if (bodyMatch) {
     return bodyMatch[1].trim();
   }
-
   return null;
 }
