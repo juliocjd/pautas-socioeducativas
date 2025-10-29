@@ -631,14 +631,123 @@ function abrirEnviarInfo(parlamentarId, nome) {
 }
 
 function adicionarAssessor() {
-  /* ... */
+  assessorCount++;
+  const html = `<div class="assessor-item mb-2" id="assessor-${assessorCount}" style="background: #fdfdfd; border: 1px solid #e9ecef; border-radius: 8px; padding: 15px;">
+    <div class="row">
+      <div class="col-md-5">
+        <input type="text" class="form-control form-control-sm" placeholder="Nome do Assessor" data-field="nome" required>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control form-control-sm" placeholder="WhatsApp (somente números)" data-field="whatsapp" required>
+      </div>
+      <div class="col-md-3">
+        <input type="text" class="form-control form-control-sm" placeholder="Cargo (opcional)" data-field="cargo">
+      </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-danger mt-2" onclick="document.getElementById('assessor-${assessorCount}').remove()">Remover Assessor</button>
+  </div>`;
+
+  const lista = document.getElementById("assessores-lista");
+  if (lista) {
+    lista.insertAdjacentHTML("beforeend", html);
+  }
 }
+
+// Submit formulário
 document
   .getElementById("formEnviarInfo")
   ?.addEventListener("submit", async function (e) {
     e.preventDefault();
-    // ... (resto do código igual) ...
-    // Necessário carregar jQuery para $('#modalEnviarInfo').modal('hide');
+
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+    submitButton.disabled = true;
+    submitButton.innerHTML =
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Enviando...';
+
+    const parlamentarId = document.getElementById(
+      "parlamentar-id-hidden"
+    ).value;
+    const parlamentarNome = document.getElementById(
+      "parlamentar-nome-hidden"
+    ).value;
+
+    const dados_contato = {};
+    const whatsappInput = document.getElementById("campo-whatsapp");
+    const instagramInput = document.getElementById("campo-instagram");
+
+    if (whatsappInput && whatsappInput.value) {
+      dados_contato.whatsapp = whatsappInput.value.replace(/\D/g, ""); // Limpa
+    }
+    if (instagramInput && instagramInput.value) {
+      dados_contato.instagram = instagramInput.value.replace("@", ""); // Limpa
+    }
+
+    const assessores = [];
+    document
+      .querySelectorAll("#assessores-lista .assessor-item")
+      .forEach((item) => {
+        const nome = item.querySelector('[data-field="nome"]').value;
+        const whatsapp = item
+          .querySelector('[data-field="whatsapp"]')
+          .value.replace(/\D/g, ""); // Limpa
+        const cargo = item.querySelector('[data-field="cargo"]').value;
+        if (nome && whatsapp) {
+          assessores.push({
+            nome,
+            whatsapp: whatsapp,
+            cargo: cargo || "Assessor(a)",
+          });
+        }
+      });
+    if (assessores.length > 0) {
+      dados_contato.assessores = assessores;
+    }
+
+    let evidencia = null;
+    const evidenciaUrl = document.getElementById("campo-evidencia-url").value;
+    if (evidenciaUrl) {
+      evidencia = {
+        tipo: document.getElementById("campo-evidencia-tipo").value,
+        url: evidenciaUrl,
+        descricao: document.getElementById("campo-evidencia-desc").value,
+      };
+    }
+
+    const payload = {
+      parlamentar_id: parlamentarId,
+      parlamentar_nome: parlamentarNome,
+      pauta_slug: pautaSlug, // pautaSlug é uma variável global
+      dados_contato:
+        Object.keys(dados_contato).length > 0 ? dados_contato : null,
+      evidencia: evidencia,
+      usuario_nome: document.getElementById("campo-usuario-nome").value,
+      usuario_email: document.getElementById("campo-usuario-email").value,
+    };
+
+    try {
+      const response = await fetch("/api/contribuir-dados", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert(
+          "✅ Contribuição enviada com sucesso! Ela será revisada pelo administrador antes de aparecer no site."
+        );
+        $("#modalEnviarInfo").modal("hide");
+      } else {
+        alert("❌ Erro: " + (data.error || "Tente novamente"));
+      }
+    } catch (error) {
+      alert("❌ Erro ao enviar. Verifique sua conexão e tente novamente.");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.innerHTML = originalButtonText;
+    }
   });
 
 function carregarContadores(listaParlamentares) {
@@ -861,23 +970,21 @@ function atualizarListaWhatsApp() {
     }`;
   // --- Fim ---
 
-  // --- INÍCIO DA CORREÇÃO (BUG B) ---
+  // --- CORREÇÃO (BUG B) ---
   // Filtra parlamentares da pauta atual, não a base inteira
   const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
-    // --- FIM DA CORREÇÃO ---
     const temWhatsApp = congressistasExtras.congressistas?.[p.id]?.whatsapp;
     const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
     return temWhatsApp && estadoMatch;
   });
 
   const count = parlamentares.length;
+  const enviados = trackingData[pautaSlug].whatsapp || [];
 
   if (count > 0) {
     totalEl.innerHTML = `Total: <strong>${count}</strong> WhatsApp(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
-    const enviados = trackingData[pautaSlug].whatsapp || [];
 
-    // --- INÍCIO DA CORREÇÃO (BUG A) ---
-    // Pega a lógica de renderização do arquivo pauta.html antigo
+    // --- CORREÇÃO (BUG A) - Preenchimento da Lógica Faltante ---
     listaEl.innerHTML = parlamentares
       .map((p) => {
         const jaEnviado = enviados.includes(p.id);
@@ -998,7 +1105,21 @@ function enviarWhatsApp(parlamentarId) {
 }
 
 function atualizarProgressoWhatsApp() {
-  /* ... (código igual) ... */
+  // --- CORREÇÃO (Bug B): Usar a lista da pauta atual para contagem ---
+  const total = parlamentaresAtuaisParaTabela.filter(
+    (p) => congressistasExtras.congressistas?.[p.id]?.whatsapp
+  ).length;
+  // --- FIM DA CORREÇÃO ---
+  const enviados = (trackingData[pautaSlug].whatsapp || []).length;
+  const percent = total > 0 ? Math.round((enviados / total) * 100) : 0;
+
+  const progressBar = document.getElementById("progress-whatsapp");
+  if (progressBar) {
+    progressBar.style.width = percent + "%";
+    progressBar.textContent = `${enviados}/${total}`;
+    progressBar.setAttribute("aria-valuenow", enviados);
+    progressBar.setAttribute("aria-valuemax", total);
+  }
 }
 
 // ATUALIZADO: CAMPANHA INSTAGRAM
@@ -1040,23 +1161,21 @@ function atualizarListaInstagram() {
     }`;
   // --- Fim ---
 
-  // --- INÍCIO DA CORREÇÃO (BUG B) ---
+  // --- CORREÇÃO (BUG B) ---
   // Filtra parlamentares da pauta atual, não a base inteira
   const parlamentares = parlamentaresAtuaisParaTabela.filter((p) => {
-    // --- FIM DA CORREÇÃO ---
     const temIg = congressistasExtras.congressistas?.[p.id]?.instagram;
     const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
     return temIg && estadoMatch;
   });
 
   const count = parlamentares.length;
+  const enviados = trackingData[pautaSlug].instagram || [];
 
   if (count > 0) {
     totalEl.innerHTML = `Total: <strong>${count}</strong> perfil(s) de <strong>${cargo}</strong> ${textoEstado} (via comunidade).`;
-    const enviados = trackingData[pautaSlug].instagram || [];
 
-    // --- INÍCIO DA CORREÇÃO (BUG A) ---
-    // Pega a lógica de renderização do arquivo pauta.html antigo
+    // --- CORREÇÃO (BUG A) - Preenchimento da Lógica Faltante ---
     listaEl.innerHTML = parlamentares
       .map((p) => {
         const jaEnviado = enviados.includes(p.id);
@@ -1180,16 +1299,86 @@ function enviarInstagram(parlamentarId) {
 }
 
 function atualizarProgressoInstagram() {
-  /* ... (código igual) ... */
+  // --- CORREÇÃO (Bug B): Usar a lista da pauta atual para contagem ---
+  const total = parlamentaresAtuaisParaTabela.filter(
+    (p) => congressistasExtras.congressistas?.[p.id]?.instagram
+  ).length;
+  // --- FIM DA CORREÇÃO ---
+  const enviados = (trackingData[pautaSlug].instagram || []).length;
+  const percent = total > 0 ? Math.round((enviados / total) * 100) : 0;
+
+  const progressBar = document.getElementById("progress-instagram");
+  if (progressBar) {
+    progressBar.style.width = percent + "%";
+    progressBar.textContent = `${enviados}/${total}`;
+    progressBar.setAttribute("aria-valuenow", enviados);
+    progressBar.setAttribute("aria-valuemax", total);
+  }
 }
 
-// TRACKING (sem mudanças)
+// TRACKING
 function salvarTracking() {
-  /* ... */
+  try {
+    localStorage.setItem("campanhas_tracking", JSON.stringify(trackingData));
+  } catch (e) {
+    console.error("Erro ao salvar tracking no localStorage:", e);
+  }
 }
+
 function mostrarTracking() {
-  /* ... */
+  const container = document.getElementById("tracking-container");
+  const itemsEl = document.getElementById("tracking-items");
+  if (!container || !itemsEl) return;
+
+  const dados = trackingData[pautaSlug];
+  if (!dados) return;
+
+  let temProgresso = false;
+  let html = "";
+
+  if (dados.email) {
+    temProgresso = true;
+    html += `<div class="tracking-item">
+      <span>📧 Email</span>
+      <span style="color: #28a745;">✅ Enviado</span>
+    </div>`;
+  }
+
+  // Usar a lista da pauta atual para contagem total
+  const totalWhatsApp = parlamentaresAtuaisParaTabela.filter(
+    (p) => congressistasExtras.congressistas?.[p.id]?.whatsapp
+  ).length;
+  if (dados.whatsapp && dados.whatsapp.length > 0) {
+    temProgresso = true;
+    html += `<div class="tracking-item">
+      <span>${whatsappIcon} WhatsApp</span>
+      <span>${dados.whatsapp.length}/${totalWhatsApp}</span>
+    </div>`;
+  }
+
+  // Usar a lista da pauta atual para contagem total
+  const totalInstagram = parlamentaresAtuaisParaTabela.filter(
+    (p) => congressistasExtras.congressistas?.[p.id]?.instagram
+  ).length;
+  if (dados.instagram && dados.instagram.length > 0) {
+    temProgresso = true;
+    html += `<div class="tracking-item">
+      <span>${instagramIcon} Instagram</span>
+      <span>${dados.instagram.length}/${totalInstagram}</span>
+    </div>`;
+  }
+
+  if (temProgresso) {
+    itemsEl.innerHTML = html;
+    container.style.display = "block";
+  } else {
+    container.style.display = "none";
+  }
 }
+
 function fecharTracking() {
-  /* ... */
+  const container = document.getElementById("tracking-container");
+  if (container) {
+    container.style.display = "none";
+  }
 }
