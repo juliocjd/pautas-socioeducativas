@@ -832,7 +832,7 @@ async function copiarParaClipboard(targetId, buttonEl) {
 }
 
 function abrirCampanhaEmail() {
-  // Verifica se o objeto campanhaEmail existe e tem dados necessários (agora checa ambas mensagens)
+  // Verifica se o objeto campanhaEmail existe e tem dados necessários
   if (
     !campanhaEmail ||
     !campanhaEmail.assunto ||
@@ -853,17 +853,28 @@ function abrirCampanhaEmail() {
   const totalEmailsEl = document.getElementById("total-emails-campanha");
   const radiosObjetivo = document.querySelectorAll(
     'input[name="objetivoEmail"]'
-  ); // Seletores de objetivo
+  );
 
   // Templates de mensagem
   const templateOposicao = campanhaEmail.mensagem_oposicao || "";
-  const templateApoio = campanhaEmail.mensagem_apoio || ""; // Pega o template de apoio
+  const templateApoio = campanhaEmail.mensagem_apoio || "";
   const templateExtra = campanhaEmail.mensagem_extra || "";
 
+  // --- INÍCIO DA CORREÇÃO ---
+  // Garante que a função global está acessível
+  if (typeof window.obterPosicao !== "function") {
+    console.error(
+      "ERRO CRÍTICO: A função global obterPosicao não foi encontrada!"
+    );
+    return alert(
+      "Erro interno ao carregar a função de posição. Contacte o suporte."
+    );
+  }
+  // --- FIM DA CORREÇÃO ---
+
   // Função interna para atualizar a lista e a mensagem
-  // Função interna para atualizar a lista e a mensagem (dentro de abrirCampanhaEmail)
   function atualizarFiltroEmail() {
-    const estadoSelecionado = selectEstado.value;
+    const estadoSelecionado = selectEstado ? selectEstado.value : ""; // Fallback
     const objetivoSelecionado =
       document.querySelector('input[name="objetivoEmail"]:checked')?.value ||
       "pedir";
@@ -871,69 +882,98 @@ function abrirCampanhaEmail() {
     let parlamentaresFiltrados = [];
     let mensagemBase = templateOposicao;
     let tipoContagem = "(Oposição/Neutros)";
-    // --- INÍCIO DA MUDANÇA ---
-    // Determinar Saudação Genérica com base na casa da pauta
-    let saudacaoGenerica = "Olá, Parlamentar,";
+    let saudacaoGenerica = "Olá, Parlamentar,"; // Fallback
+
     if (casaLegislativa.includes("Câmara")) {
       saudacaoGenerica = "Olá, Deputado(a),";
     } else if (casaLegislativa.includes("Senado")) {
       saudacaoGenerica = "Olá, Senador(a),";
     }
-    // --- FIM DA MUDANÇA ---
 
-    // 1. Filtrar Parlamentares E Escolher Mensagem
-    if (objetivoSelecionado === "agradecer") {
-      parlamentaresFiltrados =
-        parlamentaresAtuaisParaTabela.filter(/* Lógica igual */);
-      mensagemBase = templateApoio;
-      tipoContagem = "(Apoiadores)";
-    } else {
-      // 'pedir' (padrão)
-      parlamentaresFiltrados =
-        parlamentaresAtuaisParaTabela.filter(/* Lógica igual */);
-      mensagemBase = templateOposicao;
-      tipoContagem = "(Oposição/Neutros)";
+    // --- INÍCIO DA CORREÇÃO ---
+    // Garante que parlamentaresAtuaisParaTabela é um array antes de filtrar
+    const listaParaFiltrar = Array.isArray(parlamentaresAtuaisParaTabela)
+      ? parlamentaresAtuaisParaTabela
+      : [];
+    // --- FIM DA CORREÇÃO ---
+
+    try {
+      // Adiciona try...catch em volta do filter
+      if (objetivoSelecionado === "agradecer") {
+        parlamentaresFiltrados = listaParaFiltrar.filter((p) => {
+          if (!p || typeof p !== "object") return false; // Sanity check
+          const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+          const posicao = window.obterPosicao(p.id); // Chama a função global explicitamente
+          return estadoMatch && posicao === "apoia";
+        });
+        mensagemBase = templateApoio;
+        tipoContagem = "(Apoiadores)";
+      } else {
+        // 'pedir' (padrão)
+        parlamentaresFiltrados = listaParaFiltrar.filter((p) => {
+          // << LINHA DO ERRO ORIGINAL
+          if (!p || typeof p !== "object") return false; // Sanity check
+          const estadoMatch = !estadoSelecionado || p.uf === estadoSelecionado;
+          const posicao = window.obterPosicao(p.id); // Chama a função global explicitamente
+          return (
+            estadoMatch &&
+            (posicao === "contrario" || posicao === "nao-manifestado")
+          );
+        });
+        mensagemBase = templateOposicao;
+        tipoContagem = "(Oposição/Neutros)";
+      }
+    } catch (filterError) {
+      console.error(
+        "Erro durante a execução do filtro de parlamentares:",
+        filterError
+      );
+      alert(
+        "Ocorreu um erro ao filtrar os parlamentares. Verifique o console."
+      );
+      parlamentaresFiltrados = []; // Reseta em caso de erro
     }
 
-    // 2. Montar a lista de emails (Lógica igual)
     const emails = parlamentaresFiltrados
-      .filter((p) => p.email)
-      .map((p) => p.email);
-    textareaEmails.value = emails.join("; ");
-    totalEmailsEl.innerHTML = `<strong>${emails.length}</strong> email(s) selecionado(s) ${tipoContagem}`;
+      .filter((p) => p && p.email)
+      .map((p) => p.email); // Adicionado check p && p.email
+    if (textareaEmails) textareaEmails.value = emails.join("; ");
+    if (totalEmailsEl)
+      totalEmailsEl.innerHTML = `<strong>${emails.length}</strong> email(s) selecionado(s) ${tipoContagem}`;
 
-    // 3. Montar a Mensagem Final para o Preview
-    // --- INÍCIO DA MUDANÇA ---
-    // Chama a nova gerarPrefixoMensagem (que só retorna a frase de identificação)
     const fraseIdentificacao = gerarPrefixoMensagem(
       "filtro-campanha-estado-email",
       "campo-nome-email"
     );
-    // Combina: Saudação Genérica + Frase Identificação + Mensagem Base
     let mensagemFinal = `${saudacaoGenerica}\n\n${fraseIdentificacao}\n\n${mensagemBase}`;
-    // --- FIM DA MUDANÇA ---
 
-    // Adiciona o complemento, se existir (independente do objetivo)
     if (templateExtra) {
       mensagemFinal += "\n\n---\n" + templateExtra;
     }
 
-    inputAssunto.value = campanhaEmail.assunto || ""; // Assunto é o mesmo
-    textareaMensagem.value = mensagemFinal;
-  } // Fim de atualizarFiltroEmail
+    if (inputAssunto) inputAssunto.value = campanhaEmail.assunto || "";
+    if (textareaMensagem) textareaMensagem.value = mensagemFinal;
+  }
 
-  // 4. Adicionar "ouvintes" de mudança
-  selectEstado.onchange = atualizarFiltroEmail;
-  inputNome.oninput = atualizarFiltroEmail;
+  // Adicionar "ouvintes" de mudança
+  if (selectEstado) selectEstado.onchange = atualizarFiltroEmail;
+  if (inputNome) inputNome.oninput = atualizarFiltroEmail;
   radiosObjetivo.forEach((radio) => {
-    radio.onchange = atualizarFiltroEmail; // Atualiza quando muda o objetivo
+    radio.onchange = atualizarFiltroEmail;
   });
 
-  // 5. Chamar a função uma vez para carregar o estado inicial
+  // Chamar a função uma vez para carregar o estado inicial
   atualizarFiltroEmail();
 
-  // 6. Abrir o modal (Necessário jQuery)
-  $("#modalCampanhaEmail").modal("show");
+  // Abrir o modal
+  if (typeof $ !== "undefined" && $.fn.modal) {
+    $("#modalCampanhaEmail").modal("show");
+  } else {
+    console.error(
+      "jQuery ou Bootstrap Modal não carregado. Não é possível abrir o modal."
+    );
+    alert("Erro ao tentar abrir a janela da campanha.");
+  }
 }
 
 function abrirClienteEmail() {
