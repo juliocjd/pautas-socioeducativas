@@ -337,16 +337,14 @@ function carregarEstados(listaParlamentares) {
   });
 }
 
-// Renderizar tabela
+// Renderizar tabela (Responsiva + Destaque de Função com BADGE)
 function renderTabela(listaParlamentares) {
-  // Adiciona parâmetro
   const tbody = document.getElementById("tabela-parlamentares-corpo");
   if (!tbody) return;
 
   if (!listaParlamentares || listaParlamentares.length === 0) {
-    // Usa o parâmetro
     tbody.innerHTML =
-      '<tr><td colspan="5" class="text-center">Nenhum parlamentar a ser exibido para esta pauta.</td></tr>';
+      '<tr><td colspan="6" class="text-center">Nenhum parlamentar a ser exibido para esta pauta.</td>'; // Colspan 6
     return;
   }
 
@@ -355,8 +353,6 @@ function renderTabela(listaParlamentares) {
   const termoPosicao = document.getElementById("filtro-posicao").value;
 
   const filtrados = listaParlamentares.filter((p) => {
-    // Filtra a lista recebida
-    // ... (lógica de filtro interna igual) ...
     const nomeMatch = p.nome.toLowerCase().includes(termoNome);
     const estadoMatch = !termoEstado || p.uf === termoEstado;
     const posicao = obterPosicao(p.id);
@@ -366,15 +362,31 @@ function renderTabela(listaParlamentares) {
 
   if (filtrados.length === 0) {
     tbody.innerHTML =
-      '<tr><td colspan="5" class="text-center">Nenhum parlamentar encontrado com esses filtros.</td></tr>';
+      '<tr><td colspan="6" class="text-center">Nenhum parlamentar encontrado com esses filtros.</td></tr>'; // Colspan 6
     return;
   }
 
-  // O resto da função continua igual, usando 'filtrados'
   tbody.innerHTML = filtrados
     .map((p) => {
-      // ... (código igual para gerar o HTML da linha) ...
       const posicao = obterPosicao(p.id);
+      const funcao = obterFuncao(p.id);
+
+      // --- LÓGICA DE DESTAQUE ATUALIZADA ---
+      let funcaoClass = "";
+      const funcaoLower = funcao.toLowerCase();
+      if (
+        funcaoLower.includes("relator") ||
+        funcaoLower.includes("presidente")
+      ) {
+        funcaoClass = "funcao-destaque"; // Classe de modificação
+      }
+
+      // Cria o HTML do badge (se a função existir)
+      const funcaoDisplayHTML = funcao
+        ? `<span class="funcao-badge ${funcaoClass}">${funcao}</span>`
+        : ""; // Se não houver função, célula/div fica vazio
+      // --- FIM DA LÓGICA ---
+
       const badgeClass =
         posicao === "apoia"
           ? "badge-apoia"
@@ -391,10 +403,16 @@ function renderTabela(listaParlamentares) {
       const parlamentarJsonString = JSON.stringify(p).replace(/'/g, "&apos;");
 
       return `<tr>
-          <td>${p.nome}</td>
-          <td>${p.partido}</td>
-          <td>${p.uf}</td>
-          <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
+          <td>
+            <strong>${p.nome}</strong>
+            <div class="d-block d-md-none text-muted" style="margin-top: 4px;">
+              ${funcaoDisplayHTML} <small class="d-block" style="margin-top: 4px;">${p.partido}-${p.uf}</small>
+            </div>
+          </td>
+          
+          <td class="d-none d-md-table-cell">${p.partido}</td>
+          <td class="d-none d-md-table-cell">${p.uf}</td>
+          <td class="d-none d-md-table-cell">${funcaoDisplayHTML}</td> <td><span class="badge-status ${badgeClass}">${statusTexto}</span></td>
           <td>
             <button class="btn btn-sm btn-info" onclick='verContato(${parlamentarJsonString})'>Ver Contato</button>
             <button class="btn btn-sm btn-warning" onclick="abrirEnviarInfo('${p.id}', '${nomeEscapado}')">Enviar Info</button>
@@ -476,6 +494,59 @@ function obterPosicao(parlamentarId) {
 
   // Se não encontrou posição global nem local, retorna o padrão
   return "nao-manifestado";
+}
+
+// ==========================================
+// INSERIR ESTE BLOCO DE CÓDIGO
+// (Logo após a função obterPosicao)
+// ==========================================
+
+// NOVA FUNÇÃO: Obter a Função (role) do key_player
+function obterFuncao(parlamentarId) {
+  // Tenta ler do 'key_players' da pauta
+  const keyPlayersDataEl = document.getElementById("pauta-keyplayers-data");
+  if (keyPlayersDataEl) {
+    try {
+      const keyPlayersStr = keyPlayersDataEl.dataset.keyPlayers || "[]";
+      let keyPlayers = null;
+
+      try {
+        // O HTML 'escapa' as aspas (ex: &quot;), precisamos de as reverter
+        const unescapedStr = keyPlayersStr
+          .replace(/&quot;/g, '"')
+          .replace(/&apos;/g, "'");
+        keyPlayers = JSON.parse(unescapedStr);
+      } catch (parseError) {
+        console.warn(
+          "data-key-players parsing error:",
+          parseError,
+          keyPlayersStr
+        );
+        keyPlayers = []; // Trata como array vazio em caso de erro
+      }
+
+      if (Array.isArray(keyPlayers)) {
+        // parlamentaresBase é a lista completa carregada no início
+        const parlamentarAtual = parlamentaresBase.find(
+          (parl) => parl.id === parlamentarId
+        );
+
+        if (parlamentarAtual) {
+          // Encontra o key_player pelo NOME (como está guardado no YAML)
+          const keyPlayer = keyPlayers.find(
+            (p) => p.nome === parlamentarAtual.nome
+          );
+          // Retorna a 'role' (Função) se existir
+          if (keyPlayer && keyPlayer.role) {
+            return keyPlayer.role;
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Erro inesperado ao ler key_players (obterFuncao):", e);
+    }
+  }
+  return ""; // Padrão é uma string vazia
 }
 
 // Filtros

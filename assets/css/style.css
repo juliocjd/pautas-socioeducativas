@@ -313,6 +313,50 @@ hr {
   padding-right: 15px;
   padding-left: 15px;
 }
+
+/* ========================================== */
+/* --- DESTAQUE FUNÇÃO (Estilo "Badge com Borda") --- */
+/* ========================================== */
+
+/* 1. Remove qualquer estilo de fundo da CÉLULA (td) */
+td.funcao-destaque {
+  background-color: transparent !important;
+}
+
+/* 2. Estilo base para o <span> que o JS cria */
+.funcao-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 0.9em;
+  border-radius: 15px; /* Formato "pill" */
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* 3. Estilo de DESTAQUE (conforme o seu pedido) */
+.funcao-badge.funcao-destaque {
+  color: #0c5460; /* Cor do texto Info (azul-escuro) */
+  border: 2px solid #bee5eb; /* Borda Info (azul-claro) */
+  background-color: #f1fafd; /* Fundo Info (extra-claro, quase branco) */
+}
+
+/* 4. Estilo para funções normais (não-destaque) */
+.funcao-badge:not(.funcao-destaque) {
+  color: #495057; /* Cor de texto padrão */
+  background-color: #e9ecef; /* Fundo cinza padrão */
+  border: 2px solid #e9ecef; /* Borda cinza (para manter o tamanho) */
+}
+
+/* 5. Ajuste para telemóvel (para o <small> de partido/uf) */
+.d-md-none .funcao-badge {
+  margin-bottom: 4px; /* Adiciona espaço abaixo do badge */
+}
+.d-md-none strong.funcao-destaque {
+  font-weight: 700; /* Garante que o texto dentro do badge seja negrito */
+}
+
 @media (min-width: 768px) {
   .col-md-6 {
     flex: 0 0 50%;
