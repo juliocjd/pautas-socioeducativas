@@ -98,21 +98,24 @@ layout: default
       <div class="card-body">
         <h5 class="card-title">🔍 Filtrar Parlamentares</h5>
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-4">
+            <label for="filtro-nome" class="small mb-1">Nome</label>
             <input
               type="text"
-              class="form-control"
+              class="form-control form-control-sm"
               id="filtro-nome"
               placeholder="Nome do parlamentar"
             />
           </div>
-          <div class="col-md-2">
-            <select class="form-control" id="filtro-estado">
+          <div class="col-md-4">
+            <label for="filtro-estado" class="small mb-1">Estado</label>
+            <select class="form-control form-control-sm" id="filtro-estado">
               <option value="">Todos os Estados</option>
             </select>
           </div>
-          <div class="col-md-3">
-            <select class="form-control" id="filtro-posicao">
+          <div class="col-md-4">
+            <label for="filtro-posicao" class="small mb-1">Posição</label>
+            <select class="form-control form-control-sm" id="filtro-posicao">
               <option value="">Todas as Posições</option>
               <option value="apoia">Apoia</option>
               <option value="contrario">Contrário</option>
