@@ -1,6 +1,6 @@
 {
-  "installCommand": "C:\\Ruby34-x64\\bin\\bundle.bat install",
-  "buildCommand": "C:\\Ruby34-x64\\bin\\bundle.bat exec jekyll build",
-  "devCommand": "C:\\Ruby34-x64\\bin\\jekyll.bat serve --watch",
+  "installCommand": "bundle install",
+  "buildCommand": "bundle exec jekyll build",
+  "devCommand": "bundle exec jekyll serve --watch",
   "outputDirectory": "_site"
 }
