@@ -222,11 +222,14 @@ function finalizarCarregamento() {
   // Dados da pauta (lidos dos data attributes)
   const isPlenaryVote = pautaDataElement?.dataset.isPlenaryVote === "true";
   let keyPlayers = [];
+  let keyPlayerNames = [];
   try {
-    const keyPlayersStr =
-      document.getElementById("pauta-keyplayers-data")?.dataset.keyPlayers ||
-      "[]";
-    const parsedKP = JSON.parse(keyPlayersStr);
+    const keyPlayersStr = document.getElementById("pauta-keyplayers-data")?.dataset.keyPlayers || "[]";
+    // DESESCAPAR A STRING ANTES DE PARSEAR
+    const unescapedStr = keyPlayersStr.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+    console.log("DEBUG: keyPlayersStr (raw from DOM):", keyPlayersStr);
+    console.log("DEBUG: unescapedStr (before JSON.parse):", unescapedStr);
+    const parsedKP = JSON.parse(unescapedStr);
     if (Array.isArray(parsedKP)) {
       keyPlayers = parsedKP;
     }
@@ -281,17 +284,23 @@ function finalizarCarregamento() {
     console.log(
       `🔑 Pauta com ${keyPlayers.length} Membros-Chave. Buscando no cache...`
     );
-    const keyPlayerNames = keyPlayers.map((kp) => kp.nome);
+    keyPlayerNames = keyPlayers.map((kp) => kp.nome);
     parlamentaresParaExibir = parlamentaresBase.filter((p) =>
       keyPlayerNames.includes(p.nome)
     );
     console.log(`Encontrados no cache: ${parlamentaresParaExibir.length}`);
+    console.log("DEBUG: keyPlayers:", keyPlayers);
+    console.log("DEBUG: parlamentaresBase:", parlamentaresBase);
+    console.log("DEBUG: parlamentaresParaExibir:", parlamentaresParaExibir);
   } else {
     // Não é Plenário e NÃO TEM Key Players: Lista vazia
     console.log(
       "ℹ️ Pauta sem votação em plenário e sem membros-chave definidos."
     );
     parlamentaresParaExibir = [];
+    console.log("DEBUG: keyPlayers:", keyPlayers);
+    console.log("DEBUG: parlamentaresBase:", parlamentaresBase);
+    console.log("DEBUG: parlamentaresParaExibir:", parlamentaresParaExibir);
   }
 
   // Atualiza a variável global
@@ -445,12 +454,14 @@ function obterPosicao(parlamentarId) {
   if (keyPlayersDataEl) {
     try {
       // Parse potencialmente null data attribute mais safely
-      const keyPlayersStr = keyPlayersDataEl.dataset.keyPlayers || "[]"; // Garante que seja pelo menos '[]'
+      const keyPlayersStr = keyPlayersDataEl.dataset.keyPlayers || "[]"; 
       let keyPlayers = null;
 
       // Tenta o parse, mas evita erro se a string for inválida ou "null"
       try {
-        keyPlayers = JSON.parse(keyPlayersStr);
+        // O HTML 'escapa' as aspas (ex: &quot;), precisamos de as reverter
+        const unescapedStr = keyPlayersStr.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+        keyPlayers = JSON.parse(unescapedStr);
       } catch (parseError) {
         console.warn(
           "data-key-players não é JSON válido:",

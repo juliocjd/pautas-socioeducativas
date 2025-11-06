@@ -1,0 +1,36 @@
+---
+layout: default
+title: Agradecimentos
+---
+
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Apoios à Causa Socioeducativa</h1>
+  <p class="text-center mb-5">Esta página reúne manifestações públicas de parlamentares em apoio à causa socioeducativa. Use os botões abaixo para enviar uma mensagem de agradecimento e fortalecer nosso diálogo.</p>
+
+  <div id="manifestacoes-lista" class="row">
+    {% for manifestacao in site.data.manifestacoes %}
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{ manifestacao.parlamentar }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ manifestacao.partido }} - {{ manifestacao.uf }}</h6>
+            
+            <div class="instagram-post mt-auto" data-post-url="{{ manifestacao.post_url }}">
+              <a href="{{ manifestacao.post_url }}" target="_blank">Carregando post...</a>
+            </div>
+
+            <p class="card-text mt-2"><small class="text-muted">Data: {{ manifestacao.data }}</small></p>
+            
+            <button class="btn btn-success btn-sm btn-agradecer mt-2" 
+                    data-parlamentar="{{ manifestacao.parlamentar }}" 
+                    data-mensagem="{{ manifestacao.mensagem_agradecimento }}">
+              Agradecer via Instagram
+            </button>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script src="/assets/js/agradecimentos.js"></script>

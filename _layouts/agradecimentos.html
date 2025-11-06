@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<div class="container mt-5">
+    <h1>Gerenciador de Agradecimentos</h1>
+    <p>Adicione e gerencie os agradecimentos a parlamentares que apoiam a causa socioeducativa.</p>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Adicionar Nova Manifestação</h5>
+            <form id="form-agradecimento">
+                <div class="mb-3">
+                    <label for="parlamentar-nome" class="form-label">Nome do Parlamentar</label>
+                    <input type="text" class="form-control" id="parlamentar-nome" required>
+                </div>
+                <div class="mb-3">
+                    <label for="instagram-link" class="form-label">Link do Post no Instagram</label>
+                    <input type="url" class="form-control" id="instagram-link" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mensagem-agradecimento" class="form-label">Mensagem de Agradecimento</label>
+                    <textarea class="form-control" id="mensagem-agradecimento" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Adicionar Manifestação</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h5>Manifestações Cadastradas</h5>
+        <div id="lista-manifestacoes">
+            <!-- As manifestações serão listadas aqui -->
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/agradecimentos.js"></script>

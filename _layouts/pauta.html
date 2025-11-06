@@ -3,6 +3,13 @@ layout: default
 ---
 
   <div class="container">
+    <div id="pauta-data" data-pauta-slug="{{ page.slug }}" data-casa-legislativa="{{ page.casa }}" data-is-plenary-vote="{{ page.is_plenary_vote }}"></div>
+    <div id="pauta-keyplayers-data" data-key-players='{{ page.key_players | jsonify | escape }}'></div>
+    <div id="pauta-campanha-data"
+         data-campanha-email='{{ page.campanha.email | jsonify | escape }}'
+         data-campanha-whatsapp='{{ page.campanha.whatsapp | jsonify | escape }}'
+         data-campanha-instagram='{{ page.campanha.instagram | jsonify | escape }}'>
+    </div>
     <div class="jumbotron">
       <h1 class="display-4">{{ page.title }}</h1>
       <p class="lead">{{ page.description }}</p>
@@ -12,29 +19,19 @@ layout: default
           <p><strong>Casa:</strong> {{ page.casa }}</p>
         </div>
         <div class="col-md-6">
-          <p><strong>Status:</strong> {{ page.status }}</p>
+          <p class="mb-0"><strong>Status:</strong> {{ page.status }}</p>
         </div>
       </div>
+      <a class="btn btn-sm btn-light pauta-entenda-btn" data-toggle="collapse" href="#pautaContent" role="button" aria-expanded="false" aria-controls="pautaContent" style="float: right;">
+        Entenda esta pauta
+      </a>
     </div>
 
-    <div
-      id="pauta-data"
-      data-pauta-slug="{{ page.slug | default: page.title | slugify }}"
-      data-casa-legislativa="{{ page.casa }}"
-      data-is-plenary-vote="{{ page.is_plenary_vote | default: false }}"
-    ></div>
-    <div
-      id="pauta-keyplayers-data"
-      data-key-players="{{ page.key_players | jsonify | escape }}"
-    ></div>
-    <div
-      id="pauta-campanha-data"
-      data-campanha-email="{{ page.campanha.email | jsonify | escape }}"
-      data-campanha-whatsapp="{{ page.campanha.whatsapp | jsonify | escape }}"
-      data-campanha-instagram="{{ page.campanha.instagram | jsonify | escape }}"
-    ></div>
-
-    <div class="content-section mb-5">{{ content }}</div>
+    <div class="collapse" id="pautaContent">
+      <div class="card card-body">
+        {{ content }}
+      </div>
+    </div>
 
     {% if page.campanha %}
     <div class="campanhas-section mb-5">

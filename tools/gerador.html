@@ -61,6 +61,7 @@
           <button class="tab" onclick="showTab('estatisticas')">
             📊 Estatísticas
           </button>
+          <button class="tab" onclick="showTab('agradecimentos')">💌 Agradecimentos</button>
         </div>
 
         <div id="tab-criar" class="tab-content active">
@@ -397,6 +398,39 @@
           <button class="btn btn-secondary" onclick="atualizarEstatisticas()">
             🔄 Atualizar
           </button>
+        </div>
+
+        <div id="tab-agradecimentos" class="tab-content">
+          <h3>💌 Gerenciador de Agradecimentos</h3>
+          <p style="color: #666; margin-bottom: 20px">Adicione e gerencie os agradecimentos a parlamentares que apoiam a causa socioeducativa.</p>
+
+          <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Adicionar Nova Manifestação</h5>
+                  <form id="form-agradecimento">
+                      <div class="form-group">
+                          <label for="parlamentar-nome-agradecimento">Nome do Parlamentar</label>
+                          <input type="text" class="form-control" id="parlamentar-nome-agradecimento" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="instagram-link-agradecimento">Link do Post no Instagram</label>
+                          <input type="url" class="form-control" id="instagram-link-agradecimento" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="mensagem-agradecimento-agradecimento">Mensagem de Agradecimento</label>
+                          <textarea class="form-control" id="mensagem-agradecimento-agradecimento" rows="3" required></textarea>
+                      </div>
+                      <button type="submit" class="btn">Adicionar Manifestação</button>
+                  </form>
+              </div>
+          </div>
+
+          <div class="mt-4">
+              <h5>Manifestações Cadastradas</h5>
+              <div id="lista-manifestacoes-agradecimentos">
+                  <!-- As manifestações serão listadas aqui -->
+              </div>
+          </div>
         </div>
 
         <div id="tab-plenario" class="tab-content">
