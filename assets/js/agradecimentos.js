@@ -267,8 +267,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     postUrl = normalizePostUrl(postUrl);
+    // Verifica se é um dispositivo móvel para usar a API de compartilhamento
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
     // Tenta Web Share API
-    if (navigator.share) {
+    if (navigator.share && isMobile) {
       try {
         await navigator.share({
           title: `Agradecimento${
