@@ -16,22 +16,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function embedInstagramPosts() {
+    // Não usamos oEmbed do Instagram no client (bloqueado por CORS).
+    // Em vez disso, exibimos um link direto para o post para o usuário abrir no Instagram.
     const postElements = document.querySelectorAll(".instagram-post");
     for (const el of postElements) {
       const postUrl = el.dataset.postUrl;
       if (postUrl) {
-        try {
-          const response = await fetch(
-            `https://api.instagram.com/oembed?url=${postUrl}`
-          );
-          const data = await response.json();
-          if (data.html) {
-            el.innerHTML = data.html;
-          }
-        } catch (error) {
-          console.error("Erro ao carregar post do Instagram:", error);
-          el.innerHTML = `<a href="${postUrl}" target="_blank">Ver post no Instagram</a>`;
-        }
+        // Mostrar um link simples e um botão de abrir
+        el.innerHTML = `<div style="display:flex;gap:8px;align-items:center"><a href="${postUrl}" target="_blank" rel="noopener noreferrer">Ver post no Instagram</a><a class="btn btn-sm btn-outline-secondary" href="${postUrl}" target="_blank" rel="noopener noreferrer" style="margin-left:6px">Abrir</a></div>`;
+      } else {
+        el.innerHTML = "";
       }
     }
   }
@@ -39,11 +33,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function fetchAndRenderManifestacoes() {
     const container = document.getElementById("lista-manifestacoes");
     const loading = document.getElementById("manifestacoes-loading");
+    // Prioriza a rota serverless `/api/manifestacoes`. Em seguida tenta JSON estático caso exista.
     const tryPaths = [
-      "/manifestacoes.json",
-      "/api/manifestacoes.json",
-      "/manifestacoes",
       "/api/manifestacoes",
+      "/manifestacoes.json",
+      "/manifestacoes",
       "../manifestacoes.json",
     ];
     let manifestacoes = null;
@@ -324,6 +318,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await loadData();
   await fetchAndRenderManifestacoes();
+  // Render de posts sem oEmbed (evita CORS)
   await embedInstagramPosts();
   setupAgradecerButtons();
   setupPublicForm();
@@ -332,7 +327,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   // after the embed script has loaded and rendered the iframe.
   setTimeout(() => {
     if (window.instgrm) {
-      window.instgrm.Embeds.process();
+      try {
+        window.instgrm.Embeds.process();
+      } catch (e) {
+        // ignore
+      }
     }
   }, 2000);
 });

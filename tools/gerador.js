@@ -2320,16 +2320,12 @@ function initAgradecimentosTab() {
         url.replace(/^https?:\/\//, "")
       )}</div>`;
 
-      // If Instagram link, try to fetch oEmbed for thumbnail & author
+      // If Instagram link, show short link as preview (oEmbed via client é bloqueado por CORS).
       if (url.includes("instagram.com")) {
-        try {
-          const thumb = await fetchOembedThumbnail(url);
-          if (thumb) {
-            previewDiv.innerHTML = `<img src="${thumb}" style="max-width:140px; border-radius:6px; display:block; margin-top:6px">`;
-          }
-        } catch (e) {
-          // ignore
-        }
+        // manter apenas o pequeno preview textual / link
+        previewDiv.innerHTML = `<a href="${escapeHtml(
+          url
+        )}" target="_blank" rel="noopener noreferrer" style="font-size:13px">Abrir no Instagram</a>`;
       }
     });
   }
@@ -2514,24 +2510,10 @@ function renderManifestacoesAgradecimentos(manifestacoes) {
 
     container.appendChild(card);
 
-    // Try to fetch oEmbed thumbnail for Instagram posts asynchronously
+    // Não fazemos fetch do oEmbed no client (CORS). Mantemos o placeholder ou link
     if (m.post_url && m.post_url.includes("instagram.com")) {
-      fetchOembedThumbnail(m.post_url)
-        .then((thumb) => {
-          if (thumb) {
-            const img = document.createElement("img");
-            img.src = thumb;
-            img.style.width = "100%";
-            img.style.height = "100%";
-            img.style.objectFit = "cover";
-            // replace placeholder
-            thumbWrapper.innerHTML = "";
-            thumbWrapper.appendChild(img);
-          }
-        })
-        .catch((e) => {
-          // ignore oembed errors silently
-        });
+      // trocar placeholder por link curto
+      thumbWrapper.innerHTML = `<a href="${m.post_url}" target="_blank" rel="noopener noreferrer" style="font-size:12px; color:#666; text-decoration:none">Abrir post</a>`;
     }
   });
 
@@ -2539,19 +2521,11 @@ function renderManifestacoesAgradecimentos(manifestacoes) {
   listaManifestacoes.appendChild(container);
 }
 
-// Busca thumbnail via oEmbed (retorna thumbnail_url ou null)
-async function fetchOembedThumbnail(postUrl) {
-  try {
-    const resp = await fetch(
-      "https://api.instagram.com/oembed?url=" + encodeURIComponent(postUrl)
-    );
-    if (!resp.ok) return null;
-    const data = await resp.json();
-    return data.thumbnail_url || data.thumbnail;
-  } catch (e) {
-    return null;
-  }
-}
+// Nota: a busca de thumbnail via oEmbed do Instagram foi removida do cliente
+// porque a API de oEmbed do Instagram bloqueia requisições cross-origin.
+// Se precisar de thumbnails/embeds automáticos, implemente um endpoint
+// server-side (/api/instagram-oembed) que consulta o Instagram e retorna os dados
+// com CORS habilitado para o site.
 
 function escapeHtml(str) {
   if (!str) return "";
