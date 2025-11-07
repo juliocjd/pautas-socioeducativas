@@ -122,7 +122,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                   }</small>`
                 : ""
             }
-            <div class="instagram-post mt-2" data-post-url="${post_url}"></div>
+            <div class="instagram-post mt-2" data-post-url="${
+              post_url || ""
+            }"></div>
             ${mensagem ? `<p class="mt-2"><em>"${mensagem}"</em></p>` : ""}
             <small class="text-muted">${data}</small>
           </div>
@@ -131,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               parlamentar
             )}" data-mensagem="${escapeHtml(
         mensagem || "Obrigado pelo apoio!"
-      )}">Agradecer</button>
+      )}" data-post-url="${post_url || ""}">Agradecer</button>
           </div>
         </div>
       `;
@@ -177,13 +179,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         const parlamentarNome = btn.dataset.parlamentar;
         const mensagem = btn.dataset.mensagem;
 
-        // Tenta encontrar o postUrl associado (procura o elemento pai .manifestacao-item)
-        let postUrl = null;
-        const item = btn.closest(".manifestacao-item");
-        if (item) {
-          const postEl = item.querySelector(".instagram-post");
-          if (postEl && postEl.dataset.postUrl)
-            postUrl = postEl.dataset.postUrl;
+        // Tenta obter postUrl direto do botão, do elemento .instagram-post ou do primeiro link local ao item
+        let postUrl = btn.dataset.postUrl || null;
+        if (!postUrl) {
+          const item = btn.closest(".manifestacao-item");
+          if (item) {
+            const postEl = item.querySelector(".instagram-post");
+            if (postEl && postEl.dataset && postEl.dataset.postUrl)
+              postUrl = postEl.dataset.postUrl || null;
+            // fallback: procurar por um link do instagram no item
+            if (!postUrl) {
+              const link = item.querySelector('a[href*="instagram.com"]');
+              if (link) postUrl = link.href;
+            }
+          }
         }
 
         // Buscar parlamentar nos dados locais para obter username
@@ -218,6 +227,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Tenta compartilhar a mensagem com a melhor UX disponível:
   // 1) Web Share API (mobile) 2) copiar para clipboard + abrir post/profile 3) fallback: alert com instruções
   async function tryShareMessage(instagramUsername, mensagem, postUrl) {
+    // Normaliza postUrl: adiciona esquema se estiver ausente e trata paths relativos do Instagram
+    function normalizePostUrl(url) {
+      if (!url) return null;
+      url = String(url).trim();
+      if (!url) return null;
+      if (/^\/\//.test(url)) return "https:" + url;
+      if (/^https?:\/\//i.test(url)) return url;
+      // caminho tipo /p/XYZ
+      if (url.startsWith("/")) return "https://www.instagram.com" + url;
+      // dominio sem esquema
+      if (url.indexOf("instagram.com") !== -1) return "https://" + url;
+      return url;
+    }
+
+    postUrl = normalizePostUrl(postUrl);
     // Tenta Web Share API
     if (navigator.share) {
       try {
