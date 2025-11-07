@@ -2,7 +2,7 @@
 layout: pauta
 title: PEC 18/2025 - ASSE no art. 144 da CF
 description: |
-  A PEC 18/2025 propõe incluir novas categorias na segurança pública, modificando o art. 144 da Constituição. A nossa luta é pela <strong>iinclusão dos Agentes de Segurança Socioeducativos</strong> nesse artigo.
+  A PEC 18/2025 propõe incluir novas categorias na segurança pública, modificando o art. 144 da Constituição. A nossa luta é pela <strong>iinclusão dos Agentes de Segurança Socioeducativos</strong> nesse artigo
 casa: Câmara dos Deputados
 status: Em tramitação na Comissão Especial
 featured: true
