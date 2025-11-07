@@ -2348,10 +2348,14 @@ async function carregarManifestacoesAgradecimentos() {
   listaManifestacoes.innerHTML = '<div class="spinner"></div>';
 
   try {
-    // Tenta múltiplos caminhos conhecidos onde a lista pode existir (build estático ou rota de API)
+    // Tenta múltiplos caminhos conhecidos onde a lista pode existir (build estático, rota de API ou arquivo _data no repo)
     const tryPaths = [
       "/manifestacoes.json",
       "/api/manifestacoes.json",
+      "/api/manifestacoes",
+      "/manifestacoes",
+      "/_data/manifestacoes.yml",
+      "../_data/manifestacoes.yml",
       "../manifestacoes.json",
     ];
     let manifestacoes = null;
@@ -2370,8 +2374,12 @@ async function carregarManifestacoesAgradecimentos() {
     }
 
     if (!manifestacoes) {
+      // Sugestão: se você estiver rodando localmente, execute `vercel dev` ou certifique-se de que as rotas /api/* estão disponíveis.
       throw (
-        lastError || new Error("Não foi possível carregar manifestacoes.json")
+        lastError ||
+        new Error(
+          "Não foi possível carregar manifestacoes.json. Se estiver em desenvolvimento local, execute `vercel dev` para habilitar as rotas /api."
+        )
       );
     }
     renderManifestacoesAgradecimentos(manifestacoes);
