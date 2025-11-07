@@ -3,36 +3,87 @@ layout: default
 ---
 
 <div class="container mt-5">
-    <h1>Gerenciador de Agradecimentos</h1>
-    <p>Adicione e gerencie os agradecimentos a parlamentares que apoiam a causa socioeducativa.</p>
+  <h1>Agradecimentos a Parlamentares</h1>
+  <p>
+    Veja publicações de parlamentares e envie uma mensagem de agradecimento —
+    sua contribuição será analisada pela equipe.
+  </p>
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Adicionar Nova Manifestação</h5>
-            <form id="form-agradecimento">
-                <div class="mb-3">
-                    <label for="parlamentar-nome" class="form-label">Nome do Parlamentar</label>
-                    <input type="text" class="form-control" id="parlamentar-nome" required>
-                </div>
-                <div class="mb-3">
-                    <label for="instagram-link" class="form-label">Link do Post no Instagram</label>
-                    <input type="url" class="form-control" id="instagram-link" required>
-                </div>
-                <div class="mb-3">
-                    <label for="mensagem-agradecimento" class="form-label">Mensagem de Agradecimento</label>
-                    <textarea class="form-control" id="mensagem-agradecimento" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Adicionar Manifestação</button>
-            </form>
+  <div class="row">
+    <div class="col-md-7">
+      <h4>Publicações</h4>
+      <div id="lista-manifestacoes" class="list-agradecimentos">
+        <!-- Lista de manifestações será carregada dinamicamente via JS -->
+        <div id="manifestacoes-loading" class="text-muted">
+          Carregando manifestações...
         </div>
+      </div>
     </div>
 
-    <div class="mt-4">
-        <h5>Manifestações Cadastradas</h5>
-        <div id="lista-manifestacoes">
-            <!-- As manifestações serão listadas aqui -->
+    <div class="col-md-5">
+      <h4>Enviar uma mensagem de agradecimento</h4>
+      <p class="text-muted">
+        Sua mensagem será enviada como contribuição para revisão. Não divulgamos
+        dados pessoais sem aprovação.
+      </p>
+
+      <form id="public-agradecimento-form">
+        <div class="mb-2">
+          <label for="public-nome" class="form-label">Seu nome</label>
+          <input id="public-nome" name="nome" class="form-control" required />
         </div>
+        <div class="mb-2">
+          <label for="public-email" class="form-label">Seu email</label>
+          <input
+            id="public-email"
+            name="email"
+            type="email"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="mb-2">
+          <label for="public-parlamentar" class="form-label"
+            >Parlamentar (selecionar)</label
+          >
+          <select
+            id="public-parlamentar"
+            name="parlamentar"
+            class="form-select"
+            required
+          >
+            <option value="">Selecione...</option>
+            <!-- Será populado via JS com a lista de manifestações/parlamentares -->
+          </select>
+        </div>
+        <div class="mb-2">
+          <label for="public-mensagem" class="form-label">Mensagem</label>
+          <textarea
+            id="public-mensagem"
+            name="mensagem"
+            rows="4"
+            class="form-control"
+            required
+            placeholder="Escreva sua mensagem de agradecimento..."
+          ></textarea>
+        </div>
+        <input
+          type="hidden"
+          id="public-pauta-slug"
+          name="pauta_slug"
+          value="agradecimentos"
+        />
+        <button type="submit" class="btn btn-primary">
+          Enviar para revisão
+        </button>
+        <div
+          id="public-agradecimento-feedback"
+          class="mt-2"
+          style="display: none"
+        ></div>
+      </form>
     </div>
+  </div>
+
+  <script src="/assets/js/agradecimentos.js"></script>
 </div>
-
-<script src="/assets/js/agradecimentos.js"></script>

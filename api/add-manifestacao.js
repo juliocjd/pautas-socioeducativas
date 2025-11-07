@@ -40,8 +40,17 @@ module.exports = async (req, res) => {
       "_data",
       "manifestacoes.yml"
     );
-    const manifestacoesFile = await fs.readFile(manifestacoesPath, "utf8");
-    const manifestacoes = yaml.load(manifestacoesFile) || [];
+    let manifestacoes = [];
+    try {
+      const manifestacoesFile = await fs.readFile(manifestacoesPath, "utf8");
+      manifestacoes = yaml.load(manifestacoesFile) || [];
+    } catch (error) {
+      if (error.code === "ENOENT") {
+        console.log("Arquivo manifestacoes.yml não encontrado, será criado.");
+      } else {
+        throw error; // Lança outros erros que não sejam "arquivo não encontrado"
+      }
+    }
 
     manifestacoes.unshift(novaManifestacao); // Adiciona no início da lista
 

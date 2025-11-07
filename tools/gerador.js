@@ -1989,7 +1989,7 @@ function showTab(tabName, event) {
   if (tabName === "gerenciar") carregarPautas();
   if (tabName === "contribuicoes") carregarContribuicoes();
   if (tabName === "dados") renderDados();
-    if (tabName === "estatisticas") atualizarEstatisticas();
+  if (tabName === "estatisticas") atualizarEstatisticas();
   if (tabName === "agradecimentos") initAgradecimentosTab();
 
   // Carregar editor de plenário APENAS se uma pauta estiver selecionada
@@ -2296,88 +2296,122 @@ async function savePlenarioChanges() {
 // ==========================================
 
 function initAgradecimentosTab() {
-    carregarManifestacoesAgradecimentos();
+  carregarManifestacoesAgradecimentos();
 
-    const form = document.getElementById('form-agradecimento');
-    // Remove previous listeners to avoid duplication
-    const newForm = form.cloneNode(true);
-    form.parentNode.replaceChild(newForm, form);
+  const form = document.getElementById("form-agradecimento");
+  // Remove previous listeners to avoid duplication
+  const newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
 
-    newForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+  newForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        const novaManifestacao = {
-            parlamentar: document.getElementById('parlamentar-nome-agradecimento').value,
-            post_url: document.getElementById('instagram-link-agradecimento').value,
-            mensagem_agradecimento: document.getElementById('mensagem-agradecimento-agradecimento').value,
-        };
+    const novaManifestacao = {
+      parlamentar: document.getElementById("parlamentar-nome-agradecimento")
+        .value,
+      post_url: document.getElementById("instagram-link-agradecimento").value,
+      mensagem_agradecimento: document.getElementById(
+        "mensagem-agradecimento-agradecimento"
+      ).value,
+    };
 
-        try {
-            const response = await fetch('/api/add-manifestacao', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${sessionToken}`,
-                },
-                body: JSON.stringify(novaManifestacao),
-            });
+    try {
+      const response = await fetch("/api/add-manifestacao", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify(novaManifestacao),
+      });
 
-            if (!response.ok) {
-                throw new Error('Falha ao adicionar manifestação');
-            }
+      if (!response.ok) {
+        throw new Error("Falha ao adicionar manifestação");
+      }
 
-            newForm.reset();
-            carregarManifestacoesAgradecimentos(); // Recarrega a lista
-            alert('✅ Manifestação adicionada com sucesso!');
-        } catch (error) {
-            console.error('Erro ao adicionar manifestação:', error);
-            alert('Erro ao adicionar manifestação. Verifique o console para mais detalhes.');
-        }
-    });
+      newForm.reset();
+      carregarManifestacoesAgradecimentos(); // Recarrega a lista
+      alert("✅ Manifestação adicionada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao adicionar manifestação:", error);
+      alert(
+        "Erro ao adicionar manifestação. Verifique o console para mais detalhes."
+      );
+    }
+  });
 }
 
 async function carregarManifestacoesAgradecimentos() {
-    const listaManifestacoes = document.getElementById('lista-manifestacoes-agradecimentos');
-    listaManifestacoes.innerHTML = '<div class="spinner"></div>';
+  const listaManifestacoes = document.getElementById(
+    "lista-manifestacoes-agradecimentos"
+  );
+  listaManifestacoes.innerHTML = '<div class="spinner"></div>';
 
-    try {
-        const response = await fetch('/api/manifestacoes.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const manifestacoes = await response.json();
-        renderManifestacoesAgradecimentos(manifestacoes);
-    } catch (error) {
-        console.error('Erro ao carregar manifestações:', error);
-        listaManifestacoes.innerHTML = '<p class="text-danger">Não foi possível carregar as manifestações.</p>';
+  try {
+    // Tenta múltiplos caminhos conhecidos onde a lista pode existir (build estático ou rota de API)
+    const tryPaths = [
+      "/manifestacoes.json",
+      "/api/manifestacoes.json",
+      "../manifestacoes.json",
+    ];
+    let manifestacoes = null;
+    let lastError = null;
+
+    for (const p of tryPaths) {
+      try {
+        const response = await fetch(p);
+        if (!response.ok) throw new Error(`status ${response.status}`);
+        manifestacoes = await response.json();
+        break;
+      } catch (e) {
+        lastError = e;
+        console.warn(`Falha ao carregar manifestacoes em ${p}:`, e.message);
+      }
     }
+
+    if (!manifestacoes) {
+      throw (
+        lastError || new Error("Não foi possível carregar manifestacoes.json")
+      );
+    }
+    renderManifestacoesAgradecimentos(manifestacoes);
+  } catch (error) {
+    console.error("Erro ao carregar manifestações:", error);
+    listaManifestacoes.innerHTML =
+      '<p class="text-danger">Não foi possível carregar as manifestações.</p>';
+  }
 }
 
 function renderManifestacoesAgradecimentos(manifestacoes) {
-    const listaManifestacoes = document.getElementById('lista-manifestacoes-agradecimentos');
-    if (!manifestacoes || manifestacoes.length === 0) {
-        listaManifestacoes.innerHTML = '<p>Nenhuma manifestação cadastrada.</p>';
-        return;
-    }
+  const listaManifestacoes = document.getElementById(
+    "lista-manifestacoes-agradecimentos"
+  );
+  if (!manifestacoes || manifestacoes.length === 0) {
+    listaManifestacoes.innerHTML = "<p>Nenhuma manifestação cadastrada.</p>";
+    return;
+  }
 
-    const list = document.createElement('ul');
-    list.className = 'list-group';
+  const list = document.createElement("ul");
+  list.className = "list-group";
 
-    manifestacoes.forEach(manifestacao => {
-        const item = document.createElement('li');
-        item.className = 'list-group-item';
-        item.innerHTML = `
-            <strong>${manifestacao.parlamentar} (${manifestacao.partido || ''}-${manifestacao.uf || ''})</strong><br>
-            <a href="${manifestacao.post_url}" target="_blank">${manifestacao.post_url}</a><br>
+  manifestacoes.forEach((manifestacao) => {
+    const item = document.createElement("li");
+    item.className = "list-group-item";
+    item.innerHTML = `
+            <strong>${manifestacao.parlamentar} (${
+      manifestacao.partido || ""
+    }-${manifestacao.uf || ""})</strong><br>
+            <a href="${manifestacao.post_url}" target="_blank">${
+      manifestacao.post_url
+    }</a><br>
             <small><em>"${manifestacao.mensagem_agradecimento}"</em></small>
         `;
-        list.appendChild(item);
-    });
+    list.appendChild(item);
+  });
 
-    listaManifestacoes.innerHTML = '';
-    listaManifestacoes.appendChild(list);
+  listaManifestacoes.innerHTML = "";
+  listaManifestacoes.appendChild(list);
 }
-
 
 // Inicializar
 checkAuth();

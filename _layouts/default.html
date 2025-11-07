@@ -33,7 +33,11 @@
                 <a class="nav-link" href="{{ '/' | relative_url }}">Início</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ '/agradecimentos.html' | relative_url }}">Agradecimentos</a>
+                <a
+                  class="nav-link"
+                  href="{{ '/agradecimentos.html' | relative_url }}"
+                  >Agradecimentos</a
+                >
               </li>
             </ul>
           </div>
@@ -63,5 +67,65 @@
     {% if page.layout == 'pauta' %}
     <script src="/assets/js/pauta.js" defer></script>
     {% endif %}
+    <!-- Toast container -->
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      style="position: fixed; top: 1rem; right: 1rem; z-index: 1080"
+    >
+      <div id="toast-container"></div>
+    </div>
+
+    <script>
+      // showToast(message, type) - type: 'success' | 'error' | 'info'
+      function showToast(message, type = "info", timeout = 4000) {
+        try {
+          const container = document.getElementById("toast-container");
+          if (!container) {
+            alert(message); // fallback
+            return;
+          }
+
+          const toastId = "toast-" + Date.now();
+          const bgClass =
+            type === "success"
+              ? "bg-success"
+              : type === "error"
+              ? "bg-danger"
+              : "bg-secondary";
+
+          const toast = document.createElement("div");
+          toast.id = toastId;
+          toast.className = "toast text-white " + bgClass;
+          toast.role = "alert";
+          toast.ariaLive = "assertive";
+          toast.ariaAtomic = "true";
+          toast.style.minWidth = "220px";
+
+          toast.innerHTML = `
+            <div class="d-flex">
+              <div class="toast-body">${message}</div>
+              <button type="button" class="ml-2 mb-1 close text-white" data-dismiss="toast" aria-label="Fechar" style="opacity:0.9;background:none;border:none">&times;</button>
+            </div>
+          `;
+
+          container.appendChild(toast);
+          // Initialize bootstrap toast
+          $(toast).toast({ delay: timeout });
+          $(toast).toast("show");
+
+          // Remove after hidden
+          $(toast).on("hidden.bs.toast", function () {
+            try {
+              container.removeChild(toast);
+            } catch (e) {}
+          });
+        } catch (e) {
+          try {
+            alert(message);
+          } catch (_) {}
+        }
+      }
+    </script>
   </body>
 </html>
