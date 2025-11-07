@@ -2302,7 +2302,37 @@ function initAgradecimentosTab() {
   // Remove previous listeners to avoid duplication
   const newForm = form.cloneNode(true);
   form.parentNode.replaceChild(newForm, form);
+  // Hook to update preview and open button for the Instagram URL
+  const linkInput = newForm.querySelector("#instagram-link-agradecimento");
+  const openBtn = newForm.querySelector("#btn-open-instagram-agr");
+  const previewDiv = newForm.querySelector("#instagram-preview-agradecimento");
 
+  if (linkInput && openBtn) {
+    linkInput.addEventListener("input", async () => {
+      const url = linkInput.value.trim();
+      openBtn.href = url || "#";
+      if (!url) {
+        previewDiv.innerHTML = "";
+        return;
+      }
+      // Show short URL immediately
+      previewDiv.innerHTML = `<div style="font-size:13px; color:#444">${escapeHtml(
+        url.replace(/^https?:\/\//, "")
+      )}</div>`;
+
+      // If Instagram link, try to fetch oEmbed for thumbnail & author
+      if (url.includes("instagram.com")) {
+        try {
+          const thumb = await fetchOembedThumbnail(url);
+          if (thumb) {
+            previewDiv.innerHTML = `<img src="${thumb}" style="max-width:140px; border-radius:6px; display:block; margin-top:6px">`;
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+    });
+  }
   newForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -2398,27 +2428,139 @@ function renderManifestacoesAgradecimentos(manifestacoes) {
     listaManifestacoes.innerHTML = "<p>Nenhuma manifestação cadastrada.</p>";
     return;
   }
+  // Render as cards with clearer UI. Tentaremos obter thumbnail via oEmbed do Instagram
+  const container = document.createElement("div");
+  container.className = "list-group";
 
-  const list = document.createElement("ul");
-  list.className = "list-group";
+  manifestacoes.forEach((m) => {
+    const card = document.createElement("div");
+    card.className = "list-group-item d-flex gap-3 align-items-start";
 
-  manifestacoes.forEach((manifestacao) => {
-    const item = document.createElement("li");
-    item.className = "list-group-item";
-    item.innerHTML = `
-            <strong>${manifestacao.parlamentar} (${
-      manifestacao.partido || ""
-    }-${manifestacao.uf || ""})</strong><br>
-            <a href="${manifestacao.post_url}" target="_blank">${
-      manifestacao.post_url
-    }</a><br>
-            <small><em>"${manifestacao.mensagem_agradecimento}"</em></small>
-        `;
-    list.appendChild(item);
+    const left = document.createElement("div");
+    left.style.minWidth = "120px";
+    left.style.maxWidth = "160px";
+
+    const thumbWrapper = document.createElement("div");
+    thumbWrapper.style.width = "120px";
+    thumbWrapper.style.height = "120px";
+    thumbWrapper.style.background = "#f4f4f4";
+    thumbWrapper.style.display = "flex";
+    thumbWrapper.style.alignItems = "center";
+    thumbWrapper.style.justifyContent = "center";
+    thumbWrapper.style.overflow = "hidden";
+    thumbWrapper.style.borderRadius = "6px";
+
+    // Placeholder until we fetch oembed
+    const placeholder = document.createElement("div");
+    placeholder.style.fontSize = "12px";
+    placeholder.style.color = "#666";
+    placeholder.style.padding = "6px";
+    placeholder.textContent = "Preview do post";
+    thumbWrapper.appendChild(placeholder);
+    left.appendChild(thumbWrapper);
+
+    const right = document.createElement("div");
+    right.style.flex = "1";
+
+    const header = document.createElement("div");
+    header.innerHTML = `<strong>${escapeHtml(
+      m.parlamentar || m.nome || "Parlamentar"
+    )}</strong> ${m.partido || ""}${m.uf ? " - " + m.uf : ""}`;
+
+    const linkDiv = document.createElement("div");
+    linkDiv.style.marginTop = "6px";
+    linkDiv.style.marginBottom = "6px";
+
+    if (m.post_url) {
+      const a = document.createElement("a");
+      a.href = m.post_url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.textContent = m.post_url.replace(/^https?:\/\//, "");
+      a.style.display = "inline-block";
+      a.style.maxWidth = "100%";
+      a.style.whiteSpace = "nowrap";
+      a.style.overflow = "hidden";
+      a.style.textOverflow = "ellipsis";
+
+      const btn = document.createElement("a");
+      btn.href = m.post_url;
+      btn.target = "_blank";
+      btn.className = "btn btn-sm btn-outline-primary ml-2";
+      btn.style.marginLeft = "0.5rem";
+      btn.textContent = "Abrir post";
+
+      linkDiv.appendChild(a);
+      linkDiv.appendChild(btn);
+    }
+
+    const mensagemP = document.createElement("p");
+    mensagemP.className = "mb-1";
+    mensagemP.style.whiteSpace = "pre-wrap";
+    mensagemP.style.marginTop = "8px";
+    mensagemP.textContent = m.mensagem_agradecimento || m.mensagem || "";
+
+    const meta = document.createElement("small");
+    meta.className = "text-muted";
+    meta.textContent = m.data || m.criado_em || "";
+
+    right.appendChild(header);
+    right.appendChild(linkDiv);
+    right.appendChild(mensagemP);
+    right.appendChild(meta);
+
+    card.appendChild(left);
+    card.appendChild(right);
+
+    container.appendChild(card);
+
+    // Try to fetch oEmbed thumbnail for Instagram posts asynchronously
+    if (m.post_url && m.post_url.includes("instagram.com")) {
+      fetchOembedThumbnail(m.post_url)
+        .then((thumb) => {
+          if (thumb) {
+            const img = document.createElement("img");
+            img.src = thumb;
+            img.style.width = "100%";
+            img.style.height = "100%";
+            img.style.objectFit = "cover";
+            // replace placeholder
+            thumbWrapper.innerHTML = "";
+            thumbWrapper.appendChild(img);
+          }
+        })
+        .catch((e) => {
+          // ignore oembed errors silently
+        });
+    }
   });
 
   listaManifestacoes.innerHTML = "";
-  listaManifestacoes.appendChild(list);
+  listaManifestacoes.appendChild(container);
+}
+
+// Busca thumbnail via oEmbed (retorna thumbnail_url ou null)
+async function fetchOembedThumbnail(postUrl) {
+  try {
+    const resp = await fetch(
+      "https://api.instagram.com/oembed?url=" + encodeURIComponent(postUrl)
+    );
+    if (!resp.ok) return null;
+    const data = await resp.json();
+    return data.thumbnail_url || data.thumbnail;
+  } catch (e) {
+    return null;
+  }
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 // Inicializar
