@@ -10,6 +10,10 @@ module.exports = function (eleventyConfig) {
 
   eleventyConfig.ignores.add("api/**");
 
+  eleventyConfig.addCollection("pautas", (collectionApi) => {
+    return collectionApi.getFilteredByGlob(["pautas/*.md", "pautas/**/*.md"]);
+  });
+
   eleventyConfig.addFilter("relative_url", (url = "") => ensureLeadingSlash(url));
 
   eleventyConfig.addFilter("absolute_url", (url = "") => {
