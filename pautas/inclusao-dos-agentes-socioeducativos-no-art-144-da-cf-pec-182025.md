@@ -7,6 +7,7 @@ casa: Câmara dos Deputados
 status: Comissão Especial
 featured: true
 is_plenary_vote: true
+key_players: []
 campanha:
   email:
     assunto: "Inclusão dos Agentes Socioeducativos no Art. 144 da Constituição Federal – PEC 18/2025"

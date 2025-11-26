@@ -6,9 +6,15 @@ layout: default
     <div id="pauta-data" data-pauta-slug="{{ page.fileSlug }}" data-casa-legislativa="{{ casa }}" data-is-plenary-vote="{{ is_plenary_vote }}"></div>
     <div id="pauta-keyplayers-data" data-key-players='{{ key_players | jsonify | escape }}'></div>
     <div id="pauta-campanha-data"
+         {% if campanha and campanha.email %}
          data-campanha-email='{{ campanha.email | jsonify | escape }}'
+         {% endif %}
+         {% if campanha and campanha.whatsapp %}
          data-campanha-whatsapp='{{ campanha.whatsapp | jsonify | escape }}'
-         data-campanha-instagram='{{ campanha.instagram | jsonify | escape }}'>
+         {% endif %}
+         {% if campanha and campanha.instagram %}
+         data-campanha-instagram='{{ campanha.instagram | jsonify | escape }}'
+         {% endif %}>
     </div>
     <div class="jumbotron">
       <h1 class="display-4">{{ title }}</h1>
