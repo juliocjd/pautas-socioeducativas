@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     if (req.method === 'GET') {
       const { data: files } = await octokit.rest.repos.getContent({
         ...REPO,
-        path: '_pautas'
+        path: 'pautas'
       });
 
       const pautas = [];
@@ -96,13 +96,13 @@ module.exports = async (req, res) => {
       // Buscar SHA do arquivo
       const { data: fileData } = await octokit.rest.repos.getContent({
         ...REPO,
-        path: `_pautas/${filename}`
+        path: `pautas/${filename}`
       });
 
       // Excluir arquivo
       await octokit.rest.repos.deleteFile({
         ...REPO,
-        path: `_pautas/${filename}`,
+        path: `pautas/${filename}`,
         message: `Excluir pauta: ${filename}`,
         sha: fileData.sha
       });

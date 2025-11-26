@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
     let existingSha = null;
 
     try {
-      const existingFile = await githubRequest('GET', `/contents/_pautas/${filename}`);
+      const existingFile = await githubRequest('GET', `/contents/pautas/${filename}`);
       fileExists = true;
       existingSha = existingFile.sha;
     } catch (error) {
@@ -56,7 +56,7 @@ module.exports = async (req, res) => {
     }
 
     // Criar arquivo no GitHub
-    const result = await githubRequest('PUT', `/contents/_pautas/${filename}`, {
+    const result = await githubRequest('PUT', `/contents/pautas/${filename}`, {
       message: `Adicionar pauta: ${filename}`,
       content: Buffer.from(content).toString('base64')
     });

@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
 
       const { data: fileData } = await octokit.rest.repos.getContent({
         ...REPO,
-        path: `_pautas/${filename}`
+        path: `pautas/${filename}`
       });
 
       const content = Buffer.from(fileData.content, 'base64').toString('utf-8');
@@ -64,7 +64,7 @@ module.exports = async (req, res) => {
         return res.status(401).json({ success: false, error: 'Não autorizado' });
       }
 
-      const filePath = `_pautas/${filename}`;
+      const filePath = `pautas/${filename}`;
 
       // Buscar SHA atual
       const { data: fileData } = await octokit.rest.repos.getContent({
