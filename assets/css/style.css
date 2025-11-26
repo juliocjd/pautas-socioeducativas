@@ -148,40 +148,46 @@
 .position-relative {
   position: relative;
 }
-.copy-icon {
+.copy-btn {
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 12px;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid #d0d7de;
-  background-color: #ffffff;
-  color: #6c757d;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.9rem;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.copy-icon svg {
-  width: 16px;
-  height: 16px;
+.copy-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(79, 70, 229, 0.35);
 }
-.copy-icon:hover {
-  background-color: #f3f4f6;
-  color: #0056b3;
-  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
-}
-input + .copy-icon {
+input + .copy-btn {
   top: 50%;
   transform: translateY(-50%);
 }
-textarea + .copy-icon {
-  top: 12px;
-  transform: none;
-  right: 15px;
+textarea + .copy-btn {
+  top: 14px;
+}
+#aviso-lotes-email {
+  font-size: 0.9em;
+}
+#aviso-lotes-email.aviso-lotes-destaque {
+  background-color: #fff4d6;
+  color: #8a4b00;
+  padding: 0.6rem 0.75rem;
+  border-left: 4px solid #ffb347;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.email-copy-alert {
+  border-left: 4px solid #f0ad4e;
+  font-weight: 600;
 }
 
 /* --- Textareas Ocultos (para templates de campanha) --- */
