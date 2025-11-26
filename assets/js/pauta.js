@@ -1179,36 +1179,6 @@ function criarLinkMailto(destinatarios, assunto, mensagem) {
   )}`;
 }
 
-function gerarLotesMailto(emails, assunto, mensagem) {
-  if (!Array.isArray(emails) || emails.length === 0) {
-    return { lotes: [] };
-  }
-
-  const lotes = [];
-  let indice = 0;
-
-  while (indice < emails.length) {
-    let tamanhoLote = Math.min(EMAILS_POR_LOTE, emails.length - indice);
-    let lote = emails.slice(indice, indice + tamanhoLote);
-    let mailto = criarLinkMailto(lote, assunto, mensagem);
-
-    while (mailto.length > MAILTO_MAX_LENGTH && lote.length > 1) {
-      lote = lote.slice(0, lote.length - 1);
-      tamanhoLote -= 1;
-      mailto = criarLinkMailto(lote, assunto, mensagem);
-    }
-
-    if (mailto.length > MAILTO_MAX_LENGTH) {
-      return { erro: "mensagem_muito_longa" };
-    }
-
-    lotes.push({ destinatarios: lote, mailto });
-    indice += lote.length;
-  }
-
-  return { lotes };
-}
-
 function atualizarDisponibilidadeCampanhaEmail() {
   const wrapper = document.getElementById("objetivo-email-agradecer-wrapper");
   const radioAgradecer = document.getElementById("objetivoEmailAgradecer");
@@ -1356,13 +1326,11 @@ function abrirCampanhaEmail() {
         avisoLotesEl.textContent =
           "Selecione parlamentares com email para habilitar o envio.";
         avisoLotesEl.style.display = "block";
+      } else if (emails.length > EMAILS_POR_LOTE) {
+        avisoLotesEl.textContent = `Temos ${emails.length} destinatários. Copiaremos automaticamente todos os emails para sua área de transferência e abriremos um rascunho com assunto e mensagem prontos; basta colar os endereços no campo "Para"/"CCO".`;
+        avisoLotesEl.style.display = "block";
       } else {
-        const lotesPrevistos = Math.ceil(emails.length / EMAILS_POR_LOTE);
-        const complemento =
-          lotesPrevistos > 1
-            ? `Abriremos aproximadamente ${lotesPrevistos} rascunhos e ajustaremos cada lote para caber no cliente de email.`
-            : "Normalmente conseguimos enviar em um único rascunho.";
-        avisoLotesEl.textContent = `Temos ${emails.length} destinatários. ${complemento}`;
+        avisoLotesEl.textContent = `Até ${EMAILS_POR_LOTE} emails serão inseridos automaticamente no rascunho.`;
         avisoLotesEl.style.display = "block";
       }
     }
@@ -1402,7 +1370,7 @@ function abrirCampanhaEmail() {
   }
 }
 
-function abrirClienteEmail() {
+async function abrirClienteEmail() {
   const emailsTextarea = document.getElementById("emails-lista");
   const assuntoInput = document.getElementById("email-assunto");
   const mensagemInput = document.getElementById("email-mensagem");
@@ -1420,54 +1388,58 @@ function abrirClienteEmail() {
     return;
   }
 
-  const resultado = gerarLotesMailto(
-    emailsNormalizados,
-    assunto,
-    mensagem
-  );
-  if (resultado.erro === "mensagem_muito_longa") {
-    notificarUsuario(
-      "O corpo do email está muito grande para o cliente escolhido. Tente encurtar a mensagem ou enviar manualmente com os ícones de copiar.",
-      "error",
-      7000
-    );
-    return;
-  }
-
-  const lotes = resultado.lotes || [];
-  if (lotes.length === 0) {
-    notificarUsuario(
-      "Não foi possível montar os lotes de envio. Tente novamente.",
-      "error"
-    );
-    return;
-  }
-
-  if (lotes.length > 1) {
-    notificarUsuario(
-      `Temos ${emailsNormalizados.length} destinatários. Abriremos ${lotes.length} rascunhos ajustados automaticamente para caber no cliente de email. Envie todos para completar a campanha.`,
-      "info",
-      7000
-    );
-  }
-
-  for (let i = 0; i < lotes.length; i += 1) {
-    const lote = lotes[i];
-    const mailto = lote.mailto;
-    if (mailto.length > MAILTO_MAX_LENGTH) {
-      // fallback defensivo
+  if (emailsNormalizados.length > EMAILS_POR_LOTE) {
+    const lista = emailsNormalizados.join("; ");
+    try {
+      await navigator.clipboard.writeText(lista);
+    } catch (err) {
+      console.error("Falha ao copiar emails em lote:", err);
       notificarUsuario(
-        `Não foi possível abrir o rascunho ${i + 1}. Copie os emails manualmente e tente novamente.`,
+        "Não conseguimos copiar automaticamente tantos emails. Use o ícone de copiar ao lado da lista e tente novamente.",
         "error",
-        6000
+        7000
       );
       return;
     }
-    if (i === 0) {
-      window.location.href = mailto;
-    } else {
-      window.open(mailto);
+
+    notificarUsuario(
+      `Temos ${emailsNormalizados.length} destinatários. Copiamos todos para sua área de transferência; abra o rascunho e cole-os no campo \"Para\"/\"CCO\" antes de enviar.`,
+      "info",
+      8000
+    );
+
+    const mailtoSemDestinatarios = `mailto:?subject=${encodeURIComponent(
+      assunto
+    )}&body=${encodeURIComponent(mensagem)}`;
+    window.location.href = mailtoSemDestinatarios;
+  } else {
+    let mailto = criarLinkMailto(emailsNormalizados, assunto, mensagem);
+
+    if (mailto.length > MAILTO_MAX_LENGTH) {
+      try {
+        await navigator.clipboard.writeText(emailsNormalizados.join("; "));
+      } catch (err) {
+        console.error("Falha ao copiar emails:", err);
+        notificarUsuario(
+          "O rascunho ficou grande demais e não conseguimos copiar automaticamente. Utilize o ícone de copiar ao lado da lista.",
+          "error",
+          7000
+        );
+        return;
+      }
+
+      notificarUsuario(
+        "O texto ficou grande demais para adicionar automaticamente os emails. Copiamos a lista para sua área de transferência; cole-a no campo \"Para\"/\"CCO\" do rascunho.",
+        "info",
+        8000
+      );
+
+      mailto = `mailto:?subject=${encodeURIComponent(
+        assunto
+      )}&body=${encodeURIComponent(mensagem)}`;
     }
+
+    window.location.href = mailto;
   }
 
   trackingData[pautaSlug].email = new Date().toISOString();
