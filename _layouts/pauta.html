@@ -3,23 +3,23 @@ layout: default
 ---
 
   <div class="container">
-    <div id="pauta-data" data-pauta-slug="{{ page.slug }}" data-casa-legislativa="{{ page.casa }}" data-is-plenary-vote="{{ page.is_plenary_vote }}"></div>
-    <div id="pauta-keyplayers-data" data-key-players='{{ page.key_players | jsonify | escape }}'></div>
+    <div id="pauta-data" data-pauta-slug="{{ page.fileSlug }}" data-casa-legislativa="{{ casa }}" data-is-plenary-vote="{{ is_plenary_vote }}"></div>
+    <div id="pauta-keyplayers-data" data-key-players='{{ key_players | jsonify | escape }}'></div>
     <div id="pauta-campanha-data"
-         data-campanha-email='{{ page.campanha.email | jsonify | escape }}'
-         data-campanha-whatsapp='{{ page.campanha.whatsapp | jsonify | escape }}'
-         data-campanha-instagram='{{ page.campanha.instagram | jsonify | escape }}'>
+         data-campanha-email='{{ campanha.email | jsonify | escape }}'
+         data-campanha-whatsapp='{{ campanha.whatsapp | jsonify | escape }}'
+         data-campanha-instagram='{{ campanha.instagram | jsonify | escape }}'>
     </div>
     <div class="jumbotron">
-      <h1 class="display-4">{{ page.title }}</h1>
-      <p class="lead">{{ page.description }}</p>
+      <h1 class="display-4">{{ title }}</h1>
+      <p class="lead">{{ description }}</p>
       <hr class="my-4" />
       <div class="row">
         <div class="col-md-6">
-          <p><strong>Casa:</strong> {{ page.casa }}</p>
+          <p><strong>Casa:</strong> {{ casa }}</p>
         </div>
         <div class="col-md-6">
-          <p class="mb-0"><strong>Status:</strong> {{ page.status }}</p>
+          <p class="mb-0"><strong>Status:</strong> {{ status }}</p>
         </div>
       </div>
       <a class="btn btn-sm btn-light pauta-entenda-btn" data-toggle="collapse" href="#pautaContent" role="button" aria-expanded="false" aria-controls="pautaContent" style="float: right;">
@@ -33,7 +33,7 @@ layout: default
       </div>
     </div>
 
-    {% if page.campanha %}
+    {% if campanha %}
     <div class="campanhas-section mb-5">
       <h3>📢 Mobilização</h3>
       <p>
@@ -54,7 +54,7 @@ layout: default
         </p>
       </div>
       <div class="row">
-        {% if page.campanha.email %}
+        {% if campanha.email %}
         <div class="col-md-4 mb-3">
           <button
             class="btn btn-primary btn-block"
@@ -64,7 +64,7 @@ layout: default
           </button>
           <small id="contador-emails" class="text-muted">Carregando...</small>
         </div>
-        {% endif %} {% if page.campanha.whatsapp %}
+        {% endif %} {% if campanha.whatsapp %}
         <div class="col-md-4 mb-3">
           <button
             class="btn btn-success btn-block"
@@ -74,7 +74,7 @@ layout: default
           </button>
           <small id="contador-whatsapp" class="text-muted">Carregando...</small>
         </div>
-        {% endif %} {% if page.campanha.instagram %}
+        {% endif %} {% if campanha.instagram %}
         <div class="col-md-4 mb-3">
           <button
             class="btn btn-danger btn-block"
