@@ -2,6 +2,7 @@
 // Autentica administrador (suporta senha hash ou texto plano)
 
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 
 module.exports = async (req, res) => {
   // CORS
@@ -42,8 +43,13 @@ module.exports = async (req, res) => {
 
     // Se tiver hash, verificar com hash
     if (ADMIN_PASSWORD_HASH) {
-      const hash = crypto.createHash('sha256').update(password).digest('hex');
-      isValid = hash === ADMIN_PASSWORD_HASH;
+      if (ADMIN_PASSWORD_HASH.startsWith('$2')) {
+        // Hash em bcrypt ($2a$, $2b$, etc.)
+        isValid = await bcrypt.compare(password, ADMIN_PASSWORD_HASH);
+      } else {
+        const hash = crypto.createHash('sha256').update(password).digest('hex');
+        isValid = hash === ADMIN_PASSWORD_HASH;
+      }
     } 
     // Se não tiver hash, verificar senha em texto plano
     else if (ADMIN_PASSWORD) {

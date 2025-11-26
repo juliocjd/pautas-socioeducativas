@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^19.0.13",
+    "bcryptjs": "^3.0.3",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
