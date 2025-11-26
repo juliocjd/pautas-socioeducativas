@@ -15,6 +15,7 @@ const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
   <path d="M13.5 1a.5.5 0 0 0-.5.5V3h-2a.5.5 0 0 0 0 1h2v1.5a.5.5 0 0 0 1 0V4h1.5a.5.5 0 0 0 0-1H14V1.5a.5.5 0 0 0-.5-.5z"/>
 </svg>`;
 const EMAILS_POR_LOTE = 30;
+const MAILTO_MAX_LENGTH = 1900;
 
 let parlamentaresAtuaisParaTabela = []; // Guarda a lista correta para os filtros
 
@@ -1170,23 +1171,42 @@ function normalizarListaEmails(texto = "") {
     .filter((email) => email && email.includes("@"));
 }
 
-function dividirEmailsEmLotes(lista, tamanho = EMAILS_POR_LOTE) {
-  const lotes = [];
-  if (!Array.isArray(lista) || lista.length === 0) {
-    return lotes;
-  }
-  for (let i = 0; i < lista.length; i += tamanho) {
-    lotes.push(lista.slice(i, i + tamanho));
-  }
-  return lotes;
-}
-
 function criarLinkMailto(destinatarios, assunto, mensagem) {
   return `mailto:?bcc=${encodeURIComponent(
     destinatarios.join("; ")
   )}&subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(
     mensagem
   )}`;
+}
+
+function gerarLotesMailto(emails, assunto, mensagem) {
+  if (!Array.isArray(emails) || emails.length === 0) {
+    return { lotes: [] };
+  }
+
+  const lotes = [];
+  let indice = 0;
+
+  while (indice < emails.length) {
+    let tamanhoLote = Math.min(EMAILS_POR_LOTE, emails.length - indice);
+    let lote = emails.slice(indice, indice + tamanhoLote);
+    let mailto = criarLinkMailto(lote, assunto, mensagem);
+
+    while (mailto.length > MAILTO_MAX_LENGTH && lote.length > 1) {
+      lote = lote.slice(0, lote.length - 1);
+      tamanhoLote -= 1;
+      mailto = criarLinkMailto(lote, assunto, mensagem);
+    }
+
+    if (mailto.length > MAILTO_MAX_LENGTH) {
+      return { erro: "mensagem_muito_longa" };
+    }
+
+    lotes.push({ destinatarios: lote, mailto });
+    indice += lote.length;
+  }
+
+  return { lotes };
 }
 
 function atualizarDisponibilidadeCampanhaEmail() {
@@ -1338,11 +1358,11 @@ function abrirCampanhaEmail() {
         avisoLotesEl.style.display = "block";
       } else {
         const lotesPrevistos = Math.ceil(emails.length / EMAILS_POR_LOTE);
-        if (lotesPrevistos > 1) {
-          avisoLotesEl.textContent = `Temos ${emails.length} destinatários. Abriremos automaticamente ${lotesPrevistos} rascunhos com até ${EMAILS_POR_LOTE} emails cada.`;
-        } else {
-          avisoLotesEl.textContent = `Até ${EMAILS_POR_LOTE} emails são enviados em um único rascunho.`;
-        }
+        const complemento =
+          lotesPrevistos > 1
+            ? `Abriremos aproximadamente ${lotesPrevistos} rascunhos e ajustaremos cada lote para caber no cliente de email.`
+            : "Normalmente conseguimos enviar em um único rascunho.";
+        avisoLotesEl.textContent = `Temos ${emails.length} destinatários. ${complemento}`;
         avisoLotesEl.style.display = "block";
       }
     }
@@ -1400,10 +1420,32 @@ function abrirClienteEmail() {
     return;
   }
 
-  const lotes = dividirEmailsEmLotes(emailsNormalizados, EMAILS_POR_LOTE);
+  const resultado = gerarLotesMailto(
+    emailsNormalizados,
+    assunto,
+    mensagem
+  );
+  if (resultado.erro === "mensagem_muito_longa") {
+    notificarUsuario(
+      "O corpo do email está muito grande para o cliente escolhido. Tente encurtar a mensagem ou enviar manualmente com os ícones de copiar.",
+      "error",
+      7000
+    );
+    return;
+  }
+
+  const lotes = resultado.lotes || [];
+  if (lotes.length === 0) {
+    notificarUsuario(
+      "Não foi possível montar os lotes de envio. Tente novamente.",
+      "error"
+    );
+    return;
+  }
+
   if (lotes.length > 1) {
     notificarUsuario(
-      `Temos ${emailsNormalizados.length} destinatários. Abriremos ${lotes.length} rascunhos em lotes de até ${EMAILS_POR_LOTE} emails cada. Envie todos para completar a campanha.`,
+      `Temos ${emailsNormalizados.length} destinatários. Abriremos ${lotes.length} rascunhos ajustados automaticamente para caber no cliente de email. Envie todos para completar a campanha.`,
       "info",
       7000
     );
@@ -1411,10 +1453,11 @@ function abrirClienteEmail() {
 
   for (let i = 0; i < lotes.length; i += 1) {
     const lote = lotes[i];
-    const mailto = criarLinkMailto(lote, assunto, mensagem);
-    if (mailto.length > 2000) {
+    const mailto = lote.mailto;
+    if (mailto.length > MAILTO_MAX_LENGTH) {
+      // fallback defensivo
       notificarUsuario(
-        `O lote ${i + 1} excedeu o limite do cliente de email. Reduza a lista (máximo ${EMAILS_POR_LOTE} destinatários) ou simplifique a mensagem.`,
+        `Não foi possível abrir o rascunho ${i + 1}. Copie os emails manualmente e tente novamente.`,
         "error",
         6000
       );
