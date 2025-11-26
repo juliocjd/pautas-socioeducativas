@@ -2,8 +2,15 @@
   "name": "pautas-socioeducativas-api",
   "version": "1.0.0",
   "description": "APIs para painel administrativo",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve --watch --quiet"
+  },
   "dependencies": {
     "@octokit/rest": "^19.0.13",
     "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
   }
 }

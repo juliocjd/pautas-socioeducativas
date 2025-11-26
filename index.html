@@ -8,25 +8,25 @@ layout: default
   <p class="h5 font-weight-normal text-muted mb-4"><em>Uma ferramenta para Agentes de Segurança Socioeducativos.</em></p>
   <hr class="my-4">
   
-  {% assign featured_pauta = site.pautas | where: "featured", true | first %}
+  {% assign featured_pauta = collections.pautas | where: "data.featured", true | first %}
   {% if featured_pauta %}
     <p class="featured-pauta-label"> 
       <span style="font-size: 1.2em; vertical-align: middle;">⭐</span> 
       Nossa <strong>luta principal</strong> é:
     </p>
-    <a class="btn btn-primary btn-lg mt-2" href="{{ featured_pauta.url }}" role="button">{{ featured_pauta.title }}</a>
+    <a class="btn btn-primary btn-lg mt-2" href="{{ featured_pauta.url }}" role="button">{{ featured_pauta.data.title }}</a>
   {% endif %}
   </div>
 
 <div class="container">
   <h2 class="mb-4">Nossas Pautas em Andamento</h2>
   <div class="row">
-    {% for pauta in site.pautas %}
+    {% for pauta in collections.pautas %}
       <div class="col-md-4 mb-4">
         <div class="card h-100">
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title">{{ pauta.title }}</h5>
-            <p class="card-text">{{ pauta.description }}</p>
+            <h5 class="card-title">{{ pauta.data.title }}</h5>
+            <p class="card-text">{{ pauta.data.description }}</p>
             <div class="mt-auto">
               <a href="{{ pauta.url }}" class="btn btn-primary">Acompanhar Pauta</a>
             </div>

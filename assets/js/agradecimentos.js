@@ -180,12 +180,29 @@ document.addEventListener("DOMContentLoaded", async () => {
       .replace(/>/g, "&gt;");
   }
 
+  /**
+   * Processa um texto com spintax (ex: "{olá|oi}") e retorna uma variação aleatória.
+   * @param {string} text O texto base com spintax.
+   * @returns {string} O texto com as opções sorteadas.
+   */
+  function spin(text) {
+    const spintaxRegex = /\{([^{}]+)\}/g;
+    while (spintaxRegex.test(text)) {
+      text = text.replace(spintaxRegex, (match, group) => {
+        const options = group.split("|");
+        return options[Math.floor(Math.random() * options.length)];
+      });
+    }
+    return text;
+  }
+
   function setupAgradecerButtons() {
     document.querySelectorAll(".btn-agradecer").forEach((button) => {
       button.addEventListener("click", async (e) => {
         const btn = e.currentTarget;
         const parlamentarNome = btn.dataset.parlamentar;
-        const mensagem = btn.dataset.mensagem;
+        const mensagemBase = btn.dataset.mensagem;
+        const mensagem = spin(mensagemBase); // Gera a variação da mensagem
 
         // 1. Copiar a mensagem para a área de transferência
         try {

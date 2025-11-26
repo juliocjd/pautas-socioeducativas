@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# Instalar Ruby e dependências
-bundle install
+set -euo pipefail
 
-# Build do Jekyll
-bundle exec jekyll build
-
-# Copiar arquivos adicionais para _site
-cp -r tools _site/tools
-cp -r api _site/api
+npm install
+npm run build
