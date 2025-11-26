@@ -7,13 +7,10 @@ casa: Câmara dos Deputados
 status: Comissão Especial
 featured: true
 is_plenary_vote: true
-key_players: []
 campanha:
   email:
     assunto: "Inclusão dos Agentes Socioeducativos no Art. 144 da Constituição Federal – PEC 18/2025"
     mensagem_oposicao: |
-      Excelentíssimo(a) Deputado(a),
-      
       Venho respeitosamente solicitar a Vossa Excelência a inclusão expressa dos agentes socioeducativos estaduais no texto da PEC 18/2025, que trata da Segurança Pública, reconhecendo a categoria como integrante do sistema de segurança pública, à semelhança do que já ocorre com a Polícia Penal.
       
       1. Fundamentação funcional e jurídica
