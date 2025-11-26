@@ -3,16 +3,6 @@ layout: pauta
 title: Inclusão dos Agentes Socioeducativos no Art. 144 da CF – PEC 18/2025
 description: |
   Texto técnico para enviar a deputados defendendo a inclusão dos agentes socioeducativos na PEC 18
-  
-  ✔ Vocês exercem custódia, não apenas socioeducação.
-  ✔ O risco é reconhecido pelo TST como “permanente e acentuado”.
-  ✔ O ambiente é prisional juvenil, com violência e rebeliões.
-  ✔ A função é híbrida, como o policial penal (educar + custodiar).
-  ✔ A Constituição está desatualizada: descreve a função socioeducativa apenas no aspecto pedagógico, ignorando a segurança.
-  ✔ A PEC 18 é o momento ideal: o texto está aberto para inserções.
-  ✔ A inclusão melhora o SUSP e padroniza normas nacionais.
-  ✔ Protege o adolescente, pois garante profissionais mais capacitados, treinados e valorizados.
-  ✔ Protege o próprio Estado, reduzindo ações judiciais, acidentes e falhas de gestão.
 casa: Câmara dos Deputados
 status: Comissão Especial
 featured: true
@@ -57,8 +47,6 @@ campanha:
       "§ X – Os agentes socioeducativos, encarregados da custódia, vigilância e segurança de adolescentes em privação de liberdade nos termos do SINASE, integram o sistema de segurança pública, com atribuições definidas em lei federal."
       
       Assim, solicita-se que a Comissão Especial considere a inclusão expressa dessa carreira essencial na PEC 18/2025.
-    mensagem_apoio: |
-      a
 ---
 
 Texto técnico para enviar a deputados defendendo a inclusão dos agentes socioeducativos na PEC 18
