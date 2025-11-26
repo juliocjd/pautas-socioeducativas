@@ -108,48 +108,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Dentro de carregarDadosNecessarios no pauta.js
 
-async function carregarDadosNecessarios() {
+async function fetchJSONSeguro(url, contexto) {
   try {
-    // Carregar dados extras (NOVO ENDPOINT)
-    const extrasRes = await fetch("/api/congressistas_extras.json"); // <-- MUDOU AQUI
-    if (extrasRes.ok) {
-      congressistasExtras = await extrasRes.json();
-    } else {
-      console.warn("Falha ao carregar congressistas extras:", extrasRes.status);
-      congressistasExtras = { congressistas: {} };
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
     }
-    // Adiciona uma verificação extra, pois o JSON agora vem de `site.data` que pode ter a chave 'congressistas'
-    if (congressistasExtras && congressistasExtras.congressistas) {
-      congressistasExtras = congressistasExtras; // Mantém a estrutura { congressistas: {...} } se ela existir
-    } else {
-      // Se a estrutura vier direto, envolvemos para manter a consistência esperada
-      congressistasExtras = { congressistas: congressistasExtras || {} };
+    const rawText = await response.text();
+    const sanitized = rawText.trim();
+    if (!sanitized) {
+      throw new Error("Resposta vazia");
     }
+    return JSON.parse(sanitized);
+  } catch (error) {
+    console.warn(`Falha ao carregar ${contexto}:`, error);
+    return null;
+  }
+}
 
-    // Carregar evidências (NOVO ENDPOINT)
-    const evidenciasRes = await fetch("/api/evidencias_pautas.json"); // <-- MUDOU AQUI
-    if (evidenciasRes.ok) {
-      evidenciasPautas = await evidenciasRes.json();
+async function carregarDadosNecessarios() {
+  const extrasData = await fetchJSONSeguro(
+    "/api/congressistas_extras.json",
+    "congressistas extras"
+  );
+  if (extrasData) {
+    if (extrasData.congressistas) {
+      congressistasExtras = extrasData;
     } else {
-      console.warn("Falha ao carregar evidências:", evidenciasRes.status);
-      evidenciasPautas = { pautas: {} };
+      congressistasExtras = { congressistas: extrasData };
     }
-    // Adiciona uma verificação similar para evidências, caso venha com a chave 'pautas'
-    if (evidenciasPautas && evidenciasPautas.pautas) {
-      evidenciasPautas = evidenciasPautas; // Mantém a estrutura { pautas: {...} }
+  } else {
+    congressistasExtras = { congressistas: {} };
+  }
+
+  const evidenciasData = await fetchJSONSeguro(
+    "/api/evidencias_pautas.json",
+    "evidências"
+  );
+  if (evidenciasData) {
+    if (evidenciasData.pautas) {
+      evidenciasPautas = evidenciasData;
     } else {
-      evidenciasPautas = { pautas: evidenciasPautas || {} };
+      evidenciasPautas = { pautas: evidenciasData };
     }
+  } else {
+    evidenciasPautas = { pautas: {} };
+  }
 
-    // Carregar dados da campanha (do front matter - via data attribute)
-    const campanhaDataEl = document.getElementById("pauta-campanha-data");
-    // ... (resto do código igual) ...
-
-    // Carregar parlamentares (essencial - continua buscando o cache)
+  try {
     await carregarParlamentaresComCache();
   } catch (error) {
-    console.error("Erro ao carregar dados iniciais:", error);
-    // ... (resto do código igual) ...
+    console.error("Erro ao carregar parlamentares:", error);
   }
 }
 
