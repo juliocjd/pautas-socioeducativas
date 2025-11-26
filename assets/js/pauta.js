@@ -12,6 +12,11 @@ const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height
 
 const EMAILS_POR_LOTE = 30;
 const MAILTO_MAX_LENGTH = 1900;
+const userAgent =
+  (navigator.userAgent || navigator.vendor || window.opera || "").toLowerCase();
+const isMobileDevice = /android|iphone|ipad|ipod|windows phone|opera mini|iemobile/i.test(
+  userAgent
+);
 
 let parlamentaresAtuaisParaTabela = []; // Guarda a lista correta para os filtros
 
@@ -104,11 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("icon-instagram-2")
     ?.insertAdjacentHTML("afterbegin", instagramIcon); // No modal
 
-  const userAgent =
-    navigator.userAgent || navigator.vendor || window.opera || "";
-  const isMobileDevice = /android|iphone|ipad|ipod|windows phone|opera mini|iemobile/i.test(
-    userAgent
-  );
   const emailButton = document.getElementById("btn-abrir-email");
   const desktopAlert = document.getElementById("aviso-desktop-email");
   if (!isMobileDevice) {
@@ -1190,6 +1190,7 @@ function atualizarDisponibilidadeCampanhaEmail() {
   const wrapper = document.getElementById("objetivo-email-agradecer-wrapper");
   const radioAgradecer = document.getElementById("objetivoEmailAgradecer");
   const radioPedir = document.getElementById("objetivoEmailPedir");
+  const objetivoGroup = document.getElementById("objetivo-email-group");
 
   if (!wrapper || !radioAgradecer || !radioPedir) {
     return;
@@ -1201,6 +1202,7 @@ function atualizarDisponibilidadeCampanhaEmail() {
 
   if (!temMensagemApoio) {
     wrapper.classList.add("d-none");
+    objetivoGroup?.classList.add("d-none");
     radioAgradecer.checked = false;
     radioAgradecer.disabled = true;
     if (!radioPedir.checked) {
@@ -1208,6 +1210,7 @@ function atualizarDisponibilidadeCampanhaEmail() {
     }
   } else {
     wrapper.classList.remove("d-none");
+    objetivoGroup?.classList.remove("d-none");
     radioAgradecer.disabled = false;
   }
 }
@@ -1335,9 +1338,13 @@ function abrirCampanhaEmail() {
           "Selecione parlamentares com email para habilitar o envio.";
         avisoLotesEl.style.display = "block";
       } else if (emails.length > EMAILS_POR_LOTE) {
-        avisoLotesEl.textContent = `Temos ${emails.length} destinatários. Copiamos automaticamente os emails para sua área de transferência; abra o rascunho e cole-os no campo "Para"/"CCO".`;
+        if (isMobileDevice) {
+          avisoLotesEl.textContent = `Temos ${emails.length} destinatários. Copiamos automaticamente os emails para sua área de transferência; abriremos um rascunho e basta colar no campo "Para"/"CCO".`;
+          avisoLotesEl.classList.add("aviso-lotes-destaque");
+        } else {
+          avisoLotesEl.textContent = `Temos ${emails.length} destinatários. Use os botões "Copiar" acima e envie pelo seu webmail (Gmail, Outlook, etc.).`;
+        }
         avisoLotesEl.style.display = "block";
-        avisoLotesEl.classList.add("aviso-lotes-destaque");
       } else {
         avisoLotesEl.textContent = `Até ${EMAILS_POR_LOTE} emails serão inseridos automaticamente no rascunho.`;
         avisoLotesEl.style.display = "block";
@@ -1397,6 +1404,15 @@ async function abrirClienteEmail() {
     return;
   }
 
+  if (!isMobileDevice) {
+    notificarUsuario(
+      "Use os botões \"Copiar\" acima para levar emails, assunto e mensagem ao seu webmail (Gmail/Outlook) e enviar manualmente.",
+      "info",
+      8000
+    );
+    return;
+  }
+
   if (emailsNormalizados.length > EMAILS_POR_LOTE) {
     const lista = emailsNormalizados.join("; ");
     try {
@@ -1412,7 +1428,7 @@ async function abrirClienteEmail() {
     }
 
     notificarUsuario(
-      `Temos ${emailsNormalizados.length} destinatários. Copiamos todos para sua área de transferência; abra o rascunho e cole-os no campo \"Para\"/\"CCO\" antes de enviar.`,
+      `Temos ${emailsNormalizados.length} destinatários. Copiamos todos para sua área de transferência; abriremos um rascunho e basta colar no campo "Para"/"CCO" antes de enviar.`,
       "success",
       8000
     );

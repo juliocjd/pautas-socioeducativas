@@ -126,53 +126,35 @@
 }
 
 /* --- Widget de Progresso (Tracking) --- */
-.tracking-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 13px;
-}
-.tracking-item:last-child {
-  border-bottom: none;
-}
-.tracking-item svg {
-  vertical-align: middle;
-  margin-right: 5px;
-  margin-top: -2px;
-  width: 14px;
-  height: 14px;
-}
-
 /* --- Ícone de Copiar --- */
 .position-relative {
   position: relative;
 }
+.copy-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+  gap: 0.75rem;
+}
+.copy-group-header label {
+  margin-bottom: 0;
+}
 .copy-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
   border: none;
-  border-radius: 50px;
+  border-radius: 999px;
   background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: #fff;
   font-size: 0.8rem;
   font-weight: 600;
-  padding: 0.35rem 0.9rem;
+  padding: 0.35rem 1rem;
   cursor: pointer;
-  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.22);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 .copy-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 20px rgba(79, 70, 229, 0.35);
-}
-input + .copy-btn {
-  top: 50%;
-  transform: translateY(-50%);
-}
-textarea + .copy-btn {
-  top: 14px;
+  box-shadow: 0 12px 20px rgba(79, 70, 229, 0.32);
 }
 #aviso-lotes-email {
   font-size: 0.9em;
