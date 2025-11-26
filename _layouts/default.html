@@ -64,7 +64,7 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-    {% if page.layout == 'pauta' %}
+    {% if page.url contains '/pautas/' %}
     <script src="/assets/js/pauta.js" defer></script>
     {% endif %}
     <!-- Toast container -->
