@@ -150,26 +150,36 @@
 }
 .copy-icon {
   position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  background-color: #ffffff;
   color: #6c757d;
-  opacity: 0.4;
-  transition: opacity 0.2s, color 0.2s;
-  padding: 6px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+.copy-icon svg {
+  width: 16px;
+  height: 16px;
 }
 .copy-icon:hover {
-  opacity: 1;
-  color: #007bff;
+  background-color: #f3f4f6;
+  color: #0056b3;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
 }
 input + .copy-icon {
-  top: calc(50% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
 }
 textarea + .copy-icon {
-  top: 15px;
+  top: 12px;
   transform: none;
   right: 15px;
 }

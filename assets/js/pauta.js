@@ -14,6 +14,7 @@ const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
   <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V4a2 2 0 0 0-2-2 2 2 0 0 0-2-2zM2 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4z"/>
   <path d="M13.5 1a.5.5 0 0 0-.5.5V3h-2a.5.5 0 0 0 0 1h2v1.5a.5.5 0 0 0 1 0V4h1.5a.5.5 0 0 0 0-1H14V1.5a.5.5 0 0 0-.5-.5z"/>
 </svg>`;
+const EMAILS_POR_LOTE = 30;
 
 let parlamentaresAtuaisParaTabela = []; // Guarda a lista correta para os filtros
 
@@ -79,6 +80,14 @@ if (!trackingData[pautaSlug]) {
 }
 
 let assessorCount = 0;
+
+function notificarUsuario(mensagem, tipo = "info", timeout = 5000) {
+  if (typeof showToast === "function") {
+    showToast(mensagem, tipo, timeout);
+  } else {
+    alert(mensagem);
+  }
+}
 
 // Inicialização
 document.addEventListener("DOMContentLoaded", function () {
@@ -1153,6 +1162,33 @@ async function copiarParaClipboard(targetId, buttonEl) {
   }
 }
 
+function normalizarListaEmails(texto = "") {
+  if (!texto) return [];
+  return texto
+    .split(/[\s;,]+/)
+    .map((email) => email.trim())
+    .filter((email) => email && email.includes("@"));
+}
+
+function dividirEmailsEmLotes(lista, tamanho = EMAILS_POR_LOTE) {
+  const lotes = [];
+  if (!Array.isArray(lista) || lista.length === 0) {
+    return lotes;
+  }
+  for (let i = 0; i < lista.length; i += tamanho) {
+    lotes.push(lista.slice(i, i + tamanho));
+  }
+  return lotes;
+}
+
+function criarLinkMailto(destinatarios, assunto, mensagem) {
+  return `mailto:?bcc=${encodeURIComponent(
+    destinatarios.join("; ")
+  )}&subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(
+    mensagem
+  )}`;
+}
+
 function atualizarDisponibilidadeCampanhaEmail() {
   const wrapper = document.getElementById("objetivo-email-agradecer-wrapper");
   const radioAgradecer = document.getElementById("objetivoEmailAgradecer");
@@ -1294,6 +1330,22 @@ function abrirCampanhaEmail() {
     if (textareaEmails) textareaEmails.value = emails.join("; ");
     if (totalEmailsEl)
       totalEmailsEl.innerHTML = `<strong>${emails.length}</strong> email(s) selecionado(s) ${tipoContagem}`;
+    const avisoLotesEl = document.getElementById("aviso-lotes-email");
+    if (avisoLotesEl) {
+      if (emails.length === 0) {
+        avisoLotesEl.textContent =
+          "Selecione parlamentares com email para habilitar o envio.";
+        avisoLotesEl.style.display = "block";
+      } else {
+        const lotesPrevistos = Math.ceil(emails.length / EMAILS_POR_LOTE);
+        if (lotesPrevistos > 1) {
+          avisoLotesEl.textContent = `Temos ${emails.length} destinatários. Abriremos automaticamente ${lotesPrevistos} rascunhos com até ${EMAILS_POR_LOTE} emails cada.`;
+        } else {
+          avisoLotesEl.textContent = `Até ${EMAILS_POR_LOTE} emails são enviados em um único rascunho.`;
+        }
+        avisoLotesEl.style.display = "block";
+      }
+    }
 
     const fraseIdentificacao = gerarPrefixoMensagem(
       "filtro-campanha-estado-email",
@@ -1331,22 +1383,49 @@ function abrirCampanhaEmail() {
 }
 
 function abrirClienteEmail() {
-  const emails = document.getElementById("emails-lista").value;
-  const assunto = document.getElementById("email-assunto").value;
-  const mensagem = document.getElementById("email-mensagem").value;
+  const emailsTextarea = document.getElementById("emails-lista");
+  const assuntoInput = document.getElementById("email-assunto");
+  const mensagemInput = document.getElementById("email-mensagem");
+  const emailsNormalizados = normalizarListaEmails(
+    emailsTextarea?.value || ""
+  );
+  const assunto = assuntoInput?.value || "";
+  const mensagem = mensagemInput?.value || "";
 
-  const mailto = `mailto:?bcc=${encodeURIComponent(
-    emails
-  )}&subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(
-    mensagem
-  )}`;
-
-  if (mailto.length > 2000) {
-    alert("⚠️ Muitos emails! Use os ícones de copiar manualmente.");
+  if (emailsNormalizados.length === 0) {
+    notificarUsuario(
+      "Nenhum email disponível para envio. Ajuste os filtros ou aguarde novos dados.",
+      "error"
+    );
     return;
   }
 
-  window.location.href = mailto;
+  const lotes = dividirEmailsEmLotes(emailsNormalizados, EMAILS_POR_LOTE);
+  if (lotes.length > 1) {
+    notificarUsuario(
+      `Temos ${emailsNormalizados.length} destinatários. Abriremos ${lotes.length} rascunhos em lotes de até ${EMAILS_POR_LOTE} emails cada. Envie todos para completar a campanha.`,
+      "info",
+      7000
+    );
+  }
+
+  for (let i = 0; i < lotes.length; i += 1) {
+    const lote = lotes[i];
+    const mailto = criarLinkMailto(lote, assunto, mensagem);
+    if (mailto.length > 2000) {
+      notificarUsuario(
+        `O lote ${i + 1} excedeu o limite do cliente de email. Reduza a lista (máximo ${EMAILS_POR_LOTE} destinatários) ou simplifique a mensagem.`,
+        "error",
+        6000
+      );
+      return;
+    }
+    if (i === 0) {
+      window.location.href = mailto;
+    } else {
+      window.open(mailto);
+    }
+  }
 
   trackingData[pautaSlug].email = new Date().toISOString();
   salvarTracking();

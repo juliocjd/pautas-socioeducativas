@@ -442,14 +442,19 @@ layout: default
             </div>
           </div>
 
-          <p>
-            <strong>Total Selecionado:</strong>
-            <span id="total-emails-campanha"></span>
-          </p>
-          <div class="form-group position-relative">
-            <label>Lista de Emails (CCO)</label>
-            <textarea
-              class="form-control"
+        <p>
+          <strong>Total Selecionado:</strong>
+          <span id="total-emails-campanha"></span>
+        </p>
+        <small
+          id="aviso-lotes-email"
+          class="text-muted d-block mb-2"
+          style="display: none;"
+        ></small>
+        <div class="form-group position-relative">
+          <label>Lista de Emails (CCO)</label>
+          <textarea
+            class="form-control"
               id="emails-lista"
               rows="3"
               readonly
