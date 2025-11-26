@@ -112,7 +112,12 @@ async function carregarDadosNecessarios() {
   try {
     // Carregar dados extras (NOVO ENDPOINT)
     const extrasRes = await fetch("/api/congressistas_extras.json"); // <-- MUDOU AQUI
-    if (extrasRes.ok) congressistasExtras = await extrasRes.json();
+    if (extrasRes.ok) {
+      congressistasExtras = await extrasRes.json();
+    } else {
+      console.warn("Falha ao carregar congressistas extras:", extrasRes.status);
+      congressistasExtras = { congressistas: {} };
+    }
     // Adiciona uma verificação extra, pois o JSON agora vem de `site.data` que pode ter a chave 'congressistas'
     if (congressistasExtras && congressistasExtras.congressistas) {
       congressistasExtras = congressistasExtras; // Mantém a estrutura { congressistas: {...} } se ela existir
@@ -123,7 +128,12 @@ async function carregarDadosNecessarios() {
 
     // Carregar evidências (NOVO ENDPOINT)
     const evidenciasRes = await fetch("/api/evidencias_pautas.json"); // <-- MUDOU AQUI
-    if (evidenciasRes.ok) evidenciasPautas = await evidenciasRes.json();
+    if (evidenciasRes.ok) {
+      evidenciasPautas = await evidenciasRes.json();
+    } else {
+      console.warn("Falha ao carregar evidências:", evidenciasRes.status);
+      evidenciasPautas = { pautas: {} };
+    }
     // Adiciona uma verificação similar para evidências, caso venha com a chave 'pautas'
     if (evidenciasPautas && evidenciasPautas.pautas) {
       evidenciasPautas = evidenciasPautas; // Mantém a estrutura { pautas: {...} }
@@ -243,13 +253,28 @@ function finalizarCarregamento() {
     const campanhaDataEl = document.getElementById("pauta-campanha-data");
     if (campanhaDataEl) {
       // Parseia o JSON que o Jekyll/Liquid gerou
+    try {
       campanhaEmail = JSON.parse(campanhaDataEl.dataset.campanhaEmail || "{}");
+    } catch (e) {
+      console.warn("Falha ao parsear campanhaEmail:", e);
+      campanhaEmail = {};
+    }
+    try {
       campanhaWhatsApp = JSON.parse(
         campanhaDataEl.dataset.campanhaWhatsapp || "{}"
       );
+    } catch (e) {
+      console.warn("Falha ao parsear campanhaWhatsapp:", e);
+      campanhaWhatsApp = {};
+    }
+    try {
       campanhaInstagram = JSON.parse(
         campanhaDataEl.dataset.campanhaInstagram || "{}"
       );
+    } catch (e) {
+      console.warn("Falha ao parsear campanhaInstagram:", e);
+      campanhaInstagram = {};
+    }
       console.log("✅ Dados da campanha carregados do DOM.");
     } else {
       console.warn("Elemento #pauta-campanha-data não encontrado.");
