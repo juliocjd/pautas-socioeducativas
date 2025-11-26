@@ -508,8 +508,8 @@ is_plenary_vote: ${isPlenaryVote}
 
   // --- NOVA LÓGICA: Geração do YAML das Campanhas ---
   const hasAnyCampaign = enableEmail || enableWhatsApp || enableInstagram;
-  if (hasAnyCampaign && msgOpposition && msgSupport) {
-    // Só adiciona se tiver mensagens principais
+  if (hasAnyCampaign && msgOpposition) {
+    // Só adiciona se tiver a mensagem principal (oposição/neutro)
     yaml += `campanha:\n`;
 
     // Função auxiliar para formatar mensagem multiline
@@ -520,19 +520,22 @@ is_plenary_vote: ${isPlenaryVote}
       yaml += `  email:\n`;
       if (emailSubject) yaml += `    assunto: "${emailSubject}"\n`;
       yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
-      yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
+      if (msgSupport)
+        yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
       if (emailExtra)
         yaml += `    mensagem_extra: ${formatYamlMessage(emailExtra)}\n`;
     }
     if (enableWhatsApp) {
       yaml += `  whatsapp:\n`;
       yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
-      yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
+      if (msgSupport)
+        yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
     }
     if (enableInstagram) {
       yaml += `  instagram:\n`;
       yaml += `    mensagem_oposicao: ${formatYamlMessage(msgOpposition)}\n`;
-      yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
+      if (msgSupport)
+        yaml += `    mensagem_apoio: ${formatYamlMessage(msgSupport)}\n`;
     }
   }
   // --- FIM DA NOVA LÓGICA ---

@@ -263,6 +263,8 @@ function finalizarCarregamento() {
   }
   // <<< FIM DA CORREÇÃO DO BUG 5 >>>
 
+  atualizarDisponibilidadeCampanhaEmail();
+
   let parlamentaresParaExibir = [];
 
   if (isPlenaryVote) {
@@ -1117,18 +1119,45 @@ async function copiarParaClipboard(targetId, buttonEl) {
   }
 }
 
+function atualizarDisponibilidadeCampanhaEmail() {
+  const wrapper = document.getElementById("objetivo-email-agradecer-wrapper");
+  const radioAgradecer = document.getElementById("objetivoEmailAgradecer");
+  const radioPedir = document.getElementById("objetivoEmailPedir");
+
+  if (!wrapper || !radioAgradecer || !radioPedir) {
+    return;
+  }
+
+  const temMensagemApoio = Boolean(
+    campanhaEmail && campanhaEmail.mensagem_apoio
+  );
+
+  if (!temMensagemApoio) {
+    wrapper.classList.add("d-none");
+    radioAgradecer.checked = false;
+    radioAgradecer.disabled = true;
+    if (!radioPedir.checked) {
+      radioPedir.checked = true;
+    }
+  } else {
+    wrapper.classList.remove("d-none");
+    radioAgradecer.disabled = false;
+  }
+}
+
 function abrirCampanhaEmail() {
   // Verifica se o objeto campanhaEmail existe e tem dados necessários
   if (
     !campanhaEmail ||
     !campanhaEmail.assunto ||
-    !campanhaEmail.mensagem_oposicao ||
-    !campanhaEmail.mensagem_apoio
+    !campanhaEmail.mensagem_oposicao
   ) {
     return alert(
-      "Campanha de email não configurada corretamente (faltando assunto ou mensagens de oposição/apoio)."
+      "Campanha de email não configurada corretamente (faltando assunto ou mensagem de oposição)."
     );
   }
+
+  atualizarDisponibilidadeCampanhaEmail();
 
   // Elementos do DOM
   const selectEstado = document.getElementById("filtro-campanha-estado-email");
@@ -1161,9 +1190,14 @@ function abrirCampanhaEmail() {
   // Função interna para atualizar a lista e a mensagem
   function atualizarFiltroEmail() {
     const estadoSelecionado = selectEstado ? selectEstado.value : ""; // Fallback
-    const objetivoSelecionado =
-      document.querySelector('input[name="objetivoEmail"]:checked')?.value ||
-      "pedir";
+    const radioObjetivo = document.querySelector('input[name="objetivoEmail"]:checked');
+    const permiteAgradecer = Boolean(campanhaEmail.mensagem_apoio);
+    let objetivoSelecionado = radioObjetivo?.value || "pedir";
+    if (objetivoSelecionado === "agradecer" && !permiteAgradecer) {
+      objetivoSelecionado = "pedir";
+      const radioPedir = document.getElementById("objetivoEmailPedir");
+      if (radioPedir) radioPedir.checked = true;
+    }
 
     let parlamentaresFiltrados = [];
     let mensagemBase = templateOposicao;
@@ -1433,11 +1467,10 @@ function atualizarListaInstagram() {
 function enviarWhatsApp(parlamentarId, nomeEscapado) {
   if (
     !campanhaWhatsApp ||
-    !campanhaWhatsApp.mensagem_oposicao ||
-    !campanhaWhatsApp.mensagem_apoio
+    !campanhaWhatsApp.mensagem_oposicao
   ) {
     return alert(
-      "Campanha de WhatsApp não configurada corretamente (mensagens faltando)."
+      "Campanha de WhatsApp n?o configurada corretamente (mensagem de oposi??o faltando)."
     );
   }
 
@@ -1457,6 +1490,12 @@ function enviarWhatsApp(parlamentarId, nomeEscapado) {
     );
 
   const posicao = obterPosicao(parlamentarId);
+
+  if (posicao === "apoia" && !campanhaWhatsApp.mensagem_apoio) {
+    return alert(
+      "Ainda n?o cadastramos mensagem de agradecimento para esta campanha."
+    );
+  }
 
   // --- INÍCIO DA PERSONALIZAÇÃO ---
   // 1. Determinar Saudação Personalizada (com fallback)
@@ -1557,9 +1596,9 @@ function enviarInstagram(parlamentarId, nomeEscapado) {
     document.getElementById("instagram-mensagem-oposicao")?.value || "";
   const templateApoio =
     document.getElementById("instagram-mensagem-apoio")?.value || "";
-  if (!templateOposicao || !templateApoio) {
+  if (!templateOposicao) {
     return alert(
-      "Campanha de Instagram não configurada corretamente (mensagens faltando nos templates ocultos)."
+      "Campanha de Instagram n?o configurada corretamente (mensagem de oposi??o faltando nos templates ocultos)."
     );
   }
 
@@ -1577,6 +1616,12 @@ function enviarInstagram(parlamentarId, nomeEscapado) {
     );
 
   const posicao = obterPosicao(parlamentarId);
+
+  if (posicao === "apoia" && !templateApoio) {
+    return alert(
+      "Ainda n?o cadastramos mensagem de agradecimento para esta campanha."
+    );
+  }
 
   // --- INÍCIO DA PERSONALIZAÇÃO ---
   // 1. Determinar Saudação Personalizada (com fallback)
