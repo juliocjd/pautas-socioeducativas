@@ -1193,17 +1193,25 @@ function normalizarListaEmails(texto = "") {
 }
 
 function criarLinkMailto(destinatarios, assunto, mensagem) {
-  const destinatariosFormatados = destinatarios
-    .map((email) => email.trim())
-    .filter(Boolean)
-    .map((email) => encodeURIComponent(email))
-    .join(",");
+  const emailsLimpos = destinatarios.map((email) => email.trim()).filter(Boolean);
 
-  return `mailto:${destinatariosFormatados}?subject=${encodeURIComponent(
-    assunto
-  )}&body=${encodeURIComponent(
-    mensagem
-  )}`;
+  const [primeiroEmail, ...emailsRestantes] = emailsLimpos;
+  const baseMailto = primeiroEmail
+    ? `mailto:${encodeURIComponent(primeiroEmail)}`
+    : "mailto:";
+
+  const queryParts = [];
+
+  if (emailsRestantes.length > 0) {
+    queryParts.push(
+      `bcc=${encodeURIComponent(emailsRestantes.join(", "))}`
+    );
+  }
+
+  queryParts.push(`subject=${encodeURIComponent(assunto || "")}`);
+  queryParts.push(`body=${encodeURIComponent(mensagem || "")}`);
+
+  return `${baseMailto}?${queryParts.join("&")}`;
 }
 
 function atualizarDisponibilidadeCampanhaEmail() {
