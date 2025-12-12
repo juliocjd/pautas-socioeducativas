@@ -1193,9 +1193,15 @@ function normalizarListaEmails(texto = "") {
 }
 
 function criarLinkMailto(destinatarios, assunto, mensagem) {
-  return `mailto:?to=${encodeURIComponent(
-    destinatarios.join("; ")
-  )}&subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(
+  const destinatariosFormatados = destinatarios
+    .map((email) => email.trim())
+    .filter(Boolean)
+    .map((email) => encodeURIComponent(email))
+    .join(",");
+
+  return `mailto:${destinatariosFormatados}?subject=${encodeURIComponent(
+    assunto
+  )}&body=${encodeURIComponent(
     mensagem
   )}`;
 }
