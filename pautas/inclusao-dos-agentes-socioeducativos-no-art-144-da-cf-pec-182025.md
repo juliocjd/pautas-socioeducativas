@@ -2,9 +2,9 @@
 layout: pauta
 title: Inclusão dos Agentes Socioeducativos no Art. 144 da CF – PEC 18/2025
 description: |
-  DESTAQUE 12 para inclusão da Emenda 11 na PEC 18/2025, incluindo os agentes socioeducativos no rol de segurança pública no art. 144 da Constituição Federal.
+  Pedido de apoio ao Destaque nº 12, visando que a Emenda nº 11 seja acatada em sua integralidade, para inclusão dos Órgãos do Sistema Socioeducativo no art. 144 da CF. 
   
-  A hora é contactar
+  O pedido visa apoio dos parlamentares que fazem parte da Comissão Especial, para que convençam o Relator de incluir o Sistema Socioeducativo em um substitutivo, sem passar pelo plenário o pedido veiculado no Destaque nº 12.
 casa: Câmara dos Deputados
 status: Comissão Especial
 featured: true
@@ -12,10 +12,10 @@ is_plenary_vote: false
 key_players:
   - nome: "Alberto Fraga"
     role: "1º Vice-Presidente"
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Aluisio Mendes"
     role: "Presidente"
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Amaro Neto"
     role: ""
     position: "nao-manifestado"
@@ -30,7 +30,7 @@ key_players:
     position: "nao-manifestado"
   - nome: "Coronel Assis"
     role: ""
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Célio Silveira"
     role: ""
     position: "nao-manifestado"
@@ -51,7 +51,7 @@ key_players:
     position: "nao-manifestado"
   - nome: "Dr. Ismael Alexandrino"
     role: "2º Vice-Presidente"
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Eriberto Medeiros"
     role: ""
     position: "nao-manifestado"
@@ -75,13 +75,10 @@ key_players:
     position: "nao-manifestado"
   - nome: "Maria do Rosário"
     role: ""
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Max Lemos"
     role: ""
-    position: "nao-manifestado"
-  - nome: "Mendonça Filho"
-    role: "Relator"
-    position: "contrario"
+    position: "apoia"
   - nome: "Nicoletti"
     role: ""
     position: "nao-manifestado"
@@ -93,61 +90,53 @@ key_players:
     position: "nao-manifestado"
   - nome: "Sanderson"
     role: ""
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Sargento Gonçalves"
     role: ""
-    position: "nao-manifestado"
+    position: "apoia"
   - nome: "Sargento Portugal"
     role: ""
     position: "nao-manifestado"
 campanha:
   email:
-    assunto: "Inclusão dos Agentes Socioeducativos no Art. 144 da Constituição Federal – PEC 18/2025"
+    assunto: "Pedido de apoio ao Destaque nº 12 (PEC 18/2025) - Inclusão dos Agentes Socioeducativos no Art. 144 da CF "
     mensagem_oposicao: |
-      Venho respeitosamente solicitar a Vossa Excelência a inclusão expressa dos agentes socioeducativos estaduais no texto da PEC 18/2025, que trata da Segurança Pública, reconhecendo a categoria como integrante do sistema de segurança pública, à semelhança do que já ocorre com a Polícia Penal.
+      Venho respeitosamente requerer a Vossa Excelência a inclusão dos agentes socioeducativos no texto da PEC 18/2025, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9, proposto pela Deputada Laura Carneiro.
       
-      1. Fundamentação funcional e jurídica
+      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator, deputado Mendonça Filho, a necessidade de um novo substitutivo do texto final, evitando que referido Destaque precise passar pelo plenário para aprovação.
       
-      O agente socioeducativo exerce custódia direta de adolescentes privados de liberdade, garantindo segurança, disciplina, vigilância, contenção física, prevenção de fugas e intervenção em crises.
-      Tais atividades são materialmente idênticas às realizadas pelos policiais penais, com quem compartilham:
-      a) risco acentuado;
-      b) exposição permanente à violência;
-      c) ambiente de privação de liberdade;
-      d) atribuições de vigilância e segurança institucional.
+      Conto com seu apoio, essa inclusão é muito importante para nós. Muito obrigado!
+    mensagem_apoio: |
+      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE EMENDA Nº 12 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do sistema socioeducativo na Constituição. 
       
-      2. Reconhecimento judicial da periculosidade
+      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator a necessidade de um novo substitutivo do texto final da PEC 18/2025, evitando que referido destaque precise passar pelo plenário.
       
-      O Tribunal Superior do Trabalho (TST), em julgamento repetitivo (IRR-1001796-60.2014.5.02.0382), firmou tese reconhecendo que o agente socioeducativo da Fundação Casa-SP exerce atividade perigosa, pelo risco intrínseco decorrente da custódia e vigilância de adolescentes internos.
-      Tal entendimento se fundamenta em fatos objetivos e é plenamente aplicável às demais unidades socioeducativas do país.
+      Conto com seu apoio e muito obrigado!
+  whatsapp:
+    mensagem_oposicao: |
+      Venho respeitosamente requerer a Vossa Excelência a inclusão dos agentes socioeducativos no texto da PEC 18/2025, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9, proposto pela Deputada Laura Carneiro.
       
-      Embora a função tenha componente pedagógico, não existe socioeducação sem custódia, e não existe custódia sem segurança.
-      A Constituição deve refletir essa realidade.
-      O atual vazio constitucional deixa a categoria vulnerável e impede padronização nacional de carreira, formação, prerrogativas e garantias.
+      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator, deputado Mendonça Filho, a necessidade de um novo substitutivo do texto final, evitando que referido Destaque precise passar pelo plenário para aprovação.
       
-      4. Por que incluir os agentes socioeducativos no art. 144 
-      - garante segurança jurídica para os servidores e para o próprio Estado; 
-      - reduz conflitos internos e de competências; 
-      - fortalece o SUSP (Sistema Único de Segurança Pública); 
-      - padroniza protocolos de segurança nas unidades de internação; 
-      - alinha o Brasil às melhores práticas internacionais em justiça juvenil.
+      Conto com seu apoio, essa inclusão é muito importante para nós. Muito obrigado!
+    mensagem_apoio: |
+      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE EMENDA Nº 12 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do sistema socioeducativo na Constituição. 
       
-      5. Proposta de redação
+      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator a necessidade de um novo substitutivo do texto final da PEC 18/2025, evitando que referido destaque precise passar pelo plenário.
       
-      Sugerimos a inclusão do seguinte dispositivo:
+      Conto com seu apoio e muito obrigado!
+  instagram:
+    mensagem_oposicao: |
+      Venho respeitosamente requerer a Vossa Excelência a inclusão dos agentes socioeducativos no texto da PEC 18/2025, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9, proposto pela Deputada Laura Carneiro.
       
-      "§ X – Os agentes socioeducativos, encarregados da custódia, vigilância e segurança de adolescentes em privação de liberdade nos termos do SINASE, integram o sistema de segurança pública, com atribuições definidas em lei federal."
+      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator, deputado Mendonça Filho, a necessidade de um novo substitutivo do texto final, evitando que referido Destaque precise passar pelo plenário para aprovação.
       
-      Assim, solicita-se que a Comissão Especial considere a inclusão expressa dessa carreira essencial na PEC 18/2025.
+      Conto com seu apoio, essa inclusão é muito importante para nós. Muito obrigado!
+    mensagem_apoio: |
+      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE EMENDA Nº 12 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do sistema socioeducativo na Constituição. 
+      
+      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator a necessidade de um novo substitutivo do texto final da PEC 18/2025, evitando que referido destaque precise passar pelo plenário.
+      
+      Conto com seu apoio e muito obrigado!
 ---
 
-Texto técnico para enviar a deputados defendendo a inclusão dos agentes socioeducativos na PEC 18
-
-✔ Vocês exercem custódia, não apenas socioeducação.
-✔ O risco é reconhecido pelo TST como “permanente e acentuado”.
-✔ O ambiente é prisional juvenil, com violência e rebeliões.
-✔ A função é híbrida, como o policial penal (educar + custodiar).
-✔ A Constituição está desatualizada: descreve a função socioeducativa apenas no aspecto pedagógico, ignorando a segurança.
-✔ A PEC 18 é o momento ideal: o texto está aberto para inserções.
-✔ A inclusão melhora o SUSP e padroniza normas nacionais.
-✔ Protege o adolescente, pois garante profissionais mais capacitados, treinados e valorizados.
-✔ Protege o próprio Estado, reduzindo ações judiciais, acidentes e falhas de gestão.
