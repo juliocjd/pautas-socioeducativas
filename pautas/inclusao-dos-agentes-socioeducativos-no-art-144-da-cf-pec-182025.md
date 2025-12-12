@@ -2,9 +2,9 @@
 layout: pauta
 title: Inclusão dos Agentes Socioeducativos no Art. 144 da CF – PEC 18/2025
 description: |
-  Pedido de apoio ao Destaque nº 12, visando que a Emenda nº 11 seja acatada em sua integralidade, para inclusão dos Órgãos do Sistema Socioeducativo no art. 144 da CF. 
+  Estamos pedindo apoio à Emenda nº 11, por meio do Destaque nº 12, para incluir os órgãos do Sistema Socioeducativo no artigo 144 da Constituição Federal. 
   
-  O pedido visa apoio dos parlamentares que fazem parte da Comissão Especial, para que convençam o Relator de incluir o Sistema Socioeducativo em um substitutivo, sem passar pelo plenário o pedido veiculado no Destaque nº 12.
+  Precisamos do apoio dos parlamentares da Comissão Especial para convencer o Relator a adotar essa inclusão diretamente no substitutivo, sem precisar ir ao Plenário.
 casa: Câmara dos Deputados
 status: Comissão Especial
 featured: true
@@ -99,7 +99,7 @@ key_players:
     position: "nao-manifestado"
 campanha:
   email:
-    assunto: "Pedido de apoio ao Destaque nº 12 (PEC 18/2025) - Inclusão dos Agentes Socioeducativos no Art. 144 da CF "
+    assunto: "Pedido de apoio ao Destaque nº 12 (PEC 18/2025) - Inclusão dos Agentes Socioeducativos no Art. 144 da CF"
     mensagem_oposicao: |
       Venho respeitosamente requerer a Vossa Excelência a inclusão dos agentes socioeducativos no texto da PEC 18/2025, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9, proposto pela Deputada Laura Carneiro.
       
