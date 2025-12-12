@@ -1,22 +1,85 @@
 congressistas:
-  '160573':
-    whatsapp: '21987654321'
-    instagram: depciclano
-    ultima_atualizacao: '2025-01-18'
-  '178881':
-    instagram: aluisiomendesma
-    ultima_atualizacao: '2025-10-29'
-    whatsapp:
-      - '44999999262'
-  '204534':
-    whatsapp: '11987654321'
-    instagram: deputadofulano
-    telefone_gabinete: (61) 3215-5000
-    assessores:
-      - nome: João Silva
-        whatsapp: '11999999999'
-        cargo: Chefe de Gabinete
-      - nome: Maria Santos
-        whatsapp: '11988888888'
-        cargo: Assessora de Imprensa
-    ultima_atualizacao: '2025-01-20'
+  '73579':
+    instagram: dep_albertofraga
+    ultima_atualizacao: '2025-12-12'
+  '204356':
+    instagram: amaronetotv
+    ultima_atualizacao: '2025-12-12'
+  '160512':
+    instagram: aureo.ribeiro
+    ultima_atualizacao: '2025-12-12'
+  '220690':
+    instagram: capitao_alden
+    ultima_atualizacao: '2025-12-12'
+  '178829':
+    instagram: capitaoaugustooficial
+    ultima_atualizacao: '2025-12-12'
+  '220594':
+    instagram: coronelassis
+    ultima_atualizacao: '2025-12-12'
+  '178876':
+    instagram: celiosilveiradeputado
+    ultima_atualizacao: '2025-12-12'
+  '141411':
+    instagram: dagobertonogueirams
+    ultima_atualizacao: '2025-12-12'
+  '220565':
+    instagram: adriana_accorsi
+    ultima_atualizacao: '2025-12-12'
+  '220642':
+    instagram: del.brunolima
+    ultima_atualizacao: '2025-12-12'
+  '220583':
+    instagram: delegadofabiocosta
+    ultima_atualizacao: '2025-12-12'
+  '220649':
+    instagram: delegadodacunha
+    ultima_atualizacao: '2025-12-12'
+  '220570':
+    instagram: ismael.alexandrino
+    ultima_atualizacao: '2025-12-12'
+  '220663':
+    instagram: eriberto.medeiros
+    ultima_atualizacao: '2025-12-12'
+  '220611':
+    instagram: generalpazuello.oficial
+    ultima_atualizacao: '2025-12-12'
+  '220672':
+    instagram: hendersonpintooficial
+    ultima_atualizacao: '2025-12-12'
+  '141450':
+    instagram: dephugoleal
+    ultima_atualizacao: '2025-12-12'
+  '178857':
+    instagram: depjorgesolla
+    ultima_atualizacao: '2025-12-12'
+  '220677':
+    instagram: kenistonoficial
+    ultima_atualizacao: '2025-12-12'
+  '98057':
+    instagram: lafayetteandrada
+    ultima_atualizacao: '2025-12-12'
+  '74398':
+    instagram: _mariadorosario
+    ultima_atualizacao: '2025-12-12'
+  '220607':
+    instagram: maxlemosoficial
+    ultima_atualizacao: '2025-12-12'
+  '204479':
+    instagram: deputadonicoletti
+    ultima_atualizacao: '2025-12-12'
+  '74160':
+    instagram: patrus_ananias
+    ultima_atualizacao: '2025-12-12'
+  'SEN-70':
+    instagram: renildocalheiros
+    ultima_atualizacao: '2025-12-12'
+  '204416':
+    instagram: deputadosanderson
+    ultima_atualizacao: '2025-12-12'
+  '220621':
+    instagram: sargentogoncalves22
+    ultima_atualizacao: '2025-12-12'
+  '220618':
+    instagram: sargentoportugal
+    ultima_atualizacao: '2025-12-12'
