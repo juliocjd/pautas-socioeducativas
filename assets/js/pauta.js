@@ -1741,6 +1741,9 @@ function abrirCampanhaInstagram() {
 
   atualizarListaInstagram();
   // Necessário jQuery
+  alert(
+    'Atenção: Ao clicar em \"Abrir Direct\", a mensagem correta (pedido ou agradecimento) será copiada para sua área de transferência. Devido a limitações do Instagram, você precisará colar manualmente a mensagem no Direct que será aberto.'
+  );
   $("#modalCampanhaInstagram").modal("show");
 }
 

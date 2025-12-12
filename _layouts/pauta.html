@@ -3,6 +3,7 @@ layout: default
 ---
 
   <div class="container">
+    {% assign pauta_content_text = content | strip %}
     <div id="pauta-data" data-pauta-slug="{{ page.fileSlug }}" data-casa-legislativa="{{ casa }}" data-is-plenary-vote="{{ is_plenary_vote }}"></div>
     <div id="pauta-keyplayers-data" data-key-players='{{ key_players | jsonify | escape }}'></div>
     <div id="pauta-campanha-data"
@@ -28,16 +29,20 @@ layout: default
           <p class="mb-0"><strong>Status:</strong> {{ status }}</p>
         </div>
       </div>
+      {% if pauta_content_text != "" %}
       <a class="btn btn-sm btn-light pauta-entenda-btn" data-toggle="collapse" href="#pautaContent" role="button" aria-expanded="false" aria-controls="pautaContent" style="float: right;">
         Entenda esta pauta
       </a>
+      {% endif %}
     </div>
 
+    {% if pauta_content_text != "" %}
     <div class="collapse" id="pautaContent">
       <div class="card card-body">
         {{ content }}
       </div>
     </div>
+    {% endif %}
 
     {% if campanha %}
     <div class="campanhas-section mb-5">
