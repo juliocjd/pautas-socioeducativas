@@ -11,12 +11,15 @@ const instagramIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height
 </svg>`;
 
 const EMAILS_POR_LOTE = 30;
-const MAILTO_MAX_LENGTH = 1900;
-const userAgent =
-  (navigator.userAgent || navigator.vendor || window.opera || "").toLowerCase();
-const isMobileDevice = /android|iphone|ipad|ipod|windows phone|opera mini|iemobile/i.test(
-  userAgent
-);
+const MAILTO_MAX_LENGTH = 2500;
+const userAgent = (
+  navigator.userAgent ||
+  navigator.vendor ||
+  window.opera ||
+  ""
+).toLowerCase();
+const isMobileDevice =
+  /android|iphone|ipad|ipod|windows phone|opera mini|iemobile/i.test(userAgent);
 
 let parlamentaresAtuaisParaTabela = []; // Guarda a lista correta para os filtros
 
@@ -260,9 +263,13 @@ function finalizarCarregamento() {
   let keyPlayers = [];
   let keyPlayerNames = [];
   try {
-    const keyPlayersStr = document.getElementById("pauta-keyplayers-data")?.dataset.keyPlayers || "[]";
+    const keyPlayersStr =
+      document.getElementById("pauta-keyplayers-data")?.dataset.keyPlayers ||
+      "[]";
     // DESESCAPAR A STRING ANTES DE PARSEAR
-    const unescapedStr = keyPlayersStr.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+    const unescapedStr = keyPlayersStr
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'");
     console.log("DEBUG: keyPlayersStr (raw from DOM):", keyPlayersStr);
     console.log("DEBUG: unescapedStr (before JSON.parse):", unescapedStr);
     const parsedKP = JSON.parse(unescapedStr);
@@ -279,28 +286,30 @@ function finalizarCarregamento() {
     const campanhaDataEl = document.getElementById("pauta-campanha-data");
     if (campanhaDataEl) {
       // Parseia o JSON que o Jekyll/Liquid gerou
-    try {
-      campanhaEmail = JSON.parse(campanhaDataEl.dataset.campanhaEmail || "{}");
-    } catch (e) {
-      console.warn("Falha ao parsear campanhaEmail:", e);
-      campanhaEmail = {};
-    }
-    try {
-      campanhaWhatsApp = JSON.parse(
-        campanhaDataEl.dataset.campanhaWhatsapp || "{}"
-      );
-    } catch (e) {
-      console.warn("Falha ao parsear campanhaWhatsapp:", e);
-      campanhaWhatsApp = {};
-    }
-    try {
-      campanhaInstagram = JSON.parse(
-        campanhaDataEl.dataset.campanhaInstagram || "{}"
-      );
-    } catch (e) {
-      console.warn("Falha ao parsear campanhaInstagram:", e);
-      campanhaInstagram = {};
-    }
+      try {
+        campanhaEmail = JSON.parse(
+          campanhaDataEl.dataset.campanhaEmail || "{}"
+        );
+      } catch (e) {
+        console.warn("Falha ao parsear campanhaEmail:", e);
+        campanhaEmail = {};
+      }
+      try {
+        campanhaWhatsApp = JSON.parse(
+          campanhaDataEl.dataset.campanhaWhatsapp || "{}"
+        );
+      } catch (e) {
+        console.warn("Falha ao parsear campanhaWhatsapp:", e);
+        campanhaWhatsApp = {};
+      }
+      try {
+        campanhaInstagram = JSON.parse(
+          campanhaDataEl.dataset.campanhaInstagram || "{}"
+        );
+      } catch (e) {
+        console.warn("Falha ao parsear campanhaInstagram:", e);
+        campanhaInstagram = {};
+      }
       console.log("✅ Dados da campanha carregados do DOM.");
     } else {
       console.warn("Elemento #pauta-campanha-data não encontrado.");
@@ -507,13 +516,15 @@ function obterPosicao(parlamentarId) {
   if (keyPlayersDataEl) {
     try {
       // Parse potencialmente null data attribute mais safely
-      const keyPlayersStr = keyPlayersDataEl.dataset.keyPlayers || "[]"; 
+      const keyPlayersStr = keyPlayersDataEl.dataset.keyPlayers || "[]";
       let keyPlayers = null;
 
       // Tenta o parse, mas evita erro se a string for inválida ou "null"
       try {
         // O HTML 'escapa' as aspas (ex: &quot;), precisamos de as reverter
-        const unescapedStr = keyPlayersStr.replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+        const unescapedStr = keyPlayersStr
+          .replace(/&quot;/g, '"')
+          .replace(/&apos;/g, "'");
         keyPlayers = JSON.parse(unescapedStr);
       } catch (parseError) {
         console.warn(
@@ -1127,19 +1138,22 @@ function gerarPrefixoMensagem(idSelectEstado, idInputNome) {
   const estadoSelecionado = selectEstadoEl ? selectEstadoEl.value : null;
   const nomeUsuario = inputNomeEl ? inputNomeEl.value : null;
 
-  let frase = "Sou Agente de Segurança Socioeducativo"; // Padrão
+  const partes = [];
 
-  if (estadoSelecionado && nomeUsuario) {
+  if (estadoSelecionado) {
     const nomeEstado = mapEstados[estadoSelecionado] || estadoSelecionado;
-    frase += ` do Estado do ${nomeEstado}, meu nome é ${nomeUsuario}`;
-  } else if (estadoSelecionado) {
-    const nomeEstado = mapEstados[estadoSelecionado] || estadoSelecionado;
-    frase += ` do Estado do ${nomeEstado}`;
-  } else if (nomeUsuario) {
-    frase += `, meu nome é ${nomeUsuario}`;
+    partes.push(`Sou do Estado do ${nomeEstado}`);
   }
 
-  return frase + "."; // Adiciona ponto final
+  if (nomeUsuario) {
+    partes.push(`meu nome é ${nomeUsuario}`);
+  }
+
+  if (partes.length === 0) {
+    return "";
+  }
+
+  return partes.join(", ") + ".";
 }
 
 // NOVO: Função auxiliar para copiar
@@ -1179,7 +1193,7 @@ function normalizarListaEmails(texto = "") {
 }
 
 function criarLinkMailto(destinatarios, assunto, mensagem) {
-  return `mailto:?bcc=${encodeURIComponent(
+  return `mailto:?to=${encodeURIComponent(
     destinatarios.join("; ")
   )}&subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(
     mensagem
@@ -1260,7 +1274,9 @@ function abrirCampanhaEmail() {
   // Função interna para atualizar a lista e a mensagem
   function atualizarFiltroEmail() {
     const estadoSelecionado = selectEstado ? selectEstado.value : ""; // Fallback
-    const radioObjetivo = document.querySelector('input[name="objetivoEmail"]:checked');
+    const radioObjetivo = document.querySelector(
+      'input[name="objetivoEmail"]:checked'
+    );
     const permiteAgradecer = Boolean(campanhaEmail.mensagem_apoio);
     let objetivoSelecionado = radioObjetivo?.value || "pedir";
     if (objetivoSelecionado === "agradecer" && !permiteAgradecer) {
@@ -1390,9 +1406,7 @@ async function abrirClienteEmail() {
   const emailsTextarea = document.getElementById("emails-lista");
   const assuntoInput = document.getElementById("email-assunto");
   const mensagemInput = document.getElementById("email-mensagem");
-  const emailsNormalizados = normalizarListaEmails(
-    emailsTextarea?.value || ""
-  );
+  const emailsNormalizados = normalizarListaEmails(emailsTextarea?.value || "");
   const assunto = assuntoInput?.value || "";
   const mensagem = mensagemInput?.value || "";
 
@@ -1406,7 +1420,7 @@ async function abrirClienteEmail() {
 
   if (!isMobileDevice) {
     notificarUsuario(
-      "Use os botões \"Copiar\" acima para levar emails, assunto e mensagem ao seu webmail (Gmail/Outlook) e enviar manualmente.",
+      'Use os botões "Copiar" acima para levar emails, assunto e mensagem ao seu webmail (Gmail/Outlook) e enviar manualmente.',
       "info",
       8000
     );
@@ -1454,7 +1468,7 @@ async function abrirClienteEmail() {
       }
 
       notificarUsuario(
-        "O texto ficou grande demais para adicionar automaticamente os emails. Copiamos a lista para sua área de transferência; cole-a no campo \"Para\"/\"CCO\" do rascunho.",
+        'O texto ficou grande demais para adicionar automaticamente os emails. Copiamos a lista para sua área de transferência; cole-a no campo "Para"/"CCO" do rascunho.',
         "success",
         8000
       );
@@ -1618,10 +1632,7 @@ function atualizarListaInstagram() {
 }
 
 function enviarWhatsApp(parlamentarId, nomeEscapado) {
-  if (
-    !campanhaWhatsApp ||
-    !campanhaWhatsApp.mensagem_oposicao
-  ) {
+  if (!campanhaWhatsApp || !campanhaWhatsApp.mensagem_oposicao) {
     return alert(
       "Campanha de WhatsApp n?o configurada corretamente (mensagem de oposi??o faltando)."
     );
@@ -1742,7 +1753,7 @@ function abrirCampanhaInstagram() {
   atualizarListaInstagram();
   // Necessário jQuery
   alert(
-    'Atenção: Ao clicar em \"Abrir Direct\", a mensagem correta (pedido ou agradecimento) será copiada para sua área de transferência. Devido a limitações do Instagram, você precisará colar manualmente a mensagem no Direct que será aberto.'
+    'Atenção: Ao clicar em "Abrir Direct", a mensagem correta (pedido ou agradecimento) será copiada para sua área de transferência. Devido a limitações do Instagram, você precisará colar manualmente a mensagem no Direct que será aberto.'
   );
   $("#modalCampanhaInstagram").modal("show");
 }
