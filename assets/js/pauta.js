@@ -1,3 +1,5 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 // ==========================================
 // ÍCONES E MAPAS (NOVOS)
 // ==========================================
