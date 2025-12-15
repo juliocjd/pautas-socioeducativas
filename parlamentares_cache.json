@@ -848,17 +848,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "204507",
-      "nome": "Carla Zambelli",
-      "partido": "PL",
-      "uf": "SP",
-      "email": "dep.carlazambelli@camara.leg.br",
-      "telefone_gabinete": "3215-5885",
-      "sexo": "F",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178993",
       "nome": "Carlos Henrique Gaguim",
       "partido": "UNIÃO",
@@ -2718,17 +2707,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "152605",
-      "nome": "Glauber Braga",
-      "partido": "PSOL",
-      "uf": "RJ",
-      "email": "dep.glauberbraga@camara.leg.br",
-      "telefone_gabinete": "3215-5362",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204419",
       "nome": "Glaustin da Fokus",
       "partido": "PODE",
@@ -2756,7 +2734,7 @@
       "partido": "PP",
       "uf": "SP",
       "email": "dep.guilhermederrite@camara.leg.br",
-      "telefone_gabinete": null,
+      "telefone_gabinete": "3215-5750",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6535,7 +6513,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2025-12-08T03:57:39.287349",
-  "total_deputados": 513,
+  "ultima_atualizacao": "2025-12-15T04:09:31.076009",
+  "total_deputados": 511,
   "total_senadores": 81
 }
