@@ -3345,17 +3345,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6305",
-      "nome": "José Lacerda",
-      "partido": "PSD",
-      "uf": "MT",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204472",
       "nome": "José Medeiros",
       "partido": "PL",
@@ -4273,6 +4262,17 @@
       "nome": "Marcos do Val",
       "partido": "PODEMOS",
       "uf": "ES",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6304",
+      "nome": "Margareth Buzetti",
+      "partido": "PP",
+      "uf": "MT",
       "email": "",
       "telefone_gabinete": "",
       "sexo": "",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-01-26T04:18:23.314120",
+  "ultima_atualizacao": "2026-02-02T04:58:25.584893",
   "total_deputados": 513,
   "total_senadores": 81
 }
