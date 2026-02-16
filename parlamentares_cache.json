@@ -809,7 +809,7 @@
       "partido": "PSD",
       "uf": "RJ",
       "email": "dep.caiovianna@camara.leg.br",
-      "telefone_gabinete": null,
+      "telefone_gabinete": "3215-5975",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -1515,17 +1515,6 @@
       "email": "dep.davidsoares@camara.leg.br",
       "telefone_gabinete": "3215-5235",
       "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "220659",
-      "nome": "Dayany Bittencourt",
-      "partido": "UNIÃO",
-      "uf": "CE",
-      "email": "dep.dayanybittencourt@camara.leg.br",
-      "telefone_gabinete": "3215-5711",
-      "sexo": "F",
       "casa": "Câmara",
       "situacao": "Exercício"
     },
@@ -3301,17 +3290,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "204563",
-      "nome": "Josimar Maranhãozinho",
-      "partido": "PL",
-      "uf": "MA",
-      "email": "dep.josimarmaranhaozinho@camara.leg.br",
-      "telefone_gabinete": "3215-5715",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "215043",
       "nome": "Josivaldo JP",
       "partido": "PSD",
@@ -5017,6 +4995,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "128760",
+      "nome": "Paulo Marinho Jr",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.paulomarinhojr@camara.leg.br",
+      "telefone_gabinete": "3215-5715",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "SEN-825",
       "nome": "Paulo Paim",
       "partido": "PT",
@@ -5930,6 +5919,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "222565",
+      "nome": "Soldado Noelio",
+      "partido": "UNIÃO",
+      "uf": "CE",
+      "email": "dep.soldadonoelio@camara.leg.br",
+      "telefone_gabinete": "3215-5711",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "178946",
       "nome": "Soraya Santos",
       "partido": "PL",
@@ -6185,7 +6185,7 @@
     {
       "id": "234673",
       "nome": "Vanderlan Alves",
-      "partido": "UNIÃO",
+      "partido": "REPUBLICANOS",
       "uf": "CE",
       "email": "dep.vanderlanalves@camara.leg.br",
       "telefone_gabinete": "3215-5209",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-02-09T05:01:47.844443",
+  "ultima_atualizacao": "2026-02-16T05:00:36.082251",
   "total_deputados": 513,
   "total_senadores": 81
 }
