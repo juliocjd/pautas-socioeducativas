@@ -3873,6 +3873,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "204448",
+      "nome": "Luiz Antonio Corrêa",
+      "partido": "PP",
+      "uf": "RJ",
+      "email": "dep.luizantoniocorrea@camara.leg.br",
+      "telefone_gabinete": "3215-5929",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "141485",
       "nome": "Luiz Carlos Busato",
       "partido": "UNIÃO",
@@ -4110,17 +4121,6 @@
       "uf": "RS",
       "email": "dep.marcelomoraes@camara.leg.br",
       "telefone_gabinete": "3215-5258",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "160161",
-      "nome": "Marcelo Queiroz",
-      "partido": "PSDB",
-      "uf": "RJ",
-      "email": "dep.marceloqueiroz@camara.leg.br",
-      "telefone_gabinete": "3215-5929",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-02-23T04:59:22.473582",
+  "ultima_atualizacao": "2026-03-02T04:49:21.611010",
   "total_deputados": 513,
   "total_senadores": 81
 }
