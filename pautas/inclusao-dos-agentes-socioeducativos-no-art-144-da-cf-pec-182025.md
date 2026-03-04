@@ -3,10 +3,9 @@ layout: pauta
 title: Inclusão dos Agentes Socioeducativos no Art. 144 da CF – PEC 18/2025
 description: |
   Estamos pedindo apoio à Emenda nº 9, por meio do Destaque de plenário nº 14, para incluir os órgãos do Sistema Socioeducativo nos incisos do artigo 144 da Constituição Federal. 
-  
-  Precisamos do apoio dos parlamentares da Comissão Especial para convencer o Relator a adotar essa inclusão diretamente no substitutivo, sem precisar ir ao Plenário.
+
 casa: Câmara dos Deputados
-status: Comissão Especial
+status: Plenário
 featured: true
 is_plenary_vote: false
 key_players:
