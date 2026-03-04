@@ -2,7 +2,7 @@
 layout: pauta
 title: Inclusão dos Agentes Socioeducativos no Art. 144 da CF – PEC 18/2025
 description: |
-  Estamos pedindo apoio à Emenda nº 9, por meio do Destaque nº 12, para incluir os órgãos do Sistema Socioeducativo no artigo 144 da Constituição Federal. 
+  Estamos pedindo apoio à Emenda nº 9, por meio do Destaque de plenário nº 14, para incluir os órgãos do Sistema Socioeducativo nos incisos do artigo 144 da Constituição Federal. 
   
   Precisamos do apoio dos parlamentares da Comissão Especial para convencer o Relator a adotar essa inclusão diretamente no substitutivo, sem precisar ir ao Plenário.
 casa: Câmara dos Deputados
@@ -99,43 +99,31 @@ key_players:
     position: "nao-manifestado"
 campanha:
   email:
-    assunto: "Pedido de apoio ao Destaque nº 12 (PEC 18/2025) - Inclusão dos Agentes Socioeducativos no Art. 144 da CF"
+    assunto: "Pedido de apoio ao Destaque de plenário nº 14 (PEC 18/2025) - Inclusão dos Agentes Socioeducativos nos incisos do Art. 144 da CF"
     mensagem_oposicao: |
-      Venho respeitosamente requerer a Vossa Excelência a inclusão dos Agentes Socioeducativos no art. 144 da CF, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9 da PEC 18/25.
-      
-      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator, deputado Mendonça Filho, a necessidade de um novo substitutivo do texto, evitando que referido Destaque precise passar pelo plenário para aprovação.
+      Venho respeitosamente requerer a Vossa Excelência a inclusão dos Agentes Socioeducativos no art. 144 da CF, através do Destaque de plenário nº 14, que visa o acatamento da Emenda nº 9 da PEC 18/25.
       
       Conto com seu apoio, essa inclusão é muito importante para nós.
     mensagem_apoio: |
-      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE EMENDA Nº 12 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do Sistema Socioeducativo na Constituição. 
-      
-      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator a necessidade de um novo substitutivo do texto final da PEC 18/2025, evitando que referido destaque precise passar pelo plenário.
+      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE PLENÁRIO DE EMENDA Nº 14 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do Sistema Socioeducativo na Constituição. 
       
       Conto com seu apoio e muito obrigado!
   whatsapp:
     mensagem_oposicao: |
-      Venho respeitosamente requerer a Vossa Excelência a inclusão dos Agentes Socioeducativos no art. 144 da CF, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9 da PEC 18/25.
-      
-      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator, deputado Mendonça Filho, a necessidade de um novo substitutivo do texto, evitando que referido Destaque precise passar pelo plenário para aprovação.
+      Venho respeitosamente requerer a Vossa Excelência a inclusão dos Agentes Socioeducativos no art. 144 da CF, através do DESTAQUE DE PLENÁRIO de Emenda nº 14, que visa o acatamento da Emenda nº 9 da PEC 18/25.
       
       Conto com seu apoio, essa inclusão é muito importante para nós.
     mensagem_apoio: |
-      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE EMENDA Nº 12 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do Sistema Socioeducativo na Constituição. 
-      
-      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator a necessidade de um novo substitutivo do texto final da PEC 18/2025, evitando que referido destaque precise passar pelo plenário.
+      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE PLENÁRIO DE EMENDA Nº 14 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do Sistema Socioeducativo na Constituição. 
       
       Conto com seu apoio e muito obrigado!
   instagram:
     mensagem_oposicao: |
-      Venho respeitosamente requerer a Vossa Excelência a inclusão dos Agentes Socioeducativos no art. 144 da CF, através do DESTAQUE de Emenda nº 12, que visa o acatamento da Emenda nº 9 da PEC 18/25.
-      
-      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator, deputado Mendonça Filho, a necessidade de um novo substitutivo do texto, evitando que referido Destaque precise passar pelo plenário para aprovação.
+      Venho respeitosamente requerer a Vossa Excelência a inclusão dos Agentes Socioeducativos no art. 144 da CF, através do DESTAQUE DE PLENÁRIO de Emenda nº 14, que visa o acatamento da Emenda nº 9 da PEC 18/25.
       
       Conto com seu apoio, essa inclusão é muito importante para nós.
     mensagem_apoio: |
-      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE EMENDA Nº 12 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do Sistema Socioeducativo na Constituição. 
-      
-      Peço que Vossa Excelência, junto a reunião de lideres, demonstre ao Relator a necessidade de um novo substitutivo do texto final da PEC 18/2025, evitando que referido destaque precise passar pelo plenário.
+      Venho agradecer o apoio dado os agentes socioeducativos e também pedir ajuda ao DESTAQUE DE PLENÁRIO DE EMENDA Nº 14 - PEC 18/2025, a fim de que seja acatada e Emenda nº 9, que propõe a inclusão dos órgãos do Sistema Socioeducativo na Constituição. 
       
       Conto com seu apoio e muito obrigado!
 ---
