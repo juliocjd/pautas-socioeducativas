@@ -366,7 +366,7 @@
     {
       "id": "SEN-6358",
       "nome": "Ana Paula Lobato",
-      "partido": "PDT",
+      "partido": "PSB",
       "uf": "MA",
       "email": "",
       "telefone_gabinete": "",
@@ -1251,17 +1251,6 @@
       "email": "dep.cristianelopes@camara.leg.br",
       "telefone_gabinete": "3215-5618",
       "sexo": "F",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "234840",
-      "nome": "Cristiano Furlan",
-      "partido": "REDE",
-      "uf": "AP",
-      "email": "dep.cristianofurlan@camara.leg.br",
-      "telefone_gabinete": "3215-5503",
-      "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
     },
@@ -2229,17 +2218,6 @@
       "uf": "ES",
       "email": "dep.evairvieirademelo@camara.leg.br",
       "telefone_gabinete": "3215-5443",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "234388",
-      "nome": "Fabiano Cazeca",
-      "partido": "PRD",
-      "uf": "MG",
-      "email": "dep.fabianocazeca@camara.leg.br",
-      "telefone_gabinete": "3215-5323",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3730,6 +3708,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "234253",
+      "nome": "Lucas Abrahao",
+      "partido": "REDE",
+      "uf": "AP",
+      "email": "dep.lucasabrahao@camara.leg.br",
+      "telefone_gabinete": "3215-5503",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "SEN-5926",
       "nome": "Lucas Barreto",
       "partido": "PSD",
@@ -3869,17 +3858,6 @@
       "email": "dep.luisacanziani@camara.leg.br",
       "telefone_gabinete": "3215-5842",
       "sexo": "F",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "204448",
-      "nome": "Luiz Antonio Corrêa",
-      "partido": "PP",
-      "uf": "RJ",
-      "email": "dep.luizantoniocorrea@camara.leg.br",
-      "telefone_gabinete": "3215-5929",
-      "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
     },
@@ -4121,6 +4099,17 @@
       "uf": "RS",
       "email": "dep.marcelomoraes@camara.leg.br",
       "telefone_gabinete": "3215-5258",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "160161",
+      "nome": "Marcelo Queiroz",
+      "partido": "PSDB",
+      "uf": "RJ",
+      "email": "dep.marceloqueiroz@camara.leg.br",
+      "telefone_gabinete": "3215-5929",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -4885,17 +4874,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "74095",
-      "nome": "Pauderney Avelino",
-      "partido": "UNIÃO",
-      "uf": "AM",
-      "email": "dep.pauderneyavelino@camara.leg.br",
-      "telefone_gabinete": "3215-5607",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "141518",
       "nome": "Paulinho da Força",
       "partido": "SOLIDARIEDADE",
@@ -5034,6 +5012,17 @@
       "uf": "AL",
       "email": "dep.paulao@camara.leg.br",
       "telefone_gabinete": "3215-5671",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220630",
+      "nome": "Pedro Aihara",
+      "partido": "PRD",
+      "uf": "MG",
+      "email": "dep.pedroaihara@camara.leg.br",
+      "telefone_gabinete": "3215-5323",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5798,6 +5787,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "220713",
+      "nome": "Saullo Vianna",
+      "partido": "UNIÃO",
+      "uf": "AM",
+      "email": "dep.saullovianna@camara.leg.br",
+      "telefone_gabinete": "3215-5607",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "226837",
       "nome": "Saulo Pedroso",
       "partido": "PSD",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-03-02T04:49:21.611010",
+  "ultima_atualizacao": "2026-03-09T04:52:29.803426",
   "total_deputados": 513,
   "total_senadores": 81
 }
