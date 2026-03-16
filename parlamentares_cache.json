@@ -2698,7 +2698,7 @@
     {
       "id": "SEN-6008",
       "nome": "Giordano",
-      "partido": "S/Partido",
+      "partido": "PODEMOS",
       "uf": "SP",
       "email": "",
       "telefone_gabinete": "",
@@ -3578,7 +3578,7 @@
     {
       "id": "204536",
       "nome": "Kim Kataguiri",
-      "partido": "UNIÃO",
+      "partido": "MISSÃO",
       "uf": "SP",
       "email": "dep.kimkataguiri@camara.leg.br",
       "telefone_gabinete": "3215-5744",
@@ -4018,7 +4018,7 @@
     {
       "id": "166402",
       "nome": "Magda Mofatto",
-      "partido": "PRD",
+      "partido": "PL",
       "uf": "GO",
       "email": "dep.magdamofatto@camara.leg.br",
       "telefone_gabinete": "3215-5934",
@@ -4390,17 +4390,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6027",
-      "nome": "Mecias de Jesus",
-      "partido": "REPUBLICANOS",
-      "uf": "RR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220591",
       "nome": "Meire Serafim",
       "partido": "UNIÃO",
@@ -4656,7 +4645,7 @@
     {
       "id": "204479",
       "nome": "Nicoletti",
-      "partido": "UNIÃO",
+      "partido": "PL",
       "uf": "RR",
       "email": "dep.nicoletti@camara.leg.br",
       "telefone_gabinete": "3215-5746",
@@ -5457,6 +5446,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "SEN-6025",
+      "nome": "Roberta Acioly",
+      "partido": "REPUBLICANOS",
+      "uf": "RR",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220693",
       "nome": "Roberta Roma",
       "partido": "PL",
@@ -5756,7 +5756,7 @@
     {
       "id": "204387",
       "nome": "Sargento Fahur",
-      "partido": "PSD",
+      "partido": "PL",
       "uf": "PR",
       "email": "dep.sargentofahur@camara.leg.br",
       "telefone_gabinete": "3215-5858",
@@ -5789,7 +5789,7 @@
     {
       "id": "220713",
       "nome": "Saullo Vianna",
-      "partido": "UNIÃO",
+      "partido": "MDB",
       "uf": "AM",
       "email": "dep.saullovianna@camara.leg.br",
       "telefone_gabinete": "3215-5607",
@@ -6240,7 +6240,7 @@
     {
       "id": "137070",
       "nome": "Vicentinho Júnior",
-      "partido": "PP",
+      "partido": "PSDB",
       "uf": "TO",
       "email": "dep.vicentinhojunior@camara.leg.br",
       "telefone_gabinete": "3215-5204",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-03-09T04:52:29.803426",
+  "ultima_atualizacao": "2026-03-16T05:16:35.023946",
   "total_deputados": 513,
   "total_senadores": 81
 }
