@@ -221,6 +221,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "160545",
+      "nome": "Alexandre Leite",
+      "partido": "UNIÃO",
+      "uf": "SP",
+      "email": "dep.alexandreleite@camara.leg.br",
+      "telefone_gabinete": "3215-5841",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220554",
       "nome": "Alexandre Lindenmeyer",
       "partido": "PT",
@@ -454,7 +465,7 @@
     {
       "id": "SEN-5967",
       "nome": "Angelo Coronel",
-      "partido": "PSD",
+      "partido": "REPUBLICANOS",
       "uf": "BA",
       "email": "",
       "telefone_gabinete": "",
@@ -1767,17 +1778,6 @@
       "uf": "AP",
       "email": "dep.dorinaldomalafaia@camara.leg.br",
       "telefone_gabinete": "3215-5733",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "227433",
-      "nome": "Douglas Viegas",
-      "partido": "UNIÃO",
-      "uf": "SP",
-      "email": "dep.douglasviegas@camara.leg.br",
-      "telefone_gabinete": "3215-5841",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -4621,6 +4621,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "220622",
+      "nome": "Nely Aquino",
+      "partido": "PODE",
+      "uf": "MG",
+      "email": "dep.nelyaquino@camara.leg.br",
+      "telefone_gabinete": "3215-5943",
+      "sexo": "F",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220703",
       "nome": "Neto Carletto",
       "partido": "AVANTE",
@@ -5820,17 +5831,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "77003",
-      "nome": "Sergio Santos Rodrigues",
-      "partido": "PODE",
-      "uf": "MG",
-      "email": "dep.sergiosantosrodrigues@camara.leg.br",
-      "telefone_gabinete": "3215-5943",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178933",
       "nome": "Sergio Souza",
       "partido": "MDB",
@@ -6273,7 +6273,7 @@
     {
       "id": "178992",
       "nome": "Vitor Lippi",
-      "partido": "PSDB",
+      "partido": "PSD",
       "uf": "SP",
       "email": "dep.vitorlippi@camara.leg.br",
       "telefone_gabinete": "3215-5823",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-03-16T05:16:35.023946",
+  "ultima_atualizacao": "2026-03-23T05:04:25.733965",
   "total_deputados": 513,
   "total_senadores": 81
 }
