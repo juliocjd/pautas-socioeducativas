@@ -2608,17 +2608,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "74383",
-      "nome": "Giacobo",
-      "partido": "PSD",
-      "uf": "PR",
-      "email": "dep.giacobo@camara.leg.br",
-      "telefone_gabinete": "3215-5629",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204491",
       "nome": "Gilberto Abramo",
       "partido": "REPUBLICANOS",
@@ -2872,6 +2861,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "SEN-6381",
+      "nome": "Hermes Klann",
+      "partido": "PL",
+      "uf": "SC",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
       "id": "178884",
       "nome": "Hildo Rocha",
       "partido": "MDB",
@@ -2999,6 +2999,17 @@
       "uf": "AL",
       "email": "dep.isnaldobulhoesjr@camara.leg.br",
       "telefone_gabinete": "3215-5639",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "225846",
+      "nome": "Itamar Paim",
+      "partido": "PL",
+      "uf": "PR",
+      "email": "dep.itamarpaim@camara.leg.br",
+      "telefone_gabinete": "3215-5629",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3217,17 +3228,6 @@
       "nome": "Jorge Kajuru",
       "partido": "PSB",
       "uf": "GO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-6342",
-      "nome": "Jorge Seif",
-      "partido": "PL",
-      "uf": "SC",
       "email": "",
       "telefone_gabinete": "",
       "sexo": "",
@@ -3496,6 +3496,17 @@
       "telefone_gabinete": "3215-5222",
       "sexo": "M",
       "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-6369",
+      "nome": "Jussara Lima",
+      "partido": "PSD",
+      "uf": "PI",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -6293,17 +6304,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5016",
-      "nome": "Wellington Dias",
-      "partido": "PT",
-      "uf": "PI",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "SEN-1173",
       "nome": "Wellington Fagundes",
       "partido": "PL",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-05-04T06:14:04.037255",
+  "ultima_atualizacao": "2026-05-11T06:41:34.345419",
   "total_deputados": 513,
   "total_senadores": 81
 }
