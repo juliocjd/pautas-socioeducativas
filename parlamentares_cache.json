@@ -509,7 +509,7 @@
     {
       "id": "220638",
       "nome": "Antonio Carlos Rodrigues",
-      "partido": "PL",
+      "partido": "PODE",
       "uf": "SP",
       "email": "dep.antoniocarlosrodrigues@camara.leg.br",
       "telefone_gabinete": "3215-5683",
@@ -1543,7 +1543,7 @@
     {
       "id": "220625",
       "nome": "Delegada Ione",
-      "partido": "AVANTE",
+      "partido": "PL",
       "uf": "MG",
       "email": "dep.delegadaione@camara.leg.br",
       "telefone_gabinete": "3215-5606",
@@ -1840,7 +1840,7 @@
     {
       "id": "204518",
       "nome": "Dr. Frederico",
-      "partido": "PRD",
+      "partido": "PL",
       "uf": "MG",
       "email": "dep.dr.frederico@camara.leg.br",
       "telefone_gabinete": "3215-5673",
@@ -1895,7 +1895,7 @@
     {
       "id": "220528",
       "nome": "Dr. Victor Linhalis",
-      "partido": "PODE",
+      "partido": "PSB",
       "uf": "ES",
       "email": "dep.dr.victorlinhalis@camara.leg.br",
       "telefone_gabinete": "3215-5845",
@@ -4326,7 +4326,7 @@
     {
       "id": "220607",
       "nome": "Max Lemos",
-      "partido": "PDT",
+      "partido": "UNIÃO",
       "uf": "RJ",
       "email": "dep.maxlemos@camara.leg.br",
       "telefone_gabinete": "3215-5429",
@@ -4843,7 +4843,7 @@
     {
       "id": "220650",
       "nome": "Paulo Alexandre Barbosa",
-      "partido": "PSDB",
+      "partido": "PSD",
       "uf": "SP",
       "email": "dep.pauloalexandrebarbosa@camara.leg.br",
       "telefone_gabinete": "3215-5937",
@@ -6295,7 +6295,7 @@
     {
       "id": "160518",
       "nome": "Weliton Prado",
-      "partido": "SOLIDARIEDADE",
+      "partido": "PSD",
       "uf": "MG",
       "email": "dep.welitonprado@camara.leg.br",
       "telefone_gabinete": "3215-5250",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-05-11T06:41:34.345419",
+  "ultima_atualizacao": "2026-05-18T06:58:24.898925",
   "total_deputados": 513,
   "total_senadores": 81
 }
