@@ -2698,7 +2698,7 @@
     {
       "id": "236284",
       "nome": "Glaycon Franco",
-      "partido": "PV",
+      "partido": "PSDB",
       "uf": "MG",
       "email": "dep.glayconfranco@camara.leg.br",
       "telefone_gabinete": "3215-5556",
@@ -3763,17 +3763,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "220616",
-      "nome": "Luciano Vieira",
-      "partido": "PSDB",
-      "uf": "RJ",
-      "email": "dep.lucianovieira@camara.leg.br",
-      "telefone_gabinete": "3215-5329",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178954",
       "nome": "Lucio Mosquini",
       "partido": "PL",
@@ -4126,6 +4115,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "236375",
+      "nome": "Marcos Braz",
+      "partido": "PSDB",
+      "uf": "RJ",
+      "email": "dep.marcosbraz@camara.leg.br",
+      "telefone_gabinete": "3215-5329",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "204506",
       "nome": "Marcos Pereira",
       "partido": "REPUBLICANOS",
@@ -4473,17 +4473,6 @@
       "uf": "RJ",
       "email": "dep.murillogouvea@camara.leg.br",
       "telefone_gabinete": "3215-5631",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "220584",
-      "nome": "Murilo Galdino",
-      "partido": "REPUBLICANOS",
-      "uf": "PB",
-      "email": "dep.murilogaldino@camara.leg.br",
-      "telefone_gabinete": "3215-5815",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5245,6 +5234,17 @@
       "telefone_gabinete": "",
       "sexo": "",
       "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "115200",
+      "nome": "Raniery Paulino",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.ranierypaulino@camara.leg.br",
+      "telefone_gabinete": "3215-5815",
+      "sexo": "M",
+      "casa": "Câmara",
       "situacao": "Exercício"
     },
     {
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-05-25T07:16:32.543436",
+  "ultima_atualizacao": "2026-06-01T08:35:41.452198",
   "total_deputados": 513,
   "total_senadores": 81
 }
