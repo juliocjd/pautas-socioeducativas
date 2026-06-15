@@ -133,17 +133,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5672",
-      "nome": "Alan Rick",
-      "partido": "REPUBLICANOS",
-      "uf": "AC",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "73579",
       "nome": "Alberto Fraga",
       "partido": "PL",
@@ -185,17 +174,6 @@
       "telefone_gabinete": "3215-5256",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5982",
-      "nome": "Alessandro Vieira",
-      "partido": "MDB",
-      "uf": "SE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -375,17 +353,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6358",
-      "nome": "Ana Paula Lobato",
-      "partido": "PSB",
-      "uf": "MA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220632",
       "nome": "Ana Pimentel",
       "partido": "PT",
@@ -471,17 +438,6 @@
       "telefone_gabinete": "3215-5687",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5967",
-      "nome": "Angelo Coronel",
-      "partido": "REPUBLICANOS",
-      "uf": "BA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -595,17 +551,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6009",
-      "nome": "Astronauta Marcos Pontes",
-      "partido": "PL",
-      "uf": "SP",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "160665",
       "nome": "Augusto Coutinho",
       "partido": "REPUBLICANOS",
@@ -702,17 +647,6 @@
       "telefone_gabinete": "3215-5724",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-4639",
-      "nome": "Beto Faro",
-      "partido": "PT",
-      "uf": "PA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -826,17 +760,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6336",
-      "nome": "Camilo Santana",
-      "partido": "PT",
-      "uf": "CE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204572",
       "nome": "Capitão Alberto Neto",
       "partido": "PL",
@@ -892,17 +815,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6295",
-      "nome": "Carlos Fávaro",
-      "partido": "PSD",
-      "uf": "MT",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178962",
       "nome": "Carlos Gomes",
       "partido": "REPUBLICANOS",
@@ -936,17 +848,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5936",
-      "nome": "Carlos Portinho",
-      "partido": "PL",
-      "uf": "RJ",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74262",
       "nome": "Carlos Sampaio",
       "partido": "PSD",
@@ -966,17 +867,6 @@
       "telefone_gabinete": "3215-5870",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5990",
-      "nome": "Carlos Viana",
-      "partido": "PSD",
-      "uf": "MG",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -1079,17 +969,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-470",
-      "nome": "Chico Rodrigues",
-      "partido": "PSB",
-      "uf": "RR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204462",
       "nome": "Chris Tonietto",
       "partido": "PL",
@@ -1098,28 +977,6 @@
       "telefone_gabinete": "3215-5446",
       "sexo": "F",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5973",
-      "nome": "Cid Gomes",
-      "partido": "PSB",
-      "uf": "CE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-739",
-      "nome": "Ciro Nogueira",
-      "partido": "PP",
-      "uf": "PI",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -1156,17 +1013,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6337",
-      "nome": "Cleitinho",
-      "partido": "REPUBLICANOS",
-      "uf": "MG",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "88256",
       "nome": "Clodoaldo Magalhães",
       "partido": "PV",
@@ -1186,17 +1032,6 @@
       "telefone_gabinete": "3215-5358",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-475",
-      "nome": "Confúcio Moura",
-      "partido": "MDB",
-      "uf": "RO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -1343,17 +1178,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6335",
-      "nome": "Damares Alves",
-      "partido": "REPUBLICANOS",
-      "uf": "DF",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74467",
       "nome": "Damião Feliciano",
       "partido": "UNIÃO",
@@ -1464,17 +1288,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5998",
-      "nome": "Daniella Ribeiro",
-      "partido": "PP",
-      "uf": "PB",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "62881",
       "nome": "Danilo Forte",
       "partido": "PP",
@@ -1497,17 +1310,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-3830",
-      "nome": "Davi Alcolumbre",
-      "partido": "UNIÃO",
-      "uf": "AP",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204511",
       "nome": "David Soares",
       "partido": "PODE",
@@ -1515,6 +1317,17 @@
       "email": "dep.davidsoares@camara.leg.br",
       "telefone_gabinete": "3215-5235",
       "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220659",
+      "nome": "Dayany Bittencourt",
+      "partido": "UNIÃO",
+      "uf": "CE",
+      "email": "dep.dayanybittencourt@camara.leg.br",
+      "telefone_gabinete": "3215-5711",
+      "sexo": "F",
       "casa": "Câmara",
       "situacao": "Exercício"
     },
@@ -1668,6 +1481,17 @@
       "uf": "RS",
       "email": "dep.denisepessoa@camara.leg.br",
       "telefone_gabinete": "3215-5832",
+      "sexo": "F",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220689",
+      "nome": "Detinha",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.detinha@camara.leg.br",
+      "telefone_gabinete": "3215-5714",
       "sexo": "F",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -1849,17 +1673,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5793",
-      "nome": "Dr. Hiran",
-      "partido": "PP",
-      "uf": "RR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220570",
       "nome": "Dr. Ismael Alexandrino",
       "partido": "PSD",
@@ -1926,17 +1739,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5906",
-      "nome": "Dra. Eudócia",
-      "partido": "PSDB",
-      "uf": "AL",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220686",
       "nome": "Duarte Jr.",
       "partido": "AVANTE",
@@ -1981,39 +1783,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-4994",
-      "nome": "Eduardo Braga",
-      "partido": "MDB",
-      "uf": "AM",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5976",
-      "nome": "Eduardo Girão",
-      "partido": "NOVO",
-      "uf": "CE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-3777",
-      "nome": "Eduardo Gomes",
-      "partido": "PL",
-      "uf": "TO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220589",
       "nome": "Eduardo Velloso",
       "partido": "SOLIDARIEDADE",
@@ -2036,17 +1805,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-4642",
-      "nome": "Efraim Filho",
-      "partido": "PL",
-      "uf": "PB",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74075",
       "nome": "Elcione Barbalho",
       "partido": "MDB",
@@ -2066,17 +1824,6 @@
       "telefone_gabinete": "3215-5248",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5718",
-      "nome": "Eliziane Gama",
-      "partido": "PSD",
-      "uf": "MA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -2168,17 +1915,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-22",
-      "nome": "Esperidião Amin",
-      "partido": "PP",
-      "uf": "SC",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74454",
       "nome": "Eunício Oliveira",
       "partido": "MDB",
@@ -2198,17 +1934,6 @@
       "telefone_gabinete": "3215-5443",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5953",
-      "nome": "Fabiano Contarato",
-      "partido": "PT",
-      "uf": "ES",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -2333,17 +2058,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5917",
-      "nome": "Fernando Dueire",
-      "partido": "PSD",
-      "uf": "PE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204445",
       "nome": "Fernando Mineiro",
       "partido": "PT",
@@ -2418,28 +2132,6 @@
       "telefone_gabinete": "3215-5738",
       "sexo": "F",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-345",
-      "nome": "Flávio Arns",
-      "partido": "PSB",
-      "uf": "PR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5894",
-      "nome": "Flávio Bolsonaro",
-      "partido": "PL",
-      "uf": "RJ",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -2663,23 +2355,23 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6008",
-      "nome": "Giordano",
-      "partido": "PODEMOS",
-      "uf": "SP",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "160673",
       "nome": "Giovani Cherini",
       "partido": "PL",
       "uf": "RS",
       "email": "dep.giovanicherini@camara.leg.br",
       "telefone_gabinete": "3215-5872",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "152605",
+      "nome": "Glauber Braga",
+      "partido": "PSOL",
+      "uf": "RJ",
+      "email": "dep.glauberbraga@camara.leg.br",
+      "telefone_gabinete": "3215-5362",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -2784,17 +2476,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6341",
-      "nome": "Hamilton Mourão",
-      "partido": "REPUBLICANOS",
-      "uf": "RS",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178964",
       "nome": "Heitor Schuch",
       "partido": "PSD",
@@ -2839,17 +2520,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "234788",
-      "nome": "Heloísa Helena",
-      "partido": "REDE",
-      "uf": "RJ",
-      "email": "dep.heloisahelena@camara.leg.br",
-      "telefone_gabinete": "3215-5362",
-      "sexo": "F",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220672",
       "nome": "Henderson Pinto",
       "partido": "UNIÃO",
@@ -2869,17 +2539,6 @@
       "telefone_gabinete": "3215-5510",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-6381",
-      "nome": "Hermes Klann",
-      "partido": "PL",
-      "uf": "SC",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -2913,17 +2572,6 @@
       "telefone_gabinete": "3215-5237",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5008",
-      "nome": "Humberto Costa",
-      "partido": "PT",
-      "uf": "PE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -2982,17 +2630,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5385",
-      "nome": "Irajá",
-      "partido": "PSD",
-      "uf": "TO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "98615",
       "nome": "Ismael",
       "partido": "PL",
@@ -3026,17 +2663,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6010",
-      "nome": "Ivete da Silveira",
-      "partido": "MDB",
-      "uf": "SC",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220696",
       "nome": "Ivoneide Caetano",
       "partido": "PT",
@@ -3059,17 +2685,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-4770",
-      "nome": "Izalci Lucas",
-      "partido": "PL",
-      "uf": "DF",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220527",
       "nome": "Jack Rocha",
       "partido": "PT",
@@ -3078,17 +2693,6 @@
       "telefone_gabinete": "3215-5252",
       "sexo": "F",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-35",
-      "nome": "Jader Barbalho",
-      "partido": "MDB",
-      "uf": "PA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -3103,17 +2707,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6340",
-      "nome": "Jaime Bagattoli",
-      "partido": "PL",
-      "uf": "RO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74848",
       "nome": "Jandira Feghali",
       "partido": "PCdoB",
@@ -3122,28 +2715,6 @@
       "telefone_gabinete": "3215-5622",
       "sexo": "F",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-581",
-      "nome": "Jaques Wagner",
-      "partido": "PT",
-      "uf": "BA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-4531",
-      "nome": "Jayme Campos",
-      "partido": "UNIÃO",
-      "uf": "MT",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -3235,17 +2806,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5895",
-      "nome": "Jorge Kajuru",
-      "partido": "PSB",
-      "uf": "GO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178857",
       "nome": "Jorge Solla",
       "partido": "PT",
@@ -3274,6 +2834,17 @@
       "uf": "AP",
       "email": "dep.josenildo@camara.leg.br",
       "telefone_gabinete": "3215-5645",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204563",
+      "nome": "Josimar Maranhãozinho",
+      "partido": "PL",
+      "uf": "MA",
+      "email": "dep.josimarmaranhaozinho@camara.leg.br",
+      "telefone_gabinete": "3215-5715",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3510,17 +3081,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6369",
-      "nome": "Jussara Lima",
-      "partido": "PSD",
-      "uf": "PI",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74317",
       "nome": "Júlio Cesar",
       "partido": "PSD",
@@ -3609,17 +3169,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-4811",
-      "nome": "Laércio Oliveira",
-      "partido": "PP",
-      "uf": "SE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178832",
       "nome": "Leandre",
       "partido": "PSD",
@@ -3628,17 +3177,6 @@
       "telefone_gabinete": "3215-5454",
       "sexo": "F",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5979",
-      "nome": "Leila Barros",
-      "partido": "PDT",
-      "uf": "DF",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -3694,17 +3232,6 @@
       "telefone_gabinete": "3215-5227",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5926",
-      "nome": "Lucas Barreto",
-      "partido": "PSD",
-      "uf": "AP",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -3771,17 +3298,6 @@
       "telefone_gabinete": "3215-5918",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-1186",
-      "nome": "Luis Carlos Heinze",
-      "partido": "PP",
-      "uf": "RS",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -3961,28 +3477,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-631",
-      "nome": "Magno Malta",
-      "partido": "PL",
-      "uf": "ES",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5376",
-      "nome": "Mara Gabrilli",
-      "partido": "PSD",
-      "uf": "SP",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220648",
       "nome": "Marangoni",
       "partido": "PODE",
@@ -4002,17 +3496,6 @@
       "telefone_gabinete": "3215-5958",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-742",
-      "nome": "Marcelo Castro",
-      "partido": "MDB",
-      "uf": "PI",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -4082,17 +3565,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-285",
-      "nome": "Marcio Bittar",
-      "partido": "PL",
-      "uf": "AC",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "160535",
       "nome": "Marcon",
       "partido": "PT",
@@ -4148,17 +3620,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5422",
-      "nome": "Marcos Rogério",
-      "partido": "PL",
-      "uf": "RO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178943",
       "nome": "Marcos Soares",
       "partido": "PSDB",
@@ -4178,17 +3639,6 @@
       "telefone_gabinete": "3215-5611",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5942",
-      "nome": "Marcos do Val",
-      "partido": "AVANTE",
-      "uf": "ES",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -4242,6 +3692,17 @@
       "uf": "SP",
       "email": "dep.mariofrias@camara.leg.br",
       "telefone_gabinete": "3215-5826",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "204566",
+      "nome": "Marreca Filho",
+      "partido": "PRD",
+      "uf": "MA",
+      "email": "dep.marrecafilho@camara.leg.br",
+      "telefone_gabinete": "3215-5537",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -4555,17 +4016,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5985",
-      "nome": "Nelsinho Trad",
-      "partido": "PSD",
-      "uf": "MS",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204449",
       "nome": "Nelson Barbudo",
       "partido": "PODE",
@@ -4654,28 +4104,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5525",
-      "nome": "Omar Aziz",
-      "partido": "PSD",
-      "uf": "AM",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5924",
-      "nome": "Oriovisto Guimarães",
-      "partido": "PSDB",
-      "uf": "PR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178987",
       "nome": "Orlando Silva",
       "partido": "PCdoB",
@@ -4704,28 +4132,6 @@
       "uf": "RJ",
       "email": "dep.otonidepaula@camara.leg.br",
       "telefone_gabinete": "3215-5682",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5523",
-      "nome": "Otto Alencar",
-      "partido": "PSD",
-      "uf": "BA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "220706",
-      "nome": "Padovani",
-      "partido": "PP",
-      "uf": "PR",
-      "email": "dep.padovani@camara.leg.br",
-      "telefone_gabinete": "3215-5923",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -4918,28 +4324,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "128760",
-      "nome": "Paulo Marinho Jr",
-      "partido": "PL",
-      "uf": "MA",
-      "email": "dep.paulomarinhojr@camara.leg.br",
-      "telefone_gabinete": "3215-5715",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-825",
-      "nome": "Paulo Paim",
-      "partido": "PT",
-      "uf": "RS",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74400",
       "nome": "Paulo Pimenta",
       "partido": "PT",
@@ -5072,17 +4456,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5502",
-      "nome": "Plínio Valério",
-      "partido": "PSDB",
-      "uf": "AM",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "73486",
       "nome": "Pompeo de Mattos",
       "partido": "PDT",
@@ -5124,17 +4497,6 @@
       "telefone_gabinete": "3215-5441",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5386",
-      "nome": "Professora Dorinha Seabra",
-      "partido": "UNIÃO",
-      "uf": "TO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5226,17 +4588,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5012",
-      "nome": "Randolfe Rodrigues",
-      "partido": "PT",
-      "uf": "AP",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "115200",
       "nome": "Raniery Paulino",
       "partido": "REPUBLICANOS",
@@ -5267,28 +4618,6 @@
       "telefone_gabinete": "3215-5348",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-70",
-      "nome": "Renan Calheiros",
-      "partido": "MDB",
-      "uf": "AL",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5207",
-      "nome": "Renan Filho",
-      "partido": "MDB",
-      "uf": "AL",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5331,17 +4660,6 @@
       "uf": "SP",
       "email": "dep.ribamarsilva@camara.leg.br",
       "telefone_gabinete": "3215-5904",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "235088",
-      "nome": "Ribeiro Neto",
-      "partido": "SOLIDARIEDADE",
-      "uf": "MA",
-      "email": "dep.ribeironeto@camara.leg.br",
-      "telefone_gabinete": "3215-5537",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5410,17 +4728,6 @@
       "telefone_gabinete": "3215-5458",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-6025",
-      "nome": "Roberta Acioly",
-      "partido": "REPUBLICANOS",
-      "uf": "RR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5501,17 +4808,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5732",
-      "nome": "Rodrigo Pacheco",
-      "partido": "PSB",
-      "uf": "MG",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "141533",
       "nome": "Rodrigo Rollemberg",
       "partido": "PSB",
@@ -5556,17 +4852,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-4694",
-      "nome": "Rogerio Marinho",
-      "partido": "PL",
-      "uf": "RN",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220695",
       "nome": "Rogéria Santos",
       "partido": "REPUBLICANOS",
@@ -5575,17 +4860,6 @@
       "telefone_gabinete": "3215-5338",
       "sexo": "F",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5352",
-      "nome": "Rogério Carvalho",
-      "partido": "PT",
-      "uf": "SE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5608,17 +4882,6 @@
       "telefone_gabinete": "3215-5610",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5322",
-      "nome": "Romário",
-      "partido": "PL",
-      "uf": "RJ",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5743,6 +5006,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "236518",
+      "nome": "Santin Roveda",
+      "partido": "UNIÃO",
+      "uf": "PR",
+      "email": "dep.santinroveda@camara.leg.br",
+      "telefone_gabinete": "3215-5923",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "204387",
       "nome": "Sargento Fahur",
       "partido": "PL",
@@ -5798,17 +5072,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6331",
-      "nome": "Sergio Moro",
-      "partido": "PL",
-      "uf": "PR",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178933",
       "nome": "Sergio Souza",
       "partido": "MDB",
@@ -5838,17 +5101,6 @@
       "email": "dep.silviacristina@camara.leg.br",
       "telefone_gabinete": "3215-5524",
       "sexo": "F",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "227310",
-      "nome": "Silvio Antonio",
-      "partido": "PL",
-      "uf": "MA",
-      "email": "dep.silvioantonio@camara.leg.br",
-      "telefone_gabinete": "3215-5714",
-      "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
     },
@@ -5908,17 +5160,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5988",
-      "nome": "Soraya Thronicke",
-      "partido": "PSB",
-      "uf": "MS",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "92776",
       "nome": "Stefano Aguiar",
       "partido": "PSD",
@@ -5927,17 +5168,6 @@
       "telefone_gabinete": "3215-5341",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5959",
-      "nome": "Styvenson Valentim",
-      "partido": "PODEMOS",
-      "uf": "RN",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5960,17 +5190,6 @@
       "telefone_gabinete": "3215-5638",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-4560",
-      "nome": "Sérgio Petecão",
-      "partido": "PSD",
-      "uf": "AC",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -6051,28 +5270,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6338",
-      "nome": "Teresa Leitão",
-      "partido": "PT",
-      "uf": "PE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5736",
-      "nome": "Tereza Cristina",
-      "partido": "PP",
-      "uf": "MS",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220597",
       "nome": "Thiago Flores",
       "partido": "UNIÃO",
@@ -6150,6 +5347,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "236423",
+      "nome": "Valdir Trindade",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.valdirtrindade@camara.leg.br",
+      "telefone_gabinete": "3215-5534",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "160610",
       "nome": "Valmir Assunção",
       "partido": "PT",
@@ -6172,28 +5380,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "234673",
-      "nome": "Vanderlan Alves",
-      "partido": "SOLIDARIEDADE",
-      "uf": "CE",
-      "email": "dep.vanderlanalves@camara.leg.br",
-      "telefone_gabinete": "3215-5711",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5899",
-      "nome": "Vanderlan Cardoso",
-      "partido": "PSD",
-      "uf": "GO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "235712",
       "nome": "Vavá",
       "partido": "AVANTE",
@@ -6202,17 +5388,6 @@
       "telefone_gabinete": "3215-5632",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5748",
-      "nome": "Veneziano Vital do Rêgo",
-      "partido": "MDB",
-      "uf": "PB",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -6304,17 +5479,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-1173",
-      "nome": "Wellington Fagundes",
-      "partido": "PL",
-      "uf": "MT",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74043",
       "nome": "Wellington Roberto",
       "partido": "PSD",
@@ -6332,39 +5496,6 @@
       "uf": "PR",
       "email": "dep.welter@camara.leg.br",
       "telefone_gabinete": "3215-5303",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5411",
-      "nome": "Weverton",
-      "partido": "PDT",
-      "uf": "MA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5070",
-      "nome": "Wilder Morais",
-      "partido": "PL",
-      "uf": "GO",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "74044",
-      "nome": "Wilson Santiago",
-      "partido": "REPUBLICANOS",
-      "uf": "PB",
-      "email": "dep.wilsonsantiago@camara.leg.br",
-      "telefone_gabinete": "3215-5534",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6400,28 +5531,6 @@
       "telefone_gabinete": "3215-5613",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5783",
-      "nome": "Zenaide Maia",
-      "partido": "PSD",
-      "uf": "RN",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-3806",
-      "nome": "Zequinha Marinho",
-      "partido": "PODEMOS",
-      "uf": "PA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -6535,7 +5644,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-06-01T08:35:41.452198",
+  "ultima_atualizacao": "2026-06-15T09:23:28.251251",
   "total_deputados": 513,
-  "total_senadores": 81
+  "total_senadores": 0
 }
