@@ -424,7 +424,7 @@
       "partido": "PL",
       "uf": "CE",
       "email": "dep.andrefernandes@camara.leg.br",
-      "telefone_gabinete": "3215-5578",
+      "telefone_gabinete": "3215-5981",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -501,7 +501,7 @@
       "partido": "PSD",
       "uf": "BA",
       "email": "dep.antoniobrito@camara.leg.br",
-      "telefone_gabinete": "3215-5985",
+      "telefone_gabinete": "3215-5495",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -2294,7 +2294,7 @@
       "partido": "PODE",
       "uf": "SP",
       "email": "dep.felipebecari@camara.leg.br",
-      "telefone_gabinete": "3215-5476",
+      "telefone_gabinete": "3215-5978",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -2954,7 +2954,7 @@
       "partido": "REPUBLICANOS",
       "uf": "SE",
       "email": "dep.icarodevalmir@camara.leg.br",
-      "telefone_gabinete": "3215-5917",
+      "telefone_gabinete": "3215-5878",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3675,17 +3675,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "80815",
-      "nome": "Leo Prates",
-      "partido": "REPUBLICANOS",
-      "uf": "BA",
-      "email": "dep.leoprates@camara.leg.br",
-      "telefone_gabinete": "3215-5646",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74156",
       "nome": "Leonardo Monteiro",
       "partido": "PT",
@@ -4263,7 +4252,7 @@
       "partido": "REDE",
       "uf": "SP",
       "email": "dep.marinasilva@camara.leg.br",
-      "telefone_gabinete": "3215-5230",
+      "telefone_gabinete": "3215-5979",
       "sexo": "F",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5781,7 +5770,7 @@
       "partido": "PL",
       "uf": "RN",
       "email": "dep.sargentogoncalves@camara.leg.br",
-      "telefone_gabinete": "3215-5569",
+      "telefone_gabinete": "3215-5494",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6535,7 +6524,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-06-22T08:58:58.057357",
-  "total_deputados": 513,
+  "ultima_atualizacao": "2026-06-29T07:31:52.630961",
+  "total_deputados": 512,
   "total_senadores": 81
 }
