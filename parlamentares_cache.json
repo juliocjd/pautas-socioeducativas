@@ -2190,6 +2190,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "204482",
+      "nome": "Euclydes Pettersen",
+      "partido": "REPUBLICANOS",
+      "uf": "MG",
+      "email": "dep.euclydespettersen@camara.leg.br",
+      "telefone_gabinete": "3215-5456",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "74454",
       "nome": "Eunício Oliveira",
       "partido": "MDB",
@@ -2955,17 +2966,6 @@
       "uf": "MG",
       "email": "dep.igortimo@camara.leg.br",
       "telefone_gabinete": "3215-5726",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "235620",
-      "nome": "Ilacir Bicalho",
-      "partido": "REPUBLICANOS",
-      "uf": "MG",
-      "email": "dep.ilacirbicalho@camara.leg.br",
-      "telefone_gabinete": "3215-5456",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3807,6 +3807,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "160510",
+      "nome": "Luis Tibé",
+      "partido": "AVANTE",
+      "uf": "MG",
+      "email": "dep.luistibe@camara.leg.br",
+      "telefone_gabinete": null,
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "204410",
       "nome": "Luisa Canziani",
       "partido": "UNIÃO",
@@ -3878,7 +3889,7 @@
       "partido": "PSD",
       "uf": "CE",
       "email": "dep.luizgastao@camara.leg.br",
-      "telefone_gabinete": "3215-5709",
+      "telefone_gabinete": "3215-5497",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6194,17 +6205,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "235712",
-      "nome": "Vavá",
-      "partido": "AVANTE",
-      "uf": "MG",
-      "email": "dep.vava@camara.leg.br",
-      "telefone_gabinete": "3215-5632",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "SEN-5748",
       "nome": "Veneziano Vital do Rêgo",
       "partido": "MDB",
@@ -6524,7 +6524,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-07-27T06:29:56.341154",
+  "ultima_atualizacao": "2026-08-03T06:23:23.288724",
   "total_deputados": 512,
   "total_senadores": 81
 }
