@@ -375,17 +375,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-6358",
-      "nome": "Ana Paula Lobato",
-      "partido": "PSB",
-      "uf": "MA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "220632",
       "nome": "Ana Pimentel",
       "partido": "PT",
@@ -1250,6 +1239,17 @@
       "uf": "AC",
       "email": "dep.coronelulysses@camara.leg.br",
       "telefone_gabinete": "3215-5231",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "178963",
+      "nome": "Covatti Filho",
+      "partido": "PP",
+      "uf": "RS",
+      "email": "dep.covattifilho@camara.leg.br",
+      "telefone_gabinete": "3215-5228",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -2316,7 +2316,7 @@
       "partido": "PODE",
       "uf": "PR",
       "email": "dep.felipefrancischini@camara.leg.br",
-      "telefone_gabinete": "3215-5265",
+      "telefone_gabinete": "3215-5395",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3719,6 +3719,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "SEN-6359",
+      "nome": "Lourdinha Pereira",
+      "partido": "PSB",
+      "uf": "MA",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
       "id": "SEN-5926",
       "nome": "Lucas Barreto",
       "partido": "PSD",
@@ -3812,7 +3823,7 @@
       "partido": "AVANTE",
       "uf": "MG",
       "email": "dep.luistibe@camara.leg.br",
-      "telefone_gabinete": null,
+      "telefone_gabinete": "3215-5632",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5985,17 +5996,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "235776",
-      "nome": "Sérgio Turra",
-      "partido": "PP",
-      "uf": "RS",
-      "email": "dep.sergioturra@camara.leg.br",
-      "telefone_gabinete": "3215-5228",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "178947",
       "nome": "Sóstenes Cavalcante",
       "partido": "PL",
@@ -6524,7 +6524,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-08-03T06:23:23.288724",
+  "ultima_atualizacao": "2026-08-10T04:30:49.146496",
   "total_deputados": 512,
   "total_senadores": 81
 }
