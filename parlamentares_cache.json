@@ -2003,17 +2003,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5976",
-      "nome": "Eduardo Girão",
-      "partido": "NOVO",
-      "uf": "CE",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
-      "situacao": "Exercício"
-    },
-    {
       "id": "SEN-3777",
       "nome": "Eduardo Gomes",
       "partido": "PL",
@@ -3362,17 +3351,6 @@
       "uf": "BA",
       "email": "dep.joserocha@camara.leg.br",
       "telefone_gabinete": "3215-5908",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "235869",
-      "nome": "João Carlos",
-      "partido": "REPUBLICANOS",
-      "uf": "AM",
-      "email": "dep.joaocarlos@camara.leg.br",
-      "telefone_gabinete": "3215-5532",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5149,6 +5127,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "226075",
+      "nome": "Priscila Costa",
+      "partido": "PL",
+      "uf": "CE",
+      "email": "dep.priscilacosta@camara.leg.br",
+      "telefone_gabinete": "3215-5711",
+      "sexo": "F",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220533",
       "nome": "Prof. Reginaldo Veras",
       "partido": "PV",
@@ -5809,6 +5798,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "SEN-5974",
+      "nome": "Sargento Reginauro",
+      "partido": "PSDB",
+      "uf": "CE",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220713",
       "nome": "Saullo Vianna",
       "partido": "MDB",
@@ -5859,6 +5859,17 @@
       "uf": "AM",
       "email": "dep.sidneyleite@camara.leg.br",
       "telefone_gabinete": "3215-5770",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "74356",
+      "nome": "Silas Câmara",
+      "partido": "REPUBLICANOS",
+      "uf": "AM",
+      "email": "dep.silascamara@camara.leg.br",
+      "telefone_gabinete": "3215-5532",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6524,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-08-10T04:30:49.146496",
-  "total_deputados": 512,
+  "ultima_atualizacao": "2026-08-17T03:50:18.300460",
+  "total_deputados": 513,
   "total_senadores": 81
 }
