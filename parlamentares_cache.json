@@ -2641,6 +2641,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "74581",
+      "nome": "Gilmar Machado",
+      "partido": "PT",
+      "uf": "MG",
+      "email": "dep.gilmarmachado@camara.leg.br",
+      "telefone_gabinete": "3215-5394",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220529",
       "nome": "Gilson Daniel",
       "partido": "PODE",
@@ -2713,17 +2724,6 @@
       "uf": "GO",
       "email": "dep.glaustindafokus@camara.leg.br",
       "telefone_gabinete": "3215-5295",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "236284",
-      "nome": "Glaycon Franco",
-      "partido": "PSDB",
-      "uf": "MG",
-      "email": "dep.glayconfranco@camara.leg.br",
-      "telefone_gabinete": "3215-5556",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-09-14T08:35:41.682069",
+  "ultima_atualizacao": "2026-09-21T08:36:48.952568",
   "total_deputados": 513,
   "total_senadores": 81
 }
