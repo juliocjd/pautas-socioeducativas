@@ -4522,6 +4522,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "220584",
+      "nome": "Murilo Galdino",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.murilogaldino@camara.leg.br",
+      "telefone_gabinete": "3215-5815",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "179001",
       "nome": "Márcio Biolchi",
       "partido": "MDB",
@@ -5281,17 +5292,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "115200",
-      "nome": "Raniery Paulino",
-      "partido": "REPUBLICANOS",
-      "uf": "PB",
-      "email": "dep.ranierypaulino@camara.leg.br",
-      "telefone_gabinete": "3215-5815",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74161",
       "nome": "Reginaldo Lopes",
       "partido": "PT",
@@ -5355,6 +5355,17 @@
       "telefone_gabinete": "3215-5915",
       "sexo": "M",
       "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "SEN-5257",
+      "nome": "Renzo Braz",
+      "partido": "PP",
+      "uf": "MG",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -5520,17 +5531,6 @@
       "telefone_gabinete": "3215-5939",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-5732",
-      "nome": "Rodrigo Pacheco",
-      "partido": "PSB",
-      "uf": "MG",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -6172,17 +6172,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "236423",
-      "nome": "Valdir Trindade",
-      "partido": "REPUBLICANOS",
-      "uf": "PB",
-      "email": "dep.valdirtrindade@camara.leg.br",
-      "telefone_gabinete": "3215-5534",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "160610",
       "nome": "Valmir Assunção",
       "partido": "PT",
@@ -6370,6 +6359,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "74044",
+      "nome": "Wilson Santiago",
+      "partido": "REPUBLICANOS",
+      "uf": "PB",
+      "email": "dep.wilsonsantiago@camara.leg.br",
+      "telefone_gabinete": "3215-5534",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220564",
       "nome": "Yandra Moura",
       "partido": "UNIÃO",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-09-28T09:23:48.988237",
+  "ultima_atualizacao": "2026-10-05T10:03:18.225305",
   "total_deputados": 513,
   "total_senadores": 81
 }
