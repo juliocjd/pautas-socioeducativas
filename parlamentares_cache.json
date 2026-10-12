@@ -375,6 +375,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "SEN-6358",
+      "nome": "Ana Paula Lobato",
+      "partido": "PSB",
+      "uf": "MA",
+      "email": "",
+      "telefone_gabinete": "",
+      "sexo": "",
+      "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
       "id": "220632",
       "nome": "Ana Pimentel",
       "partido": "PT",
@@ -2888,7 +2899,7 @@
       "partido": "MDB",
       "uf": "MA",
       "email": "dep.hildorocha@camara.leg.br",
-      "telefone_gabinete": null,
+      "telefone_gabinete": "3215-5734",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3642,9 +3653,9 @@
       "situacao": "Exercício"
     },
     {
-      "id": "SEN-5979",
-      "nome": "Leila Barros",
-      "partido": "PDT",
+      "id": "SEN-5977",
+      "nome": "Leany Lemos",
+      "partido": "PSB",
       "uf": "DF",
       "email": "",
       "telefone_gabinete": "",
@@ -3705,17 +3716,6 @@
       "telefone_gabinete": "3215-5227",
       "sexo": "M",
       "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
-      "id": "SEN-6359",
-      "nome": "Lourdinha Pereira",
-      "partido": "PSB",
-      "uf": "MA",
-      "email": "",
-      "telefone_gabinete": "",
-      "sexo": "",
-      "casa": "Senado",
       "situacao": "Exercício"
     },
     {
@@ -4698,17 +4698,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "194260",
-      "nome": "Nivaldo Albuquerque",
-      "partido": "UNIÃO",
-      "uf": "AL",
-      "email": "dep.nivaldoalbuquerque@camara.leg.br",
-      "telefone_gabinete": "3215-5671",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204498",
       "nome": "Olival Marques",
       "partido": "PODE",
@@ -4783,6 +4772,17 @@
       "telefone_gabinete": "",
       "sexo": "",
       "casa": "Senado",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "220706",
+      "nome": "Padovani",
+      "partido": "PP",
+      "uf": "PR",
+      "email": "dep.padovani@camara.leg.br",
+      "telefone_gabinete": "3215-5923",
+      "sexo": "M",
+      "casa": "Câmara",
       "situacao": "Exercício"
     },
     {
@@ -5012,6 +5012,17 @@
       "uf": "SP",
       "email": "dep.pauloteixeira@camara.leg.br",
       "telefone_gabinete": "3215-5684",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
+      "id": "171617",
+      "nome": "Paulão",
+      "partido": "PT",
+      "uf": "AL",
+      "email": "dep.paulao@camara.leg.br",
+      "telefone_gabinete": null,
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5754,17 +5765,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "236518",
-      "nome": "Santin Roveda",
-      "partido": "UNIÃO",
-      "uf": "PR",
-      "email": "dep.santinroveda@camara.leg.br",
-      "telefone_gabinete": "3215-5923",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "204387",
       "nome": "Sargento Fahur",
       "partido": "PL",
@@ -6382,10 +6382,10 @@
     },
     {
       "id": "220660",
-      "nome": "Yury do Paredão",
+      "nome": "Yury Bruno",
       "partido": "MDB",
       "uf": "CE",
-      "email": "dep.yurydoparedao@camara.leg.br",
+      "email": "dep.yurybruno@camara.leg.br",
       "telefone_gabinete": "3215-5545",
       "sexo": "M",
       "casa": "Câmara",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-10-05T10:03:18.225305",
+  "ultima_atualizacao": "2026-10-12T10:15:39.744983",
   "total_deputados": 513,
   "total_senadores": 81
 }
