@@ -2668,7 +2668,7 @@
       "partido": "PODE",
       "uf": "ES",
       "email": "dep.gilsondaniel@camara.leg.br",
-      "telefone_gabinete": "3215-5433",
+      "telefone_gabinete": "3215-5916",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -3664,17 +3664,6 @@
       "situacao": "Exercício"
     },
     {
-      "id": "122195",
-      "nome": "Leonardo Gadelha",
-      "partido": "PODE",
-      "uf": "PB",
-      "email": "dep.leonardogadelha@camara.leg.br",
-      "telefone_gabinete": "3215-5610",
-      "sexo": "M",
-      "casa": "Câmara",
-      "situacao": "Exercício"
-    },
-    {
       "id": "74156",
       "nome": "Leonardo Monteiro",
       "partido": "PT",
@@ -3889,7 +3878,7 @@
       "partido": "UNIÃO",
       "uf": "MG",
       "email": "dep.luizfernandofaria@camara.leg.br",
-      "telefone_gabinete": "3215-5916",
+      "telefone_gabinete": "3215-5433",
       "sexo": "M",
       "casa": "Câmara",
       "situacao": "Exercício"
@@ -5633,6 +5622,17 @@
       "situacao": "Exercício"
     },
     {
+      "id": "160629",
+      "nome": "Romero Rodrigues",
+      "partido": "PODE",
+      "uf": "PB",
+      "email": "dep.romerorodrigues@camara.leg.br",
+      "telefone_gabinete": "3215-5610",
+      "sexo": "M",
+      "casa": "Câmara",
+      "situacao": "Exercício"
+    },
+    {
       "id": "SEN-5322",
       "nome": "Romário",
       "partido": "S/Partido",
@@ -6535,7 +6535,7 @@
       "situacao": "Exercício"
     }
   ],
-  "ultima_atualizacao": "2026-11-02T10:35:17.989993",
+  "ultima_atualizacao": "2026-11-09T10:56:42.406417",
   "total_deputados": 513,
   "total_senadores": 81
 }
